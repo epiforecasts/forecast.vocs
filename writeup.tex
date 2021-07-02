@@ -40,11 +40,11 @@ The model involves the following quantities:
 \end{itemize}
 \end{itemize}
 
-\textbf{Caveat:} The definition of the weeks for the different data streams is not identical, and I am not sure whether one needs to shift one of them slightly to have them actually refer to the same time periods.
+\textbf{Caveat:} The definition of the weeks for the different data streams is not identical, and I am not sure whether one needs to shift one of them slightly to have them actually refer to the same time periods. The sequencing data are by date of sampling, while the incidence data are by date of reporting to the national authorities.
 
 \section{Model formulation}
 
-The total number of observed cases is decomposed into
+I apply a fully Bayesian model defined as follows. The total number of observed cases is decomposed into
 $$
 X_t = X^\Delta_t + X^o_t
 $$
@@ -81,9 +81,15 @@ X^\Delta_{16} & \sim \text{Unif}(0, 1000.)\\
 \end{align*}
 These are intended to be ``uninformative'', motivating priors for these parameters is not straightforward.
 
+\section{Inference}
+
+I generate samples from the posterior distribution of the various unobserved and predicted quantities using the \texttt{JAGS} software via the \texttt{R} package \texttt{runjags} (see \texttt{JAGS\_model.R} for the code). I generate 50,000 samples from 5 chains after a burn-in period of 4,000 samples.
+
 \section{Results}
 
-I ran the model on the RKI and JHU data and obtained the results shown in Figures 1 and 2. While the data imply slightly different current case levels, in both cases the extrapolation of trends implies a rather sudden flattening of the case counts which had previously been decaying steadily. The data which have accumulated since the last used data point point into this direction, too, even though the flattening may not be as abrupt as implied by the point predictions. Note that the model implies a lot of uncertainty and for more than one week ahead actually makes very uninformative predicitons. In three weeks the Delta variant will have become strongly dominant.
+I ran the model on the RKI and JHU data and obtained the results shown in Figures 1 and 2. While the data imply slightly different current case levels, in both cases the extrapolation of trends implies a rather sudden flattening of the overall case counts which had previously been decaying steadily. The data which have accumulated since the last used data point point into this direction, too, even though the flattening may not be as abrupt as implied by the point predictions. Note that the model implies a lot of uncertainty and for more than one week ahead actually makes very uninformative predicitons. In three weeks the Delta variant will have become strongly dominant.
+
+Note that the availability of sequencing results lags behind the available incidence data ad there is one week for which the overall case count is already known while the sequencing results are not. This is reflected by a widening of the uncertainty intervals for the strain-specific numbers.
 
 \begin{figure}
 \center
