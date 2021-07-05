@@ -75,7 +75,7 @@ plot_case_post <- ggplot(posterior_case_preds) +
   scale_y_continuous(labels = comma, trans = log_trans()) +
   scale_color_brewer(palette = "Dark2") +
   scale_fill_brewer(palette = "Dark2") +
-  theme_minimal() +
+  theme_bw() +
   theme(legend.position = "bottom") +
   labs(y = "Weekly test postive cases (log scale)", x = "Date") +
   scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
@@ -97,7 +97,7 @@ plot_delta_frac <- ggplot(delta_frac) +
   geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
   geom_point(data = cases_sat, aes(y = share_B.1.1617.2)) +
   scale_y_continuous(labels = percent) +
-  theme_minimal() +
+  theme_bw() +
   labs(y = "Percentage of overall cases with the DELTA variant",
        x = "Date") +
   scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
@@ -127,7 +127,7 @@ plot_rt <- ggplot(posterior_rt) +
   geom_line(aes(y = mean), linetype = 2) +
   geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
   scale_y_continuous() +
-  theme_minimal() +
+  theme_bw() +
   labs(y = "Effective reproduction number of observed cases",
        x = "Date") +
   scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
@@ -135,5 +135,5 @@ plot_rt <- ggplot(posterior_rt) +
   theme(legend.position = "bottom")
 plot_rt
 
-ggsave("plots/stan-posterior-rt.pdf", plot_rt,
+ggsave("plots/stan-posterior-rt.png", plot_rt,
        height = 6, width = 9)

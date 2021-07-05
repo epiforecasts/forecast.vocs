@@ -1,3 +1,4 @@
 *.xlsx
 model
 results/stan-fit.rds
+*.png
