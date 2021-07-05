@@ -10,131 +10,34 @@ library(cmdstanr)
 # get stan setup
 # install_cmdstan()
 
-today <- as.Date("2021-07-01")
+# set number of cores
+options(mc.cores = 4)
 
+# load data
 cases_sat <- fread("data/cases.csv")
 
 # extract variables for model:
 data <- list(
-  X  = cases_sat$inc7, # weekly incidences
-  N = cases_sat$seq_total, # total number of sequenced samples
-  Y = cases_sat$seq_B.1.1617.2 # number of sequenced samples with delta variant
+  # time indices
+  t = nrow(cases_sat) + 4,
+  t_nots = nrow(cases_sat),
+  t_seq = nrow(cases_sat[!is.na(seq_B.1.1617.2)]),
+  # weekly incidences
+  X  = cases_sat$inc7,
+  # total number of sequenced samples
+  N = cases_sat[!is.na(seq_total)]$seq_total,
+  # number of sequenced samples with delta variant
+  Y = cases_sat[!is.na(seq_total)]$seq_B.1.1617.2
 )
-data$T1 <- length(data$Y[!is.na(data$Y)]) # number of time points for sequencing data
-data$T2 <- data$T1 + 1
-data$T3 <- data$T2 + 3
 
 # compile model
 mod <- cmdstan_model("model.stan")
-# Model definition in JAGS language:
-model <- "
-    model {
-      # flat prior on overdispersion parameters (could be refined)
-      psi_delta ~ dunif(0, 100)
-      psi_other ~ dunif(0, 100)
-      # flat prior on precision of random walk (could be refined)
-      prec ~ dunif(5, 200)
-    
-      # initial values of weekly rowth rates
-      r_other[1] ~ dunif(0.5, 1.5)
-      r_delta[1] ~ dunif(0.5, 1.5)
-      
-      # vague priors on initial values of incidence per variant
-      X_delta[1] ~ dunif(0, 1000)
-      X_other[1] ~ dunif(X[1] - 1000, X[1])
-      X_proj[1] = X[1]
-    
-      # run through time points where both incidence and sequencing data are available
-      for(t in 2 : T1) { #data# T1
-          # multiplicative random walk on weekly growth rates for delta variant and others
-          r_other[t] = r_other[t - 1]*exp(epsilon_other[t])
-          r_delta[t] = r_delta[t - 1]*exp(epsilon_delta[t])
-          epsilon_delta[t] ~ dnorm(0, prec)
-          epsilon_other[t] ~ dnorm(0, prec)
 
-          # multiplication factors to express NegBin as Poisson-Gamma mixture
-          omega_delta[t] ~ dgamma(psi_delta, psi_delta)
-          omega_other[t] ~ dgamma(psi_other, psi_other)
-        
-          # conditional expectations given the multiplication factor for overdispersion
-          lambda_delta[t] = omega_delta[t]*(r_delta[t - 1]*X_delta[t - 1])
-          lambda_other[t] = omega_other[t]*(r_other[t - 1]*X_other[t - 1])
-        
-          # for the branching process a little detour is necessary: X[t] cannot be written as
-          # X[t] = X_delta[t] + X_other[t]
-          # as observed nodes cannot be logical in JAGS
-          # can be circumvented using Poisson convolution and thinning properties
-          # sample X[t] first:
-          lambda_total[t] = lambda_delta[t] + lambda_other[t]
-          X[t] ~ dpois(lambda_total[t])  #data# X
-          # then obtain delta share via thinning
-          X_delta[t] ~ dbinom(lambda_delta[t]/lambda_total[t], X[t])
-          # and others as the resulting difference
-          X_other[t] = X[t] - X_delta[t]
-        
-          # add observation process for sequencing:
-          # probabilty that a randomly chosen sample is delta
-          p[t] = X_delta[t]/X[t]
-          # binomial observation process
-          Y[t] ~ dbin(p[t], N[t])  #data# Y, N
-          
-          # for t = 1, ..., T2 X_proj is just a place holder identical to X[t]
-          X_proj[t] = X[t]
-      }
-      
-      # run through time points where incidence data is still available, but not sequencing data:
-      for(t in (T1 + 1) : T2){ #data# T2
-          # same as above: random walk on r
-          r_other[t] = r_other[t - 1]*exp(epsilon_other[t])
-          r_delta[t] = r_delta[t - 1]*exp(epsilon_delta[t])
-          epsilon_delta[t] ~ dnorm(0, prec)
-          epsilon_other[t] ~ dnorm(0, prec)
-        
-          # multiplication factors for overdispersion
-          omega_delta[t] ~ dgamma(psi_delta, psi_delta)
-          omega_other[t] ~ dgamma(psi_other, psi_other)
-        
-          # branching process:
-          lambda_delta[t] = omega_delta[t]*(r_delta[t - 1]*X_delta[t - 1])
-          lambda_other[t] = omega_other[t]*(r_other[t - 1]*X_other[t - 1])
-          lambda_total[t] = lambda_delta[t] + lambda_other[t]
-          X[t] ~ dpois(lambda_total[t])
-          X_delta[t] ~ dbinom(lambda_delta[t]/lambda_total[t], X[t])
-          X_other[t] = X[t] - X_delta[t]
-          # X_proj is still a place holder, becomes relevant in next step
-          X_proj[t] = X[t]
-      }
-      
-      # run through timepoints for which to predict:
-      for(t in (T2 + 1):(T2 + 3)){
-          # continue random walk on r
-          r_other[t] = r_other[t - 1]*exp(epsilon_other[t])
-          r_delta[t] = r_delta[t - 1]*exp(epsilon_delta[t])
-          epsilon_delta[t] ~ dnorm(0, prec)
-          epsilon_other[t] ~ dnorm(0, prec)
-          
-          # overdispersion
-          omega_delta[t] ~ dgamma(psi_delta, psi_delta)
-          omega_other[t] ~ dgamma(psi_other, psi_other)
-          
-          # branching:
-          lambda_delta[t] = omega_delta[t]*(r_delta[t - 1]*X_delta[t - 1])
-          lambda_other[t] = omega_other[t]*(r_other[t - 1]*X_other[t - 1])
-  
-          lambda_total[t] = lambda_delta[t] + lambda_other[t]
-          
-          # IMPORTANT: Now use X_proj here rather than X as no data is available
-          X_proj[t] ~ dpois(lambda_total[t])
-          X_delta[t] ~ dbinom(lambda_delta[t]/lambda_total[t], X_proj[t])
-          X_other[t] = X_proj[t] - X_delta[t]
-      }
-    # which quantities to write out?
-    #monitor# X_delta, X_other, X_proj, prec
-    }"
+# fit model using NUTS
+fit <- mod$sample(data = data, adapt_delta = 0.9)
 
-# run sampling:
-results <- run.jags(model, n.chains = 5, sample = 50000)
-
+# summarise posterior
+sfit <- fit$summary()
 
 # extract point estimators and quantiles:
 # summary(results, vars = "r_delta") # not currently experted

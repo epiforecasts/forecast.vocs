@@ -10,8 +10,8 @@ data {
 parameters {
   real beta;
   real beta_noise;
-  real delta_mod;
-  real delta_noise;
+  real<lower = 0> delta_mod;
+  real<lower = 0> delta_noise;
   vector[t-2] eta;
   vector[t-2] delta_eta;
   real <lower = 0> init_cases[2];
@@ -19,42 +19,40 @@ parameters {
 }
 
 transformed parameters {
-  vector[t - 1] beta_growth;
-  vector[t - 1] delta_growth;
-  vector[t] mean_beta_cases;
-  vector[t] mean_delta_cases;
-  vector[t] mean_cases;
-  vector[t] frac_delta;
+  vector[t - 1] beta_r;
+  vector[t - 1] delta_r;
+  vector<lower = 0>[t] mean_beta_cases;
+  vector<lower = 0>[t] mean_delta_cases;
+  vector<lower = 0>[t] mean_cases;
+  vector<lower = 0, upper = 1>[t] frac_delta;
   vector[2] phi;
 
   // beta growth rate
-  beta_growth = rep_vector(beta, t);
-  beta_growth[2:(t-1)] = 
-    beta_growth[2:(t-1)] + cumulative_sum(beta_noise * eta);
+  beta_r = rep_vector(beta, t - 1);
+  beta_r[2:(t-1)] = beta_r[2:(t-1)] + cumulative_sum(beta_noise * eta);
 
   // delta growth rate based on beta with AR residuals
-  delta_growth = beta_growth + delta_mod;
-  delta_growth[2:(t-1)] = 
-    delta_growth[2:(t-1)] + cumulative_sum(delta_noise * delta_eta);
+  delta_r = beta_r + delta_mod;
+  delta_r[2:(t-1)] = delta_r[2:(t-1)] + cumulative_sum(delta_noise * delta_eta);
 
   // initialise log mean cases
   mean_beta_cases = rep_vector(init_cases[1], t);
   mean_delta_cases = rep_vector(init_cases[2], t);
 
-  // cases growth
-  mean_beta_cases[2:t] = mean_beta_cases[2:t] + beta_growth;
-  mean_delta_cases[2:t] = mean_delta_cases[2:t] + delta_growth;
-  
-  //scale cases
+  // log cases combined with growth
+  mean_beta_cases[2:t] = mean_beta_cases[2:t] + cumulative_sum(beta_r);
+  mean_delta_cases[2:t] = mean_delta_cases[2:t] + cumulative_sum(delta_r);
+
+  // natural scale cases
   mean_beta_cases = exp(mean_beta_cases);
   mean_delta_cases = exp(mean_delta_cases);
-  mean_cases = mean_delta_cases + mean_delta_cases;
+  mean_cases = mean_beta_cases + mean_delta_cases;
 
   // rescale observation model
   phi = 1 ./ sqrt(sqrt_phi);
   
-  //calculate fraction delta;
-  frac_delta = mean_delta_cases ./ mean_cases;
+  // calculate fraction delta (to log for stability);
+  frac_delta = exp(log(mean_delta_cases) - log(mean_cases));
 }
 
 model {
@@ -62,10 +60,10 @@ model {
   init_cases ~ normal(5, 5);
 
   // growth priors
-  beta_growth ~ std_normal();
-  delta_mod ~ std_normal();
-  beta_noise ~ std_normal();
-  delta_noise ~ std_normal(); 
+  beta ~ normal(0, 0.25);
+  delta_mod ~ normal(0, 0.25);
+  beta_noise ~ normal(0, 0.1) T[0,];
+  delta_noise ~ normal(0, 0.01) T[0,]; 
 
   // random walk priors
   eta ~ std_normal();
