@@ -6,6 +6,8 @@ Sys.setlocale(category = "LC_TIME", locale = "en_US.UTF8")
 library(data.table)
 #install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos"))) 
 library(cmdstanr)
+library(ggplot2)
+library(scales)
 
 # get stan setup
 # install_cmdstan()
@@ -33,86 +35,104 @@ data <- list(
 # compile model
 mod <- cmdstan_model("model.stan")
 
+# print model
+mod$print()
+
 # fit model using NUTS
-fit <- mod$sample(data = data, adapt_delta = 0.9)
+fit <- mod$sample(data = data, adapt_delta = 0.95)
+
+# assess fit
+diag <- fit$cmdstan_diagnose()
+diag
 
 # summarise posterior
 sfit <- fit$summary()
 
-# extract point estimators and quantiles:
-# summary(results, vars = "r_delta") # not currently experted
-summary_X_delta <- summary(results, vars = "X_delta")
-# summary(results, vars = "r_other") # not currently experted
-summary_X_other <- summary(results, vars = "X_other")
-summary_X_proj <- summary(results, vars = "X_proj")
+# save fit
+fit$save_object(file = "stan-fit.rds")
 
-# arrange into data.frame:
-summary_all <- data.frame(wk = seq(from = cases_sat$wk[1], length.out = nrow(summary_X_delta)),
-                      date = seq(from = cases_sat$date[1], length.out = nrow(summary_X_delta), by = 7),
-                      X_total_Lower95 = summary_X_proj[, "Lower95"],
-                      X_total_Median = summary_X_proj[, "Median"],
-                      X_total_Upper95 = summary_X_proj[, "Upper95"],
-                      X_delta_Lower95 = summary_X_delta[, "Lower95"],
-                      X_delta_Median = summary_X_delta[, "Median"],
-                      X_delta_Upper95 = summary_X_delta[, "Upper95"],
-                      X_other_Lower95 = summary_X_other[, "Lower95"],
-                      X_other_Median = summary_X_other[, "Median"],
-                      X_other_Upper95 = summary_X_other[, "Upper95"])
+# save summarised posterior
+sfit <- setDT(sfit)
+fwrite(sfit, "results/stan-posterior.csv")
 
-dir.create("results")
-write.csv(summary_all, file = paste("results/summary_", data_source, today, ".csv"), row.names = FALSE)
+# extract cases posterior predictions
+posterior_case_preds <- sfit[grepl("sim_", variable)]
+posterior_case_preds[, date := rep(seq(min(cases_sat$dat),
+                                   by = "week", length.out = data$t), 3)]
+posterior_case_preds[, Variant := fcase(
+  grepl("_beta", variable), "BETA",
+  grepl("_delta", variable), "DELTA",
+  default = "Overall"
+)]
 
-# helper function: 
-# modify the alpha value of a given color (to generate transparent versions for prediction bands)
-modify_alpha <- function(col, alpha){
-  x <- col2rgb(col)/255
-  rgb(x[1], x[2], x[3], alpha = alpha)
-}
+# plot case posterior
+plot_case_post <- ggplot(posterior_case_preds) +
+  aes(x = date, y = median, col = Variant, fill = Variant) +
+  geom_line(size = 1.1, alpha = 0.6) +
+  geom_line(aes(y = mean), linetype = 2) +
+  geom_ribbon(aes(ymin = q5, ymax = q95, ), alpha = 0.3, size = 0.4) +
+  geom_point(data = cases_sat, aes(y = inc7, col = NULL, fill = NULL)) +
+  scale_y_continuous(labels = comma, trans = log_trans()) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(y = "Weekly test postive cases (log scale)", x = "Date") +
+  scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
+  theme(axis.text.x = element_text(angle = 90))
+plot_case_post
 
-# helper function: add dots and bands to plot
-add_result <- function(results, tag, col, line = FALSE){
-  transparent_col <- modify_alpha(col, 0.3)
-  polygon(c(results$date, rev(results$date)),
-          c(results[, paste0("X_", tag, "_Lower95")],
-            rev(results[, paste0("X_", tag, "_Upper95")])),
-          col = transparent_col, border = NA)
-  lines(results$date, results[, paste0("X_", tag, "_Median")], type = ifelse(line, "b", "p"),
-        pch = 1, col = col, lty = "dotted", cex = 0.7)
-}
+ggsave("plots/stan-posterior-cases.png", plot_case_post,
+       height = 6, width = 9)
 
-# plot:
-pdf(paste0("plots/plot_", data_source, "_", today, ".pdf"), width = 9, height = 6)
-# aggregated incidence data
-plot(summary_all$date, summary_all$X_total_Median, pch = 1, cex = 0.7, ylim = c(0, 20000),
-     xlab = "calendar week", ylab = "confirmed cases", 
-     main = paste0("7-day absolute case numbers, Germany (", data_source, " data)" ))
-lines(cases$date, cases$inc7)
-points(cases_sat$date, cases_sat$inc7, pch = 15)
-# prediction at aggregate level:
-add_result(summary_all, "total", "black")
-# non-delta:
-add_result(summary_all, "other", "darkgreen")
-# delta:
-add_result(summary_all, "delta", "red")
+# extract fraction DELTA
+delta_frac <- sfit[grepl("frac_delta", variable)]
+delta_frac[, date := seq(min(cases_sat$dat), by = "week", length.out = data$t)]
 
-# vertical line at current date:
-abline(v = today, lty = "dashed")
-text(x = today, y = 17000, "today \n", srt = 90, cex = 0.65)
+# plot DELTA fraction
+plot_delta_frac <- ggplot(delta_frac) +
+  aes(x = date, y = median) +
+  geom_line(size = 1.1, alpha = 0.6) +
+  geom_line(aes(y = mean), linetype = 2) +
+  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
+  geom_point(data = cases_sat, aes(y = share_B.1.1617.2)) +
+  scale_y_continuous(labels = percent) +
+  theme_minimal() +
+  labs(y = "Percentage of overall cases with the DELTA variant",
+       x = "Date") +
+  scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
+  theme(axis.text.x = element_text(angle = 90))
+plot_delta_frac
 
-date_last_incidence_data <- max(cases_sat$date)
-abline(v = date_last_incidence_data, lty = "dotted")
-text(x = date_last_incidence_data, y = 17000, "last incidence \n data used", cex = 0.65, srt = 90)
+ggsave("plots/stan-posterior-delta-frac.pdf", plot_delta_frac,
+       height = 6, width = 9)
 
-date_last_sequencing_data <- max(cases_sat$date[!is.na(cases_sat$seq_B.1.1617.2)])
-abline(v = date_last_sequencing_data, lty = "dotted")
-text(x = date_last_sequencing_data,
-     y = 17000, "last sequencing \n data used", cex = 0.65, srt = 90)
+# extract Rt estimates
+posterior_rt <- sfit[grepl("_r", variable)]
+posterior_rt[, date := rep(seq(min(cases_sat$dat),
+                               by = "week", length.out = data$t - 1), 2)]
+posterior_rt[, Variant := fcase(
+  grepl("beta", variable), "BETA",
+  grepl("delta", variable), "DELTA"
+)]
+cols <- c("mean", "median", "q5", "q95")
+posterior_rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Variant"]
 
+# plot Rt estimates
+plot_rt <- ggplot(posterior_rt) +
+  aes(x = date, y = median, col = Variant, fill = Variant) +
+  geom_hline(yintercept = 1, linetype = 3, col = "black")
+  geom_line(size = 1.1, alpha = 0.6) +
+  geom_line(aes(y = mean), linetype = 2) +
+  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
+  scale_y_continuous() +
+  theme_minimal() +
+  labs(y = "Effective reproduction number of observed cases",
+       x = "Date") +
+  scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  theme(legend.position = "bottom")
+plot_rt
 
-legend("topleft", legend = c("total", "non-delta", "delta", "(points mark Saturdays)"),
-       col = c("black", "darkgreen", "red", NA), pch = 15, lty = c(1, NA, NA, NA), bty = "n")
-
-legend("left", pch = c(15, 1, 15), col = c("black", "black", "lightgrey"), 
-       legend = c("observed", "unobserved or predicted", "95% uncertainty intervals"), 
-       bty = "n")
-dev.off()
+ggsave("plots/stan-posterior-delta-frac.pdf", plot_delta_frac,
+       height = 6, width = 9)

@@ -6,7 +6,17 @@ data {
   int Y[t_seq];
   int N[t_seq];
 }
-  
+
+transformed data {
+  // initialise the prior beta and delta cases using observed data
+  vector[2] mean_init_cases;
+  vector[2] sd_init_cases;
+  mean_init_cases[2] = X[1] * Y[1] / N[1];
+  mean_init_cases[1] = X[1] - mean_init_cases[2];
+  mean_init_cases = log(mean_init_cases);
+  sd_init_cases = 0.025 * mean_init_cases;
+}
+
 parameters {
   real beta;
   real beta_noise;
@@ -57,7 +67,7 @@ transformed parameters {
 
 model {
   // initial log cases
-  init_cases ~ normal(5, 5);
+  init_cases ~ normal(mean_init_cases, sd_init_cases);
 
   // growth priors
   beta ~ normal(0, 0.25);
@@ -84,9 +94,9 @@ generated quantities {
   int sim_beta_cases[t];
   int sim_cases[t];
 
-  sim_beta_cases = neg_binomial_rng(mean_beta_cases, phi[1]);
-  sim_delta_cases = neg_binomial_rng(mean_delta_cases, phi[1]);
   for (i in 1:t) {
+    sim_beta_cases[i] = neg_binomial_2_rng(mean_beta_cases[i], phi[1]);
+    sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
     sim_cases[i] = sim_beta_cases[i] + sim_delta_cases[i];
   }
 }
