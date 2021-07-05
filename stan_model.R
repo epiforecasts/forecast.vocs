@@ -39,7 +39,7 @@ mod <- cmdstan_model("model.stan")
 mod$print()
 
 # fit model using NUTS
-fit <- mod$sample(data = data, adapt_delta = 0.95)
+fit <- mod$sample(data = data, adapt_delta = 0.99)
 
 # assess fit
 diag <- fit$cmdstan_diagnose()
@@ -82,7 +82,7 @@ plot_case_post <- ggplot(posterior_case_preds) +
   theme(axis.text.x = element_text(angle = 90))
 plot_case_post
 
-ggsave("plots/stan-posterior-cases.png", plot_case_post,
+ggsave("plots/stan-posterior-cases.pdf", plot_case_post,
        height = 6, width = 9)
 
 # extract fraction DELTA
@@ -121,7 +121,8 @@ posterior_rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Variant"]
 # plot Rt estimates
 plot_rt <- ggplot(posterior_rt) +
   aes(x = date, y = median, col = Variant, fill = Variant) +
-  geom_hline(yintercept = 1, linetype = 3, col = "black")
+  geom_hline(yintercept = 1, linetype = 3, col = "black") +
+
   geom_line(size = 1.1, alpha = 0.6) +
   geom_line(aes(y = mean), linetype = 2) +
   geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
@@ -134,5 +135,5 @@ plot_rt <- ggplot(posterior_rt) +
   theme(legend.position = "bottom")
 plot_rt
 
-ggsave("plots/stan-posterior-delta-frac.pdf", plot_delta_frac,
+ggsave("plots/stan-posterior-rt.pdf", plot_rt,
        height = 6, width = 9)

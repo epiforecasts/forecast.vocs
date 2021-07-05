@@ -71,9 +71,9 @@ model {
 
   // growth priors
   beta ~ normal(0, 0.25);
-  delta_mod ~ normal(0, 0.25);
+  delta_mod ~ normal(0.2, 0.2);
   beta_noise ~ normal(0, 0.1) T[0,];
-  delta_noise ~ normal(0, 0.01) T[0,]; 
+  delta_noise ~ normal(0, 0.1) T[0,]; 
 
   // random walk priors
   eta ~ std_normal();
