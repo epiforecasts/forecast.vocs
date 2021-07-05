@@ -49,7 +49,7 @@ diag
 sfit <- fit$summary()
 
 # save fit
-fit$save_object(file = "stan-fit.rds")
+fit$save_object(file = "results/stan-fit.rds")
 
 # save summarised posterior
 sfit <- setDT(sfit)
@@ -135,5 +135,5 @@ plot_rt <- ggplot(posterior_rt) +
   theme(legend.position = "bottom")
 plot_rt
 
-ggsave("plots/stan-posterior-rt.png", plot_rt,
+ggsave("plots/stan-posterior-rt.pdf", plot_rt,
        height = 6, width = 9)
