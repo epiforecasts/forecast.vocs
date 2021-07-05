@@ -1,27 +1,31 @@
 # Dual-strain branching process model
-# Johannes Bracher johannes.bracher@kit.edu
-
-setwd("/home/johannes/Documents/Ideas/branching_process_delta")
-
+# Sam Abbott sam.abbott@lshtm.ac.uk
 Sys.setlocale(category = "LC_TIME", locale = "en_US.UTF8")
 
-library(runjags)
+# deps
 library(data.table)
+#install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos"))) 
+library(cmdstanr)
+
+# get stan setup
+# install_cmdstan()
 
 today <- as.Date("2021-07-01")
-# the script is sort of tailored to the data availability on Thursday 1 July
-# (with one week for which incidence data are already available while sequencing data are not)
 
 cases_sat <- fread("data/cases.csv")
 
-# extract variables for JAGS:
-X <- cases_sat$inc7 # weekly incidences
-N <- cases_sat$seq_total # total number of sequenced samples
-Y <- cases_sat$seq_B.1.1617.2 # number of sequenced samples with delta variant
-T1 <- length(Y[!is.na(Y)]) # number of time points for sequencing data
-T2 <- T1 + 1 # number of observations for total incidence
-T3 <- T2 + 3 # number of time points incl weeks to predict
+# extract variables for model:
+data <- list(
+  X  = cases_sat$inc7, # weekly incidences
+  N = cases_sat$seq_total, # total number of sequenced samples
+  Y = cases_sat$seq_B.1.1617.2 # number of sequenced samples with delta variant
+)
+data$T1 <- length(data$Y[!is.na(data$Y)]) # number of time points for sequencing data
+data$T2 <- data$T1 + 1
+data$T3 <- data$T2 + 3
 
+# compile model
+mod <- cmdstan_model("model.stan")
 # Model definition in JAGS language:
 model <- "
     model {
