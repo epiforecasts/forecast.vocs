@@ -1,4 +1,5 @@
 #' @export
+#' @importFrom scales comma log_trans
 plot_cases <- function(posterior_cases, cases, log = TRUE) {
   plot <- ggplot(posterior_cases) +
   aes(x = date, y = median, col = Type, fill = Type) +
@@ -15,7 +16,7 @@ plot_cases <- function(posterior_cases, cases, log = TRUE) {
 
   if (log) {
     plot <- plot +
-      scale_y_continuous(labels = scales::comma, trans = log_trans()) +
+      scale_y_continuous(labels = scales::comma, trans = scales::log_trans()) +
       labs(y = "Weekly test postive cases (log scale)", x = "Date")
   }else{
     plot <- plot +
@@ -25,6 +26,7 @@ plot_cases <- function(posterior_cases, cases, log = TRUE) {
   return(plot)
 }
 #' @export
+#' @importFrom scales percent
 plot_delta <- function(posterior_delta, obs_delta) {
   ggplot(posterior_delta) +
     aes(x = date, y = median) +

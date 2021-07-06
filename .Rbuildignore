@@ -2,3 +2,4 @@
 ^\.devcontainer
 output
 inst/output
+^data-raw$

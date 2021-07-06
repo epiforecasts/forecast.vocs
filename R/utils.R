@@ -1,4 +1,5 @@
 #' @import data.table
-#' @import purrr
 #' @import cmdstanr
 #' @import ggplot2
+#' @importFrom stats median rnorm
+NULL

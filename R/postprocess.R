@@ -1,5 +1,6 @@
 #' @export
 summarise_posterior <- function(fit, cases, ...) {
+  variable <- Type <- NULL
   sfit <- fit$summary(...)
   sfit <- data.table::setDT(sfit)
 

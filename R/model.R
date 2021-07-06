@@ -1,5 +1,6 @@
 #' @export
 stan_data <- function(cases, horizon = 4) {
+
   cases <- data.table::as.data.table(cases)
   data <- list(
     # time indices
@@ -17,6 +18,7 @@ stan_data <- function(cases, horizon = 4) {
 }
 
 #' @export
+#' @importFrom purrr map_dbl
 stan_inits <- function(data) {
   init_fn <- function() {
     inits <- list(
@@ -60,7 +62,7 @@ stan_fit <- function(data,
 
   out <- list(
     fit = fit,
-    posterior = summarised_posterior
+    posterior = sfit
   )
   return(out)
 }
