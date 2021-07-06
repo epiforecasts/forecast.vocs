@@ -8,6 +8,7 @@ library(data.table)
 library(cmdstanr)
 library(ggplot2)
 library(scales)
+library(purrr)
 
 # get stan setup
 # install_cmdstan()
@@ -35,15 +36,26 @@ data <- list(
 # compile model
 mod <- cmdstan_model("model.stan")
 
-# print model
-mod$print()
+# set up initialisation
+init_fn <- function() {
+  inits <- list(
+    init_cases = map_dbl(c(data$X[1] * data$Y[1] / data$N[1], data$X[1]),
+                         ~ abs(rnorm(1, ., . * 0.01))),
+    beta = rnorm(1, 0, 0.25),
+    beta_noise = abs(rnorm(1, 0, 0.01)),
+    delta_mod = rnorm(1, 0.25, 0.05),
+    delta_noise = abs(rnorm(1, 0, 0.01)),
+    sqrt_phi = abs(rnorm(2, 0, 0.01))
+  )
+  return(inits)
+}
 
 # fit model using NUTS
-fit <- mod$sample(data = data, adapt_delta = 0.99)
+fit <- mod$sample(data = data, adapt_delta = 0.99, max_treedepth = 15,
+                  init = init_fn)
 
 # assess fit
-diag <- fit$cmdstan_diagnose()
-diag
+fit$cmdstan_diagnose()
 
 # summarise posterior
 sfit <- fit$summary()
@@ -65,25 +77,45 @@ posterior_case_preds[, Variant := fcase(
   default = "Overall"
 )]
 
-# plot case posterior
-plot_case_post <- ggplot(posterior_case_preds) +
+plot_case_posterior <- function(dt, log = TRUE) {
+  axis_label <- "Weekly test postive cases"
+  plot <- ggplot(dt) +
   aes(x = date, y = median, col = Variant, fill = Variant) +
   geom_line(size = 1.1, alpha = 0.6) +
   geom_line(aes(y = mean), linetype = 2) +
   geom_ribbon(aes(ymin = q5, ymax = q95, ), alpha = 0.3, size = 0.4) +
   geom_point(data = cases_sat, aes(y = inc7, col = NULL, fill = NULL)) +
-  scale_y_continuous(labels = comma, trans = log_trans()) +
   scale_color_brewer(palette = "Dark2") +
   scale_fill_brewer(palette = "Dark2") +
   theme_bw() +
   theme(legend.position = "bottom") +
-  labs(y = "Weekly test postive cases (log scale)", x = "Date") +
   scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
   theme(axis.text.x = element_text(angle = 90))
+
+  if (log) {
+    plot <- plot +
+      scale_y_continuous(labels = comma, trans = log_trans()) +
+      labs(y = "Weekly test postive cases (log scale)", x = "Date")
+  }else{
+    plot <- plot +
+      scale_y_continuous(labels = comma) +
+      labs(y = "Weekly test postive cases", x = "Date")
+  }
+  return(plot)
+}
+# plot case posterior
+plot_case_post <- plot_case_posterior(posterior_case_preds, log = FALSE)
 plot_case_post
 
 ggsave("plots/stan-posterior-cases.pdf", plot_case_post,
        height = 6, width = 9)
+
+plot_log_case_post <- plot_case_posterior(posterior_case_preds, log = TRUE)
+plot_log_case_post
+
+ggsave("plots/stan-posterior-cases.pdf", plot_log_case_post,
+       height = 6, width = 9)
+
 
 # extract fraction DELTA
 delta_frac <- sfit[grepl("frac_delta", variable)]
