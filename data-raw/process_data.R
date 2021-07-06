@@ -33,7 +33,9 @@ cases_sat$wk <- as.numeric(format(cases_sat$date, "%W"))
 cases_sat <- subset(cases_sat, date >= as.Date("2021-04-24"))
 
 # get data on variants from RKI:
-download.file("https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/VOC_VOI_Tabelle.xlsx?__blob=publicationFile", destfile="VOC_VOI_Tabelle.xlsx")
+download.file(
+  "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/VOC_VOI_Tabelle.xlsx?__blob=publicationFile", #nolint
+   destfile = "VOC_VOI_Tabelle.xlsx")
 sampling <- readxl::read_excel("VOC_VOI_Tabelle.xlsx")
 file.remove("VOC_VOI_Tabelle.xlsx")
 
@@ -41,8 +43,10 @@ file.remove("VOC_VOI_Tabelle.xlsx")
 sampling$KW <- as.numeric(gsub("KW", "", sampling$KW))
 # compute total number of tests performed and some formatting
 sampling$`B.1.617.2_Anteil (%)` <- sampling$`B.1.617.2_Anteil (%)`/100
-sampling$total <- round(sampling$B.1.617.2_Anzahl/sampling$`B.1.617.2_Anteil (%)`)
-sampling <- sampling[, c("KW", "total", "B.1.617.2_Anzahl", "B.1.617.2_Anteil (%)")]
+sampling$total <- 
+  round(sampling$B.1.617.2_Anzahl / sampling$`B.1.617.2_Anteil (%)`)
+sampling <- sampling[,
+  c("KW", "total", "B.1.617.2_Anzahl", "B.1.617.2_Anteil (%)")]
 colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
 
 # merge into case data set
