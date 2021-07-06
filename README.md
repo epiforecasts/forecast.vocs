@@ -28,7 +28,14 @@ cmdstanr::install_cmdstan()
 
 ## Using the model
 
-See the following:
+Run a forecast using the following function call (change the `save_path` argument to alter the location where results are saved).
+
+```r
+options(mc.cores = 4)
+results <- forecast(germany_cases, adapt_delta = 0.99, max_treedepth = 15)
+```
+
+See the following for more detailed analysis:
 
 - `inst/forecast.R:` for a forecasting application.
 - `inst/retrospective.R` for retrospective fitting and model evaluation

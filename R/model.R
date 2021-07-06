@@ -4,7 +4,7 @@ stan_data <- function(cases, horizon = 4) {
   cases <- data.table::as.data.table(cases)
   data <- list(
     # time indices
-    t = nrow(cases) + 4,
+    t = nrow(cases) + horizon,
     t_nots = nrow(cases),
     t_seq = nrow(cases[!is.na(seq_B.1.1617.2)]),
     # weekly incidences
@@ -40,7 +40,7 @@ stan_inits <- function(data) {
 stan_fit <- function(data,
                     model = system.file("stan/model.stan",
                                         package = "bp.delta"),
-                     save_path, diagnostics = TRUE) {
+                     save_path, diagnostics = TRUE, ...) {
   mod <- cmdstanr::cmdstan_model(model)
 
   fit <- mod$sample(data = data, ...)

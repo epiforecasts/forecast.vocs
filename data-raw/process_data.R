@@ -47,5 +47,5 @@ colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
 
 # merge into case data set
 germany_cases <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
-
+germany_cases <- setDT(germany_cases)
 usethis::use_data(germany_cases, overwrite = TRUE)
