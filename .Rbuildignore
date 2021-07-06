@@ -1,0 +1,4 @@
+^LICENSE\.md$
+^\.devcontainer
+output
+inst/output

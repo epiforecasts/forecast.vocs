@@ -1,0 +1,26 @@
+Package: bp.delta
+Title: Forecast COVID-19 Cases using a two strain autoregressive model
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Forecast COVID-19 cases using as a two strain autoregressive
+     process.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    data.table,
+    purrr,
+    ggplot2,
+    cmdstanr
+Suggests:
+    readxl
+Additional_repositories: https://mc-stan.org/r-packages/
+Depends: 
+    R (>= 2.10)
