@@ -1,4 +1,6 @@
 #' @export
+#' @examples
+#' stan_data(germany_cases)
 stan_data <- function(cases, horizon = 4) {
 
   cases <- data.table::as.data.table(cases)
@@ -19,6 +21,9 @@ stan_data <- function(cases, horizon = 4) {
 
 #' @export
 #' @importFrom purrr map_dbl
+#' @examples
+#' dt <- stan_data(germany_cases)
+#' stan_inits(dt)
 stan_inits <- function(data) {
   init_fn <- function() {
     inits <- list(
@@ -38,6 +43,13 @@ stan_inits <- function(data) {
 }
 
 #' @export
+#' @examples
+#' \dontrun{
+#' dt <- stan_data(germany_cases)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99)
+#' fit
+#' }
 stan_fit <- function(data,
                     model = system.file("stan/model.stan",
                                         package = "bp.delta"),

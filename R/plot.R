@@ -14,7 +14,7 @@ plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
   aes(x = date, y = median, col = Type, fill = Type) +
   geom_line(size = 1.1, alpha = 0.6) +
   geom_line(aes(y = mean), linetype = 2) +
-  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
+  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.4) +
   geom_point(data = cases, aes(y = inc7, col = NULL, fill = NULL)) +
   scale_color_brewer(palette = "Dark2") +
   scale_fill_brewer(palette = "Dark2") +
@@ -77,6 +77,14 @@ plot_rt <- function(posterior_rt, forecast_date = NULL) {
 }
 #' @export
 #' @importFrom purrr walk2
+#' @examples
+#' \dontrun{
+#' dt <- stan_data(germany_cases)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99)
+#' posterior <- summarise_posterior(fit, germany_cases)
+#' plot_posterior(posterior, germany_cases)
+#' }
 plot_posterior <- function(posterior, cases, forecast_date = NULL,
                            save_path, type = "png") {
   plots <- list()

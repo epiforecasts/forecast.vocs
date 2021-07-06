@@ -1,8 +1,24 @@
 #' @export
-summarise_posterior <- function(fit, cases, ...) {
+#' @importFrom purrr reduce
+#' @examples
+#' \dontrun{
+#' dt <- stan_data(germany_cases)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99)
+#' summarise_posterior(fit, germany_cases)
+#' }
+summarise_posterior <- function(fit, cases) {
   fit <- fit$fit
   variable <- Type <- NULL
-  sfit <- fit$summary(...)
+
+  #sfit <- list(
+  #  fit$summary(variables = NULL, mean, median, sd, mad),
+  #  fit$summary(variables = NULL, quantile2,
+  #              .args = list(probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05),
+  #                                     0.975, 0.99)))
+  #)
+  #sfit <- purrr::reduce(sfit, merge, by = "variable")
+  sfit <- fit$summary()
   sfit <- data.table::setDT(sfit)
 
   start_date <- min(cases$date)
