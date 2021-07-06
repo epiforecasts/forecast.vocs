@@ -8,13 +8,15 @@ data {
 }
 
 transformed data {
-  // initialise the prior beta and delta cases using observed data
+  // initialise cases using observed data
   vector[2] mean_init_cases;
   vector[2] sd_init_cases;
-  mean_init_cases[1] = X[1] * Y[1] / N[1];
-  mean_init_cases[2] = X[1] - mean_init_cases[1];
+  mean_init_cases[2] = X[1] * Y[1] / N[1];
+  mean_init_cases[1] = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.05 * mean_init_cases;
+  sd_init_cases = 0.025 * mean_init_cases;
+  print(mean_init_cases);
+  print(sd_init_cases);
 }
 
 parameters {
@@ -41,13 +43,13 @@ transformed parameters {
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
 
-  // delta growth rate based on beta with AR residuals
+  // delta growth rate based on non-delta with AR residuals
   delta_r = r + delta_mod;
   delta_r[2:(t-1)] = delta_r[2:(t-1)] + cumulative_sum(delta_noise * delta_eta);
 
   // initialise log mean cases
-  mean_ndelta_cases = rep_vector(init_cases[2], t);
-  mean_delta_cases = rep_vector(init_cases[1], t);
+  mean_ndelta_cases = rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
+  mean_delta_cases = rep_vector(init_cases[2], t);
 
   // log cases combined with growth
   mean_ndelta_cases[2:t] = mean_ndelta_cases[2:t] + cumulative_sum(r);
@@ -61,14 +63,8 @@ transformed parameters {
   // rescale observation model
   phi = 1 ./ sqrt(sqrt_phi);
   
-  // calculate fraction delta (to log for stability);
-  print(init_cases);
-  print(r);
-  print(delta_r);
-  print(mean_delta_cases);
-  print(mean_cases);
+  // calculate fraction delta
   frac_delta = mean_delta_cases ./ mean_cases;
-  print(frac_delta);
 }
 
 model {
@@ -77,7 +73,7 @@ model {
 
   // growth priors
   r_init ~ normal(0, 0.25);
-  delta_mod ~ normal(0.25, 0.25);
+  delta_mod ~ normal(0.2, 0.2);
   r_noise ~ normal(0, 0.1) T[0,];
   delta_noise ~ normal(0, 0.1) T[0,]; 
 

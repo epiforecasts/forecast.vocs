@@ -23,12 +23,12 @@ stan_inits <- function(data) {
   init_fn <- function() {
     inits <- list(
       init_cases = purrr::map_dbl(
-        c(data$X[1] * data$Y[1] / data$N[1],
-          data$X[1] * (1 - data$Y[1] / data$N[1])),
-        ~ log(abs(rnorm(1, ., . * 0.05)))),
-      r = rnorm(1, 0, 0.25),
+        c(data$X[1],
+          data$X[1] * data$Y[1] / data$N[1]),
+        ~ log(abs(rnorm(1, ., . * 0.01)))),
+      r = rnorm(1, 0, 0.05),
       r_noise = abs(rnorm(1, 0, 0.01)),
-      delta_mod = rnorm(1, 0.25, 0.05),
+      delta_mod = rnorm(1, 0.2, 0.05),
       delta_noise = abs(rnorm(1, 0, 0.01)),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
