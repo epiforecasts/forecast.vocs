@@ -41,8 +41,8 @@ init_fn <- function() {
   inits <- list(
     init_cases = map_dbl(c(data$X[1] * data$Y[1] / data$N[1], data$X[1]),
                          ~ abs(rnorm(1, ., . * 0.01))),
-    beta = rnorm(1, 0, 0.25),
-    beta_noise = abs(rnorm(1, 0, 0.01)),
+    r = rnorm(1, 0, 0.25),
+    r_noise = abs(rnorm(1, 0, 0.01)),
     delta_mod = rnorm(1, 0.25, 0.05),
     delta_noise = abs(rnorm(1, 0, 0.01)),
     sqrt_phi = abs(rnorm(2, 0, 0.01))
@@ -72,7 +72,7 @@ posterior_case_preds <- sfit[grepl("sim_", variable)]
 posterior_case_preds[, date := rep(seq(min(cases_sat$dat),
                                    by = "week", length.out = data$t), 3)]
 posterior_case_preds[, Variant := fcase(
-  grepl("_beta", variable), "BETA",
+  grepl("_ndelta", variable), "non-DELTA",
   grepl("_delta", variable), "DELTA",
   default = "Overall"
 )]
@@ -115,8 +115,6 @@ plot_log_case_post
 
 ggsave("plots/stan-posterior-cases.pdf", plot_log_case_post,
        height = 6, width = 9)
-
-
 # extract fraction DELTA
 delta_frac <- sfit[grepl("frac_delta", variable)]
 delta_frac[, date := seq(min(cases_sat$dat), by = "week", length.out = data$t)]
@@ -140,12 +138,12 @@ ggsave("plots/stan-posterior-delta-frac.pdf", plot_delta_frac,
        height = 6, width = 9)
 
 # extract Rt estimates
-posterior_rt <- sfit[grepl("_r", variable)]
+posterior_rt <- sfit[grepl("r\\[", variable)]
 posterior_rt[, date := rep(seq(min(cases_sat$dat),
                                by = "week", length.out = data$t - 1), 2)]
 posterior_rt[, Variant := fcase(
-  grepl("beta", variable), "BETA",
-  grepl("delta", variable), "DELTA"
+  grepl("delta_r", variable), "DELTA",
+  grepl("r\\[", variable), "non-DELTA"
 )]
 cols <- c("mean", "median", "q5", "q95")
 posterior_rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Variant"]

@@ -17,8 +17,8 @@ transformed data {
 }
 
 parameters {
-  real beta;
-  real beta_noise;
+  real r_init;
+  real r_noise;
   real<lower = 0> delta_mod;
   real<lower = 0> delta_noise;
   vector[t-2] eta;
@@ -28,36 +28,36 @@ parameters {
 }
 
 transformed parameters {
-  real<lower = 0> init_beta_cases;
-  vector[t - 1] beta_r;
+  real<lower = 0> init_ndelta_cases;
+  vector[t - 1] r;
   vector[t - 1] delta_r;
-  vector[t] mean_beta_cases;
+  vector[t] mean_ndelta_cases;
   vector[t] mean_delta_cases;
   vector[t] mean_cases;
   vector<lower = 0, upper = 1>[t] frac_delta;
   vector[2] phi;
 
-  // beta growth rate
-  beta_r = rep_vector(beta, t - 1);
-  beta_r[2:(t-1)] = beta_r[2:(t-1)] + cumulative_sum(beta_noise * eta);
+  // growth rate
+  r = rep_vector(r_init, t - 1);
+  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
 
   // delta growth rate based on beta with AR residuals
-  delta_r = beta_r + delta_mod;
+  delta_r = r + delta_mod;
   delta_r[2:(t-1)] = delta_r[2:(t-1)] + cumulative_sum(delta_noise * delta_eta);
 
   // initialise log mean cases
-  init_beta_cases = init_cases[2] - init_cases[1];
-  mean_beta_cases = rep_vector(log(init_beta_cases), t);
+  init_ndelta_cases = init_cases[2] - init_cases[1];
+  mean_ndelta_cases = rep_vector(log(init_ndelta_cases), t);
   mean_delta_cases = rep_vector(log(init_cases[1]), t);
 
   // log cases combined with growth
-  mean_beta_cases[2:t] = mean_beta_cases[2:t] + cumulative_sum(beta_r);
+  mean_ndelta_cases[2:t] = mean_ndelta_cases[2:t] + cumulative_sum(r);
   mean_delta_cases[2:t] = mean_delta_cases[2:t] + cumulative_sum(delta_r);
 
   // natural scale cases
-  mean_beta_cases = exp(mean_beta_cases);
+  mean_ndelta_cases = exp(mean_ndelta_cases);
   mean_delta_cases = exp(mean_delta_cases);
-  mean_cases = mean_beta_cases + mean_delta_cases;
+  mean_cases = mean_ndelta_cases + mean_delta_cases;
 
   // rescale observation model
   phi = 1 ./ sqrt(sqrt_phi);
@@ -70,11 +70,10 @@ model {
   // initial cases
   init_cases ~ normal(mean_init_cases, sd_init_cases);
 
-
   // growth priors
-  beta ~ normal(0, 0.25);
+  r_init ~ normal(0, 0.25);
   delta_mod ~ normal(0.25, 0.25);
-  beta_noise ~ normal(0, 0.1) T[0,];
+  r_noise ~ normal(0, 0.1) T[0,];
   delta_noise ~ normal(0, 0.1) T[0,]; 
 
   // random walk priors
@@ -93,12 +92,12 @@ model {
 
 generated quantities {
   int sim_delta_cases[t];
-  int sim_beta_cases[t];
+  int sim_ndelta_cases[t];
   int sim_cases[t];
 
   for (i in 1:t) {
-    sim_beta_cases[i] = neg_binomial_2_rng(mean_beta_cases[i], phi[1]);
+    sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
     sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
-    sim_cases[i] = sim_beta_cases[i] + sim_delta_cases[i];
+    sim_cases[i] = sim_ndelta_cases[i] + sim_delta_cases[i];
   }
 }
