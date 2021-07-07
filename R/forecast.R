@@ -14,7 +14,7 @@ forecast <- function(cases, target_date = max(cases$date),
   }
 
   # saving paths
-  date_path <- file.path(path, target_date)
+  date_path <- file.path(save_path, target_date)
   variant_path <- file.path(date_path, "variant")
   baseline_path <- file.path(date_path, "baseline")
   dir.create(date_path, showWarnings = FALSE, recursive = TRUE)
