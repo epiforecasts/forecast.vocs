@@ -1,7 +1,8 @@
 #' @export
 #' @importFrom purrr map
 forecast <- function(cases, target_date = max(cases$date),
-                     save_path = tempdir(), horizon = 4, ...) {
+                     save_path = tempdir(), horizon = 4,
+                     likelihood = TRUE, output_loglik = FALSE, ...) {
 
   if (target_date != max(cases$date)) {
     target_cases <- cases[date <= target_date]
@@ -21,7 +22,8 @@ forecast <- function(cases, target_date = max(cases$date),
   dir.create(variant_path, showWarnings = FALSE)
 
   # format data and fit models
-  data <- stan_data(target_cases, horizon = horizon)
+  data <- stan_data(target_cases, horizon = horizon,
+                    likelihood = likelihood, output_loglik = output_loglik)
   inits <- stan_inits(data)
 
   # fit and summarise variant model

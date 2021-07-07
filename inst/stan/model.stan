@@ -5,6 +5,8 @@ data {
   int X[t_nots];
   int Y[t_seq];
   int N[t_seq];
+  int likelihood;
+  int output_loglik;
 }
 
 transformed data {
@@ -86,19 +88,33 @@ model {
     sqrt_phi[i] ~ normal(0, 1) T[0,];
   }
   // observation model 
-  X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-  Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
-                    (1 - frac_delta[1:t_seq]) * phi[2]);
+  if (likelihood) {
+      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+      Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
+                        (1 - frac_delta[1:t_seq]) * phi[2]);
+  }
+
 }
 
 generated quantities {
   int sim_delta_cases[t];
   int sim_ndelta_cases[t];
   int sim_cases[t];
+  vector[output_loglik ? t_nots : 0] log_lik;
 
   for (i in 1:t) {
     sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
     sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
     sim_cases[i] = sim_ndelta_cases[i] + sim_delta_cases[i];
+  }
+
+  if (output_loglik) {
+    for (i in 1:t_nots) {
+      log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+    }
+    for (i in 1:t_seq) {
+      log_lik[i] += beta_binomial_lpmf(Y[i] | N[i],  frac_delta[i] * phi[2], 
+                                      (1 - frac_delta[i]) * phi[2]);
+    }
   }
 }

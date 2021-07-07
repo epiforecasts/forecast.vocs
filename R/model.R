@@ -1,7 +1,8 @@
 #' @export
 #' @examples
 #' stan_data(germany_cases)
-stan_data <- function(cases, horizon = 4) {
+stan_data <- function(cases, horizon = 4, likelihood = TRUE,
+                      output_loglikelihood = FALSE) {
 
   cases <- data.table::as.data.table(cases)
   data <- list(
@@ -14,7 +15,9 @@ stan_data <- function(cases, horizon = 4) {
     # total number of sequenced samples
     N = cases[!is.na(seq_total)]$seq_total,
     # number of sequenced samples with delta variant
-    Y = cases[!is.na(seq_total)]$seq_B.1.1617.2
+    Y = cases[!is.na(seq_total)]$seq_B.1.1617.2,
+    likelihood = as.numeric(likelihood),
+    output_loglik = as.numeric(output_loglikelihood)
   )
   return(data)
 }
