@@ -25,8 +25,13 @@ forecast <- function(cases, target_date = max(cases$date),
   # forecast required strain models
   strain_fits <- purrr::map(
     seq_along(strains),
-    ~ forecast_n_strain(model = models[.], strains = .),
-    data = data, save_path = save_path, ...)
+      function(strain, ...) {
+        forecast_n_strain(model = models[strain],
+                         strains = strain, data = data,
+                         save_path = date_path, ...)
+      },
+      ...
+  )
 
   names(strain_fits) <- paste0(strains, "_strains")
   posteriors <- purrr::transpose(strain_fits)
