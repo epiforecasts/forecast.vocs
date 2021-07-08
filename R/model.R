@@ -93,7 +93,7 @@ load_model <- function(strains = 2) {
 #' 2strain_fit
 #' }
 stan_fit <- function(data,
-                     model = bp.delta::load_model(strains = 1),
+                     model = bp.delta::load_model(strains = 2),
                      save_path, diagnostics = TRUE, ...) {
   cdata <- data
   cdata$start_date <- NULL
