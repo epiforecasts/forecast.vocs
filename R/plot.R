@@ -11,17 +11,21 @@ add_forecast_date <- function(plot, forecast_date) {
 plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
                        log = TRUE) {
   plot <- ggplot(posterior_cases) +
-  aes(x = date, y = median, col = Type, fill = Type) +
-  geom_line(size = 1.1, alpha = 0.6) +
-  geom_line(aes(y = mean), linetype = 2) +
-  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.4) +
-  geom_point(data = cases, aes(y = inc7, col = NULL, fill = NULL)) +
-  scale_color_brewer(palette = "Dark2") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme_bw() +
-  theme(legend.position = "bottom") +
-  scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
-  theme(axis.text.x = element_text(angle = 90))
+    aes(x = date, y = median, col = Type, fill = Type) +
+    geom_line(size = 1.1, alpha = 0.6) +
+    geom_line(aes(y = mean), linetype = 2) +
+    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.4)
+  if (!missing(cases)) {
+    plot <- plot + 
+      geom_point(data = cases, aes(y = inc7, col = NULL, fill = NULL))
+  }
+  plot <- plot +
+    scale_color_brewer(palette = "Dark2") +
+    scale_fill_brewer(palette = "Dark2") +
+    theme_bw() +
+    theme(legend.position = "bottom") +
+    scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
+    theme(axis.text.x = element_text(angle = 90))
 
   if (log) {
     plot <- plot +
@@ -43,8 +47,12 @@ plot_delta <- function(posterior_delta, obs_delta, forecast_date = NULL) {
     aes(x = date, y = median) +
     geom_line(size = 1.1, alpha = 0.6) +
     geom_line(aes(y = mean), linetype = 2) +
-    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4) +
-    geom_point(data = obs_delta, aes(y = share_B.1.1617.2)) +
+    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.3, size = 0.4)
+  if (!missing(obs_delta)) {
+    plot <- plot +
+      geom_point(data = obs_delta, aes(y = share_B.1.1617.2))
+  }
+  plot <- plot + 
     scale_y_continuous(labels = scales::percent) +
     theme_bw() +
     labs(y = "Percentage of overall cases with the DELTA variant",

@@ -9,21 +9,21 @@ Sys.setlocale(category = "LC_TIME", locale = "en_US.UTF8")
 # the script is sort of tailored to the data availability on Thursday 1 July
 # (with one week for which incidence data are already available while sequencing data are not)
 
-data_sources <- "RKI"
+data_source <- "RKI"
 
 # Truth data (aggregate confirmed cases):
-if(data_source == "RKI"){
-  cases <- read.csv("https://raw.githubusercontent.com/KITmetricslab/covid19-forecast-hub-de/master/data-truth/RKI/truth_RKI-Incident%20Cases_Germany.csv")
+if(data_source == "RKI") {
+  cases <- read.csv("https://raw.githubusercontent.com/KITmetricslab/covid19-forecast-hub-de/master/data-truth/RKI/truth_RKI-Incident%20Cases_Germany.csv") #nolint
 }
-if(data_source == "JHU"){
-  cases <- read.csv("https://raw.githubusercontent.com/KITmetricslab/covid19-forecast-hub-de/master/data-truth/JHU/truth_JHU-Incident%20Cases_Germany.csv")
+if(data_source == "JHU") {
+  cases <- read.csv("https://raw.githubusercontent.com/KITmetricslab/covid19-forecast-hub-de/master/data-truth/JHU/truth_JHU-Incident%20Cases_Germany.csv") #nolint
 }
 
 # some formatting...
 cases <- subset(cases, location == "GM")
 cases$date <- as.Date(cases$date)
 # generate 7-day moving averages
-cases$inc7 <- NA; 
+cases$inc7 <- NA;
 for(i in 7:nrow(cases)) cases$inc7[i] <- sum(cases$value[i - (0:6)])
 # subset to Saturdays for comparability to Forecast Hub
 cases_sat <- subset(cases, weekdays(cases$date) == "Saturday")
