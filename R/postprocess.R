@@ -52,3 +52,18 @@ summarise_posterior <- function(fit) {
   out <- list(cases = cases, delta = delta, rt = rt)
   return(out)
 }
+#' @export
+#' @importFrom purrr map2
+combine_posteriors <- function(posteriors, posteriors2) {
+  posteriors <- purrr::map2(posteriors, posteriors2,
+                            ~ rbind(.x, .y, use.names = TRUE, fill = TRUE))
+  return(posteriors)
+}
+#' @export
+#' @importFrom purrr safely walk2
+save_posterior <- function(posterior, save_path = tempdir()) {
+  file_names <- names(posterior)
+  sfwrite <- purrr::safely(fwrite)
+  purrr::walk2(posterior, file_names,
+               ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv")))
+}

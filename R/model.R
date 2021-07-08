@@ -27,7 +27,9 @@ stan_data <- function(cases, horizon = 4, likelihood = TRUE,
 #' @importFrom purrr map_dbl
 #' @examples
 #' dt <- stan_data(germany_cases)
-#' stan_inits(dt)
+#' inits <- stan_inits(dt)
+#' inits
+#' inits()
 stan_inits <- function(data, strains = 2) {
   init_fn <- function() {
     inits <- list(
@@ -97,7 +99,7 @@ stan_fit <- function(data,
                      save_path, diagnostics = TRUE, ...) {
   cdata <- data
   cdata$start_date <- NULL
-  fit <- mod$sample(data = cdata, ...)
+  fit <- model$sample(data = cdata, ...)
 
   if (!missing(save_path)) {
     fit$save_object(file = file.path(save_path, "fit.rds"))
