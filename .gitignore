@@ -1,5 +1,6 @@
 *.xlsx
-model
+inst/stan/bp
+inst/stan/twostrainbp
 results/stan-fit.rds
 *.png
 *.rds

@@ -1,5 +1,7 @@
 ^LICENSE\.md$
-^\.devcontainer
-output
-inst/output
+^\.devcontainer$
+^output$
+^inst/output$
+^inst/stan/bp$
+^inst/stan/twostrainbp$
 ^data-raw$

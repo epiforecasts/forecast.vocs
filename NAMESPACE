@@ -2,6 +2,7 @@
 
 export(add_forecast_date)
 export(forecast)
+export(load_model)
 export(plot_cases)
 export(plot_delta)
 export(plot_posterior)

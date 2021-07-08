@@ -32,7 +32,7 @@ forecast <- function(cases, target_date = max(cases$date),
     save_path = variant_path, ...
   )
 
-  posterior <- summarise_posterior(fit, target_cases)
+  posterior <- summarise_posterior(fit)
 
   plots <- plot_posterior(posterior, cases, forecast_date = target_date,
                           save_path = variant_path)

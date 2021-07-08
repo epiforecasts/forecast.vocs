@@ -5,9 +5,13 @@
 #' dt <- stan_data(germany_cases)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99)
-#' summarise_posterior(fit, germany_cases)
+#' summarise_posterior(fit)
 #' }
-summarise_posterior <- function(fit, cases) {
+summarise_posterior <- function(fit) {
+  # extract useful model info
+  data <- fit$data
+  t <- data$t
+  start_date <- data$start_date
   fit <- fit$fit
   variable <- Type <- NULL
 
@@ -20,14 +24,14 @@ summarise_posterior <- function(fit, cases) {
   #sfit <- purrr::reduce(sfit, merge, by = "variable")
   sfit <- fit$summary()
   sfit <- data.table::setDT(sfit)
-
-  start_date <- min(cases$date)
+  delta_present <- any(grepl("delta", sfit$variable))
 
   cases <- sfit[grepl("sim_", variable)]
-  cases[, date := rep(seq(start_date, by = "week", length.out = .N / 3), 3)]
+  cases[, date := rep(seq(start_date, by = "week", length.out = t), .N / t)]
   cases[, Type := data.table::fcase(
                       grepl("_ndelta", variable), "non-DELTA",
                       grepl("_delta", variable), "DELTA",
+                      rep(delta_present, .N), "Combined",
                       default = "Overall"
         )]
 
@@ -35,11 +39,12 @@ summarise_posterior <- function(fit, cases) {
   delta[, date := seq(start_date, by = "week", length.out = .N)]
 
   rt <- sfit[grepl("r\\[", variable)]
-  rt[, date := rep(seq(start_date, by = "week",
-                             length.out = .N / 2), 2)]
+  rt[, date := rep(seq(start_date, by = "week", length.out = t - 1),
+                   .N / (t - 1))]
   rt[, Type := fcase(
     grepl("delta_r", variable), "DELTA",
-    grepl("r\\[", variable), "non-DELTA"
+    grepl("r\\[", variable) & delta_present, "non-DELTA",
+    grepl("r\\[", variable), "Overall"
   )]
   cols <- c("mean", "median", "q5", "q95")
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Type"]
