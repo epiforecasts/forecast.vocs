@@ -2,5 +2,5 @@
 inst/stan/bp
 inst/stan/twostrainbp
 results/stan-fit.rds
-*.png
+output
 *.rds
