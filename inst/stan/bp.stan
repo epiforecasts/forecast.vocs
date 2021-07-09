@@ -41,7 +41,7 @@ transformed parameters {
   }
  
   r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + diff;
+  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 
   // initialise log mean cases
   mean_cases = rep_vector(init_cases, t);
@@ -63,7 +63,7 @@ model {
   r_noise ~ normal(0, 0.1) T[0,];
   
   // random walk priors
-  diff ~ normal(0, 0.1);
+  diff ~ normal(0, 0.2);
   eta ~ std_normal();
   beta ~ std_normal();
 
@@ -72,7 +72,7 @@ model {
 
   // observation model 
   if (likelihood) {
-      X ~ neg_binomial_2(mean_cases[1:t_nots], phi);
+    X ~ neg_binomial_2(mean_cases[1:t_nots], phi);
   }
 
 }
