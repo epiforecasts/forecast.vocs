@@ -1,5 +1,6 @@
+#' Summarise the posterior
 #' @export
-#' @importFrom purrr reduce map
+#' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
 #' @examples
 #' \dontrun{
@@ -50,7 +51,7 @@ summarise_posterior <- function(fit,
   delta <- sfit[grepl("frac_delta", variable)]
   delta[, date := seq(start_date, by = "week", length.out = .N)]
   delta[, Type := "DELTA"]
-  
+
   # summarise Rt and label
   rt <- sfit[grepl("r\\[", variable)]
   rt[, date := rep(seq(start_date, by = "week", length.out = t - 1),
@@ -60,14 +61,19 @@ summarise_posterior <- function(fit,
     grepl("r\\[", variable) & delta_present, "non-DELTA",
     grepl("r\\[", variable), "Overall"
   )]
-  cols <- c("mean", "median", "q5", "q95")
+  growth <- copy(rt)
+
+  # transform growth to Rt
+  cols <- c("mean", "median", paste0("q", probs * 100))
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Type"]
 
-  out <- list(cases = cases, delta = delta, rt = rt)
-  out <- map(out, ~ .x[, variable := NULL])
-  walk(out, setcolorder, neworder = c("Type", "date"))
+  out <- list(cases = cases, delta = delta, growth = growth, rt = rt)
+  out <- purrr::map(out, ~ .x[, variable := NULL])
+  purrr::walk(out, setcolorder, neworder = c("Type", "date"))
   return(out)
 }
+
+#' Combine multiple summarised posteriors
 #' @export
 #' @importFrom purrr map2
 combine_posteriors <- function(posteriors, posteriors2) {
@@ -75,6 +81,8 @@ combine_posteriors <- function(posteriors, posteriors2) {
                             ~ rbind(.x, .y, use.names = TRUE, fill = TRUE))
   return(posteriors)
 }
+
+#' Save a summarised posterior
 #' @export
 #' @importFrom purrr safely walk2
 save_posterior <- function(posterior, save_path = tempdir()) {
