@@ -28,7 +28,7 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   real phi;
 
-  // growth rate
+  // random walk growth rate
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
 
