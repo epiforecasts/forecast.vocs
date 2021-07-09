@@ -1,7 +1,8 @@
 #' @export
 #' @examples
 #' stan_data(germany_cases)
-stan_data <- function(cases, horizon = 4, likelihood = TRUE,
+stan_data <- function(cases, horizon = 4, delta = c(0.2, 0.2),
+                      likelihood = TRUE,
                       output_loglikelihood = FALSE) {
 
   cases <- data.table::as.data.table(cases)
@@ -18,7 +19,9 @@ stan_data <- function(cases, horizon = 4, likelihood = TRUE,
     Y = cases[!is.na(seq_total)]$seq_B.1.1617.2,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglikelihood),
-    start_date = min(cases$date)
+    start_date = min(cases$date),
+    delta_mean  = delta[1],
+    delta_sd = delta[2]
   )
   return(data)
 }
@@ -46,7 +49,8 @@ stan_inits <- function(data, strains = 2) {
       inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     }else{
-      inits$delta_mod <- rnorm(1, 0.2, 0.05)
+      inits$delta_mod <- rnorm(1, data$delta_mean,
+                               data$delta_sd * 0.1)
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
       inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
     }

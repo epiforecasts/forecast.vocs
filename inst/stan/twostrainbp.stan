@@ -7,6 +7,8 @@ data {
   int N[t_seq];
   int likelihood;
   int output_loglik;
+  real delta_mean;
+  real delta_sd;
 }
 
 transformed data {
@@ -88,7 +90,7 @@ model {
 
   // growth priors
   r_init ~ normal(0, 0.25);
-  delta_mod ~ normal(0.2, 0.2);
+  delta_mod ~ normal(delta_mean, delta_sd);
   r_noise ~ normal(0, 0.1) T[0,];
   delta_noise ~ normal(0, 0.1) T[0,]; 
   ndelta_noise ~ normal(0, 0.1) T[0,]; 

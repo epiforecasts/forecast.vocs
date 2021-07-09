@@ -2,7 +2,8 @@
 #' @export
 #' @importFrom purrr map transpose reduce
 forecast <- function(cases, target_date = max(cases$date),
-                     save_path = tempdir(), horizon = 4, strains = 2,
+                     save_path = tempdir(), horizon = 4, 
+                     delta = c(0.2, 0.2), strains = 2,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
                      ...) {
 
@@ -19,7 +20,7 @@ forecast <- function(cases, target_date = max(cases$date),
   date_path <- file.path(save_path, target_date)
 
   # format data and fit models
-  data <- stan_data(target_cases, horizon = horizon,
+  data <- stan_data(target_cases, horizon = horizon, delta = delta,
                     likelihood = likelihood, output_loglik = output_loglik)
 
   # forecast required strain models
