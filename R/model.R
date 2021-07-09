@@ -51,7 +51,7 @@ stan_inits <- function(data, strains = 2) {
       inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     }else{
-      inits$delta_mod <- rnorm(1, data$deltamean,
+      inits$delta_mod <- rnorm(1, data$delta_mean,
                                data$delta_sd * 0.1)
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
       inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))

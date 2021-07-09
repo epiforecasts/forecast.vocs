@@ -7,7 +7,7 @@ plot_default <- function(data, ...) {
     geom_line(aes(y = median), size = 1, alpha = 0.6) +
     geom_line(aes(y = mean), linetype = 2) +
     geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.2) +
-    geom_ribbon(aes(ymin = q20 + 1, ymax = q80 + 1, col = NULL), alpha = 0.2)
+    geom_ribbon(aes(ymin = q20, ymax = q80, col = NULL), alpha = 0.2)
   return(plot)
 }
 
@@ -21,6 +21,7 @@ plot_theme <- function(plot) {
     theme(axis.text.x = element_text(angle = 90))
   return(plot)
 }
+
 #' Add the forecast date to a plot
 #' @export
 add_forecast_date <- function(plot, forecast_date) {
@@ -34,9 +35,9 @@ add_forecast_date <- function(plot, forecast_date) {
 #' Plot the posterior prediction for cases
 #' @export
 #' @importFrom scales comma log_trans
-plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
+plot_cases <- function(posterior, cases, forecast_date = NULL,
                        log = TRUE) {
-  plot <- plot_default(posterior_cases, x = date, col = Type, fill = Type)
+  plot <- plot_default(posterior$cases, x = date, col = Type, fill = Type)
 
   if (!missing(cases)) {
     plot <- plot +
@@ -66,8 +67,8 @@ plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
 #' variant
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior_delta, obs_delta, forecast_date = NULL) {
-  plot <- plot_default(posterior_delta, x = date)
+plot_delta <- function(posterior, obs_delta, forecast_date = NULL) {
+  plot <- plot_default(posterior$delta, x = date)
 
   if (!missing(obs_delta)) {
     plot <- plot +
@@ -86,8 +87,8 @@ plot_delta <- function(posterior_delta, obs_delta, forecast_date = NULL) {
 
 #' Plot the posterior prediction for the reproduction number
 #' @export
-plot_rt <- function(posterior_rt, forecast_date = NULL) {
-  plot <- plot_default(posterior_rt, x = date, col = Type, fill = Type)
+plot_rt <- function(posterior, forecast_date = NULL) {
+  plot <- plot_default(posterior$rt, x = date, col = Type, fill = Type)
   plot <- plot +
     geom_hline(yintercept = 1, linetype = 3, col = "black")
 
@@ -114,11 +115,11 @@ plot_rt <- function(posterior_rt, forecast_date = NULL) {
 plot_posterior <- function(posterior, cases, forecast_date = NULL,
                            save_path, type = "png") {
   plots <- list()
-  plots$cases <- plot_cases(posterior$cases, cases, forecast_date, log = FALSE)
-  plots$log_cases <- plot_cases(posterior$cases, cases, forecast_date,
+  plots$cases <- plot_cases(posterior, cases, forecast_date, log = FALSE)
+  plots$log_cases <- plot_cases(posterior, cases, forecast_date,
                                 log = TRUE)
-  plots$delta <- plot_delta(posterior$delta, cases, forecast_date)
-  plots$rt <- plot_rt(posterior$rt, forecast_date)
+  plots$delta <- plot_delta(posterior, cases, forecast_date)
+  plots$rt <- plot_rt(posterior, forecast_date)
 
   if (!missing(save_path)) {
     walk2(plots, names(plots),
