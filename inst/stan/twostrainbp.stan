@@ -22,6 +22,7 @@ transformed data {
 parameters {
   real r_init;
   real<lower = 0> r_noise;
+  real<lower = -1, upper = 1> beta;
   real delta_mod;
   real<lower = 0> delta_noise;
   real<lower = 0> ndelta_noise;
@@ -34,6 +35,7 @@ parameters {
 
 transformed parameters {
   vector[t - 1] r;
+  vector[t - 2] diff;
   vector[t - 1] delta_r;
   vector[t] mean_ndelta_cases;
   vector[t] mean_delta_cases;
@@ -42,8 +44,16 @@ transformed parameters {
   vector[2] phi;
 
   // random walk growth rate
+  for (i in 1:(t-2)) {
+    if (i > 1) {
+      diff[i] = beta * diff[i -1];
+    }else{
+      diff[i] = 0;
+    }
+    diff[i] += r_noise * eta[i];
+  }
   r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
+  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 
   // delta growth rate scaled to overall with RW residuals
   delta_r = r + delta_mod;
@@ -84,6 +94,7 @@ model {
   ndelta_noise ~ normal(0, 0.1) T[0,]; 
 
   // random walk priors
+  diff ~ normal(0, 0.2);
   eta ~ std_normal();
   delta_eta ~ std_normal();
   ndelta_eta ~ std_normal();
@@ -94,11 +105,10 @@ model {
   }
   // observation model 
   if (likelihood) {
-      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-      Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
-                        (1 - frac_delta[1:t_seq]) * phi[2]);
+    X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+    Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
+                      (1 - frac_delta[1:t_seq]) * phi[2]);
   }
-
 }
 
 generated quantities {

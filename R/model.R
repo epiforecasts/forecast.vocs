@@ -39,6 +39,7 @@ stan_inits <- function(data, strains = 2) {
         ~ log(abs(rnorm(1, ., . * 0.01)))),
       r = rnorm(1, 0, 0.05),
       r_noise = abs(rnorm(1, 0, 0.01)),
+      beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
     if (strains == 1) {
@@ -47,6 +48,7 @@ stan_inits <- function(data, strains = 2) {
     }else{
       inits$delta_mod <- rnorm(1, 0.2, 0.05)
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
+      inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
     }
     return(inits)
   }
