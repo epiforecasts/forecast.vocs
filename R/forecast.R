@@ -1,4 +1,5 @@
 
+#' Forecast using branching processes at a target date
 #' @export
 #' @importFrom purrr map transpose reduce
 forecast <- function(cases, target_date = max(cases$date),
@@ -49,6 +50,7 @@ forecast <- function(cases, target_date = max(cases$date),
   out <- list(posteriors = posteriors, plots = plots, models = strain_fits)
   return(out)
 }
+#' Forecast using a single branching process
 #' @export
 #' @importFrom purrr map
 forecast_n_strain <- function(data, model = NULL, strains = 2,

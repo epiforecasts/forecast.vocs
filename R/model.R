@@ -1,3 +1,4 @@
+#' Format data for use with stan
 #' @export
 #' @examples
 #' stan_data(germany_cases)
@@ -26,6 +27,7 @@ stan_data <- function(cases, horizon = 4, delta = c(0.2, 0.2),
   return(data)
 }
 
+#' Set up initial conditions for model
 #' @export
 #' @importFrom purrr map_dbl
 #' @examples
@@ -49,7 +51,7 @@ stan_inits <- function(data, strains = 2) {
       inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     }else{
-      inits$delta_mod <- rnorm(1, data$delta_mean,
+      inits$delta_mod <- rnorm(1, data$deltamean,
                                data$delta_sd * 0.1)
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
       inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
@@ -59,6 +61,7 @@ stan_inits <- function(data, strains = 2) {
   return(init_fn)
 }
 
+#' Load and compile a strain model
 #' @export
 #' @examples
 #' \dontrun{
@@ -82,6 +85,7 @@ load_model <- function(strains = 2) {
   return(model)
 }
 
+#' Fit a brancing process strain model
 #' @export
 #' @examples
 #' \dontrun{

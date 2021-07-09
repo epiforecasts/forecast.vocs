@@ -1,3 +1,4 @@
+#' Default plot
 #' @export
 plot_default <- function(data, ...) {
   check_quantiles(data, req_probs = c(0.05, 0.2, 0.8, 0.95))
@@ -9,6 +10,8 @@ plot_default <- function(data, ...) {
     geom_ribbon(aes(ymin = q20 + 1, ymax = q80 + 1, col = NULL), alpha = 0.2)
   return(plot)
 }
+
+#' Add the default plot theme
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -18,6 +21,7 @@ plot_theme <- function(plot) {
     theme(axis.text.x = element_text(angle = 90))
   return(plot)
 }
+#' Add the forecast date to a plot
 #' @export
 add_forecast_date <- function(plot, forecast_date) {
   if (!is.null(forecast_date)) {
@@ -26,6 +30,8 @@ add_forecast_date <- function(plot, forecast_date) {
   }
   return(plot)
 }
+
+#' Plot the posterior prediction for cases
 #' @export
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
@@ -55,6 +61,9 @@ plot_cases <- function(posterior_cases, cases, forecast_date = NULL,
   plot <- add_forecast_date(plot, forecast_date)
   return(plot)
 }
+
+#' Plot the posterior prediction for the fraction of samples with the DELTA
+#' variant
 #' @export
 #' @importFrom scales percent
 plot_delta <- function(posterior_delta, obs_delta, forecast_date = NULL) {
@@ -74,6 +83,8 @@ plot_delta <- function(posterior_delta, obs_delta, forecast_date = NULL) {
   plot <- add_forecast_date(plot, forecast_date)
   return(plot)
 }
+
+#' Plot the posterior prediction for the reproduction number
 #' @export
 plot_rt <- function(posterior_rt, forecast_date = NULL) {
   plot <- plot_default(posterior_rt, x = date, col = Type, fill = Type)
@@ -88,6 +99,8 @@ plot_rt <- function(posterior_rt, forecast_date = NULL) {
   plot <- add_forecast_date(plot, forecast_date)
   return(plot)
 }
+
+#' Plot posterior predictions
 #' @export
 #' @importFrom purrr walk2
 #' @examples
@@ -95,7 +108,7 @@ plot_rt <- function(posterior_rt, forecast_date = NULL) {
 #' dt <- stan_data(germany_cases)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit, germany_cases)
+#' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior, germany_cases)
 #' }
 plot_posterior <- function(posterior, cases, forecast_date = NULL,

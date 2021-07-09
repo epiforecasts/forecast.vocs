@@ -1,3 +1,4 @@
+#' Summarise the posterior
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -71,6 +72,8 @@ summarise_posterior <- function(fit,
   purrr::walk(out, setcolorder, neworder = c("Type", "date"))
   return(out)
 }
+
+#' Combine multiple summarised posteriors
 #' @export
 #' @importFrom purrr map2
 combine_posteriors <- function(posteriors, posteriors2) {
@@ -78,6 +81,8 @@ combine_posteriors <- function(posteriors, posteriors2) {
                             ~ rbind(.x, .y, use.names = TRUE, fill = TRUE))
   return(posteriors)
 }
+
+#' Save a summarised posterior
 #' @export
 #' @importFrom purrr safely walk2
 save_posterior <- function(posterior, save_path = tempdir()) {
