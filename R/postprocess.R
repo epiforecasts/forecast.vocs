@@ -1,31 +1,43 @@
 #' @export
-#' @importFrom purrr reduce
+#' @importFrom purrr reduce map
+#' @importFrom posterior quantile2 default_convergence_measures
 #' @examples
 #' \dontrun{
 #' dt <- stan_data(germany_cases)
 #' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99)
+#' options(mc.cores = 4)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' summarise_posterior(fit)
 #' }
-summarise_posterior <- function(fit) {
+summarise_posterior <- function(fit,
+                                probs = c(0.01, 0.025,
+                                          seq(0.05, 0.95, by = 0.05),
+                                          0.975, 0.99)) {
+  # NULL out variables
+  variable <- Type <- NULL
   # extract useful model info
   data <- fit$data
   t <- data$t
   start_date <- data$start_date
   fit <- fit$fit
-  variable <- Type <- NULL
 
-  #sfit <- list(
-  #  fit$summary(variables = NULL, mean, median, sd, mad),
-  #  fit$summary(variables = NULL, quantile2,
-  #              .args = list(probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05),
-  #                                     0.975, 0.99)))
-  #)
-  #sfit <- purrr::reduce(sfit, merge, by = "variable")
-  sfit <- fit$summary()
-  sfit <- data.table::setDT(sfit)
+  # extract summary parameters of interest and join
+  sfit <- list(
+    fit$summary(variables = NULL, mean, median, sd, mad),
+    fit$summary(variables = NULL, quantile2,
+                .args = list(probs = probs)),
+    fit$summary(variables = NULL, default_convergence_measures())
+  )
+  cbind_custom <- function(x, y) {
+    x <- setDT(x)
+    y <- setDT(y)[, variable := NULL]
+    cbind(x, y)
+  }
+  sfit <- purrr::reduce(sfit, cbind_custom)
+  # detect if delta is in the data
   delta_present <- any(grepl("delta", sfit$variable))
 
+  # summarise cases with detla label
   cases <- sfit[grepl("sim_", variable)]
   cases[, date := rep(seq(start_date, by = "week", length.out = t), .N / t)]
   cases[, Type := data.table::fcase(
@@ -34,10 +46,12 @@ summarise_posterior <- function(fit) {
                       rep(delta_present, .N), "Combined",
                       default = "Overall"
         )]
-
+  # summarise delta if present
   delta <- sfit[grepl("frac_delta", variable)]
   delta[, date := seq(start_date, by = "week", length.out = .N)]
-
+  delta[, Type := "DELTA"]
+  
+  # summarise Rt and label
   rt <- sfit[grepl("r\\[", variable)]
   rt[, date := rep(seq(start_date, by = "week", length.out = t - 1),
                    .N / (t - 1))]
@@ -50,6 +64,8 @@ summarise_posterior <- function(fit) {
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Type"]
 
   out <- list(cases = cases, delta = delta, rt = rt)
+  out <- map(out, ~ .x[, variable := NULL])
+  walk(out, setcolorder, neworder = c("Type", "date"))
   return(out)
 }
 #' @export

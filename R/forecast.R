@@ -5,6 +5,8 @@ forecast <- function(cases, target_date = max(cases$date),
                      save_path = tempdir(), horizon = 4, 
                      delta = c(0.2, 0.2), strains = 2,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
+                    probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05),
+                              0.975, 0.99),
                      ...) {
 
   if (target_date != max(cases$date)) {
@@ -29,6 +31,7 @@ forecast <- function(cases, target_date = max(cases$date),
       function(strain, ...) {
         forecast_n_strain(model = models[strain],
                          strains = strains[strain], data = data,
+                         probs = probs,
                          save_path = date_path, ...)
       },
       ...
@@ -50,6 +53,8 @@ forecast <- function(cases, target_date = max(cases$date),
 #' @importFrom purrr map
 forecast_n_strain <- function(data, model = NULL, strains = 2,
                               save_path = tempdir(),
+                              probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05),
+                                        0.975, 0.99),
                               ...) {
   save_path <- file.path(save_path, paste0(strains, "_strains"))
   dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
@@ -67,6 +72,6 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
     ...
   )
 
-  fit$tidy_posterior <- summarise_posterior(fit)
+  fit$tidy_posterior <- summarise_posterior(fit, probs = probs)
   return(fit)
 }
