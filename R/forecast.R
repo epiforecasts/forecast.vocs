@@ -27,7 +27,7 @@ forecast <- function(cases, target_date = max(cases$date),
     seq_along(strains),
       function(strain, ...) {
         forecast_n_strain(model = models[strain],
-                         strains = strain, data = data,
+                         strains = strains[strain], data = data,
                          save_path = date_path, ...)
       },
       ...

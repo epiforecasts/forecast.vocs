@@ -24,8 +24,10 @@ parameters {
   real<lower = 0> r_noise;
   real delta_mod;
   real<lower = 0> delta_noise;
+  real<lower = 0> ndelta_noise;
   vector[t-2] eta;
   vector[t-2] delta_eta;
+  vector[t-2] ndelta_eta;
   vector[2] init_cases;
   vector<lower = 0>[2] sqrt_phi;
 }
@@ -39,14 +41,17 @@ transformed parameters {
   vector<lower = 0, upper = 1>[t] frac_delta;
   vector[2] phi;
 
-  // growth rate
+  // random walk growth rate
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
 
-  // delta growth rate based on non-delta with AR residuals
+  // delta growth rate scaled to overall with RW residuals
   delta_r = r + delta_mod;
   delta_r[2:(t-1)] = delta_r[2:(t-1)] + cumulative_sum(delta_noise * delta_eta);
-
+  
+  // non-delta growth rate based on overall with RW residuals
+  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(ndelta_noise * ndelta_eta);
+  
   // initialise log mean cases
   mean_ndelta_cases = rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
   mean_delta_cases = rep_vector(init_cases[2], t);
@@ -76,10 +81,12 @@ model {
   delta_mod ~ normal(0.2, 0.2);
   r_noise ~ normal(0, 0.1) T[0,];
   delta_noise ~ normal(0, 0.1) T[0,]; 
+  ndelta_noise ~ normal(0, 0.1) T[0,]; 
 
   // random walk priors
   eta ~ std_normal();
   delta_eta ~ std_normal();
+  ndelta_eta ~ std_normal();
 
   // observation model priors
   for (i in 1:2) {

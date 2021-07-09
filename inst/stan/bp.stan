@@ -30,7 +30,7 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   real phi;
 
-  // growth rate
+ // random walk growth rate
   for (i in 1:(t-2)) {
     if (i > 1) {
       diff[i] = beta * diff[i -1];
@@ -39,6 +39,7 @@ transformed parameters {
     }
     diff[i] += r_noise * eta[i];
   }
+ 
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + diff;
 
@@ -62,6 +63,7 @@ model {
   r_noise ~ normal(0, 0.1) T[0,];
   
   // random walk priors
+  diff ~ normal(0, 0.1);
   eta ~ std_normal();
   beta ~ std_normal();
 
