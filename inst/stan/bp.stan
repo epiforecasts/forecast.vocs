@@ -63,7 +63,7 @@ model {
   r_noise ~ normal(0, 0.1) T[0,];
   
   // random walk priors
-  diff ~ normal(0, 0.2);
+  beta ~ normal(0, 0.2);
   eta ~ std_normal();
   beta ~ std_normal();
 
