@@ -96,7 +96,7 @@ model {
   ndelta_noise ~ normal(0, 0.1) T[0,]; 
 
   // random walk priors
-  beta ~ normal(0, 0.2);
+  beta ~ std_normal();
   eta ~ std_normal();
   delta_eta ~ std_normal();
   ndelta_eta ~ std_normal();
