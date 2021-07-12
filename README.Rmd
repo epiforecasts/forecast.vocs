@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance
 
-[![R-CMD-check](https://github.com/epiforecasts/bp.delta/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/bp.delta/actions) [![paper](https://github.com/epiforecasts/bp.delta/workflows/paper/badge.svg)](https://github.com/epiforecasts/bp.delta/actions)
+[![R-CMD-check](https://github.com/epiforecasts/bp.delta/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/bp.delta/actions/workflows/R-CMD-check.yaml) [![paper](https://github.com/epiforecasts/bp.delta/workflows/paper/badge.svg)](https://github.com/epiforecasts/bp.delta/actions/workflows/paper.yaml)
 
 This repository contains stan code for one and two strain branching process process models as well as an R package for using these models to produce forecasts of COVID-19 notified cass in Germany. See the paper for further method details and the rest of this README for installation and example functionality.
 
