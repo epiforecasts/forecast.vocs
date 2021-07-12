@@ -56,28 +56,28 @@ fit <- stan_fit(data = dt, model = model, init = inits,
                 refresh = 0, show_messages = FALSE)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 13.4 seconds.
-#> Chain 1 finished in 13.9 seconds.
-#> Chain 3 finished in 13.8 seconds.
-#> Chain 4 finished in 14.2 seconds.
+#> Chain 4 finished in 13.5 seconds.
+#> Chain 3 finished in 14.7 seconds.
+#> Chain 2 finished in 15.9 seconds.
+#> Chain 1 finished in 21.7 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 13.8 seconds.
-#> Total execution time: 14.3 seconds.
+#> Mean chain execution time: 16.5 seconds.
+#> Total execution time: 21.8 seconds.
 #> 
-#> Warning: 4 of 4000 (0.0%) transitions ended with a divergence.
+#> Warning: 8 of 4000 (0.0%) transitions ended with a divergence.
 #> This may indicate insufficient exploration of the posterior distribution.
 #> Possible remedies include: 
 #>   * Increasing adapt_delta closer to 1 (default is 0.8) 
 #>   * Reparameterizing the model (e.g. using a non-centered parameterization)
 #>   * Using informative or weakly informative prior distributions
-#> Processing csv files: /tmp/RtmpCZNZMR/twostrainbp-202107121114-1-05672d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-2-05672d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-3-05672d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-4-05672d.csv
+#> Processing csv files: /tmp/Rtmp5mjLew/twostrainbp-202107121334-1-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-2-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-3-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-4-808693.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
 #> 
 #> Checking sampler transitions for divergences.
-#> 4 of 4000 (0.1%) transitions ended with a divergence.
+#> 8 of 4000 (0.2%) transitions ended with a divergence.
 #> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 #> Try increasing adapt delta closer to 1.
 #> If this doesn't remove all divergences, try to reparameterize the model.
@@ -98,6 +98,7 @@ Plot the posterior prediction for cases.
 
 ``` r
 plot_cases(posterior, germany_cases, max(germany_cases$date), log = TRUE)
+#> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -106,7 +107,7 @@ Plot the posterior prediction for the fraction of cases that are DELTA.
 
 ``` r
 plot_delta(posterior, germany_cases, max(germany_cases$date))
-#> Warning: Removed 1 rows containing missing values (geom_point).
+#> Warning: Removed 2 rows containing missing values (geom_point).
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
@@ -133,21 +134,21 @@ results <- forecast(germany_cases, strains = c(1, 2),
                     refresh = 0, show_messages = FALSE)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 3.6 seconds.
-#> Chain 3 finished in 4.0 seconds.
-#> Chain 1 finished in 4.2 seconds.
-#> Chain 4 finished in 5.5 seconds.
+#> Chain 1 finished in 4.9 seconds.
+#> Chain 2 finished in 5.5 seconds.
+#> Chain 4 finished in 7.0 seconds.
+#> Chain 3 finished in 7.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 4.3 seconds.
-#> Total execution time: 5.5 seconds.
-#> Processing csv files: /tmp/RtmpCZNZMR/bp-202107121114-1-22c6d4.csv, /tmp/RtmpCZNZMR/bp-202107121114-2-22c6d4.csv, /tmp/RtmpCZNZMR/bp-202107121114-3-22c6d4.csv, /tmp/RtmpCZNZMR/bp-202107121114-4-22c6d4.csv
+#> Mean chain execution time: 6.2 seconds.
+#> Total execution time: 7.6 seconds.
+#> Processing csv files: /tmp/Rtmp5mjLew/bp-202107121335-1-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-2-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-3-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-4-36ca92.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
 #> 
 #> Checking sampler transitions for divergences.
-#> 1 of 4000 (0.025%) transitions ended with a divergence.
+#> 36 of 4000 (0.9%) transitions ended with a divergence.
 #> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 #> Try increasing adapt delta closer to 1.
 #> If this doesn't remove all divergences, try to reparameterize the model.
@@ -162,15 +163,15 @@ results <- forecast(germany_cases, strains = c(1, 2),
 #> Processing complete.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 13.0 seconds.
-#> Chain 4 finished in 13.3 seconds.
-#> Chain 3 finished in 14.4 seconds.
-#> Chain 1 finished in 15.0 seconds.
+#> Chain 2 finished in 13.8 seconds.
+#> Chain 1 finished in 14.6 seconds.
+#> Chain 4 finished in 14.8 seconds.
+#> Chain 3 finished in 16.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 13.9 seconds.
-#> Total execution time: 15.0 seconds.
-#> Processing csv files: /tmp/RtmpCZNZMR/twostrainbp-202107121114-1-92689d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-2-92689d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-3-92689d.csv, /tmp/RtmpCZNZMR/twostrainbp-202107121114-4-92689d.csv
+#> Mean chain execution time: 14.8 seconds.
+#> Total execution time: 16.1 seconds.
+#> Processing csv files: /tmp/Rtmp5mjLew/twostrainbp-202107121335-1-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-2-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-3-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-4-3a8bc2.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -189,13 +190,15 @@ results <- forecast(germany_cases, strains = c(1, 2),
 #> Split R-hat values satisfactory all parameters.
 #> 
 #> Processing complete.
-#> Warning: Removed 1 rows containing missing values (geom_point).
+#> Warning: Transformation introduced infinite values in continuous y-axis
+#> Warning: Removed 2 rows containing missing values (geom_point).
 ```
 
 Plot the posterior prediction for cases for both models.
 
 ``` r
 results$plots$log_cases
+#> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
