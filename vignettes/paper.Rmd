@@ -44,21 +44,37 @@ Correspondence to: sam.abbott@lshtm.ac.uk
 
 ## Abstract
 
-**Background:** 
+**Background:**
+
+Changes in the dynamics of reported cases of COVID-19 have been difficult to predict even at short time horizons. In the presence of representative viral sequencing data, however, changing overall trends due to a shift in dominant variant should in principle be predictable. This aspect has been part of the public debate in many countries. However, it remains under-evaluated as a tool for short-term forecasting efforts.
 
 **Methods:** 
 
+We retrospectively evalute the short-term forecasting performance of a two strain autoregressive branching process model in comparison to the same model without strain dynamics and to the ECDC forecasting hub ensemble in Germany and the United Kingdom from the first detection of the DELTA variant until it made up >98% of cases. We also explore the impact of noisy and lagged sequencing data and the presence of prior evidence for increased transmissibility on performance. 
+
 **Results:** 
 
+
 **Conclusions:** 
+
 
 ## Introduction
 
 ### Why
 
+Changes in the dynamics of reported cases of COVID-19 have been difficult to predict even at short time horizons. In the presence of representative viral sequencing data, however, changing overall trends due to a shift in dominant variant should in principle be predictable. This aspect has been part of the public debate in many countries. However, it remains under-evaluated as a tool for short-term forecasting efforts.
+
 ### What else has been done
 
+- Other papers looking at this specific question
+- Published forecasting models that include strain dynamics but don't assess contribution to short term forecasts.
+- Confounded by lots of other model complexities and changes
+- Simple models, explored in a systematic grid of information richness
+
 ### What did we do
+
+In this study, we aim to retrospectively evalute the short-term forecasting performance of explicitly modelling COVID-19 strain dynamics during a transition from one dominant strain to another across two geographies and a range of simulated data availability scenarios. We use a relatively simplistic modelling approach in order to quantify the impact of modelling strain dynamics only versus other factors. We compare our retrospective forecasts to a multi-model ensemble of forecasts produced in real time for the same locations and discuss differences in performance. 
+
 
 ## Methods
 
@@ -168,7 +184,7 @@ License: MIT
 
 **Contributors**
 
-SA conceived and designed the work. SA undertook the analysis with advice from all other authors. All authors wrote the first draft of the paper and all authors contributed to subsequent drafts. All authors approve the work for publication and agree to be accountable for the work.
+SA, JB, and SF conceived and designed the work. SA undertook the analysis with advice from all other authors. All authors wrote the first draft of the paper and all authors contributed to subsequent drafts. All authors approve the work for publication and agree to be accountable for the work.
 
 **Grant information**
 
