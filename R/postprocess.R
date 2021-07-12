@@ -8,7 +8,7 @@
 #' inits <- stan_inits(dt)
 #' options(mc.cores = 4)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' summarise_posterior(fit)
+#' summarise_posterior(fit) -> p
 #' }
 summarise_posterior <- function(fit,
                                 probs = c(0.01, 0.025,
@@ -38,7 +38,7 @@ summarise_posterior <- function(fit,
   # detect if delta is in the data
   delta_present <- any(grepl("delta", sfit$variable))
 
-  # summarise cases with detla label
+  # summarise cases with delta label
   cases <- sfit[grepl("sim_", variable)]
   cases[, date := rep(seq(start_date, by = "week", length.out = t), .N / t)]
   cases[, Type := data.table::fcase(
@@ -68,9 +68,23 @@ summarise_posterior <- function(fit,
   cols <- c("mean", "median", paste0("q", probs * 100))
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "Type"]
 
+  # summarise model parameters
+  param_lookup <- data.table(
+    variable = c("r_init", "r_noise", "beta", "delta_mod", "avg_delta_mod",
+              "delta_noise", "ndelta_noise", "init_cases[1]", "init_cases[2]",
+              "phi[1]", "phi[2]"),
+    clean_name = c("Initial growth", "Growth (sd)", "Beta",
+                  "Initial DELTA effect", "Average DELTA effect",
+                  "DELTA (sd)", "Non-DELTA (sd)", "Initial cases",
+                  "Initial DELTA cases", "Notification overdispersion",
+                  "Sequencing overdispersion")
+  )
+  model <- merge(param_lookup, sfit, by = "variable")
+
   out <- list(cases = cases, delta = delta, growth = growth, rt = rt)
   out <- purrr::map(out, ~ .x[, variable := NULL])
   purrr::walk(out, setcolorder, neworder = c("Type", "date"))
+  out$model <- model
   return(out)
 }
 
