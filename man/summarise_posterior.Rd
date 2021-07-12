@@ -18,6 +18,6 @@ dt <- stan_data(germany_cases)
 inits <- stan_inits(dt)
 options(mc.cores = 4)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-summarise_posterior(fit)
+summarise_posterior(fit) -> p
 }
 }

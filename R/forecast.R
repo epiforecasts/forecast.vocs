@@ -37,10 +37,9 @@ forecast <- function(cases, target_date = max(cases$date),
       },
       ...
   )
-
   names(strain_fits) <- paste0(strains, "_strains")
   posteriors <- purrr::transpose(strain_fits)
-  posteriors <- purrr::reduce(posteriors$tidy_posterior, combine_posteriors)
+  posteriors <- combine_posteriors(posteriors$tidy_posterior)
 
   save_posterior(posteriors, save_path = date_path)
 

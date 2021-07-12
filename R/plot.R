@@ -100,7 +100,9 @@ plot_rt <- function(posterior, forecast_date = NULL) {
   plot <- add_forecast_date(plot, forecast_date)
   return(plot)
 }
-
+plot_model <- function(posterior) {
+  dt <- posterior$model
+}
 #' Plot posterior predictions
 #' @export
 #' @importFrom purrr walk2

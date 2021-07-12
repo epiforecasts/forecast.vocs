@@ -77,10 +77,14 @@ summarise_posterior <- function(fit,
                   "Initial DELTA effect", "Average DELTA effect",
                   "DELTA (sd)", "Non-DELTA (sd)", "Initial cases",
                   "Initial DELTA cases", "Notification overdispersion",
-                  "Sequencing overdispersion")
+                  "Sequencing overdispersion"),
+    exponentiated = c(rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2),
+                      rep(TRUE, 2), rep(FALSE, 2))
   )
   model <- merge(param_lookup, sfit, by = "variable")
+  model[exponentiated == TRUE, (cols) := lapply(.SD, exp), .SDcols = cols]
 
+  # join output and reorganise as needed
   out <- list(cases = cases, delta = delta, growth = growth, rt = rt)
   out <- purrr::map(out, ~ .x[, variable := NULL])
   purrr::walk(out, setcolorder, neworder = c("Type", "date"))
@@ -90,10 +94,12 @@ summarise_posterior <- function(fit,
 
 #' Combine multiple summarised posteriors
 #' @export
-#' @importFrom purrr map2
-combine_posteriors <- function(posteriors, posteriors2) {
-  posteriors <- purrr::map2(posteriors, posteriors2,
-                            ~ rbind(.x, .y, use.names = TRUE, fill = TRUE))
+#' @importFrom purrr map transpose
+combine_posteriors <- function(posteriors_list) {
+
+  posteriors <- purrr::transpose(posteriors_list)
+  posteriors <- purrr::map(posteriors, rbindlist, use.names = TRUE, fill = TRUE,
+                           idcol = "model")
   return(posteriors)
 }
 
