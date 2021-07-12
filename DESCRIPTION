@@ -1,13 +1,12 @@
 Package: bp.delta
-Title: Forecast COVID-19 Cases using a two strain autoregressive model
+Title: Forecast COVID-19 Cases using a Two Strain Autoregressive Model
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Forecast COVID-19 cases using as a two strain autoregressive
+Authors@R: c(
+    person(given = "Sam Abbott",
+             role = c("aut", "cre"),
+             email = "sam.abbott@lshtm.ac.uk",
+             comment = c(ORCID = "0000-0001-8057-8037")))
+Description: Forecast COVID-19 Cases using a Two Strain Autoregressive Model
      process.
 License: MIT + file LICENSE
 Encoding: UTF-8

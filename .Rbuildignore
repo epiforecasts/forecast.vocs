@@ -6,6 +6,4 @@
 ^inst/stan/twostrainbp$
 ^data-raw$
 ^README\.Rmd$
-^vignettes/library.bib$
-^vignettes/figures$
 ^\.github$
