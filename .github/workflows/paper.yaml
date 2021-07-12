@@ -20,19 +20,36 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc
       - uses: r-lib/actions/setup-tinytex
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+        
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "devtools", "rmarkdown"))
+          install.packages(c("remotes", "devtools"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+
       - name: Render
         run: |
           devtools::document()
           devtools::load_all()
           rmarkdown::render("vignettes/paper.Rmd", output_format =  "all")
         shell: Rscript {0}
+
       - name: Upload
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: paper
           path: vignettes
