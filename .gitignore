@@ -5,3 +5,5 @@ results/stan-fit.rds
 output
 *.rds
 inst/doc
+*.tex
+*.log

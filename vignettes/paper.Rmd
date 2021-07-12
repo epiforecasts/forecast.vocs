@@ -1,8 +1,15 @@
 ---
-title: "paper"
-output: rmarkdown::html_vignette
+title: "Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance"
+output: 
+  rmarkdown::html_vignette: default
+  pdf_document: default
+  html_document:
+    keep_md: true
+    toc: true
+    theme: united
+  word_document: default
 vignette: >
-  %\VignetteIndexEntry{paper}
+  %\VignetteIndexEntry{Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: library.bib

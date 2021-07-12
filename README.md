@@ -1,14 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# One and two strain branching process forecasts
+# Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance
 
-Adapted from work by Johannes Bracher (<johannes.bracher@kit.edu>). See:
-<https://github.com/jbracher/branching_process_delta>
+[![R-CMD-check](https://github.com/epiforecasts/bp.delta/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/bp.delta/actions)
+[![paper](https://github.com/epiforecasts/bp.delta/workflows/paper/badge.svg)](https://github.com/epiforecasts/bp.delta/actions)
 
-A one and two strain branching process model for DELTA and non-DELTA
-COVID-19 cases applied to data from Germany. See the vignette for
-further method details.
+This repository contains stan code for one and two strain branching
+process process models as well as an R package for using these models to
+produce forecasts of COVID-19 notified cass in Germany. See the paper
+for further method details and the rest of this README for installation
+and example functionality.
 
 ## Installation
 
@@ -56,28 +58,28 @@ fit <- stan_fit(data = dt, model = model, init = inits,
                 refresh = 0, show_messages = FALSE)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 13.5 seconds.
-#> Chain 3 finished in 14.7 seconds.
-#> Chain 2 finished in 15.9 seconds.
-#> Chain 1 finished in 21.7 seconds.
+#> Chain 2 finished in 13.9 seconds.
+#> Chain 3 finished in 14.0 seconds.
+#> Chain 4 finished in 16.0 seconds.
+#> Chain 1 finished in 18.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 16.5 seconds.
-#> Total execution time: 21.8 seconds.
+#> Mean chain execution time: 15.7 seconds.
+#> Total execution time: 19.0 seconds.
 #> 
-#> Warning: 8 of 4000 (0.0%) transitions ended with a divergence.
+#> Warning: 9 of 4000 (0.0%) transitions ended with a divergence.
 #> This may indicate insufficient exploration of the posterior distribution.
 #> Possible remedies include: 
 #>   * Increasing adapt_delta closer to 1 (default is 0.8) 
 #>   * Reparameterizing the model (e.g. using a non-centered parameterization)
 #>   * Using informative or weakly informative prior distributions
-#> Processing csv files: /tmp/Rtmp5mjLew/twostrainbp-202107121334-1-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-2-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-3-808693.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121334-4-808693.csv
+#> Processing csv files: /tmp/RtmpUIDlKk/twostrainbp-202107121605-1-691874.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-2-691874.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-3-691874.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-4-691874.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
 #> 
 #> Checking sampler transitions for divergences.
-#> 8 of 4000 (0.2%) transitions ended with a divergence.
+#> 9 of 4000 (0.23%) transitions ended with a divergence.
 #> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 #> Try increasing adapt delta closer to 1.
 #> If this doesn't remove all divergences, try to reparameterize the model.
@@ -98,7 +100,6 @@ Plot the posterior prediction for cases.
 
 ``` r
 plot_cases(posterior, germany_cases, max(germany_cases$date), log = TRUE)
-#> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -134,21 +135,21 @@ results <- forecast(germany_cases, strains = c(1, 2),
                     refresh = 0, show_messages = FALSE)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 4.9 seconds.
-#> Chain 2 finished in 5.5 seconds.
-#> Chain 4 finished in 7.0 seconds.
-#> Chain 3 finished in 7.5 seconds.
+#> Chain 3 finished in 5.9 seconds.
+#> Chain 1 finished in 8.7 seconds.
+#> Chain 2 finished in 9.8 seconds.
+#> Chain 4 finished in 10.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 6.2 seconds.
-#> Total execution time: 7.6 seconds.
-#> Processing csv files: /tmp/Rtmp5mjLew/bp-202107121335-1-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-2-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-3-36ca92.csv, /tmp/Rtmp5mjLew/bp-202107121335-4-36ca92.csv
+#> Mean chain execution time: 8.6 seconds.
+#> Total execution time: 10.1 seconds.
+#> Processing csv files: /tmp/RtmpUIDlKk/bp-202107121605-1-860b1f.csv, /tmp/RtmpUIDlKk/bp-202107121605-2-860b1f.csv, /tmp/RtmpUIDlKk/bp-202107121605-3-860b1f.csv, /tmp/RtmpUIDlKk/bp-202107121605-4-860b1f.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
 #> 
 #> Checking sampler transitions for divergences.
-#> 36 of 4000 (0.9%) transitions ended with a divergence.
+#> 6 of 4000 (0.15%) transitions ended with a divergence.
 #> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 #> Try increasing adapt delta closer to 1.
 #> If this doesn't remove all divergences, try to reparameterize the model.
@@ -163,21 +164,21 @@ results <- forecast(germany_cases, strains = c(1, 2),
 #> Processing complete.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 13.8 seconds.
-#> Chain 1 finished in 14.6 seconds.
-#> Chain 4 finished in 14.8 seconds.
-#> Chain 3 finished in 16.0 seconds.
+#> Chain 4 finished in 14.6 seconds.
+#> Chain 1 finished in 15.2 seconds.
+#> Chain 3 finished in 15.6 seconds.
+#> Chain 2 finished in 20.3 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 14.8 seconds.
-#> Total execution time: 16.1 seconds.
-#> Processing csv files: /tmp/Rtmp5mjLew/twostrainbp-202107121335-1-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-2-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-3-3a8bc2.csv, /tmp/Rtmp5mjLew/twostrainbp-202107121335-4-3a8bc2.csv
+#> Mean chain execution time: 16.4 seconds.
+#> Total execution time: 20.4 seconds.
+#> Processing csv files: /tmp/RtmpUIDlKk/twostrainbp-202107121605-1-253e38.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-2-253e38.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-3-253e38.csv, /tmp/RtmpUIDlKk/twostrainbp-202107121605-4-253e38.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
 #> 
 #> Checking sampler transitions for divergences.
-#> 12 of 4000 (0.3%) transitions ended with a divergence.
+#> 1 of 4000 (0.025%) transitions ended with a divergence.
 #> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 #> Try increasing adapt delta closer to 1.
 #> If this doesn't remove all divergences, try to reparameterize the model.

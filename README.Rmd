@@ -13,11 +13,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# One and two strain branching process forecasts
+# Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance
 
-Adapted from work by Johannes Bracher (johannes.bracher@kit.edu). See: https://github.com/jbracher/branching_process_delta
+[![R-CMD-check](https://github.com/epiforecasts/bp.delta/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/bp.delta/actions) [![paper](https://github.com/epiforecasts/bp.delta/workflows/paper/badge.svg)](https://github.com/epiforecasts/bp.delta/actions)
 
-A one and two strain branching process model for DELTA and non-DELTA COVID-19 cases applied to data from Germany. See the vignette for further method details.
+This repository contains stan code for one and two strain branching process process models as well as an R package for using these models to produce forecasts of COVID-19 notified cass in Germany. See the paper for further method details and the rest of this README for installation and example functionality.
 
 ## Installation
 
