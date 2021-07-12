@@ -114,17 +114,24 @@ model {
 }
 
 generated quantities {
+  real avg_delta_mod;
+  vector[t - 1] com_r;
   int sim_delta_cases[t];
   int sim_ndelta_cases[t];
   int sim_cases[t];
   vector[output_loglik ? t_nots : 0] log_lik;
 
+  // summary measures
+  avg_delta_mod = mean(delta_r - r);
+  com_r = (1 - frac_delta[2:t]) .* r + frac_delta[2:t] .* delta_r;
+
+  // simulated cases
   for (i in 1:t) {
     sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
     sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
     sim_cases[i] = sim_ndelta_cases[i] + sim_delta_cases[i];
   }
-
+  // include log likelihood
   if (output_loglik) {
     for (i in 1:t_nots) {
       log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);

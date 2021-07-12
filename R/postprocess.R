@@ -58,6 +58,7 @@ summarise_posterior <- function(fit,
                    .N / (t - 1))]
   rt[, Type := fcase(
     grepl("delta_r", variable), "DELTA",
+    grepl("com_r", variable), "Combined",
     grepl("r\\[", variable) & delta_present, "non-DELTA",
     grepl("r\\[", variable), "Overall"
   )]

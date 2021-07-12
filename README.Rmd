@@ -48,6 +48,7 @@ cmdstanr::install_cmdstan()
 
 ```{r}
 library(bp.delta)
+options(mc.cores = 4)
 
 dt <- stan_data(germany_cases, horizon = 4)
 
@@ -85,7 +86,6 @@ plot_rt(posterior, max(germany_cases$date))
 Run a complete forecast for both the one and two strain models using the `forecast` function (change the `save_path` argument to alter the location where results are saved). See `names(results)` for a breakdown of the output (including summarised posteriors and plots).
 
 ```{r, message = FALSE}
-options(mc.cores = 4)
 results <- forecast(germany_cases, strains = c(1, 2),
                     adapt_delta = 0.99, max_treedepth = 15,
                     refresh = 0, show_messages = FALSE)
