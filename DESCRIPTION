@@ -22,7 +22,10 @@ Imports:
     purrr,
     scales
 Suggests:
+    rmarkdown,
+    knitr,
     readxl
 Additional_repositories: https://mc-stan.org/r-packages/
 Depends: 
     R (>= 2.10)
+VignetteBuilder: knitr

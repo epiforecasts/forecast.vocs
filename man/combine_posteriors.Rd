@@ -4,7 +4,7 @@
 \alias{combine_posteriors}
 \title{Combine multiple summarised posteriors}
 \usage{
-combine_posteriors(posteriors_list, models)
+combine_posteriors(posteriors_list)
 }
 \description{
 Combine multiple summarised posteriors
