@@ -73,7 +73,7 @@ plot_delta <- function(posterior, obs_delta, forecast_date = NULL) {
 
   if (!missing(obs_delta)) {
     plot <- plot +
-      geom_point(data = obs_delta, aes(y = share_B.1.1617.2))
+      geom_point(data = obs_delta, aes(y = share_delta))
   }
 
   plot <- plot +

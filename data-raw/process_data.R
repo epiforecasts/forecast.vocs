@@ -56,4 +56,10 @@ colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
 # merge into case data set
 germany_cases <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
 germany_cases <- setDT(germany_cases)
+setnames(
+  germany_cases,
+  old = c("inc7", "seq_B.1.1617.2", "share_B.1.1617.2"),
+  new = c("cases", "seq_delta", "share_delta")
+)
+set(germany_cases, j = c("value", "wk"), value = NULL)
 usethis::use_data(germany_cases, overwrite = TRUE)
