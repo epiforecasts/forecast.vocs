@@ -19,10 +19,12 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, eval = TRUE,
-                      fig.width = 9, fig.height = 9,
-                      dpi = 320,
-                      fig.path = "figures/")
+knitr::opts_chunk$set(
+  echo = FALSE, eval = TRUE,
+  fig.width = 9, fig.height = 9,
+  dpi = 320,
+  fig.path = "figures/"
+)
 ```
 
 
@@ -147,7 +149,7 @@ All analysis was carried out using R version 4.0.5 [@R]. The analysis is availab
 
 - **Strengths:**
   - Single framework in which only modelling of variants is different
-  - Evalaution of multiple synthetic scenarios gives insights not available from real world applications alone.
+  - Evaluation of multiple synthetic scenarios gives insights not available from real world applications alone.
 
 - **Weaknesses:**
   - Not actually realised real world performance as missed window to use.

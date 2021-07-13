@@ -1,18 +1,16 @@
 Package: bp.delta
 Title: Forecast COVID-19 Cases using a Two Strain Autoregressive Model
 Version: 0.0.0.9000
-Authors@R: c(
+Authors@R: 
     person(given = "Sam Abbott",
-             role = c("aut", "cre"),
-             email = "sam.abbott@lshtm.ac.uk",
-             comment = c(ORCID = "0000-0001-8057-8037")))
-Description: Forecast COVID-19 Cases using a Two Strain Autoregressive Model
-     process.
+           role = c("aut", "cre"),
+           email = "sam.abbott@lshtm.ac.uk",
+           comment = c(ORCID = "0000-0001-8057-8037"))
+Description: Forecast COVID-19 Cases using a Two Strain Autoregressive
+    Model process.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
 Imports:
     cmdstanr,
     data.table,
@@ -21,10 +19,16 @@ Imports:
     purrr,
     scales
 Suggests:
-    rmarkdown,
     knitr,
-    readxl
+    readxl,
+    rmarkdown,
+    spelling,
+    usethis
+VignetteBuilder: 
+    knitr
 Additional_repositories: https://mc-stan.org/r-packages/
-Depends: 
-    R (>= 2.10)
-VignetteBuilder: knitr
+Encoding: UTF-8
+Language: en-GB
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1

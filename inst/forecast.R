@@ -4,12 +4,13 @@ library(bp.delta)
 options(mc.cores = 4)
 
 results <- forecast(germany_cases,
-                    horizon = 4,
-                    save_path = tempdir(),
-                    strains = c(1, 2),
-                    adapt_delta = 0.99,
-                    max_treedepth = 15,
-                    output_loglik = TRUE)
+  horizon = 4,
+  save_path = tempdir(),
+  strains = c(1, 2),
+  adapt_delta = 0.99,
+  max_treedepth = 15,
+  output_loglik = TRUE
+)
 # inspect object
 names(results)
 

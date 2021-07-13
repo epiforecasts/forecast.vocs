@@ -37,6 +37,7 @@ add_forecast_date <- function(plot, forecast_date) {
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior, cases, forecast_date = NULL,
                        log = TRUE) {
+  setnames(posterior$cases, "type", "Type", skip_absent = TRUE)
   plot <- plot_default(posterior$cases, x = date, col = Type, fill = Type)
 
   if (!missing(cases)) {
@@ -48,7 +49,7 @@ plot_cases <- function(posterior, cases, forecast_date = NULL,
     plot <- plot +
       scale_y_continuous(labels = scales::comma, trans = scales::log_trans()) +
       labs(y = "Weekly test postive cases (log scale)", x = "Date")
-  }else{
+  } else {
     plot <- plot +
       scale_y_continuous(labels = scales::comma) +
       labs(y = "Weekly test postive cases", x = "Date")
@@ -77,8 +78,10 @@ plot_delta <- function(posterior, obs_delta, forecast_date = NULL) {
 
   plot <- plot +
     scale_y_continuous(labels = scales::percent) +
-    labs(y = "Percentage of overall cases with the DELTA variant",
-        x = "Date")
+    labs(
+      y = "Percentage of overall cases with the DELTA variant",
+      x = "Date"
+    )
 
   plot <- plot_theme(plot)
   plot <- add_forecast_date(plot, forecast_date)
@@ -88,14 +91,17 @@ plot_delta <- function(posterior, obs_delta, forecast_date = NULL) {
 #' Plot the posterior prediction for the reproduction number
 #' @export
 plot_rt <- function(posterior, forecast_date = NULL) {
+  setnames(posterior$rt, "type", "Type", skip_absent = TRUE)
   plot <- plot_default(posterior$rt, x = date, col = Type, fill = Type)
   plot <- plot +
     geom_hline(yintercept = 1, linetype = 3, col = "black")
 
   plot <- plot +
     scale_y_continuous() +
-    labs(y = "Effective reproduction number of observed cases",
-         x = "Date")
+    labs(
+      y = "Effective reproduction number of observed cases",
+      x = "Date"
+    )
   plot <- plot_theme(plot)
   plot <- add_forecast_date(plot, forecast_date)
   return(plot)
@@ -119,14 +125,18 @@ plot_posterior <- function(posterior, cases, forecast_date = NULL,
   plots <- list()
   plots$cases <- plot_cases(posterior, cases, forecast_date, log = FALSE)
   plots$log_cases <- plot_cases(posterior, cases, forecast_date,
-                                log = TRUE)
+    log = TRUE
+  )
   plots$delta <- plot_delta(posterior, cases, forecast_date)
   plots$rt <- plot_rt(posterior, forecast_date)
 
   if (!missing(save_path)) {
-    walk2(plots, names(plots),
-        ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x,
-                 height = 6, width = 9))
+    walk2(
+      plots, names(plots),
+      ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x,
+        height = 6, width = 9
+      )
+    )
   }
   return(plots)
 }

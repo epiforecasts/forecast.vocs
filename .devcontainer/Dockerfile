@@ -25,10 +25,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         libxml2-dev \
         libxt-dev \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts \
-    && python3 -m pip --no-cache-dir install radian \
+    && python3 -m pip --no-cache-dir install radian pre-commit \
     && install2.r --error --skipinstalled --repos ${CRAN} --ncpus -1 \
         devtools \
         languageserver \
+        git2r \
+        precommit \
     && rm -rf /tmp/downloaded_packages
 
 
@@ -46,3 +48,6 @@ RUN Rscript -e "cmdstanr::install_cmdstan()"
 
 # add docthis
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
+
+# install precommit
+RUN Rscript -e 'devtools::install_github("lorenzwalthert/precommit")'

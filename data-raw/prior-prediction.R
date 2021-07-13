@@ -5,8 +5,9 @@ library(data.table)
 options(mc.cores = 4)
 
 prior <- forecast(germany_cases,
-                  horizon = 4,
-                  save_path = "inst/output/prior-check",
-                  max_treedepth = 15,
-                  adapt_delta = 0.99,
-                  likelihood = FALSE)
+  horizon = 4,
+  save_path = "inst/output/prior-check",
+  max_treedepth = 15,
+  adapt_delta = 0.99,
+  likelihood = FALSE
+)

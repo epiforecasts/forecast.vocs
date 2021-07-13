@@ -7,3 +7,5 @@
 ^data-raw$
 ^README\.Rmd$
 ^\.github$
+^\.pre-commit-config\.yaml$
+^\.lintr$
