@@ -1,4 +1,10 @@
 #' Format data for use with stan
+#' @param cases A data frame with the following variables:
+#'  date, cases, seq_delta, and seq_total.
+#' @param horizon Integer forecast horizon. Defaults to 4.
+#' @param delta Numeric vector of length 2. Prior mean and
+#' standard deviation for the initial growth rate modifier
+#' due to the variant.
 #' @export
 #' @examples
 #' stan_data(germany_cases)

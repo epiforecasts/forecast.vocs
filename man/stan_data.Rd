@@ -12,6 +12,16 @@ stan_data(
   output_loglikelihood = FALSE
 )
 }
+\arguments{
+\item{cases}{A data frame with the following variables:
+date, cases, seq_delta, and seq_total.}
+
+\item{horizon}{Integer forecast horizon. Defaults to 4.}
+
+\item{delta}{Numeric vector of length 2. Prior mean and
+standard deviation for the initial growth rate modifier
+due to the variant.}
+}
 \description{
 Format data for use with stan
 }
