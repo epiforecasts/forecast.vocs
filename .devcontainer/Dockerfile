@@ -31,6 +31,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         languageserver \
         git2r \
         precommit \
+        tinytex \
     && rm -rf /tmp/downloaded_packages
 
 
@@ -45,6 +46,9 @@ RUN Rscript -e "devtools::install_dev_deps('/tmp/package')"
 
 # install cmdstan
 RUN Rscript -e "cmdstanr::install_cmdstan()"
+
+# install latex via tinytex
+RUN Rscript -e "tinytex::install_tinytex()"
 
 # add docthis
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'

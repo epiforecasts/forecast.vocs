@@ -26,7 +26,8 @@
 		"ivan-bocharov.stan-vscode",
 		"github.vscode-pull-request-github",
 		"formulahendry.code-runner",
-		"mutantdino.resourcemonitor"
+		"mutantdino.resourcemonitor",
+		"searking.preview-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

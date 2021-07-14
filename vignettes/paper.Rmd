@@ -32,6 +32,7 @@ knitr::opts_chunk$set(
 library(bp.delta)
 ```
 
+*Note: Sub-headings where non-standard are there to guide the writing process and will be removed in the final draft.*
 
 ## Authors
 
@@ -91,76 +92,85 @@ Sequence data for the United Kingdom was sourced from ...
 
 #### Single strain
 
-We model the mean ($\lambda_t$) of reported COVID-19 cases ($C_t$) as an order 1 autoregressive process on the log scale by week ($t$) as follows,
+We model the mean ($\lambda_t$) of reported COVID-19 cases ($C_t$) as an order 1 autoregressive (AR(1)) process on the log scale by week ($t$). The model is initialised by assuming that the initial reported cases are representative with a small amount of error (2.5%).
 
 \begin{align}
-  \log \lambda_0 &= \mathcal{LN}\left(\log C_0 , 0.025 \log C_0 \right) \
+  \log \lambda_0 &\sim \text{LogNormal}\left(\log C_0 , 0.025 \times \log C_0 \right) \\
   \log \lambda_t &= \log \lambda_{t-1} + r_t
 \end{align}
 
-Where $r_t$ can be interpreted as the weekly growth rate and $exp(r_t)$ as the effective reproduction number ($R_t$) assuming a generation time of 7 days. $r_t$ is then itself modelled as a differenced order 1 autoregressive process, 
+Where $r_t$ can be interpreted as the weekly growth rate and the exponential of $r_t$ as the effective reproduction number ($R_t$) assuming a generation time of 7 days. $r_t$ is then itself modelled as a differenced AR(1) process, 
 
 \begin{align}
-  r_0 &= \mathcal{N}\left(0, 0.25 \right) \
-  r_t &= r_{t-1} + \epsilon_t  \
-  \epsilon_0 &= \eta_0 \
+  r_0 &\sim \text{Normal}\left(0, 0.25 \right) \\
+  r_t &= r_{t-1} + \epsilon_t  \\
+  \epsilon_0 &= \eta_0 \\
   \epsilon_t &= \beta \epsilon_{t-1} + \eta_t
 \end{align}
 
 Where, 
 
 \begin{align}
-  \eta_t &\sim \mathcal{N}\left(0, \sigma \right) \
-  \sigma &\sim \mathcal{N}\left(0, 0.1 \right) \
-  \beta &\sim \mathcal{N}\left(0, 1) \right)
+  \eta_t &\sim \text{Normal}\left(0, \sigma \right) \\
+  \sigma &\sim \text{Normal}\left(0, 0.1 \right) \\
+  \beta &\sim \text{Normal}\left(0, 1 \right)
 \end{align}
 
-We then assume a negative binomial observation model with overdispersion $\phi_c$,
+We then assume a negative binomial observation model with overdispersion $\phi_c$ for reported cases ($C_t$),
 
 \begin{align}
-  C_{t} &\sim \mathrm{NB}\left(\lambda_t, \phi_c\right) \
-  \frac{1}{\sqrt{phi_c}} &\sim \mathcal{N}(0, 1) 
+  C_{t} &\sim \text{NegBinomial}\left(\lambda_t, \phi_c\right) \\
+  \frac{1}{\sqrt{\phi_c}} &\sim \text{Normal}(0, 1) 
 \end{align}
 
-$\sigma$, and $\frac{1}{\sqrt{phi_c}}$ are truncated to be greater than 0 and $\beta$ is truncated to be between -1 and 1.
+Where $\sigma$, and $\frac{1}{\sqrt{phi_c}}$ are truncated to be greater than 0 and $\beta$ is truncated to be between -1 and 1.
 
 #### Two strain
 
-We model strain dynamics using the single strain model as a starting point but with the addition of strain specific autoregressive order 1 variation and a beta binomial observation process for sequence data. The full two strain model is described below. Parameters related to the delta variant are given the $\delta$ superscript and parameters related to non-delta cases are given the $o$ superscript.
+We model strain dynamics using the single strain model as a starting point but with the addition of strain specific AR(1) variation and a beta binomial observation process for sequence data. The full two strain model is described below. Parameters related to the delta variant are given the $\delta$ superscript and parameters related to non-delta cases are given the $o$ superscript.
 
-Mean reported cases are again defined using a order 1 autoregressive process on the log scale for each strain and the combined for overall mean reported cases. 
+Mean reported cases are again defined using a AR(1) process on the log scale for each strain and the combined for overall mean reported cases. 
 
 \begin{align}
-  \log \lambda_0 &= \mathcal{LN}\left(\log C_0 , 0.025 \log C_0 \right) \
-  \log \lambda^{\delta}_0 &= \mathcal{LN}\left(\log C^{\delta}_0 , 0.025 \log C^{\delta}_0 \right) \
-  \log \lambda^{o}_0 &= \log \left(\exp(\lambda_0) - \exp(\lambda^{\delta}_0) \right) \
-  \log \lambda^{\delta}_t &= \log \lambda^{\delta}_{t-1} + r^{\delta}_t \
-  \log \lambda^{0}_t &= \log \lambda^{0}_{t-1} + r^{0}_t \
+  \log \lambda_0 &\sim \text{LogNormal}\left(\log C_0 , 0.025 \times \log C_0 \right) \\
+  \log \lambda^{\delta}_0 &\sim \text{LogNormal}\left(\log C^{\delta}_0 , 0.025 \times \log C^{\delta}_0 \right) \\
+  \log \lambda^{o}_0 &= \log \left(\lambda_0 - \lambda^{\delta}_0 \right) \\
+  \log \lambda^{\delta}_t &= \log \lambda^{\delta}_{t-1} + r^{\delta}_t \\
+  \log \lambda^{o}_t &= \log \lambda^{o}_{t-1} + r^{o}_t \\
   \lambda_t &= \lambda^{\delta}_t + \lambda^{o}_t
 \end{align}
 
-Where $C^{\delta}_0$ is derived by calculating the mean proportion of cases that were delta for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the delta variant. The growth rate for delta and non-delta cases ($r^{\delta}_t$ and $r^{o}_t$) is then modelled as a combination of an overall growth rate ($r_t$ as defined for the single strain model), a strain specific modifer $s^{\delta}_0$, $s^{o}_0$, and an autoregressive order 1 error term post introduction ($\epsilon^{o, \delta}$).
+Where $C^{\delta}_0$ is derived by calculating the mean proportion of cases that were delta for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the delta variant. The growth rate for delta and non-delta cases ($r^{o, \delta}_t$) is then modelled as a combination of an overall growth rate ($r_t$ as defined for the single strain model), a strain specific modifer ($s^{o, \delta}_0$), and an AR(1) error term post introduction ($\epsilon^{o, \delta}_t$).
 
 \begin{align}
-  r^{o, \delta}_t &= r_t + s^{o, \delta} + \epsilon^{o, \delta}_t \
-  \epsilon_0 &= 0 \
+  r^{o, \delta}_t &= r_t + s^{o, \delta} + \epsilon^{o, \delta}_t \\
+  \epsilon^{o, \delta}_0 &= 0 \\
   \epsilon^{o, \delta}_t &= \epsilon^{o, \delta}_{t-1} + \eta^{o, \delta}
 \end{align}
 
 Where, 
 
 \begin{align}
-  \eta^{o, \delta}_t &\sim \mathcal{N}\left(0, \sigma^{o, \delta} \right) \
-  \sigma^{o, \delta} &\sim \mathcal{N}\left(0, 0.1 \right) \
-  s^o &= 0 \
-  s^{\beta} ~ \mathcal{N}(0.2, 0.2)
+  \eta^{o, \delta}_t &\sim \text{Normal}\left(0, \sigma^{o, \delta} \right) \\
+  \sigma^{o, \delta} &\sim \text{Normal}\left(0, 0.1 \right) \\
+  s^o &= 0 \\
+  s^{\beta} &\sim \text{Normal}(0.2, 0.2)
 \end{align}
 
-The mean proportion of samples that have the delta variant ($p_t$) is then estimated using the mean reported cases with the delta variant and the overall mean reported cases.
+Which assumes a relatively uninformed transmissibility advantage for the delta variant vs non-delta variant cases. The mean proportion of samples that have the delta variant ($p_t$) is then estimated using the mean reported cases with the delta variant and the overall mean reported cases.
 
 \begin{equation} 
-  p = \frac{\lambda^{\delta}_t}{\lambda_t}
+  p_t = \frac{\lambda^{\delta}_t}{\lambda_t}
 \end{equation}
+
+In addition to the negative binomial observation model for cases we assume a beta binomial observation model for the number of sequences ($N_t$) that are postive ($P_t$) for the delta variant each week with overdispersion $\phi_s$.
+
+\begin{align}
+  P_{t} &\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
+  \frac{1}{\sqrt{\phi_s}} &\sim \mathcal{N}(0, 1) 
+\end{align}
+
+Where $\sigma^{o, \delta}$, and $\frac{1}{\sqrt{\phi_s}}$ are truncated to be greater than 0.
 
 #### Fitting
 
