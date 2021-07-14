@@ -13,7 +13,7 @@ forecast <- function(cases, target_date = max(cases$date),
                      ...) {
   if (target_date != max(cases$date)) {
     target_cases <- cases[date <= target_date]
-    cols <- c("seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
+    cols <- c("seq_total", "seq_delta", "share_delta")
     target_cases <- target_cases[,
       (cols) := purrr::map(.SD, ~ c(.[1:(.N - 2)], NA, NA)),
       .SDcols = cols
@@ -36,7 +36,7 @@ forecast <- function(cases, target_date = max(cases$date),
     seq_along(strains),
     function(strain, ...) {
       forecast_n_strain(
-        model = models[strain],
+        model = models[[strain]],
         strains = strains[strain], data = data,
         probs = probs,
         save_path = date_path, ...

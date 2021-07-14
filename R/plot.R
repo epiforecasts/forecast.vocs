@@ -42,7 +42,7 @@ plot_cases <- function(posterior, cases, forecast_date = NULL,
 
   if (!missing(cases)) {
     plot <- plot +
-      geom_point(data = cases, aes(y = inc7, col = NULL, fill = NULL))
+      geom_point(data = cases, aes(y = cases, col = NULL, fill = NULL))
   }
 
   if (log) {

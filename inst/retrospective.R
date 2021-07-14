@@ -14,7 +14,7 @@ fits <- map(
       load_model(strains = 2),
       load_model(strains = 1)
     ),
-    save_path = "inst/output",
+    save_path = "inst/output/retrospective",
     strains = c(2, 1),
     max_treedepth = 15, adapt_delta = 0.99
   )
