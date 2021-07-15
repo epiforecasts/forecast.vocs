@@ -62,4 +62,13 @@ setnames(
   new = c("cases", "seq_delta", "share_delta")
 )
 set(germany_cases, j = c("value", "wk"), value = NULL)
+
+# Add availability indicators
+germany_cases[, `:=`(cases_available = date, seq_available = date)]
+# assume sequence availability lag based on final NA number
+germany_cases[
+  ,
+  seq_available := seq_available + 7 * sum(is.na(seq_total))
+]
+
 usethis::use_data(germany_cases, overwrite = TRUE)

@@ -5,5 +5,6 @@
 #' DELTA variant summarised by week for Germany. Data is sourced from the RKI
 #' via the Germany/Poland forecasting hub.
 #' @return A `data.table` with the following variables: date, location,
-#' location_name, cases, seq_total, seq_delta, and share_delta.
+#' location_name, cases, seq_total, seq_delta, share_delta, cases_available,
+#' and seq_available.
 "germany_cases"

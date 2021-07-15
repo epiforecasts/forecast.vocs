@@ -12,7 +12,8 @@ germany_cases
 }
 \value{
 A \code{data.table} with the following variables: date, location,
-location_name, cases, seq_total, seq_delta, and share_delta.
+location_name, cases, seq_total, seq_delta, share_delta, cases_available,
+and seq_available.
 }
 \description{
 Test positive COVID-19 cases and sequences stratified by
