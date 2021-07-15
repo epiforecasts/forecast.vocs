@@ -1,5 +1,5 @@
 #' Format data for use with stan
-#' @param cases A data frame with the following variables:
+#' @param obs A data frame with the following variables:
 #'  date, cases, seq_delta, and seq_total.
 #' @param horizon Integer forecast horizon. Defaults to 4.
 #' @param delta Numeric vector of length 2. Prior mean and
@@ -7,25 +7,25 @@
 #' due to the variant.
 #' @export
 #' @examples
-#' stan_data(germany_cases)
-stan_data <- function(cases, horizon = 4, delta = c(0.2, 0.2),
+#' stan_data(latest_obs(germany_obs))
+stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
                       likelihood = TRUE,
                       output_loglikelihood = FALSE) {
-  cases <- data.table::as.data.table(cases)
+  obs <- data.table::as.data.table(obs)
   data <- list(
     # time indices
-    t = nrow(cases) + horizon,
-    t_nots = nrow(cases),
-    t_seq = nrow(cases[!is.na(seq_delta)]),
+    t = nrow(obs) + horizon,
+    t_nots = nrow(obs[!is.na(cases)]),
+    t_seq = nrow(obs[!is.na(seq_delta)]),
     # weekly incidences
-    X = cases$cases,
+    X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
-    N = cases[!is.na(seq_total)]$seq_total,
+    N = obs[!is.na(seq_total)]$seq_total,
     # number of sequenced samples with delta variant
-    Y = cases[!is.na(seq_total)]$seq_delta,
+    Y = obs[!is.na(seq_total)]$seq_delta,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglikelihood),
-    start_date = min(cases$date),
+    start_date = min(obs$date),
     delta_mean = delta[1],
     delta_sd = delta[2]
   )
@@ -36,7 +36,7 @@ stan_data <- function(cases, horizon = 4, delta = c(0.2, 0.2),
 #' @export
 #' @importFrom purrr map_dbl
 #' @examples
-#' dt <- stan_data(germany_cases)
+#' dt <- stan_data(latest_obs(germany_obs))
 #' inits <- stan_inits(dt)
 #' inits
 #' inits()
@@ -100,7 +100,7 @@ load_model <- function(strains = 2) {
 #' @examples
 #' \dontrun{
 #' # format example data
-#' dt <- stan_data(germany_cases)
+#' dt <- stan_data(latest_obs(germany_obs))
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)

@@ -18,7 +18,7 @@ Fit a brancing process strain model
 \examples{
 \dontrun{
 # format example data
-dt <- stan_data(germany_cases)
+dt <- stan_data(latest_obs(germany_obs))
 
 # single strain model
 inits <- stan_inits(dt, strains = 1)

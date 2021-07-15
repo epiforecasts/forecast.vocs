@@ -4,11 +4,11 @@ library(purrr)
 # set number of cores
 options(mc.cores = 4)
 
-dates <- germany_cases$date[-c(1:3)]
+dates <- germany_obs$date[-c(1:3)]
 fits <- map(
   dates,
-  ~ forecast(germany_cases,
-    target_date = .,
+  ~ forecast(germany_obs,
+    forecast_date = .,
     horizon = 4,
     models = c(
       load_model(strains = 2),

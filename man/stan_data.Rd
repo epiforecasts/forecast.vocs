@@ -5,7 +5,7 @@
 \title{Format data for use with stan}
 \usage{
 stan_data(
-  cases,
+  obs,
   horizon = 4,
   delta = c(0.2, 0.2),
   likelihood = TRUE,
@@ -13,7 +13,7 @@ stan_data(
 )
 }
 \arguments{
-\item{cases}{A data frame with the following variables:
+\item{obs}{A data frame with the following variables:
 date, cases, seq_delta, and seq_total.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
@@ -26,5 +26,5 @@ due to the variant.}
 Format data for use with stan
 }
 \examples{
-stan_data(germany_cases)
+stan_data(latest_obs(germany_obs))
 }

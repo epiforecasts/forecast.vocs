@@ -50,7 +50,9 @@ cmdstanr::install_cmdstan()
 library(bp.delta)
 options(mc.cores = 4)
 
-dt <- stan_data(germany_cases, horizon = 4)
+obs <- latest_obs(germany_obs)
+
+dt <- stan_data(obs, horizon = 4)
 
 model <- load_model(strains = 2)
 
@@ -68,19 +70,19 @@ posterior <- summarise_posterior(fit)
 Plot the posterior prediction for cases.
 
 ```{r}
-plot_cases(posterior, germany_cases, max(germany_cases$date), log = TRUE)
+plot_cases(posterior, obs, max(obs$date), log = TRUE)
 ```
 
 Plot the posterior prediction for the fraction of cases that are DELTA.
 
 ```{r}
-plot_delta(posterior, germany_cases, max(germany_cases$date))
+plot_delta(posterior, obs, max(obs$date))
 ```
 
 Plot the posterior estimate for the effective reproduction number of DELTA and non-DELTA cases.
 
 ```{r}
-plot_rt(posterior, max(germany_cases$date))
+plot_rt(posterior, max(obs$date))
 ```
 
 ### Forecast wrapper
@@ -88,7 +90,7 @@ plot_rt(posterior, max(germany_cases$date))
 Run a complete forecast for both the one and two strain models using the `forecast` function (change the `save_path` argument to alter the location where results are saved). See `names(results)` for a breakdown of the output (including summarised posteriors and plots).
 
 ```{r, message = FALSE}
-results <- forecast(germany_cases,
+results <- forecast(obs,
   strains = c(1, 2),
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE

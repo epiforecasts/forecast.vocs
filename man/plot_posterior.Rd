@@ -4,17 +4,18 @@
 \alias{plot_posterior}
 \title{Plot posterior predictions}
 \usage{
-plot_posterior(posterior, cases, forecast_date = NULL, save_path, type = "png")
+plot_posterior(posterior, obs, forecast_date = NULL, save_path, type = "png")
 }
 \description{
 Plot posterior predictions
 }
 \examples{
 \dontrun{
-dt <- stan_data(germany_cases)
+obs <- latest_obs(germany_obs)
+dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 posterior <- summarise_posterior(fit)
-plot_posterior(posterior, germany_cases)
+plot_posterior(posterior, obs)
 }
 }
