@@ -4,7 +4,7 @@ library(data.table)
 # set number of cores
 options(mc.cores = 4)
 
-prior <- forecast(germany_cases,
+prior <- forecast(germany_obs,
   horizon = 4,
   save_path = "inst/output/prior-check",
   max_treedepth = 15,

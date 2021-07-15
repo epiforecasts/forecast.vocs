@@ -4,7 +4,7 @@
 \alias{plot_cases}
 \title{Plot the posterior prediction for cases}
 \usage{
-plot_cases(posterior, cases, forecast_date = NULL, log = TRUE)
+plot_cases(posterior, obs, forecast_date = NULL, log = TRUE)
 }
 \description{
 Plot the posterior prediction for cases

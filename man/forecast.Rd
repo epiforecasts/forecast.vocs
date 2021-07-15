@@ -5,10 +5,11 @@
 \title{Forecast using branching processes at a target date}
 \usage{
 forecast(
-  cases,
-  forecast_date = max(cases$date),
-  cases_lag = NULL,
-  seq_lag = NULL,
+  obs,
+  plot_obs = latest_obs(obs),
+  forecast_date = max(obs$date),
+  seq_date = forecast_date,
+  case_date = forecast_date,
   save_path = tempdir(),
   horizon = 4,
   delta = c(0.2, 0.2),
@@ -21,17 +22,20 @@ forecast(
 )
 }
 \arguments{
-\item{cases}{A data frame with the following variables:
-date, cases, seq_delta, and seq_total.}
+\item{obs}{A data frame with the following variables:
+date, cases, seq_delta, and seq_total, cases_available,
+and seq_available. seq_available and case_available must be
+uniquely define data rows but other rows can be duplicated based
+on data availability.}
 
 \item{forecast_date}{Date at which to forecast. Defaults to the
-maximum date in \code{cases}.}
+maximum date in \code{obs}.}
 
-\item{cases_lag}{Number of weeks that case data takes to be reported.
-Defaults to not alter the input data.}
+\item{seq_date}{Date from which to use available sequence data. Defaults to
+the forecast date.}
 
-\item{seq_lag}{Number of weeks that sequence data takes to be reported.
-Defaults to not alter the input data.}
+\item{case_date}{Date from which to use available case data. Defaults to
+the forecast date.}
 }
 \description{
 Forecast using branching processes at a target date

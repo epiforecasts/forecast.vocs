@@ -5,7 +5,7 @@
 #' @importFrom data.table .SD .N := setcolorder
 #' @examples
 #' \dontrun{
-#' dt <- stan_data(germany_cases)
+#' dt <- stan_data(latest_obs(germany_obs))
 #' inits <- stan_inits(dt)
 #' options(mc.cores = 4)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)

@@ -54,21 +54,21 @@ sampling <- sampling[
 colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
 
 # merge into case data set
-germany_cases <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
-germany_cases <- setDT(germany_cases)
+germany_obs <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
+germany_obs <- setDT(germany_obs)
 setnames(
-  germany_cases,
+  germany_obs,
   old = c("inc7", "seq_B.1.1617.2", "share_B.1.1617.2"),
   new = c("cases", "seq_delta", "share_delta")
 )
-set(germany_cases, j = c("value", "wk"), value = NULL)
+set(germany_obs, j = c("value", "wk"), value = NULL)
 
 # Add availability indicators
-germany_cases[, `:=`(cases_available = date, seq_available = date)]
+germany_obs[, `:=`(cases_available = date, seq_available = date)]
 # assume sequence availability lag based on final NA number
-germany_cases[
+germany_obs[
   ,
   seq_available := seq_available + 7 * sum(is.na(seq_total))
 ]
 
-usethis::use_data(germany_cases, overwrite = TRUE)
+usethis::use_data(germany_obs, overwrite = TRUE)

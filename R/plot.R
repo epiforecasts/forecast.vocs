@@ -35,14 +35,14 @@ add_forecast_date <- function(plot, forecast_date) {
 #' Plot the posterior prediction for cases
 #' @export
 #' @importFrom scales comma log_trans
-plot_cases <- function(posterior, cases, forecast_date = NULL,
+plot_cases <- function(posterior, obs, forecast_date = NULL,
                        log = TRUE) {
   setnames(posterior$cases, "type", "Type", skip_absent = TRUE)
   plot <- plot_default(posterior$cases, x = date, col = Type, fill = Type)
 
-  if (!missing(cases)) {
+  if (!missing(obs)) {
     plot <- plot +
-      geom_point(data = cases, aes(y = cases, col = NULL, fill = NULL))
+      geom_point(data = obs, aes(y = cases, col = NULL, fill = NULL))
   }
 
   if (log) {
@@ -68,12 +68,12 @@ plot_cases <- function(posterior, cases, forecast_date = NULL,
 #' variant
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior, obs_delta, forecast_date = NULL) {
+plot_delta <- function(posterior, obs, forecast_date = NULL) {
   plot <- plot_default(posterior$delta, x = date)
 
-  if (!missing(obs_delta)) {
+  if (!missing(obs)) {
     plot <- plot +
-      geom_point(data = obs_delta, aes(y = share_delta))
+      geom_point(data = obs, aes(y = share_delta))
   }
 
   plot <- plot +
@@ -114,20 +114,21 @@ plot_model <- function(posterior) {
 #' @importFrom purrr walk2
 #' @examples
 #' \dontrun{
-#' dt <- stan_data(germany_cases)
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
-#' plot_posterior(posterior, germany_cases)
+#' plot_posterior(posterior, obs)
 #' }
-plot_posterior <- function(posterior, cases, forecast_date = NULL,
+plot_posterior <- function(posterior, obs, forecast_date = NULL,
                            save_path, type = "png") {
   plots <- list()
-  plots$cases <- plot_cases(posterior, cases, forecast_date, log = FALSE)
-  plots$log_cases <- plot_cases(posterior, cases, forecast_date,
+  plots$cases <- plot_cases(posterior, obs, forecast_date, log = FALSE)
+  plots$log_cases <- plot_cases(posterior, obs, forecast_date,
     log = TRUE
   )
-  plots$delta <- plot_delta(posterior, cases, forecast_date)
+  plots$delta <- plot_delta(posterior, obs, forecast_date)
   plots$rt <- plot_rt(posterior, forecast_date)
 
   if (!missing(save_path)) {

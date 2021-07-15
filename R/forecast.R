@@ -1,10 +1,14 @@
 
 #' Forecast using branching processes at a target date
-#' @inheritParams update_data_availability
+#' @param forecast_date Date at which to forecast. Defaults to the
+#' maximum date in `obs`.
+#' @inheritParams filter_by_availability
 #' @export
 #' @importFrom purrr map transpose reduce
-forecast <- function(cases, forecast_date = max(cases$date),
-                     cases_lag = NULL, seq_lag = NULL,
+forecast <- function(obs,
+                     plot_obs = latest_obs(obs),
+                     forecast_date = max(obs$date),
+                     seq_date = forecast_date, case_date = forecast_date,
                      save_path = tempdir(), horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
@@ -14,18 +18,17 @@ forecast <- function(cases, forecast_date = max(cases$date),
                      ),
                      ...) {
   # resolve  data availability
-  target_cases <- update_data_availability(
-    cases,
-    forecast_date = forecast_date,
-    cases_lag = cases_lag,
-    seq_lag = seq_lag
+  target_obs <- filter_by_availability(
+    obs,
+    date = forecast_date,
+    seq_date = seq_date, case_date = case_date
   )
 
   # add date to saving paths
   date_path <- file.path(save_path, forecast_date)
 
   # format data and fit models
-  data <- stan_data(target_cases,
+  data <- stan_data(target_obs,
     horizon = horizon, delta = delta,
     likelihood = likelihood, output_loglik = output_loglik
   )
@@ -49,7 +52,7 @@ forecast <- function(cases, forecast_date = max(cases$date),
 
   save_posterior(posteriors, save_path = date_path)
 
-  plots <- plot_posterior(posteriors, cases,
+  plots <- plot_posterior(posteriors, plot_obs,
     forecast_date = forecast_date,
     save_path = date_path
   )
