@@ -1,8 +1,10 @@
 
 #' Forecast using branching processes at a target date
+#' @inheritParams update_data_availability
 #' @export
 #' @importFrom purrr map transpose reduce
-forecast <- function(cases, target_date = max(cases$date),
+forecast <- function(cases, forecast_date = max(cases$date),
+                     cases_lag = NULL, seq_lag = NULL,
                      save_path = tempdir(), horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
@@ -11,19 +13,16 @@ forecast <- function(cases, target_date = max(cases$date),
                        0.975, 0.99
                      ),
                      ...) {
-  if (target_date != max(cases$date)) {
-    target_cases <- cases[date <= target_date]
-    cols <- c("seq_total", "seq_delta", "share_delta")
-    target_cases <- target_cases[,
-      (cols) := purrr::map(.SD, ~ c(.[1:(.N - 2)], NA, NA)),
-      .SDcols = cols
-    ]
-  } else {
-    target_cases <- copy(cases)
-  }
+  # resolve  data availability
+  target_cases <- update_data_availability(
+    cases,
+    forecast_date = forecast_date,
+    cases_lag = cases_lag,
+    seq_lag = seq_lag
+  )
 
   # add date to saving paths
-  date_path <- file.path(save_path, target_date)
+  date_path <- file.path(save_path, forecast_date)
 
   # format data and fit models
   data <- stan_data(target_cases,
@@ -51,7 +50,7 @@ forecast <- function(cases, target_date = max(cases$date),
   save_posterior(posteriors, save_path = date_path)
 
   plots <- plot_posterior(posteriors, cases,
-    forecast_date = target_date,
+    forecast_date = forecast_date,
     save_path = date_path
   )
   out <- list(posteriors = posteriors, plots = plots, models = strain_fits)

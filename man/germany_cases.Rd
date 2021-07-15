@@ -5,7 +5,7 @@
 \alias{germany_cases}
 \title{Test positive COVID-19 cases and sequences in Germany}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 12 rows and 7 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 12 rows and 9 columns.
 }
 \usage{
 germany_cases

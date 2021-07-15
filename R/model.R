@@ -15,10 +15,10 @@ stan_data <- function(cases, horizon = 4, delta = c(0.2, 0.2),
   data <- list(
     # time indices
     t = nrow(cases) + horizon,
-    t_nots = nrow(cases),
+    t_nots = nrow(cases[!is.na(cases)]),
     t_seq = nrow(cases[!is.na(seq_delta)]),
     # weekly incidences
-    X = cases$cases,
+    X = cases[!is.na(cases)]$cases,
     # total number of sequenced samples
     N = cases[!is.na(seq_total)]$seq_total,
     # number of sequenced samples with delta variant
