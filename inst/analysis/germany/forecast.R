@@ -3,7 +3,7 @@ library(bp.delta)
 # set number of cores
 options(mc.cores = 4)
 
-results <- forecast(germany_cases,
+results <- forecast(germany_obs,
   horizon = 4,
   save_path = tempdir(),
   strains = c(1, 2),
