@@ -123,6 +123,7 @@ forecast_across_dates <- function(obs,
 #' @inheritParams forecast_across_dates
 #' @importFrom purrr map2
 #' @importFrom future.apply future_lapply
+#' @export
 #' @return A list each containing the output from running
 #' `forecast_across_dates()` on a single scenario.
 forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),

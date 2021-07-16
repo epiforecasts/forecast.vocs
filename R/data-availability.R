@@ -11,6 +11,7 @@
 #' adjusted growth (0.74, 0.1), and an estimate based on the posterior in
 #' Germany estimated with all available data (0.27, 0.1).
 #' @return A data frame of scenario definitions with ids
+#' @export
 #' @examples
 #' define_scenarios()
 define_scenarios <- function(seq_lag = 0:3,
@@ -33,6 +34,7 @@ define_scenarios <- function(seq_lag = 0:3,
 #' date of observation.
 #' @param seq_samples Fraction of sequence samples to include.
 #' @return A data frame of scenario definitions with ids
+#' @export
 #' @examples
 #' generate_obs_scenario(latest_obs(germany_obs), 4, 0.1)
 generate_obs_scenario <- function(obs, seq_lag, seq_samples) {
