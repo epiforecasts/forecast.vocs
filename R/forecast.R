@@ -95,11 +95,12 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
 #' @param ... Additional parameters passed to `forecast()`
 #' @inheritParams forecast
 #' @importFrom purrr map
+#' @export
 #' @return A list each containing the output from running `forecast()`
 #'  on a single forecast date
-forecast_accross_dates <- function(obs,
-                                   forecast_dates = unique(obs)$date[-c(1:3)],
-                                   ...) {
+forecast_across_dates <- function(obs,
+                                  forecast_dates = unique(obs)$date[-c(1:3)],
+                                  ...) {
   fits <- purrr::map(
     forecast_dates,
     function(date, ...) {
@@ -108,4 +109,43 @@ forecast_accross_dates <- function(obs,
   )
   names(fits) <- forecast_dates
   return(fits)
+}
+
+#' Forecast across multiple scenarios and dates
+#'
+#' @param scenarios A dataframe of scenarios as produced by
+#' `define_scenarios()`. If missing uses the default scenarios
+#' from `default_scenarios()`.
+#' @param save_path Character string indicating the path to save results
+#' to. Defaults to `tempdir()`. Each scenario will be saved in a sub folder.
+#' @param ... Additional parameters passed to `forecast_across_dates()`
+#' @inheritParams forecast_across_dates
+#' @importFrom purrr map2
+#' @importFrom future.apply future_lapply
+#' @return A list each containing the output from running
+#' `forecast_across_dates()` on a single scenario.
+forecast_accross_scenarios <- function(obs, scenarios, save_path = tempdir(),
+                                       ...) {
+  if (missing(scenarios)) {
+    scenarios <- bp.delta::define_scenarios()
+  }
+  scenarios$obs <- purrr::map2(
+    scenarios$seq_lag, scenarios$seq_samples,
+    ~ generate_obs_scenario(obs, seq_lag = .x, seq_samples = .y)
+  )
+  scenarios <- split(scenarios, by = "id")
+
+  fits <- future.apply::future_lapply(
+    scenarios,
+    function(scenario, ...) {
+      forecast_accross_dates(
+        scenario$obs,
+        delta = scenario$delta,
+        save_path = file.path(save_path, scenario$id),
+        ...
+      )
+    }
+  )
+  scenarios$fits <- fits
+  return(scenarios)
 }

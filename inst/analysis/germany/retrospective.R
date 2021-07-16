@@ -4,7 +4,7 @@ library(bp.delta)
 # set number of cores
 options(mc.cores = 4)
 
-fits <- forecast_accross_dates(
+fits <- forecast_across_dates(
   germany_obs,
   horizon = 4,
   models = c(
