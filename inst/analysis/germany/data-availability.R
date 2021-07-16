@@ -5,19 +5,10 @@ library(purrr)
 # set number of cores
 options(mc.cores = 4)
 
-dates <- unique(germany_obs$date)[-c(1:3)]
-fits <- map(
-  dates,
-  ~ forecast(germany_obs,
-    forecast_date = .,
-    horizon = 4,
-    models = c(
-      load_model(strains = 2),
-      load_model(strains = 1)
-    ),
-    save_path = "inst/output/germany/retrospective",
-    strains = c(2, 1),
-    max_treedepth = 15, adapt_delta = 0.99
-  )
+obs <- latest_obs(germany_obs)
+dates <- obs$date[-c(1:3)]
+scenarios <- define_scenarios()
+scenarios_obs <- purrr::map2(
+  scenarios$seq_lag, scenarios$seq_samples,
+  ~ generate_obs_scenario(obs, seq_lag = .x, seq_samples = .y)
 )
-names(fits) <- dates

@@ -88,3 +88,24 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
   fit$tidy_posterior <- summarise_posterior(fit, probs = probs)
   return(fit)
 }
+
+#' Forecast across multiple dates
+#'
+#' @param forecast_dates A list of dates to forecast at.
+#' @param ... Additional parameters passed to `forecast()`
+#' @inheritParams forecast
+#' @importFrom purrr map
+#' @return A list each containing the output from running `forecast()`
+#'  on a single forecast date
+forecast_accross_dates <- function(obs,
+                                   forecast_dates = unique(obs)$date[-c(1:3)],
+                                   ...) {
+  fits <- purrr::map(
+    forecast_dates,
+    function(date, ...) {
+      forecast(obs, forecast_date = date, ...)
+    }
+  )
+  names(fits) <- forecast_dates
+  return(fits)
+}

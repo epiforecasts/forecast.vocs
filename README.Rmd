@@ -113,5 +113,5 @@ results$plots$rt
 
 See the following for more detailed analysis:
 
-- `inst/forecast.R:` for a forecasting application.
-- `inst/retrospective.R` for retrospective fitting and model evaluation
+- `inst/analysis/germany/forecast.R:` for a forecasting application.
+- `inst/analysis/germany/retrospective.R` for retrospective fitting and model evaluation
