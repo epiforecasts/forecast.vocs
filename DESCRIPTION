@@ -14,11 +14,13 @@ Depends:
 Imports:
     cmdstanr,
     data.table,
+    future.apply,
     ggplot2,
     posterior,
     purrr,
     scales
 Suggests:
+    future,
     knitr,
     readxl,
     rmarkdown,
