@@ -105,7 +105,8 @@ forecast_across_dates <- function(obs,
     forecast_dates,
     function(date, ...) {
       forecast(obs, forecast_date = date, ...)
-    }
+    },
+    ...
   )
   names(fits) <- forecast_dates
   return(fits)
@@ -124,8 +125,8 @@ forecast_across_dates <- function(obs,
 #' @importFrom future.apply future_lapply
 #' @return A list each containing the output from running
 #' `forecast_across_dates()` on a single scenario.
-forecast_accross_scenarios <- function(obs, scenarios, save_path = tempdir(),
-                                       ...) {
+forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
+                                      ...) {
   if (missing(scenarios)) {
     scenarios <- bp.delta::define_scenarios()
   }
@@ -135,16 +136,18 @@ forecast_accross_scenarios <- function(obs, scenarios, save_path = tempdir(),
   )
   scenarios <- split(scenarios, by = "id")
 
+  forecast_scenario <- function(scenario, ...) {
+    forecast_across_dates(
+      obs = scenario$obs[[1]],
+      delta = scenario$delta[[1]],
+      save_path = file.path(save_path, scenario$id[[1]]),
+      ...
+    )
+  }
   fits <- future.apply::future_lapply(
     scenarios,
-    function(scenario, ...) {
-      forecast_accross_dates(
-        scenario$obs,
-        delta = scenario$delta,
-        save_path = file.path(save_path, scenario$id),
-        ...
-      )
-    }
+    forecast_scenario,
+    ...
   )
   scenarios$fits <- fits
   return(scenarios)
