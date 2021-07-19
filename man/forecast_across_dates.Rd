@@ -4,7 +4,11 @@
 \alias{forecast_across_dates}
 \title{Forecast across multiple dates}
 \usage{
-forecast_across_dates(obs, forecast_dates = unique(obs)$date[-c(1:3)], ...)
+forecast_across_dates(
+  obs,
+  forecast_dates = unique(obs[!is.na(seq_available)])$date[-c(1:3)],
+  ...
+)
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
