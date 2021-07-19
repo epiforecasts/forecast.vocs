@@ -16,12 +16,12 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
   obs <- copy(obs)
   if (!missing(cases_lag)) {
     if (!is.null(cases_lag)) {
-      obs[, cases_available := date + cases_lag * 7]
+      obs[!is.na(cases_available), cases_available := date + cases_lag * 7]
     }
   }
   if (!missing(seq_lag)) {
     if (!is.null(seq_lag)) {
-      obs[, seq_available := date + seq_lag * 7]
+      obs[!is.na(seq_available), seq_available := date + seq_lag * 7]
     }
   }
   return(obs)
@@ -39,8 +39,8 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
 #' @importFrom purrr map
 #' @examples
 #' dt <- rbind(
-#'  update_obs_availability(germany_obs, seq_lag = 3),
-#'  update_obs_availability(germany_obs, seq_lag = 1)
+#'   update_obs_availability(germany_obs, seq_lag = 3),
+#'   update_obs_availability(germany_obs, seq_lag = 1)
 #' )
 #' # filter out duplicates and up to the present date
 #' filter_by_availability(dt)
@@ -49,8 +49,10 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
 #' filter_by_availability(dt, seq_date = "2021-06-12")
 #'
 #' # as above but only use
-#' filter_by_availability(dt, seq_date = "2021-06-12",
-#'                        case_date = "2021-07-01")
+#' filter_by_availability(dt,
+#'   seq_date = "2021-06-12",
+#'   case_date = "2021-07-01"
+#' )
 filter_by_availability <- function(obs, date = max(obs$date),
                                    seq_date = date,
                                    case_date = date) {
@@ -65,20 +67,28 @@ filter_by_availability <- function(obs, date = max(obs$date),
     .SDcols = cols
   ]
   # filter to get latest non NA data for sequences
-  obs_max_seq <- obs[, .SD[seq_available == max(seq_available)],
-                           by = "date"]
+  obs_na_seq <- obs[is.na(seq_available)]
+  obs <- obs[!is.na(seq_available)]
+  obs_max_seq <- obs[, .SD[seq_available == max(seq_available, na.rm = TRUE)],
+    by = "date"
+  ]
   obs_max_pres_seq <- obs[!is.na(seq_total),
-                              .SD[seq_available == max(seq_available)],
-                              by = "date"]
+    .SD[seq_available == max(seq_available, na.rm = TRUE)],
+    by = "date"
+  ]
   obs <- rbind(
-    obs_max_pres_seq, obs_max_seq[!(date %in% obs_max_pres_seq$date)]
+    obs_na_seq, obs_max_pres_seq,
+    obs_max_seq[!(date %in% obs_max_pres_seq$date)]
   )
   # repeat for cases
-  obs_max_cases <- obs[, .SD[cases_available == max(cases_available)],
-                             by = "date"]
+  obs_max_cases <- obs[,
+    .SD[cases_available == max(cases_available, na.rm = TRUE)],
+    by = "date"
+  ]
   obs_max_pres_cases <- obs[!is.na(cases),
-                                .SD[cases_available == max(cases_available)],
-                                by = "date"]
+    .SD[cases_available == max(cases_available, na.rm = TRUE)],
+    by = "date"
+  ]
   obs <- rbind(
     obs_max_pres_cases,
     obs_max_cases[!(date %in% obs_max_pres_cases$date)]
@@ -91,13 +101,15 @@ filter_by_availability <- function(obs, date = max(obs$date),
 #' @inheritParams filter_by_availability
 #' @examples
 #' dt <- rbind(
-#'  update_obs_availability(germany_obs, seq_lag = 3),
-#'  update_obs_availability(germany_obs, seq_lag = 1)
+#'   update_obs_availability(germany_obs, seq_lag = 3),
+#'   update_obs_availability(germany_obs, seq_lag = 1)
 #' )
 #' latest_obs(dt)
 latest_obs <- function(obs) {
-  date <- max(max(obs$date), max(obs$cases_available),
-              max(obs$seq_available))
+  date <- max(
+    max(obs$date), max(obs$cases_available, na.rm = TRUE),
+    max(obs$seq_available, na.rm = TRUE)
+  )
   obs <- filter_by_availability(obs, date = date)
   return(obs)
 }

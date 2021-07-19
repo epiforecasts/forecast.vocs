@@ -1,3 +1,40 @@
+#' Link dates by time for posterior parameter estimates
+#' @param posterior A data frame of summarised posterior estimates
+#' as returned by `cmdstanr::summary` with  an additional type variable
+#' which contains the following character string options: "non-DELTA",
+#' "DELTA", "Combined", "Overall".
+#' @param data A list of data as returned in the "data" entry of the output
+#' returned by `stan_fit()`.
+#' @param mod_end Integer, defaults to 0. Amount to shift the end date of
+#' estimates
+#' @export
+#' @return A dataframe with an additional data column
+link_dates_by_type <- function(posterior, data, mod_end = 0) {
+  # extract info from lis
+  t <- data$t
+  t_nseq <- data$t_nseq
+  t_seqf <- data$t_seqf
+  start_date <- data$start_date
+  end_date <- start_date + 7 * t - 1 - mod_end
+
+  # build dates data frame
+  dates <- data.table(
+    start = c(rep(start_date, 3), start_date + t_nseq * 7),
+    end = end_date,
+    type = c("non-DELTA", "Combined", "Overall", "DELTA")
+  )
+  dates <- dates[, .(date = seq(start, end, by = "weeks")), by = "type"]
+  dates <- dates[, id := 1:.N, by = "type"]
+
+  # link to input data frame
+  posterior <- setDT(posterior)
+  posterior <- posterior[, id := 1:.N, by = "type"]
+  posterior <- merge(posterior, dates, by = c("type", "id"))
+  posterior <- posterior[, id := NULL]
+  setcolorder(posterior, neworder = c("type", "date"))
+  return(posterior)
+}
+
 #' Summarise the posterior
 #' @export
 #' @importFrom purrr reduce map walk
@@ -21,8 +58,6 @@ summarise_posterior <- function(fit,
   variable <- type <- NULL
   # extract useful model info
   data <- fit$data
-  t <- data$t
-  start_date <- data$start_date
   fit <- fit$fit
 
   # extract summary parameters of interest and join
@@ -45,30 +80,32 @@ summarise_posterior <- function(fit,
 
   # summarise cases with delta label
   cases <- sfit[grepl("sim_", variable)]
-  cases[, date := rep(seq(start_date, by = "week", length.out = t), .N / t)]
   cases[, type := data.table::fcase(
     grepl("_ndelta", variable), "non-DELTA",
     grepl("_delta", variable), "DELTA",
     rep(delta_present, .N), "Combined",
     default = "Overall"
   )]
+  cases <- link_dates_by_type(cases, data)
+
   # summarise delta if present
   delta <- sfit[grepl("frac_delta", variable)]
-  delta[, date := seq(start_date, by = "week", length.out = .N)]
   delta[, type := "DELTA"]
+  if (nrow(delta) > 0) {
+    delta <- link_dates_by_type(delta, data)
+  }
 
   # summarise Rt and label
   rt <- sfit[grepl("r\\[", variable)]
-  rt[, date := rep(
-    seq(start_date, by = "week", length.out = t - 1),
-    .N / (t - 1)
-  )]
   rt[, type := fcase(
     grepl("delta_r", variable), "DELTA",
     grepl("com_r", variable), "Combined",
     grepl("r\\[", variable) & delta_present, "non-DELTA",
     grepl("r\\[", variable), "Overall"
   )]
+  rt <- link_dates_by_type(rt, data, mod_end = 1)
+
+  # copy into growth
   growth <- copy(rt)
 
   # transform growth to Rt
@@ -100,7 +137,6 @@ summarise_posterior <- function(fit,
   # join output and reorganise as needed
   out <- list(cases = cases, delta = delta, growth = growth, rt = rt)
   out <- purrr::map(out, ~ .x[, variable := NULL])
-  purrr::walk(out, setcolorder, neworder = c("type", "date"))
   out$model <- model
   return(out)
 }

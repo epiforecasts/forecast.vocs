@@ -72,6 +72,7 @@ plot_delta <- function(posterior, obs, forecast_date = NULL) {
   plot <- plot_default(posterior$delta, x = date)
 
   if (!missing(obs)) {
+    obs <- obs[!is.na(seq_available)]
     plot <- plot +
       geom_point(data = obs, aes(y = share_delta))
   }

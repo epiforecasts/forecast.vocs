@@ -19,7 +19,7 @@ parameters {
   real r_init;
   real<lower = 0> r_noise;
   real<lower = -1, upper = 1> beta;
-  vector[t-2] eta;
+  vector[t - 2] eta;
   real init_cases;
   real<lower = 0> sqrt_phi;
 }

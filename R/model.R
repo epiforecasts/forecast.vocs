@@ -16,7 +16,9 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     # time indices
     t = nrow(obs) + horizon,
     t_nots = nrow(obs[!is.na(cases)]),
+    t_nseq = nrow(obs[is.na(seq_available)]),
     t_seq = nrow(obs[!is.na(seq_delta)]),
+    t_seqf = nrow(obs) + horizon - nrow(obs[is.na(seq_available)]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
@@ -46,7 +48,7 @@ stan_inits <- function(data, strains = 2) {
       init_cases = purrr::map_dbl(
         c(
           data$X[1],
-          data$X[1] * data$Y[1] / data$N[1]
+          data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]
         ),
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
@@ -99,19 +101,23 @@ load_model <- function(strains = 2) {
 #' @export
 #' @examples
 #' \dontrun{
+#' # parallisation
+#' options(mc.cores = 4)
 #' # format example data
 #' dt <- stan_data(latest_obs(germany_obs))
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
 #' mod <- load_model(strains = 1)
-#' fit <- stan_fit(dt, model = mod, init = inits, adapt_delta = 0.99)
+#' fit <- stan_fit(dt, model = mod, init = inits, adapt_delta = 0.99,
+#'                 max_treedepth = 15)
 #' fit
 #'
 #' # two strain model
 #' inits <- stan_inits(dt, strains = 2)
 #' mod <- load_model(strains = 2)
-#' two_strain_fit <- stan_fit(dt, model = mod, init = inits, adapt_delta = 0.99)
+#' two_strain_fit <- stan_fit(dt, model = mod, init = inits,
+#'                            adapt_delta = 0.99, max_treedepth = 15)
 #' two_strain_fit
 #' }
 stan_fit <- function(data,

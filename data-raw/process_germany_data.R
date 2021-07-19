@@ -31,7 +31,7 @@ cases_sat <- subset(cases, weekdays(cases$date) == "Saturday")
 # add calendar weeks:
 cases_sat$wk <- as.numeric(format(cases_sat$date, "%W"))
 # restrict to most recent weeks
-cases_sat <- subset(cases_sat, date >= as.Date("2021-04-24"))
+cases_sat <- subset(cases_sat, date >= as.Date("2021-03-20"))
 
 # get data on variants from RKI:
 download.file(
@@ -52,6 +52,7 @@ sampling <- sampling[
   c("KW", "total", "B.1.617.2_Anzahl", "B.1.617.2_Anteil (%)")
 ]
 colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
+sampling <- setDT(sampling)[share_B.1.1617.2 >= 1e-3 & seq_B.1.1617.2 > 5]
 
 # merge into case data set
 germany_obs <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
@@ -65,10 +66,11 @@ set(germany_obs, j = c("value", "wk"), value = NULL)
 
 # Add availability indicators
 germany_obs[, `:=`(cases_available = date, seq_available = date)]
+# add that some sequences will never be available
+germany_obs[date <= "2021-04-10", seq_available := NA]
 # assume sequence availability lag based on final NA number
-germany_obs[
-  ,
-  seq_available := seq_available + 7 * sum(is.na(seq_total))
-]
+avail_lag <- nrow(germany_obs[is.na(seq_total) & !is.na(seq_available)])
+germany_obs[, seq_available := seq_available + 7 * avail_lag]
 
+# save all observations
 usethis::use_data(germany_obs, overwrite = TRUE)
