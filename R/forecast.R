@@ -99,7 +99,7 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
 #' @return A list each containing the output from running `forecast()`
 #'  on a single forecast date
 forecast_across_dates <- function(obs,
-                                  forecast_dates = unique(obs)$date[-c(1:3)],
+                                  forecast_dates = unique(obs[!is.na(seq_available)])$date[-c(1:3)], # nolint
                                   ...) {
   fits <- purrr::map(
     forecast_dates,
