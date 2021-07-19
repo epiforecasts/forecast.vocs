@@ -61,16 +61,16 @@ transformed parameters {
 
   // delta growth rate scaled to overall with RW residuals
   delta_r = tail(r, t_seqf - 1) + delta_mod;
-  delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 1) +
+  delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 2) +
                              cumulative_sum(delta_noise * delta_eta);
   
   // non-delta growth rate based on overall with RW residuals
-  r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 1) +
+  r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
                            cumulative_sum(ndelta_noise * ndelta_eta);
   
   // initialise log mean cases
-  mean_ndelta_cases = t_nseq > 0 ? rep_vector(init_cases[1], t_seqf) : 
-    rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t_seqf);
+  mean_ndelta_cases = t_nseq > 0 ? rep_vector(init_cases[1], t) : 
+    rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
   mean_delta_cases = rep_vector(init_cases[2], t_seqf);
 
   // log cases combined with growth
@@ -82,13 +82,13 @@ transformed parameters {
   mean_ndelta_cases = exp(mean_ndelta_cases);
   mean_delta_cases = exp(mean_delta_cases);
   mean_cases = mean_ndelta_cases;
-  mean_cases[(t_seqf + 1):t] = mean_cases[(t_seqf + 1):t] + mean_delta_cases;
+  mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_delta_cases;
 
   // rescale observation model
   phi = 1 ./ sqrt(sqrt_phi);
   
   // calculate fraction delta
-  frac_delta = mean_delta_cases ./ mean_cases[(t_seqf + 1):t];
+  frac_delta = mean_delta_cases ./ mean_cases[(t_nseq + 1):t];
 }
 
 model {
@@ -129,7 +129,7 @@ generated quantities {
   vector[output_loglik ? t_nots : 0] log_lik;
 
   // summary measures
-  avg_delta_mod = mean(delta_r - r);
+  avg_delta_mod = mean(delta_r - r[(t_nseq+1):(t-1)]);
   com_r = r;
   com_r[(t_nseq+1):t] = (1 - frac_delta[2:t_seqf]) .* r[(t_nseq+1):t] +
      frac_delta[2:t_seqf] .* delta_r;
@@ -141,7 +141,7 @@ generated quantities {
   sim_cases = sim_ndelta_cases;
   for (i in 1:t_seqf) {
     sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
-    sim_cases[t_nseq+i] = sim_ndelta_cases[t_nseq+i] + sim_delta_cases[i];
+    sim_cases[t_nseq+i] = sim_cases[t_nseq+i] + sim_delta_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
