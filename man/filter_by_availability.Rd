@@ -32,8 +32,8 @@ Filter data based on availability and forecast date
 }
 \examples{
 dt <- rbind(
- update_obs_availability(germany_obs, seq_lag = 3),
- update_obs_availability(germany_obs, seq_lag = 1)
+  update_obs_availability(germany_obs, seq_lag = 3),
+  update_obs_availability(germany_obs, seq_lag = 1)
 )
 # filter out duplicates and up to the present date
 filter_by_availability(dt)
@@ -42,6 +42,8 @@ filter_by_availability(dt)
 filter_by_availability(dt, seq_date = "2021-06-12")
 
 # as above but only use
-filter_by_availability(dt, seq_date = "2021-06-12",
-                       case_date = "2021-07-01")
+filter_by_availability(dt,
+  seq_date = "2021-06-12",
+  case_date = "2021-07-01"
+)
 }

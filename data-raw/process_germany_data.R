@@ -66,12 +66,11 @@ set(germany_obs, j = c("value", "wk"), value = NULL)
 
 # Add availability indicators
 germany_obs[, `:=`(cases_available = date, seq_available = date)]
-# assume sequence availability lag based on final NA number
-germany_obs[
-  ,
-  seq_available := seq_available + 7 * sum(is.na(seq_total))
-]
 # add that some sequences will never be available
-germany_obs[date < "2021-04-10", seq_available := NA]
+germany_obs[date <= "2021-04-10", seq_available := NA]
+# assume sequence availability lag based on final NA number
+avail_lag <- nrow(germany_obs[is.na(seq_total) & !is.na(seq_available)])
+germany_obs[, seq_available := seq_available + 7 * avail_lag]
+
 # save all observations
 usethis::use_data(germany_obs, overwrite = TRUE)
