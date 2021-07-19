@@ -31,7 +31,7 @@ cases_sat <- subset(cases, weekdays(cases$date) == "Saturday")
 # add calendar weeks:
 cases_sat$wk <- as.numeric(format(cases_sat$date, "%W"))
 # restrict to most recent weeks
-cases_sat <- subset(cases_sat, date >= as.Date("2021-03-27"))
+cases_sat <- subset(cases_sat, date >= as.Date("2021-03-20"))
 
 # get data on variants from RKI:
 download.file(
@@ -71,5 +71,7 @@ germany_obs[
   ,
   seq_available := seq_available + 7 * sum(is.na(seq_total))
 ]
-
+# add that some sequences will never be available
+germany_obs[date < "2021-04-10", seq_available := NA]
+# save all observations
 usethis::use_data(germany_obs, overwrite = TRUE)

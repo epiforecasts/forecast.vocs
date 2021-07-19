@@ -16,6 +16,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     # time indices
     t = nrow(obs) + horizon,
     t_nots = nrow(obs[!is.na(cases)]),
+    t_nseq = nrow(obs[is.na(seq_available)]),
     t_seq = nrow(obs[!is.na(seq_delta)]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
@@ -46,7 +47,7 @@ stan_inits <- function(data, strains = 2) {
       init_cases = purrr::map_dbl(
         c(
           data$X[1],
-          data$X[1] * data$Y[1] / data$N[1]
+          data$X[t_init + 1] * data$Y[1] / data$N[1]
         ),
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
