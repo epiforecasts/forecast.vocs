@@ -18,6 +18,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     t_nots = nrow(obs[!is.na(cases)]),
     t_nseq = nrow(obs[is.na(seq_available)]),
     t_seq = nrow(obs[!is.na(seq_delta)]),
+    t_seqf = nrow(obs) + horizon - nrow(obs[is.na(seq_available)]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
