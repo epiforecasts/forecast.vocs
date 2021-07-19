@@ -131,7 +131,7 @@ generated quantities {
   // summary measures
   avg_delta_mod = mean(delta_r - r[(t_nseq+1):(t-1)]);
   com_r = r;
-  com_r[(t_nseq+1):t] = (1 - frac_delta[2:t_seqf]) .* r[(t_nseq+1):t] +
+  com_r[(t_nseq+1):(t-1)] = (1 - frac_delta[2:t_seqf]) .* r[(t_nseq+1):(t-1)] +
      frac_delta[2:t_seqf] .* delta_r;
 
   // simulated cases
@@ -141,7 +141,7 @@ generated quantities {
   sim_cases = sim_ndelta_cases;
   for (i in 1:t_seqf) {
     sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
-    sim_cases[t_nseq+i] = sim_cases[t_nseq+i] + sim_delta_cases[i];
+    sim_cases[t_nseq+i] += sim_delta_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
