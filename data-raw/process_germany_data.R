@@ -31,7 +31,7 @@ cases_sat <- subset(cases, weekdays(cases$date) == "Saturday")
 # add calendar weeks:
 cases_sat$wk <- as.numeric(format(cases_sat$date, "%W"))
 # restrict to most recent weeks
-cases_sat <- subset(cases_sat, date >= as.Date("2021-04-24"))
+cases_sat <- subset(cases_sat, date >= as.Date("2021-03-27"))
 
 # get data on variants from RKI:
 download.file(
@@ -52,6 +52,7 @@ sampling <- sampling[
   c("KW", "total", "B.1.617.2_Anzahl", "B.1.617.2_Anteil (%)")
 ]
 colnames(sampling) <- c("wk", "seq_total", "seq_B.1.1617.2", "share_B.1.1617.2")
+sampling <- setDT(sampling)[share_B.1.1617.2 >= 1e-3 & seq_B.1.1617.2 > 5]
 
 # merge into case data set
 germany_obs <- merge(cases_sat, sampling, by = "wk", all.x = TRUE)
