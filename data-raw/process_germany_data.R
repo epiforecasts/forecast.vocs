@@ -23,6 +23,7 @@ if (data_source == "JHU") {
 # some formatting...
 cases <- subset(cases, location == "GM")
 cases$date <- as.Date(cases$date)
+
 # generate 7-day moving averages
 cases$inc7 <- NA
 for (i in 7:nrow(cases)) cases$inc7[i] <- sum(cases$value[i - (0:6)])
