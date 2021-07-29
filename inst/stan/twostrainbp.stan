@@ -26,7 +26,7 @@ transformed data {
 }
 
 parameters {
-  real r_init;
+  real<upper = 4> r_init;
   real<lower = 0> r_noise;
   real<lower = -1, upper = 1> beta;
   real delta_mod;
@@ -102,7 +102,10 @@ transformed parameters {
   if (j) {
     print(frac_delta);
     print(mean_delta_cases);
+    print(mean_ndelta_cases);
     print(mean_cases);
+    print(mean_init_cases);
+    print(sd_init_cases);
     print(init_cases);
     print(r_init);
     print(diff);
