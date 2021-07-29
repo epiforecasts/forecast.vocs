@@ -11,6 +11,7 @@ data {
   int output_loglik;
   real delta_mean;
   real delta_sd;
+  int relat;
 }
 
 transformed data {
@@ -28,11 +29,11 @@ parameters {
   real<lower = 0> r_noise;
   real<lower = -1, upper = 1> beta;
   real delta_mod;
-  real<lower = 0> delta_noise;
-  real<lower = 0> ndelta_noise;
+  real<lower = 0> delta_noise[relat ? 1 : 0];
+  real<lower = 0> ndelta_noise[relat ? 1 : 0];
   vector[t - 2] eta;
-  vector[t_seqf - 2] delta_eta;
-  vector[t_seqf - 2] ndelta_eta;
+  vector[relat ? t_seqf - 2 : 0] delta_eta;
+  vector[relat ? t_seqf - 2 : 0] ndelta_eta;
   vector[2] init_cases;
   vector<lower = 0>[2] sqrt_phi;
 }
@@ -59,15 +60,15 @@ transformed parameters {
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 
-  // delta growth rate scaled to overall with RW residuals
+  // delta growth rate scaled to overall
   delta_r = tail(r, t_seqf - 1) + delta_mod;
-  delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 2) +
-                             cumulative_sum(delta_noise * delta_eta);
-  
-  // non-delta growth rate based on overall with RW residuals
-  r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
-                           cumulative_sum(ndelta_noise * ndelta_eta);
-  
+  // Independent RW residuals for variant and non-variant
+  if (relat) {
+    delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 2) +
+                             cumulative_sum(delta_noise[1] * delta_eta);
+    r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
+                            cumulative_sum(ndelta_noise[1] * ndelta_eta);
+  }
   // initialise log mean cases
   mean_ndelta_cases = t_nseq > 0 ? rep_vector(init_cases[1], t) : 
     rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
@@ -99,14 +100,18 @@ model {
   r_init ~ normal(0, 0.25);
   delta_mod ~ normal(delta_mean, delta_sd);
   r_noise ~ normal(0, 0.1) T[0,];
-  delta_noise ~ normal(0, 0.1) T[0,]; 
-  ndelta_noise ~ normal(0, 0.1) T[0,]; 
+  if (relat) {
+    delta_noise[1] ~ normal(0, 0.1) T[0,]; 
+    ndelta_noise[1] ~ normal(0, 0.1) T[0,]; 
+  }
 
   // random walk priors
   beta ~ std_normal();
   eta ~ std_normal();
-  delta_eta ~ std_normal();
-  ndelta_eta ~ std_normal();
+  if (relat) {
+    delta_eta ~ std_normal();
+    ndelta_eta ~ std_normal();
+  }
 
   // observation model priors
   for (i in 1:2) {
