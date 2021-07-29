@@ -14,6 +14,7 @@ forecast(
   horizon = 4,
   delta = c(0.2, 0.2),
   strains = 2,
+  variant_relationship = "pooled",
   models = NULL,
   likelihood = TRUE,
   output_loglik = FALSE,
@@ -36,6 +37,17 @@ the forecast date.}
 
 \item{case_date}{Date from which to use available case data. Defaults to
 the forecast date.}
+
+\item{horizon}{Integer forecast horizon. Defaults to 4.}
+
+\item{delta}{Numeric vector of length 2. Prior mean and
+standard deviation for the initial growth rate modifier
+due to the variant.}
+
+\item{variant_relationship}{Character string, defaulting to "pooled".
+Controls the relationship of strains with options being "pooled" (dependence
+determined from the data), "scaled" (a fixed scaling between strains), and
+"independent" (fully independent strains after initial scaling).}
 }
 \description{
 Forecast using branching processes at a target date

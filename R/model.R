@@ -5,12 +5,22 @@
 #' @param delta Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant.
+#' @param variant_relationship Character string, defaulting to "pooled".
+#' Controls the relationship of strains with options being "pooled" (dependence
+#' determined from the data), "scaled" (a fixed scaling between strains), and
+#' "independent" (fully independent strains after initial scaling).
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_obs))
 stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
+                      variant_relationship = "pooled",
                       likelihood = TRUE,
                       output_loglikelihood = FALSE) {
+  variant_relationship <- match.arg(
+    variant_relationship,
+    choices = c("pooled", "scaled", "indepedent")
+  )
+
   obs <- data.table::as.data.table(obs)
   data <- list(
     # time indices
@@ -29,7 +39,11 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     output_loglik = as.numeric(output_loglikelihood),
     start_date = min(obs$date),
     delta_mean = delta[1],
-    delta_sd = delta[2]
+    delta_sd = delta[2],
+    relat = fcase(
+      variant_relationship %in% "pooled", 1,
+      variant_relationship %in% "scaled", 0,
+      variant_relationship %in% "independent", 2)
   )
   return(data)
 }

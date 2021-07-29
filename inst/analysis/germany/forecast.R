@@ -3,13 +3,14 @@ library(bp.delta)
 # set number of cores
 options(mc.cores = 4)
 
-results <- forecast(latest_obs(germany_obs)(),
+results <- forecast(latest_obs(germany_obs),
   horizon = 4,
   save_path = tempdir(),
   strains = c(1, 2),
   adapt_delta = 0.99,
   max_treedepth = 15,
-  output_loglik = TRUE
+  output_loglik = TRUE,
+  variant_relationship = "scaled"
 )
 # inspect object
 names(results)
