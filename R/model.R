@@ -68,8 +68,9 @@ stan_inits <- function(data, strains = 2) {
         ),
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
-      r = rnorm(1, 0, 0.05),
+      r_init = rnorm(1, 0, 0.05),
       r_noise = abs(rnorm(1, 0, 0.01)),
+      eta = rnorm(data$t_dep, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
@@ -83,6 +84,8 @@ stan_inits <- function(data, strains = 2) {
       )
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
       inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
+      inits$delta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$ndelta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
     }
     return(inits)
   }
@@ -94,10 +97,10 @@ stan_inits <- function(data, strains = 2) {
 #' @examples
 #' \dontrun{
 #' # one strain model
-#' bp_mod <- load_model(strains = 1)
+#' mod <- load_model(strains = 1)
 #'
 #' # two strain model
-#' twostrain_bp_mod <- load_model(strains = 2)
+#' two_strain_mod <- load_model(strains = 2)
 #' }
 load_model <- function(strains = 2) {
   if (strains == 1) {

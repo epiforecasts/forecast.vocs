@@ -12,9 +12,9 @@ Load and compile a strain model
 \examples{
 \dontrun{
 # one strain model
-bp_mod <- load_model(strains = 1)
+mod <- load_model(strains = 1)
 
 # two strain model
-twostrain_bp_mod <- load_model(strains = 2)
+two_strain_mod <- load_model(strains = 2)
 }
 }
