@@ -31,11 +31,10 @@ transformed parameters {
   real phi;
 
  // random walk growth rate
+  diff = rep_vector(0, t - 2);
   for (i in 1:(t-2)) {
     if (i > 1) {
       diff[i] = beta * diff[i -1];
-    }else{
-      diff[i] = 0;
     }
     diff[i] += r_noise * eta[i];
   }

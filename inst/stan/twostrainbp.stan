@@ -1,6 +1,7 @@
 data {
   int t;
   int t_nseq;
+  int t_dep;
   int t_seq;
   int t_seqf;
   int t_nots;
@@ -31,7 +32,7 @@ parameters {
   real delta_mod;
   real<lower = 0> delta_noise[relat ? 1 : 0];
   real<lower = 0> ndelta_noise[relat ? 1 : 0];
-  vector[t - 2] eta;
+  vector[t_dep] eta;
   vector[relat ? t_seqf - 2 : 0] delta_eta;
   vector[relat ? t_seqf - 2 : 0] ndelta_eta;
   vector[2] init_cases;
@@ -49,13 +50,14 @@ transformed parameters {
   vector[2] phi;
 
   // random walk growth rate
+  diff = rep_vector(0, t - 2);
   for (i in 1:(t-2)) {
-    if (i > 1) {
-      diff[i] = beta * diff[i - 1];
-    }else{
-      diff[i] = 0;
+    if (i <= t_dep) {
+      if (i > 1) {
+        diff[i] = beta * diff[i - 1];
+      }
+      diff[i] += r_noise * eta[i];
     }
-    diff[i] += r_noise * eta[i];
   }
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);

@@ -116,7 +116,7 @@ summarise_posterior <- function(fit,
   param_lookup <- data.table(
     variable = c(
       "r_init", "r_noise", "beta", "delta_mod", "avg_delta_mod",
-      "delta_noise", "ndelta_noise", "init_cases[1]", "init_cases[2]",
+      "delta_noise[1]", "ndelta_noise[1]", "init_cases[1]", "init_cases[2]",
       "phi[1]", "phi[2]"
     ),
     clean_name = c(

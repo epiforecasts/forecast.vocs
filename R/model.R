@@ -18,7 +18,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
                       output_loglikelihood = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
-    choices = c("pooled", "scaled", "indepedent")
+    choices = c("pooled", "scaled", "independent")
   )
 
   obs <- data.table::as.data.table(obs)
@@ -45,6 +45,8 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
       variant_relationship %in% "scaled", 0,
       variant_relationship %in% "independent", 2)
   )
+  # assign time where strains share a noise parameter
+  data$t_dep <- ifelse(data$relat == 2, data$t_nseq, data$t - 2)
   return(data)
 }
 
