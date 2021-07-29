@@ -81,9 +81,11 @@ transformed parameters {
   mean_delta_cases[2:t_seqf] = mean_delta_cases[2:t_seqf] +
                                  cumulative_sum(delta_r);
 
-  // natural scale cases
-  mean_ndelta_cases = exp(mean_ndelta_cases);
-  mean_delta_cases = exp(mean_delta_cases);
+  // natural scale cases (add a small numeric shift to avoid at 0 errors)
+  mean_ndelta_cases = exp(mean_ndelta_cases) + rep_vector(1e-4, t);
+  mean_delta_cases = exp(mean_delta_cases) + rep_vector(1e-4, t_seqf);
+
+  // combine to overall cases
   mean_cases = mean_ndelta_cases;
   mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_delta_cases;
 
@@ -92,6 +94,22 @@ transformed parameters {
   
   // calculate fraction delta
   frac_delta = mean_delta_cases ./ mean_cases[(t_nseq + 1):t];
+  {
+  int j = 0;
+  for (i in 1:t_seqf) {
+    j += is_nan(frac_delta[i]) ? 1 : 0;
+  }
+  if (j) {
+    print(frac_delta);
+    print(mean_delta_cases);
+    print(mean_cases);
+    print(init_cases);
+    print(r_init);
+    print(diff);
+    print(r);
+    print(delta_mod);
+  }
+  }
 }
 
 model {

@@ -45,9 +45,9 @@ transformed parameters {
   // initialise log mean cases
   mean_cases = rep_vector(init_cases, t);
 
-  // log cases combined with growth
+  // log cases combined with growth (add a small number to avoid 0 errors)
   mean_cases[2:t] = mean_cases[2:t] + cumulative_sum(r);
-  mean_cases = exp(mean_cases);
+  mean_cases = exp(mean_cases) + rep_vector(1e-4, t);
 
   // rescale observation model
   phi = 1 ./ sqrt(sqrt_phi);
