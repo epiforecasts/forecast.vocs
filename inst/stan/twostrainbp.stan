@@ -22,7 +22,7 @@ transformed data {
   mean_init_cases[2] = X[t_nseq + 1] * Y[1] / N[1];
   mean_init_cases[1] = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.0;
+  sd_init_cases = rep_vector(0.01, 2);
 }
 
 parameters {
@@ -36,7 +36,7 @@ parameters {
   vector[relat ? t_seqf - 2 : 0] delta_eta;
   vector[relat ? t_seqf - 2 : 0] ndelta_eta;
   vector[2] init_cases;
-  vector<lower = 0>[2] sqrt_phi;
+  vector<lower = 0>[1] sqrt_phi;
 }
 
 transformed parameters {
@@ -47,7 +47,7 @@ transformed parameters {
   vector[t_seqf] mean_delta_cases;
   vector<lower = 0>[t] mean_cases;
   vector<lower = 0, upper = 1>[t_seqf] frac_delta;
-  vector[2] phi;
+  vector[1] phi;
 
   // random walk growth rate
   diff = rep_vector(0, t - 2);
@@ -122,7 +122,7 @@ model {
   // growth priors
   r_init ~ normal(0, 0.25);
   delta_mod ~ normal(delta_mean, delta_sd);
-  r_noise ~ normal(0, 0.1) T[0,];
+  r_noise ~ normal(0, 0.2) T[0,];
   if (relat) {
     delta_noise[1] ~ normal(0, 0.1) T[0,]; 
     ndelta_noise[1] ~ normal(0, 0.1) T[0,]; 
@@ -137,14 +137,13 @@ model {
   }
 
   // observation model priors
-  for (i in 1:2) {
-    sqrt_phi[i] ~ normal(0, 1) T[0,];
-  }
+  sqrt_phi[1] ~ normal(0, 1) T[0,];
+
   // observation model 
   if (likelihood) {
-    X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-    Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
-                      (1 - frac_delta[1:t_seq]) * phi[2]);
+    X ~ poisson(mean_cases[1:t_nots]);
+    Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[1], 
+                      (1 - frac_delta[1:t_seq]) * phi[1]);
   }
 }
 
@@ -164,22 +163,22 @@ generated quantities {
 
   // simulated cases
   for (i in 1:t) {
-    sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
+    sim_ndelta_cases[i] = poisson_rng(mean_ndelta_cases[i]);
   }
   sim_cases = sim_ndelta_cases;
   for (i in 1:t_seqf) {
-    sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
+    sim_delta_cases[i] = poisson_rng(mean_delta_cases[i]);
     sim_cases[t_nseq+i] += sim_delta_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
     for (i in 1:t_nots) {
-      log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+      log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
     }
     for (i in 1:t_seq) {
       log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
-                                                frac_delta[i] * phi[2], 
-                                                (1 - frac_delta[i]) * phi[2]);
+                                                frac_delta[i] * phi[1], 
+                                                (1 - frac_delta[i]) * phi[1]);
     }
   }
 }
