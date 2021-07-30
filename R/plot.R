@@ -142,3 +142,45 @@ plot_posterior <- function(posterior, obs, forecast_date = NULL,
   }
   return(plots)
 }
+
+#' Pairs plot of parameters of interest and fitting diagnostics
+#'
+#' @param pars Character vector of parameters to try and include
+#' in the plot. Will only be included if present in the fitted model.
+#' @param ... Additional parameters passed to `mcmc_pairs()`.
+#' @inheritParams stan_fit
+#' @inheritParams summarise_posterior
+#' @importFrom bayesplot nuts_params mcmc_pairs
+#' @return  A ggplot2 based pairs plot of parameters of interest
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' plot_pairs(fit)
+#' }
+plot_pairs <- function(fit,
+                       pars = c(
+                         "r_init", "r_noise", "beta", "delta_noise[1]",
+                         "ndelta_noise[1]", "init_cases",
+                         "init_cases[1]", "init_cases[2]",
+                         "eta[1]", "delta_eta[1]", "ndelta_eta[1]",
+                         "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
+                       diagnostics = TRUE, ...) {
+  draws <- extract_draws(fit)
+  stanfit <- convert_to_stanfit(fit)
+  vars <- names(stanfit)
+  present_pars <- intersect(vars, pars)
+  np <- NULL
+  if (diagnostics) {
+    np <- nuts_params(stanfit)
+  }
+
+  pairs <- mcmc_pairs(draws,
+    np = np,
+    pars = present_pars,
+    ...
+  )
+  return(pairs)
+}

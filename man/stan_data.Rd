@@ -8,6 +8,8 @@ stan_data(
   obs,
   horizon = 4,
   delta = c(0.2, 0.2),
+  variant_relationship = "pooled",
+  overdispersion = TRUE,
   likelihood = TRUE,
   output_loglikelihood = FALSE
 )
@@ -21,6 +23,14 @@ date, cases, seq_delta, and seq_total.}
 \item{delta}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant.}
+
+\item{variant_relationship}{Character string, defaulting to "pooled".
+Controls the relationship of strains with options being "pooled" (dependence
+determined from the data), "scaled" (a fixed scaling between strains), and
+"independent" (fully independent strains after initial scaling).}
+
+\item{overdisperion}{Logical, defaults to \code{TRUE}. Should the observations
+used include overdispersion.}
 }
 \description{
 Format data for use with stan

@@ -1,6 +1,7 @@
 data {
   int t;
   int t_nseq;
+  int t_dep;
   int t_seq;
   int t_seqf;
   int t_nots;
@@ -11,6 +12,8 @@ data {
   int output_loglik;
   real delta_mean;
   real delta_sd;
+  int relat;
+  int overdisp;
 }
 
 transformed data {
@@ -20,21 +23,21 @@ transformed data {
   mean_init_cases[2] = X[t_nseq + 1] * Y[1] / N[1];
   mean_init_cases[1] = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.025 * mean_init_cases;
+  sd_init_cases = rep_vector(0.01, 2);
 }
 
 parameters {
-  real r_init;
+  real<upper = 4> r_init;
   real<lower = 0> r_noise;
   real<lower = -1, upper = 1> beta;
   real delta_mod;
-  real<lower = 0> delta_noise;
-  real<lower = 0> ndelta_noise;
-  vector[t - 2] eta;
-  vector[t_seqf - 2] delta_eta;
-  vector[t_seqf - 2] ndelta_eta;
+  real<lower = 0> delta_noise[relat ? 1 : 0];
+  real<lower = 0> ndelta_noise[relat ? 1 : 0];
+  vector[t_dep] eta;
+  vector[relat ? t_seqf - 2 : 0] delta_eta;
+  vector[relat ? t_seqf - 2 : 0] ndelta_eta;
   vector[2] init_cases;
-  vector<lower = 0>[2] sqrt_phi;
+  vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
 
 transformed parameters {
@@ -45,29 +48,30 @@ transformed parameters {
   vector[t_seqf] mean_delta_cases;
   vector<lower = 0>[t] mean_cases;
   vector<lower = 0, upper = 1>[t_seqf] frac_delta;
-  vector[2] phi;
+  vector[overdisp ? 2 : 0] phi;
 
   // random walk growth rate
+  diff = rep_vector(0, t - 2);
   for (i in 1:(t-2)) {
-    if (i > 1) {
-      diff[i] = beta * diff[i - 1];
-    }else{
-      diff[i] = 0;
+    if (i <= t_dep) {
+      if (i > 1) {
+        diff[i] = beta * diff[i - 1];
+      }
+      diff[i] += r_noise * eta[i];
     }
-    diff[i] += r_noise * eta[i];
   }
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 
-  // delta growth rate scaled to overall with RW residuals
+  // delta growth rate scaled to overall
   delta_r = tail(r, t_seqf - 1) + delta_mod;
-  delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 2) +
-                             cumulative_sum(delta_noise * delta_eta);
-  
-  // non-delta growth rate based on overall with RW residuals
-  r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
-                           cumulative_sum(ndelta_noise * ndelta_eta);
-  
+  // Independent RW residuals for variant and non-variant
+  if (relat) {
+    delta_r[2:(t_seqf-1)] = tail(delta_r, t_seqf - 2) +
+                             cumulative_sum(delta_noise[1] * delta_eta);
+    r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
+                            cumulative_sum(ndelta_noise[1] * ndelta_eta);
+  }
   // initialise log mean cases
   mean_ndelta_cases = t_nseq > 0 ? rep_vector(init_cases[1], t) : 
     rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
@@ -78,17 +82,40 @@ transformed parameters {
   mean_delta_cases[2:t_seqf] = mean_delta_cases[2:t_seqf] +
                                  cumulative_sum(delta_r);
 
-  // natural scale cases
-  mean_ndelta_cases = exp(mean_ndelta_cases);
-  mean_delta_cases = exp(mean_delta_cases);
+  // natural scale cases (add a small numeric shift to avoid at 0 errors)
+  mean_ndelta_cases = exp(mean_ndelta_cases) + rep_vector(1e-4, t);
+  mean_delta_cases = exp(mean_delta_cases) + rep_vector(1e-4, t_seqf);
+
+  // combine to overall cases
   mean_cases = mean_ndelta_cases;
   mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_delta_cases;
 
   // rescale observation model
-  phi = 1 ./ sqrt(sqrt_phi);
-  
+  if (overdisp) {
+    phi = 1 ./ sqrt(sqrt_phi);
+  }
+
   // calculate fraction delta
   frac_delta = mean_delta_cases ./ mean_cases[(t_nseq + 1):t];
+  {
+  int j = 0;
+  for (i in 1:t_seqf) {
+    j += is_nan(frac_delta[i]) ? 1 : 0;
+  }
+  if (j) {
+    print(frac_delta);
+    print(mean_delta_cases);
+    print(mean_ndelta_cases);
+    print(mean_cases);
+    print(mean_init_cases);
+    print(sd_init_cases);
+    print(init_cases);
+    print(r_init);
+    print(diff);
+    print(r);
+    print(delta_mod);
+  }
+  }
 }
 
 model {
@@ -98,25 +125,37 @@ model {
   // growth priors
   r_init ~ normal(0, 0.25);
   delta_mod ~ normal(delta_mean, delta_sd);
-  r_noise ~ normal(0, 0.1) T[0,];
-  delta_noise ~ normal(0, 0.1) T[0,]; 
-  ndelta_noise ~ normal(0, 0.1) T[0,]; 
+  r_noise ~ normal(0, 0.2) T[0,];
+  if (relat) {
+    delta_noise[1] ~ normal(0, 0.1) T[0,]; 
+    ndelta_noise[1] ~ normal(0, 0.1) T[0,]; 
+  }
 
   // random walk priors
   beta ~ std_normal();
   eta ~ std_normal();
-  delta_eta ~ std_normal();
-  ndelta_eta ~ std_normal();
+  if (relat) {
+    delta_eta ~ std_normal();
+    ndelta_eta ~ std_normal();
+  }
 
   // observation model priors
-  for (i in 1:2) {
-    sqrt_phi[i] ~ normal(0, 1) T[0,];
+  if (overdisp) {
+    for (i in 1:2) {
+      sqrt_phi[i] ~ std_normal() T[0,];
+    }
   }
+
   // observation model 
   if (likelihood) {
-    X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-    Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[2], 
-                      (1 - frac_delta[1:t_seq]) * phi[2]);
+    if (overdisp) {
+      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+      Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[1], 
+                       (1 - frac_delta[1:t_seq]) * phi[1]);
+    }else{
+      X ~ poisson(mean_cases[1:t_nots]);
+      Y ~ binomial(N, frac_delta[1:t_seq]);
+    }
   }
 }
 
@@ -136,22 +175,38 @@ generated quantities {
 
   // simulated cases
   for (i in 1:t) {
-    sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
+    if (overdisp) {
+      sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
+    }else{
+      sim_ndelta_cases[i] = poisson_rng(mean_ndelta_cases[i]);
+    }
   }
   sim_cases = sim_ndelta_cases;
   for (i in 1:t_seqf) {
-    sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
+    if (overdisp) {
+      sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
+    }else{
+      sim_delta_cases[i] = poisson_rng(mean_delta_cases[i]);
+    }
     sim_cases[t_nseq+i] += sim_delta_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
     for (i in 1:t_nots) {
-      log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+      if (overdisp) {
+        log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+      }else{
+        log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
+      }
     }
     for (i in 1:t_seq) {
-      log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
-                                                frac_delta[i] * phi[2], 
-                                                (1 - frac_delta[i]) * phi[2]);
+      if (overdisp) {
+        log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
+                                                  frac_delta[i] * phi[1], 
+                                                  (1 - frac_delta[i]) * phi[1]);
+      }else{
+        log_lik[t_nseq + i] += binomial_lpmf(Y[i] | N[i], frac_delta[i]);
+      }
     }
   }
 }

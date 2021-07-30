@@ -12,18 +12,21 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports:
+    bayesplot,
     cmdstanr,
     data.table,
     future.apply,
     ggplot2,
     posterior,
     purrr,
+    rstan,
     scales
 Suggests:
     future,
     knitr,
     readxl,
     rmarkdown,
+    shinystan,
     spelling,
     usethis
 VignetteBuilder: 

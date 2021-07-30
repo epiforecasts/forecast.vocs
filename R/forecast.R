@@ -3,6 +3,8 @@
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
 #' @inheritParams filter_by_availability
+#' @inheritParams stan_data
+#' @inheritParams forecast_n_strain
 #' @export
 #' @importFrom purrr map transpose reduce
 forecast <- function(obs,
@@ -11,6 +13,7 @@ forecast <- function(obs,
                      seq_date = forecast_date, case_date = forecast_date,
                      save_path = tempdir(), horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
+                     variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
@@ -30,6 +33,8 @@ forecast <- function(obs,
   # format data and fit models
   data <- stan_data(target_obs,
     horizon = horizon, delta = delta,
+    variant_relationship = variant_relationship,
+    overdispersion = overdispersion,
     likelihood = likelihood, output_loglik = output_loglik
   )
 

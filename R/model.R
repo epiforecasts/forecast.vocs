@@ -5,12 +5,25 @@
 #' @param delta Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant.
+#' @param variant_relationship Character string, defaulting to "pooled".
+#' Controls the relationship of strains with options being "pooled" (dependence
+#' determined from the data), "scaled" (a fixed scaling between strains), and
+#' "independent" (fully independent strains after initial scaling).
+#' @param overdisperion Logical, defaults to `TRUE`. Should the observations
+#' used include overdispersion.
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_obs))
 stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
+                      variant_relationship = "pooled",
+                      overdispersion = TRUE,
                       likelihood = TRUE,
                       output_loglikelihood = FALSE) {
+  variant_relationship <- match.arg(
+    variant_relationship,
+    choices = c("pooled", "scaled", "independent")
+  )
+
   obs <- data.table::as.data.table(obs)
   data <- list(
     # time indices
@@ -29,8 +42,15 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     output_loglik = as.numeric(output_loglikelihood),
     start_date = min(obs$date),
     delta_mean = delta[1],
-    delta_sd = delta[2]
+    delta_sd = delta[2],
+    relat = fcase(
+      variant_relationship %in% "pooled", 1,
+      variant_relationship %in% "scaled", 0,
+      variant_relationship %in% "independent", 2),
+    overdisp = as.numeric(overdispersion)
   )
+  # assign time where strains share a noise parameter
+  data$t_dep <- ifelse(data$relat == 2, data$t_nseq, data$t - 2)
   return(data)
 }
 
@@ -52,8 +72,9 @@ stan_inits <- function(data, strains = 2) {
         ),
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
-      r = rnorm(1, 0, 0.05),
+      r_init = rnorm(1, 0, 0.05),
       r_noise = abs(rnorm(1, 0, 0.01)),
+      eta = rnorm(data$t_dep, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
@@ -67,6 +88,8 @@ stan_inits <- function(data, strains = 2) {
       )
       inits$delta_noise <- abs(rnorm(1, 0, 0.01))
       inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
+      inits$delta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$ndelta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
     }
     return(inits)
   }
@@ -78,10 +101,10 @@ stan_inits <- function(data, strains = 2) {
 #' @examples
 #' \dontrun{
 #' # one strain model
-#' bp_mod <- load_model(strains = 1)
+#' mod <- load_model(strains = 1)
 #'
 #' # two strain model
-#' twostrain_bp_mod <- load_model(strains = 2)
+#' two_strain_mod <- load_model(strains = 2)
 #' }
 load_model <- function(strains = 2) {
   if (strains == 1) {
@@ -98,6 +121,13 @@ load_model <- function(strains = 2) {
 }
 
 #' Fit a brancing process strain model
+#' @param data A list of data as produced by `stan_data()`
+#' @param model A `cmdstanr` model object as loaded by `load_model()`
+#' @param save_path Character string indicating the save path to use for results
+#' if required. Defaults to empty meaning that nothing is saved
+#' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
+#' be shown.
+#' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #' @export
 #' @examples
 #' \dontrun{
