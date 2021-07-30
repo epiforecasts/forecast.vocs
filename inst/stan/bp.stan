@@ -7,18 +7,21 @@ data {
 }
 
 transformed data {
+  vector[t] log_X;
   // initialise cases using observed data
   real mean_init_cases;
   real sd_init_cases;
   mean_init_cases = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.025 * mean_init_cases;
+  sd_init_cases = 0.01;
+  for (i in 1:t) {
+    log_X[i] = log(X[i]);
+  }
 }
 
 parameters {
   real r_init;
   real<lower = 0> r_noise;
-  real<lower = -1, upper = 1> beta;
   vector[t - 2] eta;
   real init_cases;
   real<lower = 0> sqrt_phi;
@@ -26,27 +29,17 @@ parameters {
 
 transformed parameters {
   vector[t - 1] r;
-  vector[t - 2] diff;
   vector<lower = 0>[t] mean_cases;
   real phi;
 
- // random walk growth rate
-  diff = rep_vector(0, t - 2);
-  for (i in 1:(t-2)) {
-    if (i > 1) {
-      diff[i] = beta * diff[i -1];
-    }
-    diff[i] += r_noise * eta[i];
-  }
- 
   r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
+  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(r_noise * eta);
 
   // initialise log mean cases
-  mean_cases = rep_vector(init_cases, t);
-
-  // log cases combined with growth (add a small number to avoid 0 errors)
-  mean_cases[2:t] = mean_cases[2:t] + cumulative_sum(r);
+  mean_cases[1] = init_cases;
+  for (i in 1:(t-1)) {
+    mean_cases[i + 1] = log_X[i] + r[i];
+  }
   mean_cases = exp(mean_cases) + rep_vector(1e-4, t);
 
   // rescale observation model
@@ -63,7 +56,6 @@ transformed parameters {
     print(sd_init_cases);
     print(init_cases);
     print(r_init);
-    print(diff);
     print(r);
   }
   }
@@ -74,12 +66,11 @@ model {
   init_cases ~ normal(mean_init_cases, sd_init_cases);
 
   // growth priors
-  r_init ~ normal(0, 0.25);
-  r_noise ~ normal(0, 0.1) T[0,];
+  r_init ~ normal(0.2, 0.01);
+  r_noise ~ normal(0, 1) T[0,];
   
   // random walk priors
   eta ~ std_normal();
-  beta ~ std_normal();
 
   // observation model priors
   sqrt_phi ~ normal(0, 1) T[0,];

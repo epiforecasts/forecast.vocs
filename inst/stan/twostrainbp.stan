@@ -22,7 +22,7 @@ transformed data {
   mean_init_cases[2] = X[t_nseq + 1] * Y[1] / N[1];
   mean_init_cases[1] = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.025 * mean_init_cases;
+  sd_init_cases = 0.0;
 }
 
 parameters {
