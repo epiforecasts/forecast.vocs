@@ -36,6 +36,8 @@ link_dates_by_type <- function(posterior, data, mod_end = 0) {
 }
 
 #' Summarise the posterior
+#'
+#' @param fit List of output as returned by `stan_fit()`.
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -164,4 +166,60 @@ save_posterior <- function(posterior, save_path = tempdir()) {
     posterior, file_names,
     ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv"))
   )
+}
+
+#' Extract posterior draws
+#'
+#' @param ... Additional parameters passed to `cmdstanr::draws`
+#'
+#' @return A `draws` object from the `posterior` package.
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' extract_draws(fit)
+#' }
+extract_draws <- function(fit, ...) {
+  fit$fit$draws(...)
+}
+
+#' Convert to stanfit object
+#'
+#' @inheritParams summarise_posterior
+#' @return The model fit as a stanfit object
+#' @importFrom rstan read_stan_csv
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' convert_to_stanfit(fit)
+#' }
+convert_to_stanfit <- function(fit) {
+  stanfit <- read_stan_csv(fit$fit$output_files())
+  return(stanfit)
+}
+
+#' Launch shinystan
+#'
+#' Launch shinystan an interactive tool for stan model evaluation
+#'
+#' @inheritParams summarise_posterior
+#' @return NULL
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' bp_launch_shinystan(fit)
+#' }
+bp_launch_shinystan <- function(fit) {
+  requireNamespace("shinystan", quietly = TRUE)
+  stanfit <- convert_to_stanfit(fit)
+  shinystan::launch_shinystan(stanfit)
+  return(invisible(NULL))
 }
