@@ -69,7 +69,7 @@ summarise_posterior <- function(fit,
       variables = NULL, quantile2,
       .args = list(probs = probs)
     ),
-    fit$summary(variables = NULL, default_convergence_measures())
+    fit$summary(variables = NULL, posterior::default_convergence_measures())
   )
   cbind_custom <- function(x, y) {
     x <- setDT(x)
@@ -119,18 +119,18 @@ summarise_posterior <- function(fit,
     variable = c(
       "r_init", "r_noise", "beta", "delta_mod", "avg_delta_mod",
       "delta_noise[1]", "ndelta_noise[1]", "init_cases[1]", "init_cases[2]",
-      "phi[1]", "phi[2]"
+      "phi[1]", "phi[2]", "phi"
     ),
     clean_name = c(
       "Initial growth", "Growth (sd)", "Beta",
       "Initial DELTA effect", "Average DELTA effect",
       "DELTA (sd)", "Non-DELTA (sd)", "Initial cases",
       "Initial DELTA cases", "Notification overdispersion",
-      "Sequencing overdispersion"
+      "Sequencing overdispersion",  "Notification overdispersion"
     ),
     exponentiated = c(
       rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2),
-      rep(TRUE, 2), rep(FALSE, 2)
+      rep(TRUE, 2), rep(FALSE, 3)
     )
   )
   model <- merge(param_lookup, sfit, by = "variable")

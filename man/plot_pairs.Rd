@@ -6,9 +6,11 @@
 \usage{
 plot_pairs(
   fit,
-  pars = c("r_init", "r_noise", "delta_noise", "ndelta_noise", "init_cases",
-    "init_cases[1]", "init_cases[2]", "eta[1]", "phi[1]", "phi[2]", "phi"),
-  diagnostics = TRUE
+  pars = c("r_init", "r_noise", "beta", "delta_noise[1]", "ndelta_noise[1]",
+    "init_cases", "init_cases[1]", "init_cases[2]", "eta[1]", "delta_eta[1]",
+    "ndelta_eta[1]", "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
+  diagnostics = TRUE,
+  ...
 )
 }
 \arguments{
@@ -16,6 +18,9 @@ plot_pairs(
 
 \item{pars}{Character vector of parameters to try and include
 in the plot. Will only be included if present in the fitted model.}
+
+\item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
+be shown.}
 
 \item{...}{Additional parameters passed to \code{mcmc_pairs()}.}
 }

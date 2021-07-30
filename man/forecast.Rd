@@ -15,6 +15,7 @@ forecast(
   delta = c(0.2, 0.2),
   strains = 2,
   variant_relationship = "pooled",
+  overdispersion = TRUE,
   models = NULL,
   likelihood = TRUE,
   output_loglik = FALSE,

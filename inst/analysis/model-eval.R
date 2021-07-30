@@ -1,10 +1,12 @@
 library(bp.delta)
+options(mc.cores = 4)
 
-dt <- stan_data(latest_obs(germany_obs), horizon = 4)
-mod <- load_model(strains = 2)
-inits <- stan_inits(dt, strains = 2)
+strains <- 1
+dt <- stan_data(latest_obs(germany_obs), horizon = 4, overdispersion = FALSE)
+mod <- load_model(strains = strains)
+inits <- stan_inits(dt, strains = strains)
 fit <- stan_fit(dt,
-  model = mod, init = inits, adapt_delta = 0.8,
+  model = mod, init = inits, adapt_delta = 0.99,
   max_treedepth = 15, save_warmup = TRUE
 )
 

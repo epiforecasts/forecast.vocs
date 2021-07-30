@@ -9,6 +9,7 @@ stan_data(
   horizon = 4,
   delta = c(0.2, 0.2),
   variant_relationship = "pooled",
+  overdispersion = TRUE,
   likelihood = TRUE,
   output_loglikelihood = FALSE
 )
@@ -27,6 +28,9 @@ due to the variant.}
 Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and
 "independent" (fully independent strains after initial scaling).}
+
+\item{overdisperion}{Logical, defaults to \code{TRUE}. Should the observations
+used include overdispersion.}
 }
 \description{
 Format data for use with stan

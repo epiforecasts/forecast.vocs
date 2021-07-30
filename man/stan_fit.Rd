@@ -12,6 +12,19 @@ stan_fit(
   ...
 )
 }
+\arguments{
+\item{data}{A list of data as produced by \code{stan_data()}}
+
+\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
+
+\item{save_path}{Character string indicating the save path to use for results
+if required. Defaults to empty meaning that nothing is saved}
+
+\item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
+be shown.}
+
+\item{...}{Additional parameters passed to the \code{sample} method of \code{cmdstanr}.}
+}
 \description{
 Fit a brancing process strain model
 }

@@ -148,6 +148,7 @@ plot_posterior <- function(posterior, obs, forecast_date = NULL,
 #' @param pars Character vector of parameters to try and include
 #' in the plot. Will only be included if present in the fitted model.
 #' @param ... Additional parameters passed to `mcmc_pairs()`.
+#' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
 #' @return  A ggplot2 based pairs plot of parameters of interest
@@ -161,12 +162,12 @@ plot_posterior <- function(posterior, obs, forecast_date = NULL,
 #' }
 plot_pairs <- function(fit,
                        pars = c(
-                         "r_init", "r_noise", "delta_noise",
-                         "ndelta_noise", "init_cases",
+                         "r_init", "r_noise", "beta", "delta_noise[1]",
+                         "ndelta_noise[1]", "init_cases",
                          "init_cases[1]", "init_cases[2]",
-                         "eta[1]", "phi[1]", "phi[2]", "phi"
-                       ),
-                       diagnostics = TRUE) {
+                         "eta[1]", "delta_eta[1]", "ndelta_eta[1]",
+                         "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
+                       diagnostics = TRUE, ...) {
   draws <- extract_draws(fit)
   stanfit <- convert_to_stanfit(fit)
   vars <- names(stanfit)

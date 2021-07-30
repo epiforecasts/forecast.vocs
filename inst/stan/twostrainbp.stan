@@ -13,6 +13,7 @@ data {
   real delta_mean;
   real delta_sd;
   int relat;
+  int overdisp;
 }
 
 transformed data {
@@ -36,7 +37,7 @@ parameters {
   vector[relat ? t_seqf - 2 : 0] delta_eta;
   vector[relat ? t_seqf - 2 : 0] ndelta_eta;
   vector[2] init_cases;
-  vector<lower = 0>[1] sqrt_phi;
+  vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
 
 transformed parameters {
@@ -47,7 +48,7 @@ transformed parameters {
   vector[t_seqf] mean_delta_cases;
   vector<lower = 0>[t] mean_cases;
   vector<lower = 0, upper = 1>[t_seqf] frac_delta;
-  vector[1] phi;
+  vector[overdisp ? 2 : 0] phi;
 
   // random walk growth rate
   diff = rep_vector(0, t - 2);
@@ -90,8 +91,10 @@ transformed parameters {
   mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_delta_cases;
 
   // rescale observation model
-  phi = 1 ./ sqrt(sqrt_phi);
-  
+  if (overdisp) {
+    phi = 1 ./ sqrt(sqrt_phi);
+  }
+
   // calculate fraction delta
   frac_delta = mean_delta_cases ./ mean_cases[(t_nseq + 1):t];
   {
@@ -137,13 +140,22 @@ model {
   }
 
   // observation model priors
-  sqrt_phi[1] ~ normal(0, 1) T[0,];
+  if (overdisp) {
+    for (i in 1:2) {
+      sqrt_phi[i] ~ std_normal() T[0,];
+    }
+  }
 
   // observation model 
   if (likelihood) {
-    X ~ poisson(mean_cases[1:t_nots]);
-    Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[1], 
-                      (1 - frac_delta[1:t_seq]) * phi[1]);
+    if (overdisp) {
+      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+      Y ~ beta_binomial(N, frac_delta[1:t_seq] * phi[1], 
+                       (1 - frac_delta[1:t_seq]) * phi[1]);
+    }else{
+      X ~ poisson(mean_cases[1:t_nots]);
+      Y ~ binomial(N, frac_delta[1:t_seq]);
+    }
   }
 }
 
@@ -163,22 +175,38 @@ generated quantities {
 
   // simulated cases
   for (i in 1:t) {
-    sim_ndelta_cases[i] = poisson_rng(mean_ndelta_cases[i]);
+    if (overdisp) {
+      sim_ndelta_cases[i] = neg_binomial_2_rng(mean_ndelta_cases[i], phi[1]);
+    }else{
+      sim_ndelta_cases[i] = poisson_rng(mean_ndelta_cases[i]);
+    }
   }
   sim_cases = sim_ndelta_cases;
   for (i in 1:t_seqf) {
-    sim_delta_cases[i] = poisson_rng(mean_delta_cases[i]);
+    if (overdisp) {
+      sim_delta_cases[i] = neg_binomial_2_rng(mean_delta_cases[i], phi[1]);
+    }else{
+      sim_delta_cases[i] = poisson_rng(mean_delta_cases[i]);
+    }
     sim_cases[t_nseq+i] += sim_delta_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
     for (i in 1:t_nots) {
-      log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
+      if (overdisp) {
+        log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+      }else{
+        log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
+      }
     }
     for (i in 1:t_seq) {
-      log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
-                                                frac_delta[i] * phi[1], 
-                                                (1 - frac_delta[i]) * phi[1]);
+      if (overdisp) {
+        log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
+                                                  frac_delta[i] * phi[1], 
+                                                  (1 - frac_delta[i]) * phi[1]);
+      }else{
+        log_lik[t_nseq + i] += binomial_lpmf(Y[i] | N[i], frac_delta[i]);
+      }
     }
   }
 }
