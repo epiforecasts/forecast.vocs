@@ -11,6 +11,11 @@
 #' "independent" (fully independent strains after initial scaling).
 #' @param overdisperion Logical, defaults to `TRUE`. Should the observations
 #' used include overdispersion.
+#' @param likelihood Logical, defaults to `TRUE`. Should the likelihood be
+#' included in the model.extract
+#' @param output_loglikelihood Logical, defaults to `FALSE`. Should the log
+#' likelihood be output. Disabling this will speed up fitting if evaluating the
+#' model fit is not required.
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_obs))
@@ -18,7 +23,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
                       likelihood = TRUE,
-                      output_loglikelihood = FALSE) {
+                      output_loglikelihood = TRUE) {
   variant_relationship <- match.arg(
     variant_relationship,
     choices = c("pooled", "scaled", "independent")

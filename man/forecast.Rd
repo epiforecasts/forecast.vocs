@@ -49,6 +49,9 @@ due to the variant.}
 Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and
 "independent" (fully independent strains after initial scaling).}
+
+\item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
+included in the model.extract}
 }
 \description{
 Forecast using branching processes at a target date
