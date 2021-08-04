@@ -2,8 +2,10 @@ library(bp.delta)
 options(mc.cores = 4)
 
 strains <- 2
-dt <- stan_data(latest_obs(germany_obs), horizon = 4, overdispersion = TRUE,
-                variant_relationship = "pooled")
+dt <- stan_data(latest_obs(germany_obs),
+  horizon = 4, overdispersion = TRUE,
+  variant_relationship = "independent"
+)
 mod <- load_model(strains = strains)
 inits <- stan_inits(dt, strains = strains)
 fit <- stan_fit(dt,

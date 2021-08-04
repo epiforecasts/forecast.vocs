@@ -9,8 +9,7 @@ results <- forecast(latest_obs(germany_obs),
   strains = c(1, 2),
   adapt_delta = 0.99,
   max_treedepth = 15,
-  output_loglik = TRUE,
-  variant_relationship = "independent"
+  variant_relationship = "scaled"
 )
 # inspect object
 names(results)

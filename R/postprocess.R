@@ -9,7 +9,7 @@
 #' estimates
 #' @export
 #' @return A dataframe with an additional data column
-link_dates_by_type <- function(posterior, data, mod_end = 0) {
+link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
   # extract info from lis
   t <- data$t
   t_nseq <- data$t_nseq
@@ -35,6 +35,51 @@ link_dates_by_type <- function(posterior, data, mod_end = 0) {
   return(posterior)
 }
 
+
+#' Link posterior estimates with observed data
+#'
+#' Link posterior estimates with observed data and flag if values are observed
+#' or not.
+#'
+#' @param obs Numeric vector of observed data to link to posterior estimates.
+#' @param horizon Integer indicating the horizon of unobserved forecasts. If not
+#' specified will be inferred from `obs`.
+#' @param target_types A character vector of types (as specified in the `type`
+#' variable) to modify
+#' @inheritParams link_dates_with_posterior
+#' @return The input data.frame combined with `obs` and `observed` variables.
+link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
+  posterior <- setDT(posterior)
+  if (missing(horizon) & !missing(obs)) {
+    horizon <- max(posterior[type %in% target_types,
+      .(n = .N),
+      by = "type"
+    ]$n) - length(obs)
+  }
+  if (!missing(obs)) {
+    posterior[type %in% target_types,
+      obs := c(obs, rep(NA_real_, horizon)),
+      by = "type"
+    ]
+  }
+  if (!missing(horizon)) {
+    posterior[type %in% target_types,
+      observed := c(
+        rep(TRUE, .N - horizon),
+        rep(FALSE, horizon)
+      ),
+      by = "type"
+    ]
+  }
+  setcolorder(posterior,
+    neworder = intersect(
+      colnames(posterior),
+      c("type", "date", "obs", "observed")
+    )
+  )
+  return(posterior)
+}
+
 #' Summarise the posterior
 #'
 #' @param fit List of output as returned by `stan_fit()`.
@@ -48,7 +93,7 @@ link_dates_by_type <- function(posterior, data, mod_end = 0) {
 #' inits <- stan_inits(dt)
 #' options(mc.cores = 4)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' summarise_posterior(fit) -> p
+#' summarise_posterior(fit)
 #' }
 summarise_posterior <- function(fit,
                                 probs = c(
@@ -61,6 +106,8 @@ summarise_posterior <- function(fit,
   # extract useful model info
   data <- fit$data
   fit <- fit$fit
+  case_horizon <- data$t - data$t_nots
+  seq_horizon <- data$t - data$t_seq - data$t_nseq
 
   # extract summary parameters of interest and join
   sfit <- list(
@@ -88,13 +135,25 @@ summarise_posterior <- function(fit,
     rep(delta_present, .N), "Combined",
     default = "Overall"
   )]
-  cases <- link_dates_by_type(cases, data)
+  cases <- link_dates_with_posterior(cases, data)
+  cases <- link_obs_with_posterior(
+    posterior = cases, obs = data$X,
+    target_types = c("Overall", "Combined")
+  )
+  cases <- link_obs_with_posterior(
+    posterior = cases, horizon = seq_horizon,
+    target_types = c("DELTA", "non-DELTA")
+  )
 
   # summarise delta if present
   delta <- sfit[grepl("frac_delta", variable)]
   delta[, type := "DELTA"]
   if (nrow(delta) > 0) {
-    delta <- link_dates_by_type(delta, data)
+    delta <- link_dates_with_posterior(delta, data)
+    delta <- link_obs_with_posterior(
+      posterior = delta, obs = data$Y / data$N,
+      target_types = "DELTA"
+    )
   }
 
   # summarise Rt and label
@@ -105,8 +164,15 @@ summarise_posterior <- function(fit,
     grepl("r\\[", variable) & delta_present, "non-DELTA",
     grepl("r\\[", variable), "Overall"
   )]
-  rt <- link_dates_by_type(rt, data, mod_end = 1)
-
+  rt <- link_dates_with_posterior(rt, data, mod_end = 1)
+  rt <- link_obs_with_posterior(
+    posterior = rt, horizon = case_horizon,
+    target_types = c("Overall", "Combined")
+  )
+  rt <- link_obs_with_posterior(
+    posterior = rt, horizon = seq_horizon,
+    target_types = c("DELTA", "non-DELTA")
+  )
   # copy into growth
   growth <- copy(rt)
 
@@ -126,7 +192,7 @@ summarise_posterior <- function(fit,
       "Initial DELTA effect", "Average DELTA effect",
       "DELTA (sd)", "Non-DELTA (sd)", "Initial cases",
       "Initial DELTA cases", "Notification overdispersion",
-      "Sequencing overdispersion",  "Notification overdispersion"
+      "Sequencing overdispersion", "Notification overdispersion"
     ),
     exponentiated = c(
       rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2),
