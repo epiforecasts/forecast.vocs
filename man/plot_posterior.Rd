@@ -4,7 +4,7 @@
 \alias{plot_posterior}
 \title{Plot posterior predictions}
 \usage{
-plot_posterior(posterior, obs, forecast_date = NULL, save_path, type = "png")
+plot_posterior(posterior, obs, forecast_dates = NULL, save_path, type = "png")
 }
 \description{
 Plot posterior predictions

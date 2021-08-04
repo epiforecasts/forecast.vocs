@@ -16,7 +16,7 @@ plot_default <- function(data, ...) {
 plot_theme <- function(plot) {
   plot <- plot +
     theme_bw() +
-    theme(legend.position = "bottom") +
+    theme(legend.position = "bottom", legend.box = "vertical") +
     scale_x_date(date_breaks = "1 week", date_labels = "%b %d") +
     theme(axis.text.x = element_text(angle = 90))
   return(plot)
@@ -24,10 +24,22 @@ plot_theme <- function(plot) {
 
 #' Add the forecast date to a plot
 #' @export
-add_forecast_date <- function(plot, forecast_date) {
-  if (!is.null(forecast_date)) {
+add_forecast_dates <- function(plot, forecast_dates) {
+  if (!is.null(forecast_dates)) {
+    forecast_dates <- data.table(
+      "Data unavailable" = names(forecast_dates),
+      dates = as.Date(forecast_dates)
+    )
     plot <- plot +
-      geom_vline(xintercept = as.Date(forecast_date), linetype = 3, size = 1.1)
+      geom_vline(
+        data = forecast_dates,
+        aes(
+          xintercept = dates,
+          linetype = .data[["Data unavailable"]]
+        ),
+        size = 1.1, alpha = 0.9
+      ) +
+      scale_linetype_manual(values = 2:6)
   }
   return(plot)
 }
@@ -35,7 +47,7 @@ add_forecast_date <- function(plot, forecast_date) {
 #' Plot the posterior prediction for cases
 #' @export
 #' @importFrom scales comma log_trans
-plot_cases <- function(posterior, obs, forecast_date = NULL,
+plot_cases <- function(posterior, obs, forecast_dates = NULL,
                        log = TRUE) {
   setnames(posterior$cases, "type", "Type", skip_absent = TRUE)
   plot <- plot_default(posterior$cases, x = date, col = Type, fill = Type)
@@ -60,7 +72,7 @@ plot_cases <- function(posterior, obs, forecast_date = NULL,
     scale_fill_brewer(palette = "Dark2")
 
   plot <- plot_theme(plot)
-  plot <- add_forecast_date(plot, forecast_date)
+  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
 
@@ -68,7 +80,7 @@ plot_cases <- function(posterior, obs, forecast_date = NULL,
 #' variant
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior, obs, forecast_date = NULL) {
+plot_delta <- function(posterior, obs, forecast_dates = NULL) {
   plot <- plot_default(posterior$delta, x = date)
 
   if (!missing(obs)) {
@@ -85,13 +97,13 @@ plot_delta <- function(posterior, obs, forecast_date = NULL) {
     )
 
   plot <- plot_theme(plot)
-  plot <- add_forecast_date(plot, forecast_date)
+  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
 
 #' Plot the posterior prediction for the reproduction number
 #' @export
-plot_rt <- function(posterior, forecast_date = NULL) {
+plot_rt <- function(posterior, forecast_dates = NULL) {
   setnames(posterior$rt, "type", "Type", skip_absent = TRUE)
   plot <- plot_default(posterior$rt, x = date, col = Type, fill = Type)
   plot <- plot +
@@ -104,7 +116,7 @@ plot_rt <- function(posterior, forecast_date = NULL) {
       x = "Date"
     )
   plot <- plot_theme(plot)
-  plot <- add_forecast_date(plot, forecast_date)
+  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
 plot_model <- function(posterior) {
@@ -122,15 +134,15 @@ plot_model <- function(posterior) {
 #' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior, obs)
 #' }
-plot_posterior <- function(posterior, obs, forecast_date = NULL,
+plot_posterior <- function(posterior, obs, forecast_dates = NULL,
                            save_path, type = "png") {
   plots <- list()
-  plots$cases <- plot_cases(posterior, obs, forecast_date, log = FALSE)
-  plots$log_cases <- plot_cases(posterior, obs, forecast_date,
+  plots$cases <- plot_cases(posterior, obs, forecast_dates, log = FALSE)
+  plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
     log = TRUE
   )
-  plots$delta <- plot_delta(posterior, obs, forecast_date)
-  plots$rt <- plot_rt(posterior, forecast_date)
+  plots$delta <- plot_delta(posterior, obs, forecast_dates)
+  plots$rt <- plot_rt(posterior, forecast_dates)
 
   if (!missing(save_path)) {
     walk2(
@@ -166,7 +178,8 @@ plot_pairs <- function(fit,
                          "ndelta_noise[1]", "init_cases",
                          "init_cases[1]", "init_cases[2]",
                          "eta[1]", "delta_eta[1]", "ndelta_eta[1]",
-                         "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
+                         "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"
+                       ),
                        diagnostics = TRUE, ...) {
   draws <- extract_draws(fit)
   stanfit <- convert_to_stanfit(fit)

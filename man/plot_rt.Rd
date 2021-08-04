@@ -4,7 +4,7 @@
 \alias{plot_rt}
 \title{Plot the posterior prediction for the reproduction number}
 \usage{
-plot_rt(posterior, forecast_date = NULL)
+plot_rt(posterior, forecast_dates = NULL)
 }
 \description{
 Plot the posterior prediction for the reproduction number

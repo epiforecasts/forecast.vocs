@@ -5,7 +5,7 @@
 \title{Plot the posterior prediction for the fraction of samples with the DELTA
 variant}
 \usage{
-plot_delta(posterior, obs, forecast_date = NULL)
+plot_delta(posterior, obs, forecast_dates = NULL)
 }
 \description{
 Plot the posterior prediction for the fraction of samples with the DELTA
