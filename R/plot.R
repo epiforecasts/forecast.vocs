@@ -1,16 +1,3 @@
-#' Default plot
-#' @export
-plot_default <- function(data, ...) {
-  check_quantiles(data, req_probs = c(0.05, 0.2, 0.8, 0.95))
-  plot <- ggplot(data) +
-    aes(...) +
-    geom_line(aes(y = median), size = 1, alpha = 0.6) +
-    geom_line(aes(y = mean), linetype = 2) +
-    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.2) +
-    geom_ribbon(aes(ymin = q20, ymax = q80, col = NULL), alpha = 0.2)
-  return(plot)
-}
-
 #' Add the default plot theme
 #' @export
 plot_theme <- function(plot) {
@@ -22,9 +9,9 @@ plot_theme <- function(plot) {
   return(plot)
 }
 
-#' Add the forecast date to a plot
+#' Add the forecast dates to a plot
 #' @export
-add_forecast_dates <- function(plot, forecast_dates) {
+add_forecast_dates <- function(plot, forecast_dates = NULL) {
   if (!is.null(forecast_dates)) {
     forecast_dates <- data.table(
       "Data unavailable" = names(forecast_dates),
@@ -44,18 +31,61 @@ add_forecast_dates <- function(plot, forecast_dates) {
   return(plot)
 }
 
+#' Default posterior plot
+#'
+#' @param obs A data frame of observed data as produced by `latest_obs()`.
+#' @param target A character string indicating which variable to extract
+#' from the posterior list.
+#' @inheritParams extract_forecast_dates
+#' @export
+plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
+                         ...) {
+  data <- copy(posterior[[target]])
+  setnames(data, "type", "Type", skip_absent = TRUE)
+
+  forecast_dates <- extract_forecast_dates(posterior, forecast_dates)
+
+  check_quantiles(data, req_probs = c(0.05, 0.2, 0.8, 0.95))
+  plot <- ggplot(data) +
+    aes(...)
+
+  plot <- add_forecast_dates(plot, forecast_dates)
+
+  plot <- plot +
+    geom_line(aes(y = median), size = 1, alpha = 0.6) +
+    geom_line(aes(y = mean), linetype = 2) +
+    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.2) +
+    geom_ribbon(aes(ymin = q20, ymax = q80, col = NULL), alpha = 0.2)
+
+  if (is.null(obs)) {
+    if (is.null(data[["obs"]])) {
+      data[, obs := NA_real_]
+    }
+    obs <- data[, .(date, value = obs)]
+  }
+  obs <- unique(obs)
+  obs <- obs[!is.na(value)]
+
+  if (nrow(obs) > 0) {
+    obs <- obs[date <= max(data$date) & date >= min(data$date)]
+    plot <- plot +
+      geom_point(data = obs, aes(y = value, col = NULL, fill = NULL))
+  }
+  return(plot)
+}
+
 #' Plot the posterior prediction for cases
+#' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
-plot_cases <- function(posterior, obs, forecast_dates = NULL,
+plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
                        log = TRUE) {
-  setnames(posterior$cases, "type", "Type", skip_absent = TRUE)
-  plot <- plot_default(posterior$cases, x = date, col = Type, fill = Type)
-
-  if (!missing(obs)) {
-    plot <- plot +
-      geom_point(data = obs, aes(y = cases, col = NULL, fill = NULL))
+  if (!is.null(obs)) {
+    obs <- copy(obs)[, .(date, value = cases)]
   }
+  plot <- plot_default(posterior, "cases", obs, forecast_dates,
+    x = date, col = Type, fill = Type
+  )
 
   if (log) {
     plot <- plot +
@@ -72,22 +102,19 @@ plot_cases <- function(posterior, obs, forecast_dates = NULL,
     scale_fill_brewer(palette = "Dark2")
 
   plot <- plot_theme(plot)
-  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
 
 #' Plot the posterior prediction for the fraction of samples with the DELTA
 #' variant
+#' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior, obs, forecast_dates = NULL) {
-  plot <- plot_default(posterior$delta, x = date)
-
-  if (!missing(obs)) {
-    obs <- obs[!is.na(seq_available)]
-    plot <- plot +
-      geom_point(data = obs, aes(y = share_delta))
+plot_delta <- function(posterior, obs = NULL, forecast_dates = NULL) {
+  if (!is.null(obs)) {
+    obs <- copy(obs)[, .(date, value = share_delta)]
   }
+  plot <- plot_default(posterior, "delta", obs, forecast_dates, x = date)
 
   plot <- plot +
     scale_y_continuous(labels = scales::percent) +
@@ -97,15 +124,18 @@ plot_delta <- function(posterior, obs, forecast_dates = NULL) {
     )
 
   plot <- plot_theme(plot)
-  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
 
 #' Plot the posterior prediction for the reproduction number
+#' @inheritParams plot_default
 #' @export
 plot_rt <- function(posterior, forecast_dates = NULL) {
-  setnames(posterior$rt, "type", "Type", skip_absent = TRUE)
-  plot <- plot_default(posterior$rt, x = date, col = Type, fill = Type)
+  plot <- plot_default(posterior, "rt",
+    obs = NULL,
+    forecast_dates, x = date, col = Type,
+    fill = Type
+  )
   plot <- plot +
     geom_hline(yintercept = 1, linetype = 3, col = "black")
 
@@ -116,14 +146,12 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
       x = "Date"
     )
   plot <- plot_theme(plot)
-  plot <- add_forecast_dates(plot, forecast_dates)
   return(plot)
 }
-plot_model <- function(posterior) {
-  dt <- posterior$model
-}
+
 #' Plot posterior predictions
 #' @export
+#' @inheritParams plot_cases
 #' @importFrom purrr walk2
 #' @examples
 #' \dontrun{
@@ -132,16 +160,18 @@ plot_model <- function(posterior) {
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
-#' plot_posterior(posterior, obs)
+#' plot_posterior(posterior)
 #' }
-plot_posterior <- function(posterior, obs, forecast_dates = NULL,
+plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path, type = "png") {
   plots <- list()
   plots$cases <- plot_cases(posterior, obs, forecast_dates, log = FALSE)
   plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
     log = TRUE
   )
-  plots$delta <- plot_delta(posterior, obs, forecast_dates)
+  if (nrow(posterior$delta) > 0) {
+    plots$delta <- plot_delta(posterior, obs, forecast_dates)
+  }
   plots$rt <- plot_rt(posterior, forecast_dates)
 
   if (!missing(save_path)) {

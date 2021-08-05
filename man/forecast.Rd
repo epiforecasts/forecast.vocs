@@ -20,6 +20,7 @@ forecast(
   likelihood = TRUE,
   output_loglik = FALSE,
   probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
+  plot = TRUE,
   ...
 )
 }
@@ -52,6 +53,9 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
 included in the model.extract}
+
+\item{plot}{Logical, should posterior plots be produced and saved.
+Defaults to \code{TRUE}.}
 }
 \description{
 Forecast using branching processes at a target date

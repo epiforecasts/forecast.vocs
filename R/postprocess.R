@@ -223,6 +223,7 @@ combine_posteriors <- function(posteriors_list) {
 
 #' Save a summarised posterior
 #' @export
+#' @inheritParams link_dates_with_posterior
 #' @importFrom purrr safely walk2
 #' @importFrom data.table fwrite
 save_posterior <- function(posterior, save_path = tempdir()) {
@@ -232,6 +233,64 @@ save_posterior <- function(posterior, save_path = tempdir()) {
     posterior, file_names,
     ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv"))
   )
+}
+
+
+#' Extract forecast dates
+#'
+#' Extract forecast dates based on the availability of both case
+#' and sequence data. Custom forecasts dates can also be defined and the
+#' automated forecasts can be overridden as desired.
+#'
+#' @param posterior A list of posterior output as produced by
+#'  `summarise_posterior()`.
+#' @param forecast_dates A named vector of dates to use to identify when
+#' output is a forecast vs an estimate. Defaults to empty in which case
+#' forecast dates are inferred from the `posterior` list based on data
+#' availability for cases and sequences. These dates can be overridden
+#'  by supplying a replacement data with a duplicate name (see the examples).
+#' @export
+#' @return A named vector of dates.
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' p <- summarise_posterior(fit)
+#' # default
+#' extract_forecast_dates(p)
+#'
+#' # add a custom date
+#' extract_forecast_dates(p, c("custom" = "2021-08-01"))
+#'
+#' # overwrite a date
+#' extract_forecast_dates(p, c("Cases" = "2021-08-01"))
+#' }
+extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
+  dates <- suppressWarnings(
+    c(
+      "Cases" = posterior$cases[
+        observed == TRUE & type %in% c("Combined", "Overall"),
+        .(date = max(date))
+      ]$date,
+      "Sequences" = posterior$cases[
+        observed == TRUE & !(type %in% c("Combined", "Overall")),
+        .(date = max(date))
+      ]$date
+    )
+  )
+
+  if (!is.null(forecast_dates)) {
+    date_names <- names(forecast_dates)
+    forecast_dates <- as.Date(forecast_dates)
+    names(forecast_dates) <- date_names
+    dates <- c(
+      as.Date(forecast_dates),
+      dates[setdiff(names(dates), names(forecast_dates))]
+    )
+  }
+  return(dates)
 }
 
 #' Extract posterior draws

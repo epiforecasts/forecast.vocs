@@ -2,10 +2,10 @@
 % Please edit documentation in R/plot.R
 \name{add_forecast_dates}
 \alias{add_forecast_dates}
-\title{Add the forecast date to a plot}
+\title{Add the forecast dates to a plot}
 \usage{
-add_forecast_dates(plot, forecast_dates)
+add_forecast_dates(plot, forecast_dates = NULL)
 }
 \description{
-Add the forecast date to a plot
+Add the forecast dates to a plot
 }

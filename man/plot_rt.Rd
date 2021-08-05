@@ -6,6 +6,16 @@
 \usage{
 plot_rt(posterior, forecast_dates = NULL)
 }
+\arguments{
+\item{posterior}{A list of posterior output as produced by
+\code{summarise_posterior()}.}
+
+\item{forecast_dates}{A named vector of dates to use to identify when
+output is a forecast vs an estimate. Defaults to empty in which case
+forecast dates are inferred from the \code{posterior} list based on data
+availability for cases and sequences. These dates can be overridden
+by supplying a replacement data with a duplicate name (see the examples).}
+}
 \description{
 Plot the posterior prediction for the reproduction number
 }
