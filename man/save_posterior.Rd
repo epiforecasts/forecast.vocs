@@ -6,6 +6,12 @@
 \usage{
 save_posterior(posterior, save_path = tempdir())
 }
+\arguments{
+\item{posterior}{A data frame of summarised posterior estimates
+as returned by \code{cmdstanr::summary} with  an additional type variable
+which contains the following character string options: "non-DELTA",
+"DELTA", "Combined", "Overall".}
+}
 \description{
 Save a summarised posterior
 }

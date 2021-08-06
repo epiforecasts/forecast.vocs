@@ -5,7 +5,22 @@
 \title{Plot the posterior prediction for the fraction of samples with the DELTA
 variant}
 \usage{
-plot_delta(posterior, obs, forecast_date = NULL)
+plot_delta(posterior, obs = NULL, forecast_dates = NULL, all_obs = FALSE)
+}
+\arguments{
+\item{posterior}{A list of posterior output as produced by
+\code{summarise_posterior()}.}
+
+\item{obs}{A data frame of observed data as produced by \code{latest_obs()}.}
+
+\item{forecast_dates}{A named vector of dates to use to identify when
+output is a forecast vs an estimate. Defaults to empty in which case
+forecast dates are inferred from the \code{posterior} list based on data
+availability for cases and sequences. These dates can be overridden
+by supplying a replacement data with a duplicate name (see the examples).}
+
+\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
+or just those in the date range of the estimates being plot.}
 }
 \description{
 Plot the posterior prediction for the fraction of samples with the DELTA

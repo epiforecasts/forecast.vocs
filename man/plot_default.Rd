@@ -2,10 +2,35 @@
 % Please edit documentation in R/plot.R
 \name{plot_default}
 \alias{plot_default}
-\title{Default plot}
+\title{Default posterior plot}
 \usage{
-plot_default(data, ...)
+plot_default(
+  posterior,
+  target,
+  obs = NULL,
+  forecast_dates = NULL,
+  all_obs = FALSE,
+  ...
+)
+}
+\arguments{
+\item{posterior}{A list of posterior output as produced by
+\code{summarise_posterior()}.}
+
+\item{target}{A character string indicating which variable to extract
+from the posterior list.}
+
+\item{obs}{A data frame of observed data as produced by \code{latest_obs()}.}
+
+\item{forecast_dates}{A named vector of dates to use to identify when
+output is a forecast vs an estimate. Defaults to empty in which case
+forecast dates are inferred from the \code{posterior} list based on data
+availability for cases and sequences. These dates can be overridden
+by supplying a replacement data with a duplicate name (see the examples).}
+
+\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
+or just those in the date range of the estimates being plot.}
 }
 \description{
-Default plot
+Default posterior plot
 }

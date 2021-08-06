@@ -2,6 +2,8 @@
 #' Forecast using branching processes at a target date
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
+#' @param plot Logical, should posterior plots be produced and saved.
+#' Defaults to `TRUE`.
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
 #' @inheritParams forecast_n_strain
@@ -18,7 +20,7 @@ forecast <- function(obs,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
                        0.975, 0.99
-                     ),
+                     ), plot = TRUE,
                      ...) {
   # resolve  data availability
   target_obs <- filter_by_availability(
@@ -52,16 +54,18 @@ forecast <- function(obs,
     ...
   )
   names(strain_fits) <- paste0(strains, "_strains")
-  posteriors <- purrr::transpose(strain_fits)
-  posteriors <- combine_posteriors(posteriors$tidy_posterior)
+  tfits <- purrr::transpose(strain_fits)
+  posteriors <- combine_posteriors(tfits$tidy_posterior)
+  forecasts <- combine_posteriors(tfits$forecast)
 
   save_posterior(posteriors, save_path = date_path)
-
-  plots <- plot_posterior(posteriors, plot_obs,
-    forecast_date = forecast_date,
-    save_path = date_path
+  out <- list(
+    posteriors = posteriors, forecasts = forecasts,
+    models = strain_fits
   )
-  out <- list(posteriors = posteriors, plots = plots, models = strain_fits)
+  if (plot) {
+    out$plots <- plot_posterior(posteriors, plot_obs, save_path = date_path)
+  }
   return(out)
 }
 #' Forecast using a single branching process
@@ -91,6 +95,7 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
   )
 
   fit$tidy_posterior <- summarise_posterior(fit, probs = probs)
+  fit$forecast <- extract_forecast(fit$tidy_posterior)
   return(fit)
 }
 
