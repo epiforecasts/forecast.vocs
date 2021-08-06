@@ -4,7 +4,13 @@
 \alias{plot_cases}
 \title{Plot the posterior prediction for cases}
 \usage{
-plot_cases(posterior, obs = NULL, forecast_dates = NULL, log = TRUE)
+plot_cases(
+  posterior,
+  obs = NULL,
+  forecast_dates = NULL,
+  log = TRUE,
+  all_obs = FALSE
+)
 }
 \arguments{
 \item{posterior}{A list of posterior output as produced by
@@ -17,6 +23,9 @@ output is a forecast vs an estimate. Defaults to empty in which case
 forecast dates are inferred from the \code{posterior} list based on data
 availability for cases and sequences. These dates can be overridden
 by supplying a replacement data with a duplicate name (see the examples).}
+
+\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
+or just those in the date range of the estimates being plot.}
 }
 \description{
 Plot the posterior prediction for cases

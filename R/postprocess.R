@@ -235,7 +235,6 @@ save_posterior <- function(posterior, save_path = tempdir()) {
   )
 }
 
-
 #' Extract forecast dates
 #'
 #' Extract forecast dates based on the availability of both case
@@ -268,31 +267,79 @@ save_posterior <- function(posterior, save_path = tempdir()) {
 #' extract_forecast_dates(p, c("Cases" = "2021-08-01"))
 #' }
 extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
-  dates <- suppressWarnings(
-    c(
-      "Cases" = posterior$cases[
-        observed == TRUE & type %in% c("Combined", "Overall"),
-        .(date = max(date))
-      ]$date,
-      "Sequences" = posterior$cases[
-        observed == TRUE & !(type %in% c("Combined", "Overall")),
-        .(date = max(date))
-      ]$date
+  dates <- NULL
+  if (!is.null(posterior$cases[["observed"]])) {
+    dates <- suppressWarnings(
+      c(
+        "Cases" = posterior$cases[
+          observed == TRUE & type %in% c("Combined", "Overall"),
+          .(date = max(date))
+        ]$date,
+        "Sequences" = posterior$cases[
+          observed == TRUE & !(type %in% c("Combined", "Overall")),
+          .(date = max(date))
+        ]$date
+      )
     )
-  )
+  }
 
   if (!is.null(forecast_dates)) {
     date_names <- names(forecast_dates)
     forecast_dates <- as.Date(forecast_dates)
     names(forecast_dates) <- date_names
-    dates <- c(
-      as.Date(forecast_dates),
-      dates[setdiff(names(dates), names(forecast_dates))]
-    )
+    if (is.null(dates)) {
+      dates <- forecast_dates
+    } else {
+      dates <- c(
+        forecast_dates,
+        dates[setdiff(names(dates), names(forecast_dates))]
+      )
+    }
   }
   return(dates)
 }
 
+extract_forecast_by_type <- function(posterior, forecast_dates) {
+  posterior <- rbind(
+    posterior[
+      type %in% c("Overall", "Combined") & date > forecast_dates["Cases"]
+    ],
+    posterior[
+      !(type %in% c("Overall", "Combined")) & date > forecast_dates["Sequences"]
+    ]
+  )
+  return(posterior)
+}
+
+extract_forecast <- function(posterior, forecast_dates = NULL) {
+  if (!is.null(forecast_dates)) {
+    names(forecast_dates) <- match.arg(names(forecast_dates),
+      c("Sequences", "Cases"),
+      several.ok = TRUE
+    )
+  }
+  forecast_dates <- extract_forecast_dates(
+    posterior,
+    forecast_dates = forecast_dates
+  )
+
+  forecast <- list(
+    cases = extract_forecast_by_type(copy(posterior$cases), forecast_dates),
+    rt = extract_forecast_by_type(copy(posterior$rt), forecast_dates),
+    growth = extract_forecast_by_type(copy(posterior$growth), forecast_dates)
+  )
+  if (nrow(posterior$delta) > 0) {
+    forecast$delta <- posterior$delta[date > dates["Sequences"]]
+  }
+  cols <- c("obs", "observed", "rhat", "ess_bulk", "ess_tail")
+  forecast <- suppressWarnings(purrr::map(forecast, ~ .[, (cols) := NULL]))
+  forecast <- purrr::map(forecast, ~ .[, horizon := 1:.N, by = "type"])
+  forecast <- purrr::map(
+    forecast,
+    ~ setcolorder(., neworder = c("type", "date", "horizon"))
+  )
+  return(forecast)
+}
 #' Extract posterior draws
 #'
 #' @param ... Additional parameters passed to `cmdstanr::draws`

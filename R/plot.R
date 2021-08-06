@@ -36,10 +36,12 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @param obs A data frame of observed data as produced by `latest_obs()`.
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
+#' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
+#' or just those in the date range of the estimates being plot.
 #' @inheritParams extract_forecast_dates
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
-                         ...) {
+                         all_obs = FALSE, ...) {
   data <- copy(posterior[[target]])
   setnames(data, "type", "Type", skip_absent = TRUE)
 
@@ -67,7 +69,9 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
   obs <- obs[!is.na(value)]
 
   if (nrow(obs) > 0) {
-    obs <- obs[date <= max(data$date) & date >= min(data$date)]
+    if (!all_obs) {
+      obs <- obs[date <= max(data$date) & date >= min(data$date)]
+    }
     plot <- plot +
       geom_point(data = obs, aes(y = value, col = NULL, fill = NULL))
   }
@@ -79,12 +83,12 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @export
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       log = TRUE) {
+                       log = TRUE, all_obs = FALSE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = cases)]
   }
   plot <- plot_default(posterior, "cases", obs, forecast_dates,
-    x = date, col = Type, fill = Type
+    all_obs = all_obs, x = date, col = Type, fill = Type
   )
 
   if (log) {
@@ -110,11 +114,14 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior, obs = NULL, forecast_dates = NULL) {
+plot_delta <- function(posterior, obs = NULL, forecast_dates = NULL,
+                       all_obs = FALSE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = share_delta)]
   }
-  plot <- plot_default(posterior, "delta", obs, forecast_dates, x = date)
+  plot <- plot_default(posterior, "delta", obs, forecast_dates,
+    all_obs = FALSE, x = date
+  )
 
   plot <- plot +
     scale_y_continuous(labels = scales::percent) +
@@ -163,14 +170,17 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' plot_posterior(posterior)
 #' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           save_path, type = "png") {
+                           all_obs = FALSE, save_path, type = "png") {
   plots <- list()
-  plots$cases <- plot_cases(posterior, obs, forecast_dates, log = FALSE)
+  plots$cases <- plot_cases(posterior, obs, forecast_dates,
+    log = FALSE,
+    all_obs = all_obs
+  )
   plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
-    log = TRUE
+    log = TRUE, all_obs = all_obs
   )
   if (nrow(posterior$delta) > 0) {
-    plots$delta <- plot_delta(posterior, obs, forecast_dates)
+    plots$delta <- plot_delta(posterior, obs, forecast_dates, all_obs = all_obs)
   }
   plots$rt <- plot_rt(posterior, forecast_dates)
 
