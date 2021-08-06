@@ -299,6 +299,11 @@ extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
   return(dates)
 }
 
+#' Extract forecasts from a posterior data frame by type
+#'
+#' @inheritParams link_dates_with_posterior
+#' @inheritParams extract_forecast
+#' @return A data frame of forecasts from the posterior data frame.
 extract_forecast_by_type <- function(posterior, forecast_dates) {
   posterior <- rbind(
     posterior[
@@ -311,12 +316,32 @@ extract_forecast_by_type <- function(posterior, forecast_dates) {
   return(posterior)
 }
 
+#' Extract forecasts from a summarised posterior
+#'
+#'
+#' @param forecast_dates A named vector of dates to use to identify when
+#' output is a forecast. Must contain a "Cases" date and a "Sequence" date.
+#' Default is to infer these dates from the summarised posterior.
+#' @inheritParams extract_forecast_dates()
+#' @return A list containing a forecast for each parameter
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' p <- summarise_posterior(fit)
+#' extract_forecast(p)
+#' }
 extract_forecast <- function(posterior, forecast_dates = NULL) {
   if (!is.null(forecast_dates)) {
     names(forecast_dates) <- match.arg(names(forecast_dates),
       c("Sequences", "Cases"),
       several.ok = TRUE
     )
+    if (length(forecast_dates) != 2) {
+      stop("forecast_dates must contain a date for both cases and sequences")
+    }
   }
   forecast_dates <- extract_forecast_dates(
     posterior,
