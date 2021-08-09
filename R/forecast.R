@@ -30,7 +30,11 @@ forecast <- function(obs,
   )
 
   # add date to saving paths
-  date_path <- file.path(save_path, forecast_date)
+  if (!is.null(save_path)) {
+    date_path <- file.path(save_path, forecast_date)
+  } else {
+    date_path <- NULL
+  }
 
   # format data and fit models
   data <- stan_data(target_obs,
@@ -80,9 +84,10 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
                                 0.975, 0.99
                               ),
                               ...) {
-  save_path <- file.path(save_path, paste0(strains, "_strains"))
-  dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
-
+  if (!is.null(save_path)) {
+    save_path <- file.path(save_path, paste0(strains, "_strains"))
+    dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+  }
   inits <- stan_inits(data, strains = strains)
 
   if (is.null(model)) {

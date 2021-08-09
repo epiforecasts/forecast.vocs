@@ -61,20 +61,35 @@ obs_targets <- list(
   tar_target(
     retro_obs,
     filter_by_availability(obs, date = forecast_dates),
-    map(forecast_dates)
+    map(forecast_dates),
+    deployment = "main"
   ),
   tar_target(
     scenario_obs,
-    purrr::map2(
-      scenarios$seq_lag, scenarios$seq_samples,
-      ~ generate_obs_scenario(latest_obs, seq_lag = .x, seq_samples = .y)
-    )
+    scenarios[
+      ,
+      obs := list(generate_obs_scenario(
+        latest_obs,
+        seq_lag = seq_lag, seq_samples = seq_samples
+      ))
+    ],
+    map(scenarios),
+    deployment = "main"
+  ),
+  tar_target(
+    avail_scenario_obs,
+    scenario_obs[, `:=`(
+      forecast_date = forecast_dates,
+      avail_obs = list(filter_by_availability(obs, forecast_dates))
+    )],
+    cross(forecast_dates, scenario_obs),
+    deployment = "main"
   )
 )
 
 # Targets producing forecasts
-
-forecast_dt <- function(obs, overdispersion, id, forecast_args, ...) {
+forecast_dt <- function(obs, overdispersion, variant_relationship,
+                        id, forecast_args, ...) {
   dt <- data.table(
     date = max(obs$date),
     overdispersion = overdispersion
@@ -92,7 +107,7 @@ forecast_dt <- function(obs, overdispersion, id, forecast_args, ...) {
         forecast,
         c(
           forecast_args,
-          ...,
+          list(...),
           list(
             obs = obs, overdispersion = overdispersion
           )
@@ -105,7 +120,7 @@ forecast_dt <- function(obs, overdispersion, id, forecast_args, ...) {
 
 forecast_targets <- list(
   tar_target(
-    single_retrospective_forecast,
+    single_retrospective_forecasts,
     forecast_dt(retro_obs, overdispersion,
       forecast_args = forecast_args,
       strains = 1, models = list(single_model)
@@ -123,9 +138,36 @@ forecast_targets <- list(
   )
 )
 
+scenario_forecast_targets <- list(
+  tar_target(
+    single_scenario_forecasts,
+    forecast_dt(avail_scenario_obs$avail_obs[[1]],
+      overdispersion = overdispersion,
+      forecast_args = forecast_args,
+      strains = 1, models = list(single_model),
+      id = avail_scenario_obs$id[[1]],
+      delta = avail_scenario_obs$delta[[1]]
+    ),
+    cross(avail_scenario_obs, overdispersion)
+  ),
+  tar_target(
+    two_scenario_forecasts,
+    forecast_dt(avail_scenario_obs$avail_obs[[1]],
+      overdispersion = overdispersion,
+      variant_relationship = variant_relationship,
+      forecast_args = forecast_args,
+      strains = 2, models = list(two_model),
+      id = avail_scenario_obs$id[[1]],
+      delta = avail_scenario_obs$delta[[1]]
+    ),
+    cross(avail_scenario_obs, variant_relationship, overdispersion)
+  )
+)
+
 c(
   meta_targets,
   obs_targets,
   scenario_targets,
-  forecast_targets
+  forecast_targets,
+  scenario_forecast_targets
 )

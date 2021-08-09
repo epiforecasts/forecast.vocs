@@ -173,7 +173,7 @@ stan_fit <- function(data,
   model <- cmdstanr::cmdstan_model(model)
   fit <- model$sample(data = cdata, ...)
 
-  if (!missing(save_path)) {
+  if (!is.null(save_path)) {
     fit$save_object(file = file.path(save_path, "fit.rds"))
   }
 
