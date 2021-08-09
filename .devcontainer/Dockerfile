@@ -40,13 +40,6 @@ RUN apt-get update \
      && apt-get -y install --no-install-recommends libglpk-dev libv8-dev \
             pandoc-citeproc
 
-# install dependencies
-COPY DESCRIPTION /tmp/package/DESCRIPTION
-RUN Rscript -e "devtools::install_dev_deps('/tmp/package')"
-
-# install cmdstan
-RUN Rscript -e "cmdstanr::install_cmdstan()"
-
 # install latex via tinytex
 RUN Rscript -e "tinytex::install_tinytex()"
 
@@ -55,3 +48,10 @@ RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
 
 # install precommit
 RUN Rscript -e 'devtools::install_github("lorenzwalthert/precommit")'
+
+# install dependencies
+COPY ../DESCRIPTION /tmp/package/DESCRIPTION
+RUN Rscript -e "devtools::install_dev_deps('/tmp/package')"
+
+# install cmdstan
+RUN Rscript -e "cmdstanr::install_cmdstan()"
