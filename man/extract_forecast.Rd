@@ -7,6 +7,9 @@
 extract_forecast(posterior, forecast_dates = NULL)
 }
 \arguments{
+\item{posterior}{A list of posterior output as produced by
+\code{summarise_posterior()}.}
+
 \item{forecast_dates}{A named vector of dates to use to identify when
 output is a forecast. Must contain a "Cases" date and a "Sequence" date.
 Default is to infer these dates from the summarised posterior.}

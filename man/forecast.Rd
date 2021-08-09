@@ -6,7 +6,7 @@
 \usage{
 forecast(
   obs,
-  plot_obs = latest_obs(obs),
+  plot_obs = bp.delta::latest_obs(obs),
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,

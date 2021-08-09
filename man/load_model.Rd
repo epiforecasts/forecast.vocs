@@ -4,7 +4,13 @@
 \alias{load_model}
 \title{Load and compile a strain model}
 \usage{
-load_model(strains = 2)
+load_model(strains = 2, compile = TRUE, ...)
+}
+\arguments{
+\item{compile}{Logical, defaults to \code{TRUE}. Should the model
+be loaded and compiled using \code{cmdstanr::cmstan_model()}.}
+
+\item{...}{Additional arguments passed to \code{cmdstanr::cmstan_model()}.}
 }
 \description{
 Load and compile a strain model

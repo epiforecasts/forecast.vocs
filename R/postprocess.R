@@ -322,7 +322,7 @@ extract_forecast_by_type <- function(posterior, forecast_dates) {
 #' @param forecast_dates A named vector of dates to use to identify when
 #' output is a forecast. Must contain a "Cases" date and a "Sequence" date.
 #' Default is to infer these dates from the summarised posterior.
-#' @inheritParams extract_forecast_dates()
+#' @inheritParams extract_forecast_dates
 #' @return A list containing a forecast for each parameter
 #' @examples
 #' \dontrun{
@@ -354,7 +354,7 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
     growth = extract_forecast_by_type(copy(posterior$growth), forecast_dates)
   )
   if (nrow(posterior$delta) > 0) {
-    forecast$delta <- posterior$delta[date > dates["Sequences"]]
+    forecast$delta <- posterior$delta[date > forecast_dates["Sequences"]]
   }
   cols <- c("obs", "observed", "rhat", "ess_bulk", "ess_tail")
   forecast <- suppressWarnings(purrr::map(forecast, ~ .[, (cols) := NULL]))

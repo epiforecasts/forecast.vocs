@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom purrr map transpose reduce
 forecast <- function(obs,
-                     plot_obs = latest_obs(obs),
+                     plot_obs = bp.delta::latest_obs(obs),
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
                      save_path = tempdir(), horizon = 4,

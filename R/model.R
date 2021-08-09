@@ -51,7 +51,8 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     relat = fcase(
       variant_relationship %in% "pooled", 1,
       variant_relationship %in% "scaled", 0,
-      variant_relationship %in% "independent", 2),
+      variant_relationship %in% "independent", 2
+    ),
     overdisp = as.numeric(overdispersion)
   )
   # assign time where strains share a noise parameter
@@ -102,6 +103,9 @@ stan_inits <- function(data, strains = 2) {
 }
 
 #' Load and compile a strain model
+#' @param compile Logical, defaults to `TRUE`. Should the model
+#' be loaded and compiled using `cmdstanr::cmstan_model()`.
+#' @param ... Additional arguments passed to `cmdstanr::cmstan_model()`.
 #' @export
 #' @examples
 #' \dontrun{
@@ -111,7 +115,7 @@ stan_inits <- function(data, strains = 2) {
 #' # two strain model
 #' two_strain_mod <- load_model(strains = 2)
 #' }
-load_model <- function(strains = 2) {
+load_model <- function(strains = 2, compile = TRUE, ...) {
   if (strains == 1) {
     model <- "stan/bp.stan"
   } else if (strains == 2) {
@@ -121,7 +125,9 @@ load_model <- function(strains = 2) {
   }
 
   model <- system.file(model, package = "bp.delta")
-  model <- cmdstanr::cmdstan_model(model)
+  if (compile) {
+    model <- cmdstanr::cmdstan_model(model, ...)
+  }
   return(model)
 }
 
@@ -144,15 +150,19 @@ load_model <- function(strains = 2) {
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
 #' mod <- load_model(strains = 1)
-#' fit <- stan_fit(dt, model = mod, init = inits, adapt_delta = 0.99,
-#'                 max_treedepth = 15)
+#' fit <- stan_fit(dt,
+#'   model = mod, init = inits, adapt_delta = 0.99,
+#'   max_treedepth = 15
+#' )
 #' fit
 #'
 #' # two strain model
 #' inits <- stan_inits(dt, strains = 2)
 #' mod <- load_model(strains = 2)
-#' two_strain_fit <- stan_fit(dt, model = mod, init = inits,
-#'                            adapt_delta = 0.99, max_treedepth = 15)
+#' two_strain_fit <- stan_fit(dt,
+#'   model = mod, init = inits,
+#'   adapt_delta = 0.99, max_treedepth = 15
+#' )
 #' two_strain_fit
 #' }
 stan_fit <- function(data,

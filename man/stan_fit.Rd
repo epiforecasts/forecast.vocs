@@ -38,15 +38,19 @@ dt <- stan_data(latest_obs(germany_obs))
 # single strain model
 inits <- stan_inits(dt, strains = 1)
 mod <- load_model(strains = 1)
-fit <- stan_fit(dt, model = mod, init = inits, adapt_delta = 0.99,
-                max_treedepth = 15)
+fit <- stan_fit(dt,
+  model = mod, init = inits, adapt_delta = 0.99,
+  max_treedepth = 15
+)
 fit
 
 # two strain model
 inits <- stan_inits(dt, strains = 2)
 mod <- load_model(strains = 2)
-two_strain_fit <- stan_fit(dt, model = mod, init = inits,
-                           adapt_delta = 0.99, max_treedepth = 15)
+two_strain_fit <- stan_fit(dt,
+  model = mod, init = inits,
+  adapt_delta = 0.99, max_treedepth = 15
+)
 two_strain_fit
 }
 }

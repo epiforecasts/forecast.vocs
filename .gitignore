@@ -7,3 +7,4 @@ output
 inst/doc
 *.tex
 *.log
+_targets
