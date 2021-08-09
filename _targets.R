@@ -73,42 +73,51 @@ obs_targets <- list(
 )
 
 # Targets producing forecasts
-forecast_targets <- list(
-  tar_target(
-    single_retro,
-    data.table(
-      date = max(retro_obs$date),
-      overdispersion = overdispersion,
-      forecast = list(do.call(
+
+forecast_dt <- function(obs, overdispersion, id, forecast_args, ...) {
+  dt <- data.table(
+    date = max(obs$date),
+    overdispersion = overdispersion
+  )
+  if (!missing(variant_relationship)) {
+    dt[, variant_relationship := variant_relationship]
+  }
+  if (!missing(id)) {
+    dt[, id := id]
+  }
+  dt[
+    ,
+    forecast := list(
+      do.call(
         forecast,
         c(
           forecast_args,
+          ...,
           list(
-            obs = retro_obs, strains = 1, models = list(single_model),
-            overdispersion = overdispersion
+            obs = obs, overdispersion = overdispersion
           )
         )
-      ))
+      )
+    )
+  ]
+  return(dt)
+}
+
+forecast_targets <- list(
+  tar_target(
+    single_retrospective_forecast,
+    forecast_dt(retro_obs, overdispersion,
+      forecast_args = forecast_args,
+      strains = 1, models = list(single_model)
     ),
     cross(retro_obs, overdispersion)
   ),
   tar_target(
-    two_retro,
-    data.table(
-      date = max(retro_obs$date),
+    two_retrospective_forecasts,
+    forecast_dt(retro_obs, overdispersion,
       variant_relationship = variant_relationship,
-      overdispersion = overdispersion,
-      forecast = list(do.call(
-        forecast,
-        c(
-          forecast_args,
-          list(
-            obs = retro_obs, strains = 2, models = list(two_model),
-            variant_relationship = variant_relationship,
-            overdispersion = overdispersion
-          )
-        )
-      ))
+      forecast_args = forecast_args,
+      strains = 2, models = list(two_model)
     ),
     cross(retro_obs, variant_relationship, overdispersion)
   )

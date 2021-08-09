@@ -37,7 +37,8 @@ forecast <- function(obs,
     horizon = horizon, delta = delta,
     variant_relationship = variant_relationship,
     overdispersion = overdispersion,
-    likelihood = likelihood, output_loglik = output_loglik
+    likelihood = likelihood,
+    output_loglik = output_loglik
   )
 
   # forecast required strain models
