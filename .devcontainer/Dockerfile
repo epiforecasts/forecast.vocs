@@ -47,7 +47,7 @@ RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
 RUN Rscript -e 'devtools::install_github("lorenzwalthert/precommit")'
 
 # install dependencies
-COPY ../DESCRIPTION /tmp/package/DESCRIPTION
+COPY DESCRIPTION /tmp/package/DESCRIPTION
 RUN Rscript -e "devtools::install_dev_deps('/tmp/package')"
 
 # install cmdstan
