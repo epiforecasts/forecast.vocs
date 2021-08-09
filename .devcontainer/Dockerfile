@@ -40,9 +40,6 @@ RUN apt-get update \
      && apt-get -y install --no-install-recommends libglpk-dev libv8-dev \
             pandoc-citeproc
 
-# install latex via tinytex
-RUN Rscript -e "install.packages('tinytex'); tinytex::install_tinytex()"
-
 # add docthis
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
 
