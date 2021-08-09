@@ -41,7 +41,7 @@ RUN apt-get update \
             pandoc-citeproc
 
 # install latex via tinytex
-RUN Rscript -e "tinytex::install_tinytex()"
+RUN Rscript -e "install.packages('tinytex'); tinytex::install_tinytex()"
 
 # add docthis
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
