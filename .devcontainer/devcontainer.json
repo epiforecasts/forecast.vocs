@@ -4,6 +4,7 @@
 	"name": "R (Community)",
 	"build": {
 		"dockerfile": "Dockerfile",
+	        "context": "..",
 		// Update VARIANT to pick a specific R version: latest, ... ,4.0.1 , 4.0.0
 		"args": { "VARIANT": "latest" }
 	},
