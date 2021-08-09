@@ -10,7 +10,7 @@ forecast(
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
-  save_path = tempdir(),
+  save_path = NULL,
   horizon = 4,
   delta = c(0.2, 0.2),
   strains = 2,

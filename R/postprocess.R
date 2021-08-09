@@ -227,12 +227,15 @@ combine_posteriors <- function(posteriors_list) {
 #' @importFrom purrr safely walk2
 #' @importFrom data.table fwrite
 save_posterior <- function(posterior, save_path = tempdir()) {
-  file_names <- names(posterior)
-  sfwrite <- purrr::safely(fwrite)
-  purrr::walk2(
-    posterior, file_names,
-    ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv"))
-  )
+  if (!is.null(save_path)) {
+    file_names <- names(posterior)
+    sfwrite <- purrr::safely(fwrite)
+    purrr::walk2(
+      posterior, file_names,
+      ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv"))
+    )
+  }
+  return(invisible(NULL))
 }
 
 #' Extract forecast dates

@@ -126,7 +126,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 
   model <- system.file(model, package = "bp.delta")
   if (compile) {
-    model <- cmdstanr::cmdstan_model(model, ...)
+    cmdstanr::cmdstan_model(model, ...)
   }
   return(model)
 }
@@ -167,9 +167,10 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' }
 stan_fit <- function(data,
                      model = bp.delta::load_model(strains = 2),
-                     save_path, diagnostics = TRUE, ...) {
+                     save_path = NULL, diagnostics = TRUE, ...) {
   cdata <- data
   cdata$start_date <- NULL
+  model <- cmdstanr::cmdstan_model(model)
   fit <- model$sample(data = cdata, ...)
 
   if (!missing(save_path)) {
@@ -183,7 +184,7 @@ stan_fit <- function(data,
   sfit <- fit$summary()
   sfit <- data.table::setDT(sfit)
 
-  if (!missing(save_path)) {
+  if (!is.null(save_path)) {
     data.table::fwrite(sfit, file.path(save_path, "summarised_posterior.csv"))
   }
 

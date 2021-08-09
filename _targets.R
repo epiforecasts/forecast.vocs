@@ -6,11 +6,50 @@ library(future.callr)
 plan(callr)
 
 tar_option_set(packages = c("bp.delta", "purrr", "data.table"))
-list(
+
+# Input and control targets
+meta_targets <- list(
   tar_target(
     obs,
     germany_obs
   ),
+  tar_target(
+    single_model,
+    bp.delta::load_model(strains = 1),
+    format = "file", deployment = "main"
+  ),
+  tar_target(
+    two_model,
+    bp.delta::load_model(strains = 2),
+    format = "file", deployment = "main"
+  ),
+  tar_target(
+    forecast_args,
+    list(
+      horizon = 4, adapt_delta = 0.99, max_treedepth = 15,
+      parallel_chains = 1, plot = FALSE
+    )
+  )
+)
+
+# Targets defining the scenarios to evaluate
+scenario_targets <- list(
+  tar_target(
+    variant_relationship,
+    c("scaled", "pooled", "independent")
+  ),
+  tar_target(
+    overdispersion,
+    c(TRUE, FALSE)
+  ),
+  tar_target(
+    scenarios,
+    define_scenarios()
+  )
+)
+
+# Targets converting observed data
+obs_targets <- list(
   tar_target(
     latest_obs,
     latest_obs(obs)
@@ -25,39 +64,16 @@ list(
     map(forecast_dates)
   ),
   tar_target(
-    single_model,
-    bp.delta::load_model(strains = 1)
-  ),
-  tar_target(
-    two_model,
-    bp.delta::load_model(strains = 2)
-  ),
-  tar_target(
-    variant_relationship,
-    c("scaled", "pooled", "independent")
-  ),
-  tar_target(
-    overdispersion,
-    c(TRUE, FALSE)
-  ),
-  tar_target(
-    scenarios,
-    define_scenarios()
-  ),
-  tar_target(
     scenario_obs,
     purrr::map2(
       scenarios$seq_lag, scenarios$seq_samples,
       ~ generate_obs_scenario(latest_obs, seq_lag = .x, seq_samples = .y)
     )
-  ),
-  tar_target(
-    forecast_args,
-    list(
-      horizon = 4, adapt_delta = 0.99, max_treedepth = 15,
-      parallel_chains = 1
-    )
-  ),
+  )
+)
+
+# Targets producing forecasts
+forecast_targets <- list(
   tar_target(
     single_retro,
     data.table(
@@ -96,4 +112,11 @@ list(
     ),
     cross(retro_obs, variant_relationship, overdispersion)
   )
+)
+
+c(
+  meta_targets,
+  obs_targets,
+  scenario_targets,
+  forecast_targets
 )

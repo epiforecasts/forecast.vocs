@@ -7,7 +7,7 @@
 stan_fit(
   data,
   model = bp.delta::load_model(strains = 2),
-  save_path,
+  save_path = NULL,
   diagnostics = TRUE,
   ...
 )

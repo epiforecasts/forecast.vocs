@@ -170,7 +170,7 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' plot_posterior(posterior)
 #' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           all_obs = FALSE, save_path, type = "png") {
+                           all_obs = FALSE, save_path = NULL, type = "png") {
   plots <- list()
   plots$cases <- plot_cases(posterior, obs, forecast_dates,
     log = FALSE,
@@ -184,7 +184,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
   }
   plots$rt <- plot_rt(posterior, forecast_dates)
 
-  if (!missing(save_path)) {
+  if (!is.null(save_path)) {
     walk2(
       plots, names(plots),
       ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x,

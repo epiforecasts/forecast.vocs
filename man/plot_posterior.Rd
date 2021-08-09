@@ -9,7 +9,7 @@ plot_posterior(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
-  save_path,
+  save_path = NULL,
   type = "png"
 )
 }

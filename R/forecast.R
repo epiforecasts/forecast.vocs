@@ -13,7 +13,7 @@ forecast <- function(obs,
                      plot_obs = bp.delta::latest_obs(obs),
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
-                     save_path = tempdir(), horizon = 4,
+                     save_path = NULL, horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
@@ -60,7 +60,8 @@ forecast <- function(obs,
 
   save_posterior(posteriors, save_path = date_path)
   out <- list(
-    posteriors = posteriors, forecasts = forecasts,
+    posteriors = posteriors,
+    forecasts = forecasts,
     models = strain_fits
   )
   if (plot) {
