@@ -142,6 +142,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' summaries be included.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #' @export
+#' @importFrom posterior rhat
 #' @examples
 #' \dontrun{
 #' # parallisation
@@ -189,8 +190,12 @@ stan_fit <- function(data,
     fit$cmdstan_diagnose()
     diag <- fit$sampler_diagnostics(format = "df")
     diagnostics <- data.table(
-      max_rhat = max(fit$summary(variables = NULL, rhat)$rhat),
+      samples = nrow(diag),
+      max_rhat = max(
+        fit$summary(variables = NULL, posterior::rhat)$`posterior::rhat`
+      ),
       divergent_transitions = sum(diag$divergent__),
+      per_divergent_transitons = sum(diag$divergent__) / nrow(diag),
       max_treedepth = max(diag$treedepth__)
     )
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]

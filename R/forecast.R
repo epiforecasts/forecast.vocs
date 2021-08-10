@@ -9,6 +9,28 @@
 #' @inheritParams forecast_n_strain
 #' @export
 #' @importFrom purrr map transpose reduce
+#' @examples
+#' \dontrun{
+#' options(mc.cores = 4)
+#' results <- forecast(
+#'   latest_obs(germany_obs),
+#'   horizon = 4,
+#'   save_path = tempdir(),
+#'   strains = c(1, 2),
+#'   adapt_delta = 0.99,
+#'   max_treedepth = 15,
+#'   variant_relationship = "scaled"
+#' )
+#' # inspect object
+#' names(results)
+#'
+#' # look at plots
+#' names(results$plots)
+#' results$plots$cases
+#' results$plots$log_cases
+#' results$plots$delta
+#' results$plots$rt
+#' }
 forecast <- function(obs,
                      plot_obs = bp.delta::latest_obs(obs),
                      forecast_date = max(obs$date),
@@ -171,17 +193,43 @@ forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
   return(scenarios)
 }
 
+
+#' Forecast using branching processes at a target date returning a
+#' summary data frame
+#'
+#' @description Designed to streamline workflows with a large number of
+#' indepedent model fits this function returns a data frame summarising
+#' a forecast for a single model (rather than the multiple models that may
+#' be used directly with `forecast_dt()`). Unlike `forecast()` it is also
+#' error tolerant and returns the error if forecasting fails.
+#' @inheritParams forecast
+#' @param model A model as loaded by `load_model()`.
+#' @param id An integer, defaulting to 1 to identify this forecast.
+#' @param keep_forecast Logical, defaults to `FALSE`. Should the `forecast()`
+#' output be kept.
+#' @param ... Additional arguments passed to `forecast()`
+#' @importFrom purrr safely
+#' @return A dataframe containing the output of `forecast()` in each row as
+#' well as summary information about the forecast
+#' @export
+#' @examples
+#' \dontrun{
+#' options(mc.cores = 4)
+#' dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+#' print(dt)
+#' }
 forecast_dt <- function(obs,
+                        forecast_date = max(obs$date),
                         strains = 1,
                         overdispersion = TRUE,
                         variant_relationship = "pooled",
                         model = bp.delta::load_model(strains = strains),
-                        id = 1, ...) {
+                        keep_forecast = FALSE, id = 1, ...) {
   if (length(strains) > 1) {
     stop("forecast_dt only supports fitting a single strain model at one time")
   }
-  safe_forecast <- purrr::possibly(forecast, otherwise = NULL)
-  forecast <- do.call(
+  safe_forecast <- purrr::safely(forecast)
+  obj <- do.call(
     safe_forecast,
     c(
       list(...),
@@ -195,15 +243,19 @@ forecast_dt <- function(obs,
 
   dt <- data.table(
     id = id,
-    forecast_date = max(obs$date),
+    forecast_date = forecast_date,
     strains = strains,
     overdispersion = overdispersion,
     variant_relationship = variant_relationship,
-    forecast = list(obj[[1]]$models[[1]]$forecast),
-    posterior = list(obj[[1]]$models[[1]]$tidy_posterior),
-    fit = list(obj[[1]]$models[[1]]$fit),
-    data = list(obj[[1]]$models[[1]]$data),
-    rbindlist(obj[[1]]$models[[1]]$diagnostics)
+    forecast = list(obj$result$models[[1]]$forecast),
+    posterior = list(obj$result$models[[1]]$tidy_posterior),
+    fit = list(obj$result$models[[1]]$fit),
+    data = list(obj$result$models[[1]]$data),
+    obj$result$models[[1]]$diagnostics,
+    error = obj$error
   )
+  if (keep_forecast) {
+    dt[, forecast_obj = obj$result]
+  }
   return(dt)
 }

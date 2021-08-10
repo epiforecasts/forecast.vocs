@@ -60,3 +60,26 @@ Defaults to \code{TRUE}.}
 \description{
 Forecast using branching processes at a target date
 }
+\examples{
+\dontrun{
+options(mc.cores = 4)
+results <- forecast(
+  latest_obs(germany_obs),
+  horizon = 4,
+  save_path = tempdir(),
+  strains = c(1, 2),
+  adapt_delta = 0.99,
+  max_treedepth = 15,
+  variant_relationship = "scaled"
+)
+# inspect object
+names(results)
+
+# look at plots
+names(results$plots)
+results$plots$cases
+results$plots$log_cases
+results$plots$delta
+results$plots$rt
+}
+}
