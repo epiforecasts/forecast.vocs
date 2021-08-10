@@ -10,3 +10,5 @@
 ^\.pre-commit-config\.yaml$
 ^\.lintr$
 ^\.Rprofile
+^targets\.R$
+^targets$
