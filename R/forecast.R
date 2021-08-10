@@ -170,3 +170,40 @@ forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
   scenarios$fits <- fits
   return(scenarios)
 }
+
+forecast_dt <- function(obs,
+                        strains = 1,
+                        overdispersion = TRUE,
+                        variant_relationship = "pooled",
+                        model = bp.delta::load_model(strains = strains),
+                        id = 1, ...) {
+  if (length(strains) > 1) {
+    stop("forecast_dt only supports fitting a single strain model at one time")
+  }
+  safe_forecast <- purrr::possibly(forecast, otherwise = NULL)
+  forecast <- do.call(
+    safe_forecast,
+    c(
+      list(...),
+      list(
+        obs = obs, overdispersion = overdispersion,
+        variant_relationship = variant_relationship,
+        models = list(model), strains = strains
+      )
+    )
+  )
+
+  dt <- data.table(
+    id = id,
+    forecast_date = max(obs$date),
+    strains = strains,
+    overdispersion = overdispersion,
+    variant_relationship = variant_relationship,
+    forecast = list(obj[[1]]$models[[1]]$forecast),
+    posterior = list(obj[[1]]$models[[1]]$tidy_posterior),
+    fit = list(obj[[1]]$models[[1]]$fit),
+    data = list(obj[[1]]$models[[1]]$data),
+    rbindlist(obj[[1]]$models[[1]]$diagnostics)
+  )
+  return(dt)
+}

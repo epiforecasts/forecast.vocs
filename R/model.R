@@ -138,6 +138,8 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' if required. Defaults to empty meaning that nothing is saved
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be shown.
+#' @param include_posterior Logical, defaults to `FALSE`. Should posterior
+#' summaries be included.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #' @export
 #' @examples
@@ -167,7 +169,8 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' }
 stan_fit <- function(data,
                      model = bp.delta::load_model(strains = 2),
-                     save_path = NULL, diagnostics = TRUE, ...) {
+                     save_path = NULL, diagnostics = TRUE,
+                     include_posterior = TRUE, ...) {
   cdata <- data
   cdata$start_date <- NULL
   model <- cmdstanr::cmdstan_model(model)
@@ -177,21 +180,31 @@ stan_fit <- function(data,
     fit$save_object(file = file.path(save_path, "fit.rds"))
   }
 
-  if (diagnostics) {
-    fit$cmdstan_diagnose()
-  }
-
-  sfit <- fit$summary()
-  sfit <- data.table::setDT(sfit)
-
-  if (!is.null(save_path)) {
-    data.table::fwrite(sfit, file.path(save_path, "summarised_posterior.csv"))
-  }
-
   out <- list(
     fit = fit,
-    data = data,
-    posterior = sfit
+    data = data
   )
+
+  if (diagnostics) {
+    fit$cmdstan_diagnose()
+    diag <- fit$sampler_diagnostics(format = "df")
+    diagnostics <- data.table(
+      max_rhat = max(fit$summary(variables = NULL, rhat)$rhat),
+      divergent_transitions = sum(diag$divergent__),
+      max_treedepth = max(diag$treedepth__)
+    )
+    diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]
+    out$diagnostics <- diagnostics
+  }
+
+  if (include_posterior) {
+    sfit <- fit$summary()
+    sfit <- data.table::setDT(sfit)
+    out$posterior <- sfit
+  }
+
+  if (!is.null(save_path) & include_posterior) {
+    data.table::fwrite(sfit, file.path(save_path, "summarised_posterior.csv"))
+  }
   return(out)
 }

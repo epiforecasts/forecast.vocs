@@ -5,7 +5,11 @@ library(future)
 library(future.callr)
 plan(callr)
 
-tar_option_set(packages = c("bp.delta", "purrr", "data.table"))
+tar_option_set(
+  packages = c("bp.delta", "purrr", "data.table"),
+  imports = "bp.delta", deployment = "main",
+  debug = "two_retrospective_forecasts"
+)
 
 # Input and control targets
 meta_targets <- list(
@@ -16,18 +20,18 @@ meta_targets <- list(
   tar_target(
     single_model,
     bp.delta::load_model(strains = 1),
-    format = "file", deployment = "main"
+    format = "file"
   ),
   tar_target(
     two_model,
     bp.delta::load_model(strains = 2),
-    format = "file", deployment = "main"
+    format = "file"
   ),
   tar_target(
     forecast_args,
     list(
-      horizon = 4, adapt_delta = 0.99, max_treedepth = 15,
-      parallel_chains = 1, plot = FALSE
+      horizon = 4, adapt_delta = 0.8, max_treedepth = 12,
+      parallel_chains = 1, plot = FALSE,
     )
   )
 )
@@ -44,7 +48,7 @@ scenario_targets <- list(
   ),
   tar_target(
     scenarios,
-    define_scenarios()
+    head(define_scenarios(), n = 5)
   )
 )
 
@@ -62,7 +66,7 @@ obs_targets <- list(
     retro_obs,
     filter_by_availability(obs, date = forecast_dates),
     map(forecast_dates),
-    deployment = "main"
+    deployment = "worker"
   ),
   tar_target(
     scenario_obs,
@@ -74,7 +78,7 @@ obs_targets <- list(
       ))
     ],
     map(scenarios),
-    deployment = "main"
+    deployment = "worker"
   ),
   tar_target(
     avail_scenario_obs,
@@ -83,57 +87,41 @@ obs_targets <- list(
       avail_obs = list(filter_by_availability(obs, forecast_dates))
     )],
     cross(forecast_dates, scenario_obs),
-    deployment = "main"
+    deployment = "worker"
   )
 )
 
 # Targets producing forecasts
-forecast_dt <- function(obs, overdispersion, variant_relationship,
-                        id, forecast_args, ...) {
-  dt <- data.table(
-    date = max(obs$date),
-    overdispersion = overdispersion
-  )
-  if (!missing(variant_relationship)) {
-    dt[, variant_relationship := variant_relationship]
-  }
-  if (!missing(id)) {
-    dt[, id := id]
-  }
-  dt[
-    ,
-    forecast := list(
-      do.call(
-        forecast,
-        c(
-          forecast_args,
-          list(...),
-          list(
-            obs = obs, overdispersion = overdispersion
-          )
-        )
-      )
-    )
-  ]
-  return(dt)
-}
-
 forecast_targets <- list(
   tar_target(
     single_retrospective_forecasts,
-    forecast_dt(retro_obs, overdispersion,
-      forecast_args = forecast_args,
-      strains = 1, models = list(single_model)
+    do.call(
+      forecast_dt,
+      c(
+        forecast_args,
+        list(
+          obs = retro_obs, strains = 1, overdispersion = overdispersion,
+          model = single_model
+        )
+      )
     ),
+    deployment = "worker", memory = "transient", garbage_collection = TRUE,
     cross(retro_obs, overdispersion)
   ),
   tar_target(
     two_retrospective_forecasts,
-    forecast_dt(retro_obs, overdispersion,
-      variant_relationship = variant_relationship,
-      forecast_args = forecast_args,
-      strains = 2, models = list(two_model)
+    do.call(
+      forecast_dt,
+      c(
+        forecast_args,
+        list(
+          obs = retro_obs, strains = 2, overdispersion = overdispersion,
+          variant_relationship = variant_relationship,
+          model = two_model
+        )
+      )
     ),
+    deployment = "worker", memory = "transient", garbage_collection = TRUE,
     cross(retro_obs, variant_relationship, overdispersion)
   )
 )
@@ -141,25 +129,39 @@ forecast_targets <- list(
 scenario_forecast_targets <- list(
   tar_target(
     single_scenario_forecasts,
-    forecast_dt(avail_scenario_obs$avail_obs[[1]],
-      overdispersion = overdispersion,
-      forecast_args = forecast_args,
-      strains = 1, models = list(single_model),
-      id = avail_scenario_obs$id[[1]],
-      delta = avail_scenario_obs$delta[[1]]
+    do.call(
+      forecast_dt,
+      c(
+        forecast_args,
+        list(
+          obs = avail_scenario_obs$avail_obs[[1]],
+          strains = 1, overdispersion = overdispersion,
+          model = single_model,
+          id = avail_scenario_obs$id[[1]],
+          delta = avail_scenario_obs$delta[[1]]
+        )
+      )
     ),
+    deployment = "worker", memory = "transient", garbage_collection = TRUE,
     cross(avail_scenario_obs, overdispersion)
   ),
   tar_target(
     two_scenario_forecasts,
-    forecast_dt(avail_scenario_obs$avail_obs[[1]],
-      overdispersion = overdispersion,
-      variant_relationship = variant_relationship,
-      forecast_args = forecast_args,
-      strains = 2, models = list(two_model),
-      id = avail_scenario_obs$id[[1]],
-      delta = avail_scenario_obs$delta[[1]]
+    do.call(
+      forecast_dt,
+      c(
+        forecast_args,
+        list(
+          obs = avail_scenario_obs$avail_obs[[1]],
+          strains = 2, overdispersion = overdispersion,
+          variant_relationship = variant_relationship,
+          model = two_model,
+          id = avail_scenario_obs$id[[1]],
+          delta = avail_scenario_obs$delta[[1]]
+        )
+      )
     ),
+    deployment = "worker", memory = "transient", garbage_collection = TRUE,
     cross(avail_scenario_obs, variant_relationship, overdispersion)
   )
 )
