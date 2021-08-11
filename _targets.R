@@ -8,7 +8,8 @@ plan(callr)
 # load required packages and watch bp.delta for changes
 tar_option_set(
   packages = c("bp.delta", "purrr", "data.table"),
-  imports = "bp.delta", deployment = "main"
+  deployment = "main",
+  workspace_on_error = TRUE
 )
 
 # load target modules
@@ -52,7 +53,8 @@ combined_targets <- tar_map(
   c(
     obs_targets,
     forecast_targets,
-    scenario_forecast_targets
+    scenario_forecast_targets,
+    summarise_forecast_targets
   )
 )
 # Combine and evaluate targets

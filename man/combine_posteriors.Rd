@@ -4,7 +4,22 @@
 \alias{combine_posteriors}
 \title{Combine multiple summarised posteriors}
 \usage{
-combine_posteriors(posteriors_list)
+combine_posteriors(
+  posteriors_list,
+  list_id = "model",
+  combine_variables = FALSE,
+  variable_id = "value_type"
+)
+}
+\arguments{
+\item{list_id}{A character string naming the variable used to identify
+list parameters}
+
+\item{combine_variables}{Logical, defaults to FALSE. Should variables
+be combined into a single data frame (labelled using \code{variable_id}).}
+
+\item{variable_id}{A character string naming the variable used to identify
+variables. Defaults to \code{value_type}}
 }
 \description{
 Combine multiple summarised posteriors

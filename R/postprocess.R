@@ -210,14 +210,28 @@ summarise_posterior <- function(fit,
 }
 
 #' Combine multiple summarised posteriors
+#'
+#' @param list_id A character string naming the variable used to identify
+#' list parameters
+#' @param combine_variables Logical, defaults to FALSE. Should variables
+#' be combined into a single data frame (labelled using `variable_id`).
+#' @param variable_id A character string naming the variable used to identify
+#' variables. Defaults to `value_type`
 #' @export
 #' @importFrom purrr map transpose
-combine_posteriors <- function(posteriors_list) {
+combine_posteriors <- function(posteriors_list, list_id = "model",
+                               combine_variables = FALSE,
+                               variable_id = "value_type") {
   posteriors <- purrr::transpose(posteriors_list)
   posteriors <- purrr::map(posteriors, rbindlist,
-    use.names = TRUE, fill = TRUE,
-    idcol = "model"
+    use.names = TRUE, fill = TRUE, idcol = list_id
   )
+  if (combine_variables) {
+    posteriors <- rbindlist(posteriors,
+      use.names = TRUE, fill = TRUE,
+      idcol = variable_id
+    )
+  }
   return(posteriors)
 }
 
@@ -255,10 +269,11 @@ save_posterior <- function(posterior, save_path = tempdir()) {
 #' @return A named vector of dates.
 #' @examples
 #' \dontrun{
+#' options(mc.cores = 4)
 #' obs <- latest_obs(germany_obs)
-#' dt <- stan_data(obs)
+#' dt <- stan_data(obs, overdispersion = FALSE)
 #' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 #' p <- summarise_posterior(fit)
 #' # default
 #' extract_forecast_dates(p)

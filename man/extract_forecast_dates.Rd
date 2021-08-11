@@ -26,10 +26,11 @@ automated forecasts can be overridden as desired.
 }
 \examples{
 \dontrun{
+options(mc.cores = 4)
 obs <- latest_obs(germany_obs)
-dt <- stan_data(obs)
+dt <- stan_data(obs, overdispersion = FALSE)
 inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 p <- summarise_posterior(fit)
 # default
 extract_forecast_dates(p)
