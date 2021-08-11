@@ -3,6 +3,7 @@
 export(add_forecast_dates)
 export(check_quantiles)
 export(combine_posteriors)
+export(combine_posteriors_dt)
 export(define_scenarios)
 export(extract_forecast_dates)
 export(filter_by_availability)
