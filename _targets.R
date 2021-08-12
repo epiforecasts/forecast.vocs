@@ -70,5 +70,6 @@ combined_targets <- tar_map(
 c(
   meta_targets,
   scenario_targets,
-  combined_targets
+  combined_targets,
+  summarise_source_targets
 )
