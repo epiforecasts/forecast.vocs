@@ -65,9 +65,11 @@ forecast_dt <- function(obs,
   return(dt)
 }
 
-#' FUNCTION_TITLE
+#' Combine posteriors from a data frame
 #'
-#' FUNCTION_DESCRIPTION
+#' A wrapper for `combine_posteriors()` but designed for use with the output
+#' from `forecast_dt()`. Can be used to target either summarised posterior
+#' estimates or forecast estimates.
 #'
 #' @param forecasts A data frame of forecasts as produced by `forecast_dt()`
 #' @param target A character string indicating the list of posteriors to

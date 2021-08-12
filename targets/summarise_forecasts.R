@@ -48,7 +48,7 @@ summarise_forecast_targets <- list(
   ),
   tar_target(
     forecast_cases,
-    forecast[value_type == "cases"],
+    forecast[value_type == "cases"][type %in% c("Overall", "Combined")],
     deployment = "worker"
   )
 )

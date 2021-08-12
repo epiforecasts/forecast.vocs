@@ -2,7 +2,7 @@
 % Please edit documentation in R/dt.R
 \name{combine_posteriors_dt}
 \alias{combine_posteriors_dt}
-\title{FUNCTION_TITLE}
+\title{Combine posteriors from a data frame}
 \usage{
 combine_posteriors_dt(forecasts, target = "forecast")
 }
@@ -17,7 +17,9 @@ A data frame of summmarised posteriors along with summary
 information about the forecast method used.
 }
 \description{
-FUNCTION_DESCRIPTION
+A wrapper for \code{combine_posteriors()} but designed for use with the output
+from \code{forecast_dt()}. Can be used to target either summarised posterior
+estimates or forecast estimates.
 }
 \examples{
 \dontrun{
