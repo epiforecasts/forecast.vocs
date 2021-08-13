@@ -48,7 +48,11 @@ summarise_forecast_targets <- list(
   ),
   tar_target(
     forecast_cases,
-    forecast[value_type == "cases"][type %in% c("Overall", "Combined")],
+    merge(
+      forecast[value_type == "cases"][type %in% c("Overall", "Combined")],
+      current_obs[, .(date, true_value = cases)],
+      all.x = TRUE, by = "date"
+    ),
     deployment = "worker"
   )
 )

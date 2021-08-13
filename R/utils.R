@@ -32,7 +32,6 @@ check_quantiles <- function(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8)) {
 #' print(long)
 #' }
 quantiles_to_long <- function(posterior) {
-  posterior <- copy(posterior)
   long <- melt(posterior,
     measure.vars = patterns("^q[0-9]"),
     value.name = "prediction", variable.name = "quantile"
