@@ -86,21 +86,20 @@ forecast_dt <- function(obs,
 #' }
 combine_posteriors_dt <- function(forecasts, target = "forecast") {
   target <- match.arg(target, choices = c("posterior", "forecast"))
-  posteriors <- forecasts[[target]]
-  names(posteriors) <- forecasts[["forecast_date"]]
-  posteriors <- combine_posteriors(posteriors,
-    list_id = "forecast_date",
-    combine_variables = TRUE
-  )
-  posteriors[, forecast_date := as.Date(forecast_date)]
-
-  posteriors_dt <- forecasts[
+  posteriors <- copy(forecasts)[
     ,
-    .(id, forecast_date, strains, overdispersion, variant_relationship)
+    target := purrr::map(
+      get(target),
+      ~ combine_posteriors(list(.), combine_variables = TRUE, list_id = "model")
+    )
   ]
-  posteriors_dt <- merge(posteriors_dt, posteriors,
-    by = "forecast_date",
-    all.x = TRUE, allow.cartesian = TRUE
-  )
-  return(posteriors_dt)
+  posteriors <- posteriors[
+    ,
+    .(
+      id, forecast_date, strains, overdispersion, variant_relationship,
+      rbindlist(target)
+    )
+  ]
+  posteriors[, model := NULL]
+  return(posteriors)
 }

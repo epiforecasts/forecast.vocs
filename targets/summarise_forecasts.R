@@ -50,7 +50,10 @@ summarise_forecast_targets <- list(
     forecast_cases,
     merge(
       forecast[value_type == "cases"][type %in% c("Overall", "Combined")],
-      current_obs[, .(date, true_value = cases)],
+      current_obs[, .(date,
+        true_value = cases,
+        share_delta, seq_delta, seq_total
+      )],
       all.x = TRUE, by = "date"
     ),
     deployment = "worker"
