@@ -78,6 +78,7 @@ forecast_dt <- function(obs,
 #' @return A data frame of summmarised posteriors along with summary
 #' information about the forecast method used.
 #' @export
+#' @importFrom purrr map
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)

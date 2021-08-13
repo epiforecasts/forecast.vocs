@@ -16,7 +16,7 @@ plan(callr)
 
 # load required packages and watch bp.delta for changes
 tar_option_set(
-  packages = c("bp.delta", "purrr", "data.table"),
+  packages = c("bp.delta", "purrr", "data.table", "scoringutils"),
   deployment = "main",
   workspace_on_error = TRUE
 )

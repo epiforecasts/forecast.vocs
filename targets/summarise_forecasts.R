@@ -5,7 +5,6 @@ summarise_forecast_targets <- list(
       map(list(
         single_retrospective_forecasts,
         two_retrospective_forecasts,
-        single_scenario_forecasts,
         two_scenario_forecasts
       ), ~ .[, .(
         id, forecast_date, strains, overdispersion, variant_relationship,
@@ -26,30 +25,33 @@ summarise_forecast_targets <- list(
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
   ),
   tar_target(
-    forecast_single_scenario,
-    combine_posteriors_dt(single_scenario_forecasts, target = "forecast"),
-    deployment = "worker", memory = "transient", garbage_collection = TRUE,
-  ),
-  tar_target(
     forecast_two_scenario,
     combine_posteriors_dt(two_scenario_forecasts, target = "forecast"),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
   ),
   tar_target(
     forecast,
-    rbindlist(list(
-      forecast_single_retro,
-      forecast_two_retro,
-      forecast_single_scenario,
-      forecast_two_scenario
-    ))[, location := source],
+    merge(
+      rbindlist(
+        list(
+          forecast_single_retro,
+          forecast_two_retro,
+          forecast_two_scenario
+        )
+      )[, location := source],
+      scenarios[, delta := map_chr(delta, paste, collapse = ", ")],
+      by = "id", all.x = TRUE
+    ),
     deployment = "worker",
     memory = "transient"
   ),
   tar_target(
     forecast_cases,
     merge(
-      forecast[value_type == "cases"][type %in% c("Overall", "Combined")],
+      forecast[value_type == "cases"][type %in% c("Overall", "Combined")][
+        ,
+        type := NULL
+      ],
       current_obs[, .(date,
         true_value = cases,
         share_delta, seq_delta, seq_total
