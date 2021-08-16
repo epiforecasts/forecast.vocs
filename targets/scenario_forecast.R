@@ -19,7 +19,7 @@ scenario_forecast_targets <- list(
     ),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
     cross(
-      avail_scenario_obs, variant_relationship_scenario,
+      avail_scenario_obs, variant_relationship_scenarios,
       overdispersion_scenarios
     )
   )

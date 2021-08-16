@@ -25,7 +25,7 @@ obs_targets <- list(
   # generate scenario data sets using latest data and scenarios
   tar_target(
     scenario_obs,
-    scenarios[
+    data_availability_scenarios[
       ,
       obs := list(generate_obs_scenario(
         current_obs,
