@@ -8,8 +8,9 @@ scenario_forecast_targets <- list(
         forecast_args,
         list(
           obs = avail_scenario_obs$avail_obs[[1]],
-          strains = 2, overdispersion = overdispersion,
-          variant_relationship = variant_relationship,
+          strains = 2,
+          overdispersion = overdispersion_scenarios,
+          variant_relationship = variant_relationship_scenarios,
           model = two_model,
           id = avail_scenario_obs$id[[1]],
           delta = avail_scenario_obs$delta[[1]]
@@ -17,6 +18,9 @@ scenario_forecast_targets <- list(
       )
     ),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
-    cross(avail_scenario_obs, variant_relationship, overdispersion)
+    cross(
+      avail_scenario_obs, variant_relationship_scenario,
+      overdispersion_scenarios
+    )
   )
 )

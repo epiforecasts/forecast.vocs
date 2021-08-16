@@ -32,7 +32,7 @@ obs_targets <- list(
         seq_lag = seq_lag, seq_samples = seq_samples
       ))
     ],
-    map(scenarios),
+    map(data_availability_scenarios),
     deployment = "worker"
   ),
   # split scenario datasets based on forecast date

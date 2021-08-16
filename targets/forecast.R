@@ -7,13 +7,15 @@ forecast_targets <- list(
       c(
         forecast_args,
         list(
-          obs = retro_obs, strains = 1, overdispersion = overdispersion,
+          obs = retro_obs,
+          strains = 1,
+          overdispersion = overdispersion_scenarios,
           model = single_model
         )
       )
     ),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
-    cross(retro_obs, overdispersion)
+    cross(retro_obs, overdispersion_scenarios)
   ),
   tar_target(
     two_retrospective_forecasts,
@@ -22,13 +24,15 @@ forecast_targets <- list(
       c(
         forecast_args,
         list(
-          obs = retro_obs, strains = 2, overdispersion = overdispersion,
-          variant_relationship = variant_relationship,
+          obs = retro_obs,
+          strains = 2,
+          overdispersion = overdispersion_scenarios,
+          variant_relationship = variant_relationship_scenarios,
           model = two_model
         )
       )
     ),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
-    cross(retro_obs, variant_relationship, overdispersion)
+    cross(retro_obs, variant_relationship_scenarios, overdispersion_scenarios)
   )
 )

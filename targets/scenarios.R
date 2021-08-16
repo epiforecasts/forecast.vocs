@@ -2,19 +2,19 @@
 scenario_targets <- list(
   # define types of variant relationship to initial strain to tests
   tar_target(
-    variant_relationship,
+    variant_relationship_scenarios,
     c("scaled", "pooled", "independent"),
     deployment = "main"
   ),
   # define overdispersion testing scenarios
   tar_target(
-    overdispersion,
+    overdispersion_scenarios,
     c(TRUE, FALSE),
     deployment = "main"
   ),
   # define data availability scenarios for sequence data
   tar_target(
-    scenarios,
+    data_availability_scenarios,
     head(define_scenarios(), n = 5),
     deployment = "main"
   )
