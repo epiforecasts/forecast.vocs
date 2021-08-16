@@ -1,4 +1,4 @@
-# Targets producing forecasts
+# Targets producing forecasts for each week of observed data
 forecast_targets <- list(
   tar_target(
     single_retrospective_forecasts,

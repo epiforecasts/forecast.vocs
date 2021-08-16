@@ -1,3 +1,4 @@
+# Forecaast each scenario for each forecast date
 scenario_forecast_targets <- list(
   tar_target(
     two_scenario_forecasts,

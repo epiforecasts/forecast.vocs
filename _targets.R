@@ -38,6 +38,7 @@ load_obs <- function(source) {
 
 # input and control targets
 meta_targets <- list(
+  # Compile models
   tar_target(
     single_model,
     bp.delta::load_model(strains = 1),
@@ -48,6 +49,7 @@ meta_targets <- list(
     bp.delta::load_model(strains = 2),
     format = "file", deployment = "main",
   ),
+  # Arguments passed to `forecast()` to control forecasting
   tar_target(
     forecast_args,
     list(
@@ -57,7 +59,8 @@ meta_targets <- list(
     deployment = "main"
   )
 )
-# branch targets across data sources
+# branch targets across data sources (see individual targets scripts in
+# targets/ for further details of each step)
 combined_targets <- tar_map(
   values = sources,
   c(

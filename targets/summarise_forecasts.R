@@ -1,4 +1,6 @@
+# Targets summarising forecasts
 summarise_forecast_targets <- list(
+  # Summarise the forecast models fit
   tar_target(
     fit_summary,
     rbindlist(
@@ -14,6 +16,7 @@ summarise_forecast_targets <- list(
     ),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
   ),
+  # Combine forecasts into a single data frame
   tar_target(
     forecast_single_retro,
     combine_posteriors_dt(single_retrospective_forecasts, target = "forecast"),
@@ -29,6 +32,7 @@ summarise_forecast_targets <- list(
     combine_posteriors_dt(two_scenario_forecasts, target = "forecast"),
     deployment = "worker", memory = "transient", garbage_collection = TRUE,
   ),
+  # Combine all separate forecasts into a single data frame
   tar_target(
     forecast,
     merge(
@@ -45,6 +49,7 @@ summarise_forecast_targets <- list(
     deployment = "worker",
     memory = "transient"
   ),
+  # Extract forecasts for cases only and link to current observations
   tar_target(
     forecast_cases,
     merge(
