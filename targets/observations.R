@@ -27,7 +27,7 @@ obs_targets <- list(
     scenario_obs,
     data_availability_scenarios[
       ,
-      obs := list(generate_obs_scenario(
+      generated_obs := list(generate_obs_scenario(
         current_obs,
         seq_lag = seq_lag, seq_samples = seq_samples
       ))
@@ -40,7 +40,9 @@ obs_targets <- list(
     avail_scenario_obs,
     scenario_obs[, `:=`(
       forecast_date = forecast_dates,
-      avail_obs = list(filter_by_availability(obs, forecast_dates))
+      avail_obs = list(filter_by_availability(
+        scenario_obs$generated_obs[[1]], forecast_dates
+      ))
     )],
     cross(forecast_dates, scenario_obs),
     deployment = "worker"
