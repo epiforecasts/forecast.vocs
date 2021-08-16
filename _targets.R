@@ -17,7 +17,7 @@ plan(callr)
 # load required packages and watch bp.delta for changes
 tar_option_set(
   packages = c("bp.delta", "purrr", "data.table", "scoringutils"),
-  deployment = "main",
+  deployment = "worker",
   workspace_on_error = TRUE
 )
 
@@ -41,19 +41,20 @@ meta_targets <- list(
   tar_target(
     single_model,
     bp.delta::load_model(strains = 1),
-    format = "file"
+    format = "file", deployment = "main",
   ),
   tar_target(
     two_model,
     bp.delta::load_model(strains = 2),
-    format = "file"
+    format = "file", deployment = "main",
   ),
   tar_target(
     forecast_args,
     list(
       horizon = 8, adapt_delta = 0.9, max_treedepth = 15,
       parallel_chains = 1, plot = FALSE, chains = 2
-    )
+    ),
+    deployment = "main"
   )
 )
 # branch targets across data sources
