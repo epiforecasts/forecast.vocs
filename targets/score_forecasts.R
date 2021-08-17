@@ -29,6 +29,6 @@ score_forecast_targets <- list(
       )[order(id, forecast_date, date)],
       baseline_wis[, baseline := interval_score][, interval_score := NULL],
       by = c("forecast_date", "date", "horizon", "overdispersion", "location")
-    )[, rwis := interval_score / baseline]
+    )[, c("rwis") := interval_score / baseline]
   )
 )
