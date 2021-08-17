@@ -94,11 +94,11 @@ combine_posteriors_dt <- function(forecasts, target = "forecast") {
       ~ combine_posteriors(list(.), combine_variables = TRUE, list_id = "model")
     )
   ]
-  posteriors <- posteriors[
-    ,
-    .(
-      id, forecast_date, strains, overdispersion, variant_relationship,
-      rbindlist(target)
+  posteriors <- posteriors[,
+    rbindlist(target),
+    by = c(
+      "id", "forecast_date", "strains", "overdispersion",
+      "variant_relationship"
     )
   ]
   posteriors[, model := NULL]
