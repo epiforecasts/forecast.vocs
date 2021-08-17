@@ -10,5 +10,7 @@
 ^\.pre-commit-config\.yaml$
 ^\.lintr$
 ^\.Rprofile
-^targets\.R$
+^_targets\.R$
 ^targets$
+^_targets\.sh$
+^*\.log$
