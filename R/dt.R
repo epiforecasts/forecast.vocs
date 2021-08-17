@@ -81,8 +81,10 @@ forecast_dt <- function(obs,
 #' @importFrom purrr map
 #' @examples
 #' \dontrun{
+#' library(data.table)
 #' options(mc.cores = 4)
 #' dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+#' dt <- rbind(dt, copy(dt)[, overdispersion := FALSE])
 #' dt <- combine_posteriors_dt(dt, target = "forecast")
 #' }
 combine_posteriors_dt <- function(forecasts, target = "forecast") {
