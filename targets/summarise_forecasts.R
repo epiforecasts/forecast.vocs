@@ -43,7 +43,10 @@ summarise_forecast_targets <- list(
           forecast_two_scenario
         )
       )[, location := source],
-      scenarios[, delta := map_chr(delta, paste, collapse = ", ")],
+      data_availability_scenarios[
+        ,
+        delta := map_chr(delta, paste, collapse = ", ")
+      ],
       by = "id", all.x = TRUE
     ),
     deployment = "worker",

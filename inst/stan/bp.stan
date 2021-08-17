@@ -28,7 +28,7 @@ parameters {
 transformed parameters {
   vector[t - 2] diff;
   vector[t - 1] r;
-  vector<lower = 0>[t] mean_cases;
+  vector<lower = >[t] mean_cases;
   real phi[overdisp ? 1 : 0];
 
   diff = rep_vector(0, t - 2);

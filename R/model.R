@@ -192,7 +192,10 @@ stan_fit <- function(data,
     diagnostics <- data.table(
       samples = nrow(diag),
       max_rhat = max(
-        fit$summary(variables = NULL, posterior::rhat)$`posterior::rhat`
+        fit$summary(
+          variables = NULL, posterior::rhat,
+          .args = list(na.rm = TRUE)
+        )$`posterior::rhat`
       ),
       divergent_transitions = sum(diag$divergent__),
       per_divergent_transitons = sum(diag$divergent__) / nrow(diag),
@@ -203,7 +206,7 @@ stan_fit <- function(data,
   }
 
   if (include_posterior) {
-    sfit <- fit$summary()
+    sfit <- fit$summary(.args = list(na.rm = TRUE))
     sfit <- data.table::setDT(sfit)
     out$posterior <- sfit
   }

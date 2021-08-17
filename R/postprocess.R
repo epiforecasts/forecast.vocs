@@ -111,12 +111,18 @@ summarise_posterior <- function(fit,
 
   # extract summary parameters of interest and join
   sfit <- list(
-    fit$summary(variables = NULL, mean, median, sd, mad),
+    fit$summary(
+      variables = NULL, mean, median, sd, mad,
+      .args = list(na.rm = TRUE)
+    ),
     fit$summary(
       variables = NULL, quantile2,
-      .args = list(probs = probs)
+      .args = list(probs = probs, na.rm = TRUE)
     ),
-    fit$summary(variables = NULL, posterior::default_convergence_measures())
+    fit$summary(
+      variables = NULL, posterior::default_convergence_measures(),
+      .args = list(na.rm = TRUE)
+    )
   )
   cbind_custom <- function(x, y) {
     x <- setDT(x)

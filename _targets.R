@@ -53,7 +53,7 @@ meta_targets <- list(
   tar_target(
     forecast_args,
     list(
-      horizon = 8, adapt_delta = 0.95, max_treedepth = 15,
+      horizon = 4, adapt_delta = 0.95, max_treedepth = 15,
       parallel_chains = 1, plot = FALSE, chains = 2
     ),
     deployment = "main"
