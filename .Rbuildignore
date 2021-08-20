@@ -14,3 +14,4 @@
 ^targets$
 ^_targets\.sh$
 ^targets\.log$
+^_targets$
