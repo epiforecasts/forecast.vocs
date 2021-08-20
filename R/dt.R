@@ -29,7 +29,7 @@ forecast_dt <- function(obs,
                         overdispersion = TRUE,
                         variant_relationship = "pooled",
                         model = bp.delta::load_model(strains = strains),
-                        keep_forecast = FALSE, id = 0, ...) {
+                        keep_forecast = FALSE, keep_fit = TRUE, id = 0, ...) {
   if (length(strains) > 1) {
     stop("forecast_dt only supports fitting a single strain model at one time")
   }
@@ -41,7 +41,8 @@ forecast_dt <- function(obs,
       list(
         obs = obs, overdispersion = overdispersion,
         variant_relationship = variant_relationship,
-        models = list(model), strains = strains
+        models = list(model), strains = strains,
+        keep_fit = keep_fit
       )
     )
   )
@@ -54,13 +55,15 @@ forecast_dt <- function(obs,
     variant_relationship = variant_relationship,
     forecast = list(obj$result$models[[1]]$forecast),
     posterior = list(obj$result$models[[1]]$tidy_posterior),
-    fit = list(obj$result$models[[1]]$fit),
     data = list(obj$result$models[[1]]$data),
     obj$result$models[[1]]$diagnostics,
     error = obj$error
   )
+  if (keep_fit) {
+    dt[, fit := list(obj$result$models[[1]]$fit)]
+  }
   if (keep_forecast) {
-    dt[, forecast_obj = obj$result]
+    dt[, forecast_obj := obj$result]
   }
   return(dt)
 }

@@ -15,7 +15,7 @@ scenario_targets <- list(
   # define data availability scenarios for sequence data
   tar_target(
     data_availability_scenarios,
-    head(define_scenarios(), n = 5),
+    define_scenarios(),
     deployment = "main"
   )
 )

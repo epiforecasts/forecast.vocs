@@ -18,7 +18,8 @@ plan(callr)
 tar_option_set(
   packages = c("bp.delta", "purrr", "data.table", "scoringutils"),
   deployment = "worker",
-  workspace_on_error = TRUE
+  workspace_on_error = TRUE,
+  error = "continue"
 )
 
 # load target modules
@@ -53,8 +54,8 @@ meta_targets <- list(
   tar_target(
     forecast_args,
     list(
-      horizon = 4, adapt_delta = 0.95, max_treedepth = 15,
-      parallel_chains = 1, plot = FALSE, chains = 2
+      horizon = 4, adapt_delta = 0.9, max_treedepth = 15,
+      parallel_chains = 1, plot = FALSE, chains = 2, keep_fit = FALSE
     ),
     deployment = "main"
   )

@@ -13,4 +13,4 @@
 ^_targets\.R$
 ^targets$
 ^_targets\.sh$
-^*\.log$
+^targets\.log$

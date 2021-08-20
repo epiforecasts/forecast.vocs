@@ -2,6 +2,9 @@
 #' Forecast using branching processes at a target date
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
+#' @param keep_fit Logical, defaults to `TRUE`. Should the stan model fit be
+#' kept and returned. Dropping this can substantially reduce memory usage in
+#' situtations where multiple models are being fit.
 #' @param plot Logical, should posterior plots be produced and saved.
 #' Defaults to `TRUE`.
 #' @inheritParams filter_by_availability
@@ -39,11 +42,11 @@ forecast <- function(obs,
                      delta = c(0.2, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
+                     keep_fit = TRUE, plot = TRUE,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
                        0.975, 0.99
-                     ), plot = TRUE,
-                     ...) {
+                     ), ...) {
   # resolve  data availability
   target_obs <- filter_by_availability(
     obs,
@@ -86,6 +89,14 @@ forecast <- function(obs,
   forecasts <- combine_posteriors(tfits$forecast)
 
   save_posterior(posteriors, save_path = date_path)
+
+  if (!keep_fit) {
+    strain_fits <- purrr::map(strain_fits, function(.) {
+      .$fit <- NULL
+      return(.)
+    })
+  }
+
   out <- list(
     posteriors = posteriors,
     forecasts = forecasts,

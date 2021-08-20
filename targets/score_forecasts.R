@@ -10,6 +10,7 @@ score_forecast_targets <- list(
     eval_forecasts(forecast_cases_long[!is.na(true_value)])
   ),
   # calculate relative performance vs the single strain baseline
+  # baseline includes overdispersion etc so difference is just strain modelling
   tar_target(
     baseline_wis,
     eval_forecasts(

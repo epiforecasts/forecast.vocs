@@ -13,6 +13,7 @@ forecast_dt(
   variant_relationship = "pooled",
   model = bp.delta::load_model(strains = strains),
   keep_forecast = FALSE,
+  keep_fit = TRUE,
   id = 0,
   ...
 )
@@ -36,6 +37,10 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 
 \item{keep_forecast}{Logical, defaults to \code{FALSE}. Should the \code{forecast()}
 output be kept.}
+
+\item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
+kept and returned. Dropping this can substantially reduce memory usage in
+situtations where multiple models are being fit.}
 
 \item{id}{An integer, defaulting to 0 to identify this forecast.}
 

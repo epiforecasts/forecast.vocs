@@ -19,8 +19,9 @@ forecast(
   models = NULL,
   likelihood = TRUE,
   output_loglik = FALSE,
-  probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
+  keep_fit = TRUE,
   plot = TRUE,
+  probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
   ...
 )
 }
@@ -53,6 +54,10 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
 included in the model.extract}
+
+\item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
+kept and returned. Dropping this can substantially reduce memory usage in
+situtations where multiple models are being fit.}
 
 \item{plot}{Logical, should posterior plots be produced and saved.
 Defaults to \code{TRUE}.}
