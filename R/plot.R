@@ -1,4 +1,5 @@
 #' Add the default plot theme
+#' @param plot `ggplot2` object
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -10,6 +11,8 @@ plot_theme <- function(plot) {
 }
 
 #' Add the forecast dates to a plot
+#' @inheritParams plot_theme
+#' @inheritParams plot_default
 #' @export
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
   if (!is.null(forecast_dates)) {
@@ -38,6 +41,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' from the posterior list.
 #' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
 #' or just those in the date range of the estimates being plot.
+#' @param ... Additional arguments passed to `ggplot2::aes()`
 #' @inheritParams extract_forecast_dates
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
@@ -79,6 +83,8 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 }
 
 #' Plot the posterior prediction for cases
+#' @param log Logical, defaults to `TRUE`. Should cases be plot on
+#' a log scale?
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
@@ -157,6 +163,10 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 }
 
 #' Plot posterior predictions
+#'
+#' @param save_path A character string indicating where to save plots
+#' if required.
+#' @param type A character string indicating the format to use to save plots.
 #' @export
 #' @inheritParams plot_cases
 #' @importFrom purrr walk2

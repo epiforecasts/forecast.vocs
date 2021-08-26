@@ -28,6 +28,12 @@ on data availability.}
 \item{forecast_date}{Date at which to forecast. Defaults to the
 maximum date in \code{obs}.}
 
+\item{strains}{Integer number of strains. Defaults to 2. Current
+maximum is 2.}
+
+\item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
+used include overdispersion.}
+
 \item{variant_relationship}{Character string, defaulting to "pooled".
 Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and

@@ -7,6 +7,9 @@
 load_model(strains = 2, compile = TRUE, ...)
 }
 \arguments{
+\item{strains}{Integer number of strains. Defaults to 2. Current
+maximum is 2.}
+
 \item{compile}{Logical, defaults to \code{TRUE}. Should the model
 be loaded and compiled using \code{cmdstanr::cmstan_model()}.}
 

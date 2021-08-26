@@ -6,6 +6,12 @@
 \usage{
 check_quantiles(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8))
 }
+\arguments{
+\item{posterior}{A dataframe containing quantiles identified using
+the "q5" approach.}
+
+\item{req_probs}{A numeric vector of required probabilties.}
+}
 \description{
 Check Quantiles Required are Present
 }

@@ -12,6 +12,9 @@ combine_posteriors(
 )
 }
 \arguments{
+\item{posteriors_list}{A list of posteriors as produced by
+\code{summarise_posterior()}.}
+
 \item{list_id}{A character string naming the variable used to identify
 list parameters}
 

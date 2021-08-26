@@ -5,6 +5,9 @@
 NULL
 
 #' Check Quantiles Required are Present
+#' @param posterior A dataframe containing quantiles identified using
+#' the "q5" approach.
+#' @param req_probs A numeric vector of required probabilties.
 #' @export
 check_quantiles <- function(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8)) {
   cols <- colnames(posterior)

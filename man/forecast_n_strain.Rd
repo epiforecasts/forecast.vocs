@@ -13,6 +13,22 @@ forecast_n_strain(
   ...
 )
 }
+\arguments{
+\item{data}{A list of data as produced by \code{stan_data()}.}
+
+\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
+
+\item{strains}{Integer number of strains. Defaults to 2. Current
+maximum is 2.}
+
+\item{save_path}{Character string indicating the save path to use for results
+if required. Defaults to empty meaning that nothing is saved}
+
+\item{probs}{A vector of numeric probabilities to produce
+quantile summaries for.}
+
+\item{...}{Additional parameters passed to \code{stan_fit()}.}
+}
 \description{
 Forecast using a single branching process
 }

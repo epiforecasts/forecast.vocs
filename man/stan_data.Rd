@@ -11,7 +11,7 @@ stan_data(
   variant_relationship = "pooled",
   overdispersion = TRUE,
   likelihood = TRUE,
-  output_loglikelihood = TRUE
+  output_loglik = TRUE
 )
 }
 \arguments{
@@ -29,15 +29,15 @@ Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and
 "independent" (fully independent strains after initial scaling).}
 
+\item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
+used include overdispersion.}
+
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
 included in the model.extract}
 
-\item{output_loglikelihood}{Logical, defaults to \code{FALSE}. Should the log
+\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
 likelihood be output. Disabling this will speed up fitting if evaluating the
 model fit is not required.}
-
-\item{overdisperion}{Logical, defaults to \code{TRUE}. Should the observations
-used include overdispersion.}
 }
 \description{
 Format data for use with stan

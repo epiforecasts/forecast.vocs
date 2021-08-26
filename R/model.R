@@ -9,11 +9,11 @@
 #' Controls the relationship of strains with options being "pooled" (dependence
 #' determined from the data), "scaled" (a fixed scaling between strains), and
 #' "independent" (fully independent strains after initial scaling).
-#' @param overdisperion Logical, defaults to `TRUE`. Should the observations
+#' @param overdispersion Logical, defaults to `TRUE`. Should the observations
 #' used include overdispersion.
 #' @param likelihood Logical, defaults to `TRUE`. Should the likelihood be
 #' included in the model.extract
-#' @param output_loglikelihood Logical, defaults to `FALSE`. Should the log
+#' @param output_loglik Logical, defaults to `FALSE`. Should the log
 #' likelihood be output. Disabling this will speed up fitting if evaluating the
 #' model fit is not required.
 #' @export
@@ -23,7 +23,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
                       likelihood = TRUE,
-                      output_loglikelihood = TRUE) {
+                      output_loglik = TRUE) {
   variant_relationship <- match.arg(
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
@@ -44,7 +44,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     # number of sequenced samples with delta variant
     Y = obs[!is.na(seq_total)]$seq_delta,
     likelihood = as.numeric(likelihood),
-    output_loglik = as.numeric(output_loglikelihood),
+    output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
     delta_mean = delta[1],
     delta_sd = delta[2],
@@ -62,6 +62,8 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
 
 #' Set up initial conditions for model
 #' @export
+#' @param data A list of data as produced by `stan_data()`.
+#' @inheritParams load_model
 #' @importFrom purrr map_dbl
 #' @examples
 #' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
@@ -103,6 +105,8 @@ stan_inits <- function(data, strains = 2) {
 }
 
 #' Load and compile a strain model
+#' @param strains Integer number of strains. Defaults to 2. Current
+#' maximum is 2.
 #' @param compile Logical, defaults to `TRUE`. Should the model
 #' be loaded and compiled using `cmdstanr::cmstan_model()`.
 #' @param ... Additional arguments passed to `cmdstanr::cmstan_model()`.

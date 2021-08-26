@@ -6,6 +6,15 @@
 \usage{
 add_forecast_dates(plot, forecast_dates = NULL)
 }
+\arguments{
+\item{plot}{\code{ggplot2} object}
+
+\item{forecast_dates}{A named vector of dates to use to identify when
+output is a forecast vs an estimate. Defaults to empty in which case
+forecast dates are inferred from the \code{posterior} list based on data
+availability for cases and sequences. These dates can be overridden
+by supplying a replacement data with a duplicate name (see the examples).}
+}
 \description{
 Add the forecast dates to a plot
 }

@@ -6,6 +6,12 @@
 \usage{
 stan_inits(data, strains = 2)
 }
+\arguments{
+\item{data}{A list of data as produced by \code{stan_data()}.}
+
+\item{strains}{Integer number of strains. Defaults to 2. Current
+maximum is 2.}
+}
 \description{
 Set up initial conditions for model
 }

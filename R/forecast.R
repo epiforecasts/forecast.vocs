@@ -1,13 +1,19 @@
 
 #' Forecast using branching processes at a target date
+#'
+#' @param models A list of models to use named by strain. If not supplied
+#' uses the package default model for that strain.
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
 #' @param keep_fit Logical, defaults to `TRUE`. Should the stan model fit be
 #' kept and returned. Dropping this can substantially reduce memory usage in
 #' situtations where multiple models are being fit.
+#' @param ... Additional parameters passed to `stan_fit()`.
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
 #' @inheritParams forecast_n_strain
+#' @inheritParams stan_fit
+#' @inheritParams summarise_posterior
 #' @export
 #' @importFrom purrr map transpose reduce
 #' @examples
@@ -26,14 +32,13 @@
 #' names(results)
 #' }
 forecast <- function(obs,
-                     plot_obs = forecast.vocs::latest_obs(obs),
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
                      save_path = NULL, horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
-                     models = NULL, likelihood = TRUE, output_loglik = FALSE,
-                     keep_fit = TRUE,
+                     models = NULL, likelihood = TRUE,
+                     output_loglik = FALSE, keep_fit = TRUE,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
                        0.975, 0.99
@@ -97,6 +102,10 @@ forecast <- function(obs,
 }
 #' Forecast using a single branching process
 #' @export
+#' @inheritParams stan_inits
+#' @inheritParams forecast
+#' @inheritParams stan_fit
+#' @inheritParams summarise_posterior
 #' @importFrom purrr map
 forecast_n_strain <- function(data, model = NULL, strains = 2,
                               save_path = tempdir(),

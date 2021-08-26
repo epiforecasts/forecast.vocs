@@ -11,6 +11,9 @@ summarise_posterior(
 }
 \arguments{
 \item{fit}{List of output as returned by \code{stan_fit()}.}
+
+\item{probs}{A vector of numeric probabilities to produce
+quantile summaries for.}
 }
 \description{
 Summarise the posterior

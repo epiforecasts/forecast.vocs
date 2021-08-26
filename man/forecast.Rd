@@ -6,7 +6,6 @@
 \usage{
 forecast(
   obs,
-  plot_obs = forecast.vocs::latest_obs(obs),
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
@@ -40,23 +39,44 @@ the forecast date.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the forecast date.}
 
+\item{save_path}{Character string indicating the save path to use for results
+if required. Defaults to empty meaning that nothing is saved}
+
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
 \item{delta}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant.}
 
+\item{strains}{Integer number of strains. Defaults to 2. Current
+maximum is 2.}
+
 \item{variant_relationship}{Character string, defaulting to "pooled".
 Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and
 "independent" (fully independent strains after initial scaling).}
 
+\item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
+used include overdispersion.}
+
+\item{models}{A list of models to use named by strain. If not supplied
+uses the package default model for that strain.}
+
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
 included in the model.extract}
+
+\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
+likelihood be output. Disabling this will speed up fitting if evaluating the
+model fit is not required.}
 
 \item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
 kept and returned. Dropping this can substantially reduce memory usage in
 situtations where multiple models are being fit.}
+
+\item{probs}{A vector of numeric probabilities to produce
+quantile summaries for.}
+
+\item{...}{Additional parameters passed to \code{stan_fit()}.}
 }
 \description{
 Forecast using branching processes at a target date

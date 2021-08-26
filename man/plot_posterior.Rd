@@ -27,6 +27,11 @@ by supplying a replacement data with a duplicate name (see the examples).}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
+
+\item{save_path}{A character string indicating where to save plots
+if required.}
+
+\item{type}{A character string indicating the format to use to save plots.}
 }
 \description{
 Plot posterior predictions

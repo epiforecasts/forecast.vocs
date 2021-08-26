@@ -83,6 +83,8 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' Summarise the posterior
 #'
 #' @param fit List of output as returned by `stan_fit()`.
+#' @param probs A vector of numeric probabilities to produce
+#' quantile summaries for.
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -217,6 +219,8 @@ summarise_posterior <- function(fit,
 
 #' Combine multiple summarised posteriors
 #'
+#' @param posteriors_list A list of posteriors as produced by
+#'  `summarise_posterior()`.
 #' @param list_id A character string naming the variable used to identify
 #' list parameters
 #' @param combine_variables Logical, defaults to FALSE. Should variables
@@ -242,6 +246,8 @@ combine_posteriors <- function(posteriors_list, list_id = "model",
 }
 
 #' Save a summarised posterior
+#' @param save_path A character string giving the path to save the
+#' posterior to as a series of csv's.
 #' @export
 #' @inheritParams link_dates_with_posterior
 #' @importFrom purrr safely walk2
@@ -392,6 +398,7 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
 }
 #' Extract posterior draws
 #'
+#' @param fit A list as produced by `stan_fit()`.
 #' @param ... Additional parameters passed to `cmdstanr::draws`
 #'
 #' @return A `draws` object from the `posterior` package.

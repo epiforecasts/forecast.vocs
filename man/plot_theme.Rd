@@ -6,6 +6,9 @@
 \usage{
 plot_theme(plot)
 }
+\arguments{
+\item{plot}{\code{ggplot2} object}
+}
 \description{
 Add the default plot theme
 }

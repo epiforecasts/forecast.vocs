@@ -7,6 +7,8 @@
 extract_draws(fit, ...)
 }
 \arguments{
+\item{fit}{A list as produced by \code{stan_fit()}.}
+
 \item{...}{Additional parameters passed to \code{cmdstanr::draws}}
 }
 \value{
