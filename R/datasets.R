@@ -7,4 +7,4 @@
 #' @return A `data.table` with the following variables: date, location,
 #' location_name, cases, seq_total, seq_delta, share_delta, cases_available,
 #' and seq_available.
-"germany_obs"
+"germany_covid19_delta_obs"

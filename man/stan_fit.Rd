@@ -6,7 +6,7 @@
 \usage{
 stan_fit(
   data,
-  model = bp.delta::load_model(strains = 2),
+  model = forecast.vocs::load_model(strains = 2),
   save_path = NULL,
   diagnostics = TRUE,
   include_posterior = TRUE,
@@ -37,7 +37,7 @@ Fit a brancing process strain model
 # parallisation
 options(mc.cores = 4)
 # format example data
-dt <- stan_data(latest_obs(germany_obs))
+dt <- stan_data(latest_obs(germany_covid19_delta_obs))
 
 # single strain model
 inits <- stan_inits(dt, strains = 1)

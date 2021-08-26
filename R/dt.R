@@ -20,7 +20,7 @@
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)
-#' dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 #' print(dt)
 #' }
 forecast_dt <- function(obs,
@@ -28,7 +28,7 @@ forecast_dt <- function(obs,
                         strains = 1,
                         overdispersion = TRUE,
                         variant_relationship = "pooled",
-                        model = bp.delta::load_model(strains = strains),
+                        model = forecast.vocs::load_model(strains = strains),
                         keep_forecast = FALSE, keep_fit = TRUE, id = 0, ...) {
   if (length(strains) > 1) {
     stop("forecast_dt only supports fitting a single strain model at one time")
@@ -86,7 +86,7 @@ forecast_dt <- function(obs,
 #' \dontrun{
 #' library(data.table)
 #' options(mc.cores = 4)
-#' dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 #' dt <- rbind(dt, copy(dt)[, overdispersion := FALSE])
 #' dt <- combine_posteriors_dt(dt, target = "forecast")
 #' }

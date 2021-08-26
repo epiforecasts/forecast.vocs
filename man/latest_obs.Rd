@@ -18,8 +18,8 @@ Filter for latest observations of all types
 }
 \examples{
 dt <- rbind(
-  update_obs_availability(germany_obs, seq_lag = 3),
-  update_obs_availability(germany_obs, seq_lag = 1)
+  update_obs_availability(germany_covid19_delta_obs, seq_lag = 3),
+  update_obs_availability(germany_covid19_delta_obs, seq_lag = 1)
 )
 latest_obs(dt)
 }

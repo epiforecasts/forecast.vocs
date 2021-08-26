@@ -43,5 +43,5 @@ used include overdispersion.}
 Format data for use with stan
 }
 \examples{
-stan_data(latest_obs(germany_obs))
+stan_data(latest_obs(germany_covid19_delta_obs))
 }

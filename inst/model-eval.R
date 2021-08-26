@@ -1,8 +1,8 @@
-library(bp.delta)
+library(forecast.vocs)
 options(mc.cores = 4)
 
 strains <- 2
-dt <- stan_data(latest_obs(germany_obs),
+dt <- stan_data(latest_obs(germany_covid19_delta_obs),
   horizon = 4, overdispersion = TRUE,
   variant_relationship = "independent"
 )
@@ -15,7 +15,7 @@ fit <- stan_fit(dt,
 
 p <- summarise_posterior(fit)
 plot_rt(p)
-plot_cases(p, latest_obs(germany_obs), log = TRUE)
+plot_cases(p, latest_obs(germany_covid19_delta_obs), log = TRUE)
 
 plot_pairs(fit)
 

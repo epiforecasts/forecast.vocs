@@ -32,7 +32,7 @@ Pairs plot of parameters of interest and fitting diagnostics
 }
 \examples{
 \dontrun{
-obs <- latest_obs(germany_obs)
+obs <- latest_obs(germany_covid19_delta_obs)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)

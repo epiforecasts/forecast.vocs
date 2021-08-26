@@ -13,44 +13,37 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Evaluating the impact of modelling strain dynamics on short-term COVID-19 forecast performance
+# Forecast case notifications using variant of concern strain dynamics
 
-[![R-CMD-check](https://github.com/epiforecasts/bp.delta/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/bp.delta/actions/workflows/R-CMD-check.yaml) [![paper](https://github.com/epiforecasts/bp.delta/workflows/paper/badge.svg)](https://github.com/epiforecasts/bp.delta/actions/workflows/paper.yaml)
+[![R-CMD-check](https://github.com/epiforecasts/forecast.vocs/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-check.yaml)
 
-This repository contains stan code for one and two strain branching process process models as well as an R package for using these models to produce forecasts of COVID-19 notified cass in Germany. See the paper for further method details and the rest of this README for installation and example functionality.
+This package contains models and processing code to allow sequencing of variants of concern to be used to forecast case notifications.
 
 ## Installation
 
 Either install the package from GitHub using the following, 
 
 ```{r, eval = FALSE}
-devtools::install_github("seabbs/bp.delta", dependencies = TRUE)
+devtools::install_github("epiforecasts/forecast.vocs", dependencies = TRUE)
 ```
 
-Or install the package locally (with the working directory at the package root),
-
-```{r, eval = FALSE}
-devtools::install_dev_deps()
-devtools::load_all()
-```
-
-Install stan using:
+Install stan to enable model fitting and forecasting using:
 
 ```{r, eval = FALSE}
 cmdstanr::install_cmdstan()
 ```
 
-## Using the model
+## Quick start
+
+This quick start uses data from Germany that includes COVID-19 notificatons and sequences with sequences either being positive or negative for the Delta variant.
 
 ### Step by step forecast
 
-*Note: Stan throws some initialisation warnings at the moment and a low number of divergent transitions (<0.5%) regardless of auto-regressive model formulation or stan settings. This is a work in progress - remove the `refresh = 0, show_messages = FALSE ` settings to see these issues.*
-
 ```{r}
-library(bp.delta)
+library(forecast.vocs)
 options(mc.cores = 4)
 
-obs <- latest_obs(germany_obs)
+obs <- latest_obs(germany_covid19_delta_obs)
 
 dt <- stan_data(obs, horizon = 4)
 
@@ -70,19 +63,19 @@ posterior <- summarise_posterior(fit)
 Plot the posterior prediction for cases.
 
 ```{r}
-plot_cases(posterior, obs, max(obs$date), log = TRUE)
+plot_cases(posterior, obs, log = TRUE)
 ```
 
 Plot the posterior prediction for the fraction of cases that are DELTA.
 
 ```{r}
-plot_delta(posterior, obs, max(obs$date))
+plot_delta(posterior, obs)
 ```
 
 Plot the posterior estimate for the effective reproduction number of DELTA and non-DELTA cases.
 
 ```{r}
-plot_rt(posterior, max(obs$date))
+plot_rt(posterior)
 ```
 
 ### Forecast wrapper
@@ -97,21 +90,21 @@ results <- forecast(obs,
 )
 ```
 
+Generate summary plots for the forecasts:
+
+```{r}
+plots <- plot_posterior(results$posteriors)
+```
+
 Plot the posterior prediction for cases for both models.
 
 ```{r}
-results$plots$log_cases
+plots$log_cases
 ```
 
-Plot the posterior estimate for the effective reproduction number of DELTA, non-DELTA cases, and overall.
+Plot the posterior estimate for the effective reproduction number of
+Delta, non-Delta cases, and overall.
 
 ```{r}
-results$plots$rt
+plots$rt
 ```
-
-### Further details
-
-See the following for more detailed analysis:
-
-- `inst/analysis/germany/forecast.R:` for a forecasting application.
-- `inst/analysis/germany/retrospective.R` for retrospective fitting and model evaluation

@@ -10,7 +10,7 @@ stan_inits(data, strains = 2)
 Set up initial conditions for model
 }
 \examples{
-dt <- stan_data(latest_obs(germany_obs))
+dt <- stan_data(latest_obs(germany_covid19_delta_obs))
 inits <- stan_inits(dt)
 inits
 inits()

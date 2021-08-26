@@ -11,7 +11,7 @@ forecast_dt(
   strains = 1,
   overdispersion = TRUE,
   variant_relationship = "pooled",
-  model = bp.delta::load_model(strains = strains),
+  model = forecast.vocs::load_model(strains = strains),
   keep_forecast = FALSE,
   keep_fit = TRUE,
   id = 0,
@@ -60,7 +60,7 @@ error tolerant and returns the error if forecasting fails.
 \examples{
 \dontrun{
 options(mc.cores = 4)
-dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 print(dt)
 }
 }

@@ -6,7 +6,7 @@
 \usage{
 forecast(
   obs,
-  plot_obs = bp.delta::latest_obs(obs),
+  plot_obs = forecast.vocs::latest_obs(obs),
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
@@ -20,7 +20,6 @@ forecast(
   likelihood = TRUE,
   output_loglik = FALSE,
   keep_fit = TRUE,
-  plot = TRUE,
   probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
   ...
 )
@@ -58,9 +57,6 @@ included in the model.extract}
 \item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
 kept and returned. Dropping this can substantially reduce memory usage in
 situtations where multiple models are being fit.}
-
-\item{plot}{Logical, should posterior plots be produced and saved.
-Defaults to \code{TRUE}.}
 }
 \description{
 Forecast using branching processes at a target date
@@ -69,7 +65,7 @@ Forecast using branching processes at a target date
 \dontrun{
 options(mc.cores = 4)
 results <- forecast(
-  latest_obs(germany_obs),
+  latest_obs(germany_covid19_delta_obs),
   horizon = 4,
   save_path = tempdir(),
   strains = c(1, 2),
@@ -79,12 +75,5 @@ results <- forecast(
 )
 # inspect object
 names(results)
-
-# look at plots
-names(results$plots)
-results$plots$cases
-results$plots$log_cases
-results$plots$delta
-results$plots$rt
 }
 }

@@ -14,7 +14,7 @@ plot_theme <- function(plot) {
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
   if (!is.null(forecast_dates)) {
     forecast_dates <- data.table(
-      "Data unavailable" = names(forecast_dates),
+      "Date unavailable" = names(forecast_dates),
       dates = as.Date(forecast_dates)
     )
     plot <- plot +
@@ -22,7 +22,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
         data = forecast_dates,
         aes(
           xintercept = dates,
-          linetype = .data[["Data unavailable"]]
+          linetype = .data[["Date unavailable"]]
         ),
         size = 1.1, alpha = 0.9
       ) +
@@ -162,7 +162,7 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' @importFrom purrr walk2
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
@@ -206,7 +206,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @return  A ggplot2 based pairs plot of parameters of interest
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)

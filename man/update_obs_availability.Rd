@@ -23,5 +23,8 @@ Defaults to not alter the input data.}
 Update observations based on availability
 }
 \examples{
-update_obs_availability(germany_obs, cases_lag = 2, seq_lag = 3)
+update_obs_availability(
+  germany_covid19_delta_obs,
+  cases_lag = 2, seq_lag = 3
+)
 }

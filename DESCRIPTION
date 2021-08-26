@@ -1,13 +1,14 @@
-Package: bp.delta
-Title: Forecast COVID-19 Cases using a Two Strain Autoregressive Model
+Package: forecast.vocs
+Title: Forecast Case Notifications using Variant of Concern Strain
+    Dynamics
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Sam Abbott",
            role = c("aut", "cre"),
            email = "sam.abbott@lshtm.ac.uk",
            comment = c(ORCID = "0000-0001-8057-8037"))
-Description: Forecast COVID-19 Cases using a Two Strain Autoregressive
-    Model process.
+Description: Forecast case notifications using variant of concern strain
+    dynamics.
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)

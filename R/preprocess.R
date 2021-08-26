@@ -10,7 +10,10 @@
 #' Defaults to not alter the input data.
 #' @export
 #' @examples
-#' update_obs_availability(germany_obs, cases_lag = 2, seq_lag = 3)
+#' update_obs_availability(
+#'   germany_covid19_delta_obs,
+#'   cases_lag = 2, seq_lag = 3
+#' )
 update_obs_availability <- function(obs, cases_lag, seq_lag) {
   obs <- as.data.table(obs)
   obs <- copy(obs)
@@ -39,8 +42,8 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
 #' @importFrom purrr map
 #' @examples
 #' dt <- rbind(
-#'   update_obs_availability(germany_obs, seq_lag = 3),
-#'   update_obs_availability(germany_obs, seq_lag = 1)
+#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 3),
+#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 1)
 #' )
 #' # filter out duplicates and up to the present date
 #' filter_by_availability(dt)
@@ -101,8 +104,8 @@ filter_by_availability <- function(obs, date = max(obs$date),
 #' @inheritParams filter_by_availability
 #' @examples
 #' dt <- rbind(
-#'   update_obs_availability(germany_obs, seq_lag = 3),
-#'   update_obs_availability(germany_obs, seq_lag = 1)
+#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 3),
+#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 1)
 #' )
 #' latest_obs(dt)
 latest_obs <- function(obs) {

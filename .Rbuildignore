@@ -1,7 +1,5 @@
 ^LICENSE\.md$
 ^\.devcontainer$
-^output$
-^inst/output$
 ^inst/stan/bp$
 ^inst/stan/twostrainbp$
 ^data-raw$
@@ -10,8 +8,3 @@
 ^\.pre-commit-config\.yaml$
 ^\.lintr$
 ^\.Rprofile
-^_targets\.R$
-^targets$
-^_targets\.sh$
-^targets\.log$
-^_targets$

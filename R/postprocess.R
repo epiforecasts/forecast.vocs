@@ -89,7 +89,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' @importFrom data.table .SD .N := setcolorder
 #' @examples
 #' \dontrun{
-#' dt <- stan_data(latest_obs(germany_obs))
+#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
 #' inits <- stan_inits(dt)
 #' options(mc.cores = 4)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
@@ -276,7 +276,7 @@ save_posterior <- function(posterior, save_path = tempdir()) {
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs, overdispersion = FALSE)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
@@ -295,16 +295,17 @@ extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
   if (!is.null(posterior$cases[["observed"]])) {
     dates <- suppressWarnings(
       c(
-        "Cases" = posterior$cases[
+        posterior$cases[
           observed == TRUE & type %in% c("Combined", "Overall"),
           .(date = max(date))
-        ]$date,
-        "Sequences" = posterior$cases[
+        ]$date[1],
+        posterior$cases[
           observed == TRUE & !(type %in% c("Combined", "Overall")),
           .(date = max(date))
-        ]$date
+        ]$date[1]
       )
     )
+    names(dates) <- c("Cases", "Sequences")
   }
 
   if (!is.null(forecast_dates)) {
@@ -350,7 +351,7 @@ extract_forecast_by_type <- function(posterior, forecast_dates) {
 #' @return A list containing a forecast for each parameter
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
@@ -396,7 +397,7 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
 #' @return A `draws` object from the `posterior` package.
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
@@ -413,7 +414,7 @@ extract_draws <- function(fit, ...) {
 #' @importFrom rstan read_stan_csv
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
@@ -432,7 +433,7 @@ convert_to_stanfit <- function(fit) {
 #' @return NULL
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)

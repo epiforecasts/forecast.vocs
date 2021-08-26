@@ -18,7 +18,7 @@
 #' model fit is not required.
 #' @export
 #' @examples
-#' stan_data(latest_obs(germany_obs))
+#' stan_data(latest_obs(germany_covid19_delta_obs))
 stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
@@ -64,7 +64,7 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
 #' @export
 #' @importFrom purrr map_dbl
 #' @examples
-#' dt <- stan_data(latest_obs(germany_obs))
+#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
 #' inits <- stan_inits(dt)
 #' inits
 #' inits()
@@ -124,7 +124,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
     stop("Only 1 or 2 strain models are supported")
   }
 
-  model <- system.file(model, package = "bp.delta")
+  model <- system.file(model, package = "forecast.vocs")
   if (compile) {
     cmdstanr::cmdstan_model(model, ...)
   }
@@ -148,7 +148,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' # parallisation
 #' options(mc.cores = 4)
 #' # format example data
-#' dt <- stan_data(latest_obs(germany_obs))
+#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
@@ -169,7 +169,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' two_strain_fit
 #' }
 stan_fit <- function(data,
-                     model = bp.delta::load_model(strains = 2),
+                     model = forecast.vocs::load_model(strains = 2),
                      save_path = NULL, diagnostics = TRUE,
                      include_posterior = TRUE, ...) {
   cdata <- data

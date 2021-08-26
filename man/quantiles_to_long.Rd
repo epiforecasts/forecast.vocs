@@ -19,7 +19,7 @@ Convert summarised quantiles from wide to long format
 \examples{
 \dontrun{
 options(mc.cores = 4)
-dt <- forecast_dt(latest_obs(germany_obs), max_treedepth = 15)
+dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 dt <- combine_posteriors_dt(dt, target = "forecast")
 long <- quantiles_to_long(dt)
 print(long)

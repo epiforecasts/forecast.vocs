@@ -22,5 +22,5 @@ A data frame of scenario definitions with ids
 Define observed data for a scenario
 }
 \examples{
-generate_obs_scenario(latest_obs(germany_obs), 4, 0.1)
+generate_obs_scenario(latest_obs(germany_covid19_delta_obs), 4, 0.1)
 }

@@ -5,8 +5,6 @@
 #' @param keep_fit Logical, defaults to `TRUE`. Should the stan model fit be
 #' kept and returned. Dropping this can substantially reduce memory usage in
 #' situtations where multiple models are being fit.
-#' @param plot Logical, should posterior plots be produced and saved.
-#' Defaults to `TRUE`.
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
 #' @inheritParams forecast_n_strain
@@ -16,7 +14,7 @@
 #' \dontrun{
 #' options(mc.cores = 4)
 #' results <- forecast(
-#'   latest_obs(germany_obs),
+#'   latest_obs(germany_covid19_delta_obs),
 #'   horizon = 4,
 #'   save_path = tempdir(),
 #'   strains = c(1, 2),
@@ -26,23 +24,16 @@
 #' )
 #' # inspect object
 #' names(results)
-#'
-#' # look at plots
-#' names(results$plots)
-#' results$plots$cases
-#' results$plots$log_cases
-#' results$plots$delta
-#' results$plots$rt
 #' }
 forecast <- function(obs,
-                     plot_obs = bp.delta::latest_obs(obs),
+                     plot_obs = forecast.vocs::latest_obs(obs),
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
                      save_path = NULL, horizon = 4,
                      delta = c(0.2, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
-                     keep_fit = TRUE, plot = TRUE,
+                     keep_fit = TRUE,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
                        0.975, 0.99
@@ -102,9 +93,6 @@ forecast <- function(obs,
     forecasts = forecasts,
     models = strain_fits
   )
-  if (plot) {
-    out$plots <- plot_posterior(posteriors, plot_obs, save_path = date_path)
-  }
   return(out)
 }
 #' Forecast using a single branching process
@@ -179,7 +167,7 @@ forecast_across_dates <- function(obs,
 forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
                                       ...) {
   if (missing(scenarios)) {
-    scenarios <- bp.delta::define_scenarios()
+    scenarios <- forecast.vocs::define_scenarios()
   }
   scenarios$obs <- purrr::map2(
     scenarios$seq_lag, scenarios$seq_samples,

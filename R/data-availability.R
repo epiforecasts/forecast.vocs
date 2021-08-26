@@ -36,7 +36,7 @@ define_scenarios <- function(seq_lag = 0:3,
 #' @return A data frame of scenario definitions with ids
 #' @export
 #' @examples
-#' generate_obs_scenario(latest_obs(germany_obs), 4, 0.1)
+#' generate_obs_scenario(latest_obs(germany_covid19_delta_obs), 4, 0.1)
 generate_obs_scenario <- function(obs, seq_lag, seq_samples) {
   scenario_obs <- copy(obs)
   # apply downsampling of sequences
