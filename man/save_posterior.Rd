@@ -9,8 +9,8 @@ save_posterior(posterior, save_path = tempdir())
 \arguments{
 \item{posterior}{A data frame of summarised posterior estimates
 as returned by \code{cmdstanr::summary} with  an additional type variable
-which contains the following character string options: "non-DELTA",
-"DELTA", "Combined", "Overall".}
+which contains the following character string options: "non-VOC",
+"VOC", "Combined", "Overall".}
 
 \item{save_path}{A character string giving the path to save the
 posterior to as a series of csv's.}

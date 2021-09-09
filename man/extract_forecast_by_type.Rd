@@ -9,8 +9,8 @@ extract_forecast_by_type(posterior, forecast_dates)
 \arguments{
 \item{posterior}{A data frame of summarised posterior estimates
 as returned by \code{cmdstanr::summary} with  an additional type variable
-which contains the following character string options: "non-DELTA",
-"DELTA", "Combined", "Overall".}
+which contains the following character string options: "non-VOC",
+"VOC", "Combined", "Overall".}
 
 \item{forecast_dates}{A named vector of dates to use to identify when
 output is a forecast. Must contain a "Cases" date and a "Sequence" date.

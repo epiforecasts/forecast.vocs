@@ -115,24 +115,26 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
   return(plot)
 }
 
-#' Plot the posterior prediction for the fraction of samples with the DELTA
-#' variant
+#' Plot the posterior prediction for the fraction of samples with the variant
+#' of concern
+#' @param voc_label Character string giving the name to assign to the variant
+#' of concern. Defaults to  "variant of concern".
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
-plot_delta <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       all_obs = FALSE) {
+plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
+                     all_obs = FALSE, voc_label = "variant of concern") {
   if (!is.null(obs)) {
-    obs <- copy(obs)[, .(date, value = share_delta)]
+    obs <- copy(obs)[, .(date, value = share_voc)]
   }
-  plot <- plot_default(posterior, "delta", obs, forecast_dates,
+  plot <- plot_default(posterior, "voc", obs, forecast_dates,
     all_obs = FALSE, x = date
   )
 
   plot <- plot +
     scale_y_continuous(labels = scales::percent) +
     labs(
-      y = "Percentage of overall cases with the DELTA variant",
+      y = paste0("Percentage of overall cases with the ", voc_label),
       x = "Date"
     )
 
@@ -169,18 +171,20 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' @param type A character string indicating the format to use to save plots.
 #' @export
 #' @inheritParams plot_cases
+#' @inheritParams plot_voc
 #' @importFrom purrr walk2
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' obs <- latest_obs(germany_covid19_voc_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior)
 #' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           all_obs = FALSE, save_path = NULL, type = "png") {
+                           all_obs = FALSE, save_path = NULL, type = "png",
+                           voc_label = "variant of concern") {
   plots <- list()
   plots$cases <- plot_cases(posterior, obs, forecast_dates,
     log = FALSE,
@@ -189,8 +193,11 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
   plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
     log = TRUE, all_obs = all_obs
   )
-  if (nrow(posterior$delta) > 0) {
-    plots$delta <- plot_delta(posterior, obs, forecast_dates, all_obs = all_obs)
+  if (nrow(posterior$voc) > 0) {
+    plots$voc <- plot_voc(posterior, obs, forecast_dates,
+      all_obs = all_obs,
+      voc_label = voc_label
+    )
   }
   plots$rt <- plot_rt(posterior, forecast_dates)
 
@@ -216,18 +223,18 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @return  A ggplot2 based pairs plot of parameters of interest
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' obs <- latest_obs(germany_covid19_voc_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' plot_pairs(fit)
 #' }
 plot_pairs <- function(fit,
                        pars = c(
-                         "r_init", "r_noise", "beta", "delta_noise[1]",
-                         "ndelta_noise[1]", "init_cases",
+                         "r_init", "r_noise", "beta", "voc_noise[1]",
+                         "nvoc_noise[1]", "init_cases",
                          "init_cases[1]", "init_cases[2]",
-                         "eta[1]", "delta_eta[1]", "ndelta_eta[1]",
+                         "eta[1]", "voc_eta[1]", "nvoc_eta[1]",
                          "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"
                        ),
                        diagnostics = TRUE, ...) {

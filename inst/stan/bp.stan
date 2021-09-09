@@ -5,6 +5,7 @@ data {
   int likelihood;
   int output_loglik;
   int overdisp;
+  int debug;
 }
 
 transformed data {
@@ -53,20 +54,20 @@ transformed parameters {
     phi[1] = 1 ./ sqrt(sqrt_phi[1]);
   }
 
-  {
-  int j = 0;
-  for (i in 1:t) {
-    j += is_inf(mean_cases[i]) ? 1 : 0;
-  }
-  if (j) {
-    print(mean_cases);
-    print(mean_init_cases);
-    print(sd_init_cases);
-    print(init_cases);
-    print(r_init);
-    print(diff);
-    print(r);
-  }
+  if (debug) {
+    int j = 0;
+    for (i in 1:t) {
+      j += is_inf(mean_cases[i]) ? 1 : 0;
+    }
+    if (j) {
+      print(mean_cases);
+      print(mean_init_cases);
+      print(sd_init_cases);
+      print(init_cases);
+      print(r_init);
+      print(diff);
+      print(r);
+    }
   }
 }
 

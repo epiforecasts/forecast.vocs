@@ -43,7 +43,11 @@ This quick start uses data from Germany that includes COVID-19 notificatons and 
 library(forecast.vocs)
 options(mc.cores = 4)
 
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-07-05")
+)
+curr_obs <- latest_obs(germany_covid19_delta_obs)
 
 dt <- stan_data(obs, horizon = 4)
 
@@ -58,21 +62,22 @@ fit <- stan_fit(
 )
 
 posterior <- summarise_posterior(fit)
+posterior <- update_voc_label(posterior, "Delta")
 ```
 
 Plot the posterior prediction for cases.
 
 ```{r}
-plot_cases(posterior, obs, log = TRUE)
+plot_cases(posterior, curr_obs, log = TRUE)
 ```
 
-Plot the posterior prediction for the fraction of cases that are DELTA.
+Plot the posterior prediction for the fraction of cases that have the Delta variant.
 
 ```{r}
-plot_delta(posterior, obs)
+plot_voc(posterior, curr_obs, voc_label = "Delta variant")
 ```
 
-Plot the posterior estimate for the effective reproduction number of DELTA and non-DELTA cases.
+Plot the posterior estimate for the effective reproduction number of Delta and non-Delta cases.
 
 ```{r}
 plot_rt(posterior)
@@ -90,10 +95,19 @@ results <- forecast(obs,
 )
 ```
 
+Update variant of concern labels for the summarised posterior estimates.
+
+```{r}
+results$posteriors <- update_voc_label(results$posteriors, "Delta")
+```
+
 Generate summary plots for the forecasts:
 
 ```{r}
-plots <- plot_posterior(results$posteriors)
+plots <- plot_posterior(
+  results$posteriors, curr_obs,
+  voc_label = "Delta variant"
+)
 ```
 
 Plot the posterior prediction for cases for both models.
