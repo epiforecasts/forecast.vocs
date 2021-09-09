@@ -16,6 +16,8 @@
 #' @param output_loglik Logical, defaults to `FALSE`. Should the log
 #' likelihood be output. Disabling this will speed up fitting if evaluating the
 #' model fit is not required.
+#' @param debug Logical, defaults to `FALSE`. Should within model debug
+#' information be returned.
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_covid19_delta_obs))
@@ -24,7 +26,8 @@ stan_data <- function(obs, horizon = 4,
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
                       likelihood = TRUE,
-                      output_loglik = TRUE) {
+                      output_loglik = TRUE,
+                      debug = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
@@ -54,7 +57,8 @@ stan_data <- function(obs, horizon = 4,
       variant_relationship %in% "scaled", 0,
       variant_relationship %in% "independent", 2
     ),
-    overdisp = as.numeric(overdispersion)
+    overdisp = as.numeric(overdispersion),
+    debug = as.numeric(debug)
   )
   # assign time where strains share a noise parameter
   data$t_dep <- ifelse(data$relat == 2, data$t_nseq, data$t - 2)

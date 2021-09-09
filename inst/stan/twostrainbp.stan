@@ -14,6 +14,7 @@ data {
   real voc_sd;
   int relat;
   int overdisp;
+  int debug;
 }
 
 transformed data {
@@ -97,24 +98,26 @@ transformed parameters {
 
   // calculate fraction voc
   frac_voc = mean_voc_cases ./ mean_cases[(t_nseq + 1):t];
-  {
-  int j = 0;
-  for (i in 1:t_seqf) {
-    j += is_nan(frac_voc[i]) ? 1 : 0;
-  }
-  if (j) {
-    print(frac_voc);
-    print(mean_voc_cases);
-    print(mean_nvoc_cases);
-    print(mean_cases);
-    print(mean_init_cases);
-    print(sd_init_cases);
-    print(init_cases);
-    print(r_init);
-    print(diff);
-    print(r);
-    print(voc_mod);
-  }
+  
+  //Debug information
+  if (debug) {
+    int j = 0;
+    for (i in 1:t_seqf) {
+      j += is_nan(frac_voc[i]) ? 1 : 0;
+    }
+    if (j) {
+      print(frac_voc);
+      print(mean_voc_cases);
+      print(mean_nvoc_cases);
+      print(mean_cases);
+      print(mean_init_cases);
+      print(sd_init_cases);
+      print(init_cases);
+      print(r_init);
+      print(diff);
+      print(r);
+      print(voc_mod);
+    }
   }
 }
 

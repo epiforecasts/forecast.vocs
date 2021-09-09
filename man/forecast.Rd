@@ -18,6 +18,7 @@ forecast(
   models = NULL,
   likelihood = TRUE,
   output_loglik = FALSE,
+  debug = FALSE,
   keep_fit = TRUE,
   probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
   ...
@@ -68,6 +69,9 @@ included in the model.extract}
 \item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
 likelihood be output. Disabling this will speed up fitting if evaluating the
 model fit is not required.}
+
+\item{debug}{Logical, defaults to \code{FALSE}. Should within model debug
+information be returned.}
 
 \item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
 kept and returned. Dropping this can substantially reduce memory usage in

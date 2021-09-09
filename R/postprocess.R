@@ -396,6 +396,57 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
   )
   return(forecast)
 }
+
+
+#' Label the Variant of Concern
+#'
+#' Assign a custom label to the variant of concern in the
+#' output from `summarise_posterior()`.
+#'
+#' @inheritParams extract_forecast_dates
+#' @param label Character string  indicating the new label to use for the
+#' variant of concern.
+#' @param target_label A character string defaulting to "VOC". Indicates the
+#' current label for the variant of concern.
+#' @importFrom purrr map map_dbl
+#' @return A list of data frames as returned by `summarise_posterior()` but
+#' with updated labels.
+#' @export
+#' @examples
+#' \dontrun{
+#' obs <- latest_obs(germany_covid19_delta_obs)
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' p <- summarise_posterior(fit)
+#' p <- update_voc_label(p, "Delta")
+#' p$model[]
+#' }
+update_voc_label <- function(posterior, label, target_label = "VOC") {
+  if (!missing(label)) {
+    stopifnot(is.character(label))
+
+    posterior <- purrr::map(posterior, function(dt) {
+      char_cols <- names(Filter(
+        function(f) {
+          any(class(f) %in% c("character", "factor"))
+        },
+        dt
+      ))
+      dt <- dt[,
+        (char_cols) := purrr::map(
+          .SD,
+          ~ gsub(target_label,
+            replacement = label, x = .,
+            ignore.case = FALSE
+          )
+        ),
+        .SDcols = char_cols
+      ]
+    })
+  }
+  return(posterior)
+}
 #' Extract posterior draws
 #'
 #' @param fit A list as produced by `stan_fit()`.

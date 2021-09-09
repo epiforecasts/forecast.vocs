@@ -11,7 +11,8 @@ stan_data(
   variant_relationship = "pooled",
   overdispersion = TRUE,
   likelihood = TRUE,
-  output_loglik = TRUE
+  output_loglik = TRUE,
+  debug = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ included in the model.extract}
 \item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
 likelihood be output. Disabling this will speed up fitting if evaluating the
 model fit is not required.}
+
+\item{debug}{Logical, defaults to \code{FALSE}. Should within model debug
+information be returned.}
 }
 \description{
 Format data for use with stan

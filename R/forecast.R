@@ -38,7 +38,8 @@ forecast <- function(obs,
                      voc_scale = c(0, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE,
-                     output_loglik = FALSE, keep_fit = TRUE,
+                     output_loglik = FALSE, debug = FALSE,
+                     keep_fit = TRUE,
                      probs = c(
                        0.01, 0.025, seq(0.05, 0.95, by = 0.05),
                        0.975, 0.99
@@ -63,7 +64,8 @@ forecast <- function(obs,
     variant_relationship = variant_relationship,
     overdispersion = overdispersion,
     likelihood = likelihood,
-    output_loglik = output_loglik
+    output_loglik = output_loglik,
+    debug = debug
   )
 
   # forecast required strain models
