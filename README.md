@@ -35,7 +35,8 @@ library(forecast.vocs)
 options(mc.cores = 4)
 
 obs <- filter_by_availability(
-  germany_covid19_delta_obs, date = as.Date("2021-07-05")
+  germany_covid19_delta_obs,
+  date = as.Date("2021-07-05")
 )
 curr_obs <- latest_obs(germany_covid19_delta_obs)
 
@@ -52,40 +53,21 @@ fit <- stan_fit(
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 82.7 seconds.
-#> Chain 4 finished in 100.6 seconds.
-#> Chain 1 finished in 102.4 seconds.
-#> Chain 3 finished in 145.1 seconds.
+#> Chain 3 finished in 89.2 seconds.
+#> Chain 1 finished in 102.9 seconds.
+#> Chain 4 finished in 106.6 seconds.
+#> Chain 2 finished in 133.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 107.7 seconds.
-#> Total execution time: 145.3 seconds.
+#> Mean chain execution time: 107.9 seconds.
+#> Total execution time: 133.1 seconds.
 #> 
-#> Warning: 6 of 4000 (0.0%) transitions ended with a divergence.
+#> Warning: 1 of 4000 (0.0%) transitions ended with a divergence.
 #> This may indicate insufficient exploration of the posterior distribution.
 #> Possible remedies include: 
 #>   * Increasing adapt_delta closer to 1 (default is 0.8) 
 #>   * Reparameterizing the model (e.g. using a non-centered parameterization)
 #>   * Using informative or weakly informative prior distributions
-#> Processing csv files: /tmp/RtmplLeyRX/twostrainbp-202109091130-1-36c387.csv, /tmp/RtmplLeyRX/twostrainbp-202109091130-2-36c387.csv, /tmp/RtmplLeyRX/twostrainbp-202109091130-3-36c387.csv, /tmp/RtmplLeyRX/twostrainbp-202109091130-4-36c387.csv
-#> 
-#> Checking sampler transitions treedepth.
-#> Treedepth satisfactory for all transitions.
-#> 
-#> Checking sampler transitions for divergences.
-#> 6 of 4000 (0.15%) transitions ended with a divergence.
-#> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
-#> Try increasing adapt delta closer to 1.
-#> If this doesn't remove all divergences, try to reparameterize the model.
-#> 
-#> Checking E-BFMI - sampler transitions HMC potential energy.
-#> E-BFMI satisfactory.
-#> 
-#> Effective sample size satisfactory.
-#> 
-#> Split R-hat values satisfactory all parameters.
-#> 
-#> Processing complete.
 
 posterior <- summarise_posterior(fit)
 posterior <- update_voc_label(posterior, "Delta")
@@ -132,73 +114,24 @@ results <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 [0.0001,0.0001,2.61538e+141,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf] 
-#> Chain 2 11.3774 
-#> Chain 2 0.01 
-#> Chain 2 -1139.31 
-#> Chain 2 732.521 
-#> Chain 2 [-0.102317,-0.16192,-0.207311,-0.149114,-0.309786,-0.483704,-0.724303,-1.05227,-0.941118,-0.667717,-0.927358,-0.590029,-0.976228,-0.647173,-0.581032,-0.679033,-0.632327,-0.688291] 
-#> Chain 2 [732.521,732.419,732.257,732.05,731.901,731.591,731.107,730.383,729.331,728.39,727.722,726.795,726.205,725.228,724.581,724,723.321,722.689,722] 
-#> Chain 3 [2.42752e+71,1.24623e+245,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf,inf] 
-#> Chain 3 11.3774 
-#> Chain 3 0.01 
-#> Chain 3 164.37 
-#> Chain 3 399.983 
-#> Chain 3 [-0.561411,-7.36534,-3.89348,2.81783,0.391361,-2.88033,-9.87789,-13.6004,-13.9848,-8.60623,-5.68096,-4.83658,-6.56518,-2.37839,-7.04788,-4.43691,-7.24552,-7.21597] 
-#> Chain 3 [399.983,399.422,392.056,388.163,390.981,391.372,388.492,378.614,365.013,351.029,342.422,336.741,331.905,325.34,322.961,315.913,311.476,304.231,297.015] 
-#> Chain 2 finished in 33.7 seconds.
-#> Chain 1 finished in 37.5 seconds.
-#> Chain 3 finished in 38.6 seconds.
-#> Chain 4 finished in 41.0 seconds.
+#> Chain 2 finished in 32.4 seconds.
+#> Chain 4 finished in 33.5 seconds.
+#> Chain 1 finished in 36.7 seconds.
+#> Chain 3 finished in 39.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 37.7 seconds.
-#> Total execution time: 41.1 seconds.
-#> Processing csv files: /tmp/RtmplLeyRX/bp-202109091132-1-331678.csv, /tmp/RtmplLeyRX/bp-202109091132-2-331678.csv, /tmp/RtmplLeyRX/bp-202109091132-3-331678.csv, /tmp/RtmplLeyRX/bp-202109091132-4-331678.csv
-#> 
-#> Checking sampler transitions treedepth.
-#> Treedepth satisfactory for all transitions.
-#> 
-#> Checking sampler transitions for divergences.
-#> No divergent transitions found.
-#> 
-#> Checking E-BFMI - sampler transitions HMC potential energy.
-#> E-BFMI satisfactory.
-#> 
-#> Effective sample size satisfactory.
-#> 
-#> Split R-hat values satisfactory all parameters.
-#> 
-#> Processing complete, no problems detected.
+#> Mean chain execution time: 35.5 seconds.
+#> Total execution time: 39.7 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 96.6 seconds.
-#> Chain 3 finished in 108.8 seconds.
-#> Chain 1 finished in 124.4 seconds.
-#> Chain 2 finished in 139.2 seconds.
+#> Chain 4 finished in 86.1 seconds.
+#> Chain 3 finished in 86.9 seconds.
+#> Chain 1 finished in 98.5 seconds.
+#> Chain 2 finished in 103.7 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 117.2 seconds.
-#> Total execution time: 139.3 seconds.
-#> Processing csv files: /tmp/RtmplLeyRX/twostrainbp-202109091133-1-62874f.csv, /tmp/RtmplLeyRX/twostrainbp-202109091133-2-62874f.csv, /tmp/RtmplLeyRX/twostrainbp-202109091133-3-62874f.csv, /tmp/RtmplLeyRX/twostrainbp-202109091133-4-62874f.csv
-#> 
-#> Checking sampler transitions treedepth.
-#> Treedepth satisfactory for all transitions.
-#> 
-#> Checking sampler transitions for divergences.
-#> 4 of 4000 (0.1%) transitions ended with a divergence.
-#> These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
-#> Try increasing adapt delta closer to 1.
-#> If this doesn't remove all divergences, try to reparameterize the model.
-#> 
-#> Checking E-BFMI - sampler transitions HMC potential energy.
-#> E-BFMI satisfactory.
-#> 
-#> Effective sample size satisfactory.
-#> 
-#> Split R-hat values satisfactory all parameters.
-#> 
-#> Processing complete.
+#> Mean chain execution time: 93.8 seconds.
+#> Total execution time: 103.7 seconds.
 ```
 
 Update variant of concern labels for the summarised posterior estimates.
@@ -211,7 +144,8 @@ Generate summary plots for the forecasts:
 
 ``` r
 plots <- plot_posterior(
-  results$posteriors, curr_obs, voc_label = "Delta variant"
+  results$posteriors, curr_obs,
+  voc_label = "Delta variant"
 )
 ```
 

@@ -22,7 +22,7 @@ stan_fit(
 if required. Defaults to empty meaning that nothing is saved}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
-be shown.}
+be returned as a data frame.}
 
 \item{include_posterior}{Logical, defaults to \code{FALSE}. Should posterior
 summaries be included.}

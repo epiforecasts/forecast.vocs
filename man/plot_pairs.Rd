@@ -20,7 +20,7 @@ plot_pairs(
 in the plot. Will only be included if present in the fitted model.}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
-be shown.}
+be returned as a data frame.}
 
 \item{...}{Additional parameters passed to \code{mcmc_pairs()}.}
 }

@@ -146,7 +146,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' @param save_path Character string indicating the save path to use for results
 #' if required. Defaults to empty meaning that nothing is saved
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
-#' be shown.
+#' be returned as a data frame.
 #' @param include_posterior Logical, defaults to `FALSE`. Should posterior
 #' summaries be included.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
@@ -196,7 +196,6 @@ stan_fit <- function(data,
   )
 
   if (diagnostics) {
-    fit$cmdstan_diagnose()
     diag <- fit$sampler_diagnostics(format = "df")
     diagnostics <- data.table(
       samples = nrow(diag),
@@ -211,6 +210,7 @@ stan_fit <- function(data,
       max_treedepth = max(diag$treedepth__)
     )
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]
+    diagnostics[, per_at_max_treedepth := no_at_max_treedepth / nrow(diag)]
     out$diagnostics <- diagnostics
   }
 
