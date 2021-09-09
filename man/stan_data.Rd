@@ -7,7 +7,7 @@
 stan_data(
   obs,
   horizon = 4,
-  delta = c(0.2, 0.2),
+  voc_scale = c(0, 0.2),
   variant_relationship = "pooled",
   overdispersion = TRUE,
   likelihood = TRUE,
@@ -16,13 +16,13 @@ stan_data(
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
-date, cases, seq_delta, and seq_total.}
+date, cases, seq_voc, and seq_total.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
-\item{delta}{Numeric vector of length 2. Prior mean and
+\item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
-due to the variant.}
+due to the variant of concern.}
 
 \item{variant_relationship}{Character string, defaulting to "pooled".
 Controls the relationship of strains with options being "pooled" (dependence

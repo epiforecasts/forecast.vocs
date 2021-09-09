@@ -10,7 +10,8 @@ plot_posterior(
   forecast_dates = NULL,
   all_obs = FALSE,
   save_path = NULL,
-  type = "png"
+  type = "png",
+  voc_label = "variant of concern"
 )
 }
 \arguments{
@@ -32,16 +33,19 @@ or just those in the date range of the estimates being plot.}
 if required.}
 
 \item{type}{A character string indicating the format to use to save plots.}
+
+\item{voc_label}{Character string giving the name to assign to the variant
+of concern. Defaults to  "variant of concern".}
 }
 \description{
 Plot posterior predictions
 }
 \examples{
 \dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- latest_obs(germany_covid19_voc_obs)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 posterior <- summarise_posterior(fit)
 plot_posterior(posterior)
 }

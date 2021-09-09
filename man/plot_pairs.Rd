@@ -6,9 +6,9 @@
 \usage{
 plot_pairs(
   fit,
-  pars = c("r_init", "r_noise", "beta", "delta_noise[1]", "ndelta_noise[1]",
-    "init_cases", "init_cases[1]", "init_cases[2]", "eta[1]", "delta_eta[1]",
-    "ndelta_eta[1]", "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
+  pars = c("r_init", "r_noise", "beta", "voc_noise[1]", "nvoc_noise[1]", "init_cases",
+    "init_cases[1]", "init_cases[2]", "eta[1]", "voc_eta[1]", "nvoc_eta[1]",
+    "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"),
   diagnostics = TRUE,
   ...
 )
@@ -32,10 +32,10 @@ Pairs plot of parameters of interest and fitting diagnostics
 }
 \examples{
 \dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- latest_obs(germany_covid19_voc_obs)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 plot_pairs(fit)
 }
 }

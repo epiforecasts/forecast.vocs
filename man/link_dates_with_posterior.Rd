@@ -9,8 +9,8 @@ link_dates_with_posterior(posterior, data, mod_end = 0)
 \arguments{
 \item{posterior}{A data frame of summarised posterior estimates
 as returned by \code{cmdstanr::summary} with  an additional type variable
-which contains the following character string options: "non-DELTA",
-"DELTA", "Combined", "Overall".}
+which contains the following character string options: "non-VOC",
+"VOC", "Combined", "Overall".}
 
 \item{data}{A list of data as returned in the "data" entry of the output
 returned by \code{stan_fit()}.}

@@ -1,8 +1,8 @@
 #' Link dates by time for posterior parameter estimates
 #' @param posterior A data frame of summarised posterior estimates
 #' as returned by `cmdstanr::summary` with  an additional type variable
-#' which contains the following character string options: "non-DELTA",
-#' "DELTA", "Combined", "Overall".
+#' which contains the following character string options: "non-VOC",
+#' "VOC", "Combined", "Overall".
 #' @param data A list of data as returned in the "data" entry of the output
 #' returned by `stan_fit()`.
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
@@ -21,7 +21,7 @@ link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
   dates <- data.table(
     start = c(rep(start_date, 3), start_date + t_nseq * 7),
     end = end_date,
-    type = c("non-DELTA", "Combined", "Overall", "DELTA")
+    type = c("non-VOC", "Combined", "Overall", "VOC")
   )
   dates <- dates[, .(date = seq(start, end, by = "weeks")), by = "type"]
   dates <- dates[, id := 1:.N, by = "type"]
@@ -132,15 +132,15 @@ summarise_posterior <- function(fit,
     cbind(x, y)
   }
   sfit <- purrr::reduce(sfit, cbind_custom)
-  # detect if delta is in the data
-  delta_present <- any(grepl("delta", sfit$variable))
+  # detect if voc is in the data
+  voc_present <- any(grepl("voc", sfit$variable))
 
-  # summarise cases with delta label
+  # summarise cases with voc label
   cases <- sfit[grepl("sim_", variable)]
   cases[, type := data.table::fcase(
-    grepl("_ndelta", variable), "non-DELTA",
-    grepl("_delta", variable), "DELTA",
-    rep(delta_present, .N), "Combined",
+    grepl("_nvoc", variable), "non-VOC",
+    grepl("_voc", variable), "VOC",
+    rep(voc_present, .N), "Combined",
     default = "Overall"
   )]
   cases <- link_dates_with_posterior(cases, data)
@@ -150,26 +150,26 @@ summarise_posterior <- function(fit,
   )
   cases <- link_obs_with_posterior(
     posterior = cases, horizon = seq_horizon,
-    target_types = c("DELTA", "non-DELTA")
+    target_types = c("VOC", "non-VOC")
   )
 
-  # summarise delta if present
-  delta <- sfit[grepl("frac_delta", variable)]
-  delta[, type := "DELTA"]
-  if (nrow(delta) > 0) {
-    delta <- link_dates_with_posterior(delta, data)
-    delta <- link_obs_with_posterior(
-      posterior = delta, obs = data$Y / data$N,
-      target_types = "DELTA"
+  # summarise VOC if present
+  voc <- sfit[grepl("frac_voc", variable)]
+  voc[, type := "VOC"]
+  if (nrow(voc) > 0) {
+    voc <- link_dates_with_posterior(voc, data)
+    voc <- link_obs_with_posterior(
+      posterior = voc, obs = data$Y / data$N,
+      target_types = "VOC"
     )
   }
 
   # summarise Rt and label
   rt <- sfit[grepl("r\\[", variable)]
   rt[, type := fcase(
-    grepl("delta_r", variable), "DELTA",
+    grepl("voc_r", variable), "VOC",
     grepl("com_r", variable), "Combined",
-    grepl("r\\[", variable) & delta_present, "non-DELTA",
+    grepl("r\\[", variable) & voc_present, "non-VOC",
     grepl("r\\[", variable), "Overall"
   )]
   rt <- link_dates_with_posterior(rt, data, mod_end = 1)
@@ -179,7 +179,7 @@ summarise_posterior <- function(fit,
   )
   rt <- link_obs_with_posterior(
     posterior = rt, horizon = seq_horizon,
-    target_types = c("DELTA", "non-DELTA")
+    target_types = c("VOC", "non-VOC")
   )
   # copy into growth
   growth <- copy(rt)
@@ -191,15 +191,15 @@ summarise_posterior <- function(fit,
   # summarise model parameters
   param_lookup <- data.table(
     variable = c(
-      "r_init", "r_noise", "beta", "delta_mod", "avg_delta_mod",
-      "delta_noise[1]", "ndelta_noise[1]", "init_cases[1]", "init_cases[2]",
+      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_mod",
+      "voc_noise[1]", "nvoc_noise[1]", "init_cases[1]", "init_cases[2]",
       "phi[1]", "phi[2]", "phi"
     ),
     clean_name = c(
       "Initial growth", "Growth (sd)", "Beta",
-      "Initial DELTA effect", "Average DELTA effect",
-      "DELTA (sd)", "Non-DELTA (sd)", "Initial cases",
-      "Initial DELTA cases", "Notification overdispersion",
+      "Initial VOC effect", "Average VOC effect",
+      "VOC (sd)", "Non-VOC (sd)", "Initial cases",
+      "Initial VOC cases", "Notification overdispersion",
       "Sequencing overdispersion", "Notification overdispersion"
     ),
     exponentiated = c(
@@ -211,7 +211,7 @@ summarise_posterior <- function(fit,
   model[exponentiated == TRUE, (cols) := lapply(.SD, exp), .SDcols = cols]
 
   # join output and reorganise as needed
-  out <- list(cases = cases, delta = delta, growth = growth, rt = rt)
+  out <- list(cases = cases, voc = voc, growth = growth, rt = rt)
   out <- purrr::map(out, ~ .x[, variable := NULL])
   out$model <- model
   return(out)
@@ -384,8 +384,8 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
     rt = extract_forecast_by_type(copy(posterior$rt), forecast_dates),
     growth = extract_forecast_by_type(copy(posterior$growth), forecast_dates)
   )
-  if (nrow(posterior$delta) > 0) {
-    forecast$delta <- posterior$delta[date > forecast_dates["Sequences"]]
+  if (nrow(posterior$voc) > 0) {
+    forecast$voc <- posterior$voc[date > forecast_dates["Sequences"]]
   }
   cols <- c("obs", "observed", "rhat", "ess_bulk", "ess_tail")
   forecast <- suppressWarnings(purrr::map(forecast, ~ .[, (cols) := NULL]))

@@ -8,7 +8,7 @@ latest_obs(obs)
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
-date, cases, seq_delta, and seq_total, cases_available,
+date, cases, seq_voc, and seq_total, cases_available,
 and seq_available. seq_available and case_available must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}

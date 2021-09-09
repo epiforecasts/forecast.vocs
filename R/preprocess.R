@@ -1,6 +1,6 @@
 #' Update observations based on availability
 #' @param obs A data frame with the following variables:
-#'  date, cases, seq_delta, and seq_total, cases_available,
+#'  date, cases, seq_voc, and seq_total, cases_available,
 #' and seq_available. seq_available and case_available must be
 #' uniquely define data rows but other rows can be duplicated based
 #' on data availability.
@@ -65,7 +65,7 @@ filter_by_availability <- function(obs, date = max(obs$date),
   # filter by forecast date and update data based on availability
   obs <- obs[date <= target_date]
   obs[cases_available > case_date, cases := NA]
-  cols <- c("seq_total", "seq_delta", "share_delta")
+  cols <- c("seq_total", "seq_voc", "share_voc")
   obs[seq_available > seq_date, (cols) := purrr::map(.SD, ~NA),
     .SDcols = cols
   ]

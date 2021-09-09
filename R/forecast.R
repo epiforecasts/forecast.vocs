@@ -24,7 +24,7 @@
 #'   horizon = 4,
 #'   save_path = tempdir(),
 #'   strains = c(1, 2),
-#'   adapt_delta = 0.99,
+#'   adapt_voc = 0.99,
 #'   max_treedepth = 15,
 #'   variant_relationship = "scaled"
 #' )
@@ -35,7 +35,7 @@ forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
                      save_path = NULL, horizon = 4,
-                     delta = c(0.2, 0.2), strains = 2,
+                     voc_scale = c(0, 0.2), strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE,
                      output_loglik = FALSE, keep_fit = TRUE,
@@ -59,7 +59,7 @@ forecast <- function(obs,
 
   # format data and fit models
   data <- stan_data(target_obs,
-    horizon = horizon, delta = delta,
+    horizon = horizon, voc_scale = voc_scale,
     variant_relationship = variant_relationship,
     overdispersion = overdispersion,
     likelihood = likelihood,
@@ -72,7 +72,8 @@ forecast <- function(obs,
     function(strain, ...) {
       forecast_n_strain(
         model = models[[strain]],
-        strains = strains[strain], data = data,
+        strains = strains[strain],
+        data = data,
         probs = probs,
         save_path = date_path, ...
       )

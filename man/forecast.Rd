@@ -11,7 +11,7 @@ forecast(
   case_date = forecast_date,
   save_path = NULL,
   horizon = 4,
-  delta = c(0.2, 0.2),
+  voc_scale = c(0, 0.2),
   strains = 2,
   variant_relationship = "pooled",
   overdispersion = TRUE,
@@ -25,7 +25,7 @@ forecast(
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
-date, cases, seq_delta, and seq_total, cases_available,
+date, cases, seq_voc, and seq_total, cases_available,
 and seq_available. seq_available and case_available must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
@@ -44,9 +44,9 @@ if required. Defaults to empty meaning that nothing is saved}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
-\item{delta}{Numeric vector of length 2. Prior mean and
+\item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
-due to the variant.}
+due to the variant of concern.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
@@ -89,7 +89,7 @@ results <- forecast(
   horizon = 4,
   save_path = tempdir(),
   strains = c(1, 2),
-  adapt_delta = 0.99,
+  adapt_voc = 0.99,
   max_treedepth = 15,
   variant_relationship = "scaled"
 )

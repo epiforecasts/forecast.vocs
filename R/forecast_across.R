@@ -50,7 +50,7 @@ forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
   forecast_scenario <- function(scenario, ...) {
     forecast_across_dates(
       obs = scenario$obs[[1]],
-      delta = scenario$delta[[1]],
+      voc_scale = scenario$voc_scale[[1]],
       save_path = file.path(save_path, scenario$id[[1]]),
       id = scenario$id[[1]],
       ...

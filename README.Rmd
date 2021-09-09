@@ -66,13 +66,13 @@ Plot the posterior prediction for cases.
 plot_cases(posterior, obs, log = TRUE)
 ```
 
-Plot the posterior prediction for the fraction of cases that are DELTA.
+Plot the posterior prediction for the fraction of cases that have the Delta variant.
 
 ```{r}
-plot_delta(posterior, obs)
+plot_voc(posterior, obs)
 ```
 
-Plot the posterior estimate for the effective reproduction number of DELTA and non-DELTA cases.
+Plot the posterior estimate for the effective reproduction number of Delta and non-Delta cases.
 
 ```{r}
 plot_rt(posterior)

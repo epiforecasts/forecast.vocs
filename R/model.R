@@ -1,10 +1,10 @@
 #' Format data for use with stan
 #' @param obs A data frame with the following variables:
-#'  date, cases, seq_delta, and seq_total.
+#'  date, cases, seq_voc, and seq_total.
 #' @param horizon Integer forecast horizon. Defaults to 4.
-#' @param delta Numeric vector of length 2. Prior mean and
+#' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
-#' due to the variant.
+#' due to the variant of concern.
 #' @param variant_relationship Character string, defaulting to "pooled".
 #' Controls the relationship of strains with options being "pooled" (dependence
 #' determined from the data), "scaled" (a fixed scaling between strains), and
@@ -19,7 +19,8 @@
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_covid19_delta_obs))
-stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
+stan_data <- function(obs, horizon = 4,
+                      voc_scale = c(0, 0.2),
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
                       likelihood = TRUE,
@@ -35,19 +36,19 @@ stan_data <- function(obs, horizon = 4, delta = c(0.2, 0.2),
     t = nrow(obs) + horizon,
     t_nots = nrow(obs[!is.na(cases)]),
     t_nseq = nrow(obs[is.na(seq_available)]),
-    t_seq = nrow(obs[!is.na(seq_delta)]),
+    t_seq = nrow(obs[!is.na(seq_voc)]),
     t_seqf = nrow(obs) + horizon - nrow(obs[is.na(seq_available)]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
     N = obs[!is.na(seq_total)]$seq_total,
-    # number of sequenced samples with delta variant
-    Y = obs[!is.na(seq_total)]$seq_delta,
+    # number of sequenced samples with voc variant
+    Y = obs[!is.na(seq_total)]$seq_voc,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
-    delta_mean = delta[1],
-    delta_sd = delta[2],
+    voc_mean = voc_scale[1],
+    voc_sd = voc_scale[2],
     relat = fcase(
       variant_relationship %in% "pooled", 1,
       variant_relationship %in% "scaled", 0,
@@ -90,14 +91,14 @@ stan_inits <- function(data, strains = 2) {
       inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     } else {
-      inits$delta_mod <- rnorm(
-        1, data$delta_mean,
-        data$delta_sd * 0.1
+      inits$voc_mod <- rnorm(
+        1, data$voc_mean,
+        data$voc_sd * 0.1
       )
-      inits$delta_noise <- abs(rnorm(1, 0, 0.01))
-      inits$ndelta_noise <- abs(rnorm(1, 0, 0.01))
-      inits$delta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
-      inits$ndelta_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$voc_noise <- abs(rnorm(1, 0, 0.01))
+      inits$nvoc_noise <- abs(rnorm(1, 0, 0.01))
+      inits$voc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$nvoc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
     }
     return(inits)
   }
