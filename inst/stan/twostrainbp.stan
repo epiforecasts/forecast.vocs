@@ -15,6 +15,7 @@ data {
   int relat;
   int overdisp;
   int debug;
+
 }
 
 transformed data {
@@ -153,8 +154,8 @@ model {
   if (likelihood) {
     if (overdisp) {
       X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-      Y ~ beta_binomial(N, frac_voc[1:t_seq] * phi[1], 
-                       (1 - frac_voc[1:t_seq]) * phi[1]);
+      Y ~ beta_binomial(N, frac_voc[1:t_seq] * phi[2], 
+                       (1 - frac_voc[1:t_seq]) * phi[2]);
     }else{
       X ~ poisson(mean_cases[1:t_nots]);
       Y ~ binomial(N, frac_voc[1:t_seq]);
