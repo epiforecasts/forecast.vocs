@@ -68,7 +68,7 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 #'
-#' # fit a simulate dataset
+#' # fit a simulated dataset
 #' sim_dt <- sim_obs$stan_data[[1]]
 #' inits <- stan_inits(sim_dt)
 #' fit <- stan_fit(sim_dt, init = inits, adapt_delta = 0.95, max_treedepth = 15)
