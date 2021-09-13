@@ -10,21 +10,24 @@ data {
   int N[t_seq];
   int likelihood;
   int output_loglik;
+  real r_init_mean;
+  real r_init_sd;
   real voc_mean;
   real voc_sd;
   int relat;
   int overdisp;
   int debug;
+
 }
 
 transformed data {
   // initialise cases using observed data
   vector[2] mean_init_cases;
   vector[2] sd_init_cases;
-  mean_init_cases[2] = X[t_nseq + 1] * Y[1] / N[1];
+  mean_init_cases[2] = max(2, X[t_nseq + 1] * Y[1] / N[1]);
   mean_init_cases[1] = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = rep_vector(0.01, 2);
+  sd_init_cases = rep_vector(0.1, 2);
 }
 
 parameters {
@@ -126,7 +129,7 @@ model {
   init_cases ~ normal(mean_init_cases, sd_init_cases);
 
   // growth priors
-  r_init ~ normal(0, 0.25);
+  r_init ~ normal(r_init_mean, r_init_sd);
   voc_mod ~ normal(voc_mean, voc_sd);
   r_noise ~ normal(0, 0.2) T[0,];
   if (relat) {
@@ -153,8 +156,8 @@ model {
   if (likelihood) {
     if (overdisp) {
       X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
-      Y ~ beta_binomial(N, frac_voc[1:t_seq] * phi[1], 
-                       (1 - frac_voc[1:t_seq]) * phi[1]);
+      Y ~ beta_binomial(N, frac_voc[1:t_seq] * phi[2], 
+                       (1 - frac_voc[1:t_seq]) * phi[2]);
     }else{
       X ~ poisson(mean_cases[1:t_nots]);
       Y ~ binomial(N, frac_voc[1:t_seq]);

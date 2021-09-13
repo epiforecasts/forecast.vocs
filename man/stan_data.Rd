@@ -7,6 +7,7 @@
 stan_data(
   obs,
   horizon = 4,
+  r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
   variant_relationship = "pooled",
   overdispersion = TRUE,
@@ -20,6 +21,9 @@ stan_data(
 date, cases, seq_voc, and seq_total.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
+
+\item{r_init}{Numeric vector of length 2. Prior mean and
+standard deviation for the initial growht rate.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier

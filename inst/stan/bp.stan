@@ -2,6 +2,8 @@ data {
   int t;
   int t_nots;
   int X[t_nots];
+  real r_init_mean;
+  real r_init_sd;
   int likelihood;
   int output_loglik;
   int overdisp;
@@ -14,7 +16,7 @@ transformed data {
   real sd_init_cases;
   mean_init_cases = X[1];
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = 0.01;
+  sd_init_cases = 0.1;
 }
 
 parameters {
@@ -76,7 +78,7 @@ model {
   init_cases ~ normal(mean_init_cases, sd_init_cases);
 
   // growth priors
-  r_init ~ normal(0, 0.25);
+  r_init ~ normal(r_init_mean, r_init_sd);
   r_noise ~ normal(0, 0.2) T[0,];
   
   // random walk priors
