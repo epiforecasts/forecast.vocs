@@ -39,6 +39,10 @@ generate_data <- function(obs, strains = 2,
   draws <- setDT(posterior::as_draws_df(draws))
   draws <- draws[.draw <= datasets]
   vars <- colnames(draws)
+  melt_draws <- melt(draws,
+    id.vars = c(".draw", ".iteration", ".chain"),
+    variable.name = "parameter", value.name = "sample"
+  )
 
   gen_cases <- suppressWarnings(
     data.table::copy(draws)[, grepl("sim_cases", vars), with = FALSE]
@@ -51,6 +55,7 @@ generate_data <- function(obs, strains = 2,
   seq_phi <- draws[["phi[2]"]]
 
   gen_data <- data.table(
+    parameters = purrr::map(seq_len(datasets), ~ melt_draws[.draw == .]),
     obs = purrr::map(seq_len(datasets), function(i) {
       copy(obs)[
         ,
@@ -71,6 +76,6 @@ generate_data <- function(obs, strains = 2,
     })
   )
 
-  gen_data[, stan_data := purrr::map(obs, stan_data, horizon = 0, ...)]
+  gen_data[, stan_data := purrr::map(obs, stan_data, horizon = 0)]
   return(gen_data)
 }
