@@ -11,6 +11,7 @@ forecast(
   case_date = forecast_date,
   save_path = NULL,
   horizon = 4,
+  r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
   strains = 2,
   variant_relationship = "pooled",
@@ -44,6 +45,9 @@ the forecast date.}
 if required. Defaults to empty meaning that nothing is saved}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
+
+\item{r_init}{Numeric vector of length 2. Prior mean and
+standard deviation for the initial growht rate.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier

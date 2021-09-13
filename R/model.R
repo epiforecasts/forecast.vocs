@@ -2,6 +2,8 @@
 #' @param obs A data frame with the following variables:
 #'  date, cases, seq_voc, and seq_total.
 #' @param horizon Integer forecast horizon. Defaults to 4.
+#' @param r_init Numeric vector of length 2. Prior mean and
+#' standard deviation for the initial growht rate.
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
@@ -22,6 +24,7 @@
 #' @examples
 #' stan_data(latest_obs(germany_covid19_delta_obs))
 stan_data <- function(obs, horizon = 4,
+                      r_init = c(0, 0.25),
                       voc_scale = c(0, 0.2),
                       variant_relationship = "pooled",
                       overdispersion = TRUE,
@@ -50,6 +53,8 @@ stan_data <- function(obs, horizon = 4,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
+    r_init_mean = r_init[1],
+    r_init_sd = r_init[2],
     voc_mean = voc_scale[1],
     voc_sd = voc_scale[2],
     relat = fcase(
@@ -81,11 +86,11 @@ stan_inits <- function(data, strains = 2) {
       init_cases = purrr::map_dbl(
         c(
           data$X[1],
-          data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]
+          max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1])
         ),
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
-      r_init = rnorm(1, 0, 0.05),
+      r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
       r_noise = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$t_dep, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
