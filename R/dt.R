@@ -59,7 +59,7 @@ forecast_dt <- function(obs,
     posterior = list(obj$result$models[[1]]$tidy_posterior),
     data = list(obj$result$models[[1]]$data),
     obj$result$models[[1]]$diagnostics,
-    error = obj$error
+    error = list(obj$error)
   )
   if (keep_fit) {
     dt[, fit := list(obj$result$models[[1]]$fit)]
