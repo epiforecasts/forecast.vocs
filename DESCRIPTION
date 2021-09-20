@@ -10,6 +10,9 @@ Authors@R:
 Description: Forecast case notifications using variant of concern strain
     dynamics.
 License: MIT + file LICENSE
+URL: https://epiforecasts.io/forecast.vocs/,
+    https://github.com/epiforecasts/forecast.vocs/
+BugReports: https://github.com/epiforecasts/forecast.vocs/issues/
 Depends:
     R (>= 2.10)
 Imports:
