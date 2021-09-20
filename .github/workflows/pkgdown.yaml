@@ -37,6 +37,9 @@ jobs:
         run: |
           install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_github("r-lib/pkgdown")
+        shell: Rscript {0}
+        
       - name: Deploy package
         run: |
           git config --local user.name "$GITHUB_ACTOR"

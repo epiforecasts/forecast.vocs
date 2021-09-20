@@ -5,14 +5,14 @@
 \alias{germany_covid19_delta_obs}
 \title{Test positive COVID-19 cases and sequences in Germany}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 19 rows and 9 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 114 rows and 9 columns.
 }
 \usage{
 germany_covid19_delta_obs
 }
 \value{
-A \code{data.table} with the following variables: date, location,
-location_name, cases, seq_total, seq_voc, share_voc, cases_available,
+A \code{data.table} with the following variables: date, location_name,
+location, cases, seq_total, seq_voc, share_voc, cases_available,
 and seq_available.
 }
 \description{

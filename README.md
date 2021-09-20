@@ -53,22 +53,21 @@ fit <- stan_fit(
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 89.2 seconds.
-#> Chain 1 finished in 102.9 seconds.
-#> Chain 4 finished in 106.6 seconds.
-#> Chain 2 finished in 133.0 seconds.
+#> Chain 3 finished in 76.6 seconds.
+#> Chain 1 finished in 79.1 seconds.
+#> Chain 2 finished in 100.4 seconds.
+#> Chain 4 finished in 105.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 107.9 seconds.
-#> Total execution time: 133.1 seconds.
+#> Mean chain execution time: 90.2 seconds.
+#> Total execution time: 105.3 seconds.
 #> 
-#> Warning: 1 of 4000 (0.0%) transitions ended with a divergence.
+#> Warning: 5 of 4000 (0.0%) transitions ended with a divergence.
 #> This may indicate insufficient exploration of the posterior distribution.
 #> Possible remedies include: 
 #>   * Increasing adapt_delta closer to 1 (default is 0.8) 
 #>   * Reparameterizing the model (e.g. using a non-centered parameterization)
 #>   * Using informative or weakly informative prior distributions
-
 posterior <- summarise_posterior(fit)
 posterior <- update_voc_label(posterior, "Delta")
 ```
@@ -114,24 +113,24 @@ results <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 32.4 seconds.
-#> Chain 4 finished in 33.5 seconds.
-#> Chain 1 finished in 36.7 seconds.
-#> Chain 3 finished in 39.5 seconds.
+#> Chain 2 finished in 28.0 seconds.
+#> Chain 4 finished in 28.2 seconds.
+#> Chain 1 finished in 32.8 seconds.
+#> Chain 3 finished in 36.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 35.5 seconds.
-#> Total execution time: 39.7 seconds.
+#> Mean chain execution time: 31.3 seconds.
+#> Total execution time: 36.6 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 86.1 seconds.
-#> Chain 3 finished in 86.9 seconds.
-#> Chain 1 finished in 98.5 seconds.
-#> Chain 2 finished in 103.7 seconds.
+#> Chain 1 finished in 70.3 seconds.
+#> Chain 2 finished in 77.3 seconds.
+#> Chain 3 finished in 80.2 seconds.
+#> Chain 4 finished in 91.1 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 93.8 seconds.
-#> Total execution time: 103.7 seconds.
+#> Mean chain execution time: 79.7 seconds.
+#> Total execution time: 91.3 seconds.
 ```
 
 Update variant of concern labels for the summarised posterior estimates.
