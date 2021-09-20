@@ -97,7 +97,7 @@ results <- forecast(
   horizon = 4,
   save_path = tempdir(),
   strains = c(1, 2),
-  adapt_voc = 0.99,
+  adapt_delta = 0.99,
   max_treedepth = 15,
   variant_relationship = "scaled"
 )

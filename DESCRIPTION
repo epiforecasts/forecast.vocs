@@ -1,8 +1,8 @@
 Package: forecast.vocs
 Title: Forecast Case Notifications using Variant of Concern Strain
     Dynamics
-Version: 0.0.1.1000
-Authors@R: 
+Version: 0.0.2.1000
+Authors@R:
     person(given = "Sam Abbott",
            role = c("aut", "cre"),
            email = "sam.abbott@lshtm.ac.uk",
@@ -10,7 +10,7 @@ Authors@R:
 Description: Forecast case notifications using variant of concern strain
     dynamics.
 License: MIT + file LICENSE
-Depends: 
+Depends:
     R (>= 2.10)
 Imports:
     bayesplot,
@@ -30,11 +30,12 @@ Suggests:
     shinystan,
     spelling,
     usethis
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Additional_repositories: https://mc-stan.org/r-packages/
+Config/Needs/website: r-lib/pkgdown
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

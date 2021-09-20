@@ -6,13 +6,14 @@ on:
   pull_request:
     branches: [main, master]
 
-name: lint
+name: test-coverage
 
 jobs:
-  lint:
+  test-coverage:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
 
@@ -22,8 +23,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: lintr
+          extra-packages: covr
 
-      - name: Lint
-        run: lintr::lint_package()
+      - name: Test coverage
+        run: covr::codecov()
         shell: Rscript {0}

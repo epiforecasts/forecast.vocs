@@ -20,12 +20,14 @@
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)
-#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
+#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs),
+#'   max_treedepth = 15, adapt_delta = 0.95
+#' )
 #' print(dt)
 #' }
 forecast_dt <- function(obs,
                         forecast_date = max(obs$date),
-                        strains = 1,
+                        strains = 2,
                         overdispersion = TRUE,
                         variant_relationship = "pooled",
                         model = forecast.vocs::load_model(strains = strains),
