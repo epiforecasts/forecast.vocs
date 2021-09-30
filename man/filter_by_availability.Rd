@@ -31,9 +31,10 @@ the forecast date.}
 Filter data based on availability and forecast date
 }
 \examples{
+latest_dt <- latest_obs(germany_covid19_delta_obs)
 dt <- rbind(
-  update_obs_availability(germany_covid19_delta_obs, seq_lag = 3),
-  update_obs_availability(germany_covid19_delta_obs, seq_lag = 1)
+  update_obs_availability(latest_dt, seq_lag = 3),
+  update_obs_availability(latest_dt, seq_lag = 1)
 )
 # filter out duplicates and up to the present date
 filter_by_availability(dt)

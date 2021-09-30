@@ -3,9 +3,7 @@ Title: Forecast Case Notifications using Variant of Concern Strain
     Dynamics
 Version: 0.0.2.1000
 Authors@R:
-    person(given = "Sam Abbott",
-           role = c("aut", "cre"),
-           email = "sam.abbott@lshtm.ac.uk",
+    person("Sam Abbott", , , "sam.abbott@lshtm.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8057-8037"))
 Description: Forecast case notifications using variant of concern strain
     dynamics.
@@ -32,11 +30,13 @@ Suggests:
     rmarkdown,
     shinystan,
     spelling,
+    testthat (>= 3.0.0),
     usethis
 VignetteBuilder:
     knitr
 Additional_repositories: https://mc-stan.org/r-packages/
 Config/Needs/website: r-lib/pkgdown
+Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-GB
 LazyData: true

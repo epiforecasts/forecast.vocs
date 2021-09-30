@@ -41,9 +41,10 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
 #' @inheritParams update_obs_availability
 #' @importFrom purrr map
 #' @examples
+#' latest_dt <- latest_obs(germany_covid19_delta_obs)
 #' dt <- rbind(
-#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 3),
-#'   update_obs_availability(germany_covid19_delta_obs, seq_lag = 1)
+#'   update_obs_availability(latest_dt, seq_lag = 3),
+#'   update_obs_availability(latest_dt, seq_lag = 1)
 #' )
 #' # filter out duplicates and up to the present date
 #' filter_by_availability(dt)
@@ -89,13 +90,15 @@ filter_by_availability <- function(obs, date = max(obs$date),
     by = "date"
   ]
   obs_max_pres_cases <- obs[!is.na(cases),
-    .SD[cases_available == max(cases_available, na.rm = TRUE)],
+    .SD[cases_available == max(cases_available, na.rm = TRUE)][1, ],
     by = "date"
   ]
   obs <- rbind(
     obs_max_pres_cases,
     obs_max_cases[!(date %in% obs_max_pres_cases$date)]
   )
+  # make sure the data is in the correct order
+  setorderv(obs, cols = c("date"))
   return(obs)
 }
 
