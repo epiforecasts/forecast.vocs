@@ -4,6 +4,8 @@
 # Forecast case notifications using variant of concern strain dynamics
 
 [![R-CMD-check](https://github.com/epiforecasts/forecast.vocs/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-check.yaml)
+\[![Codecov test
+coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)\]
 
 This package contains models and processing code to allow sequencing of
 variants of concern to be used to forecast case notifications.
@@ -53,21 +55,22 @@ fit <- stan_fit(
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 76.6 seconds.
-#> Chain 1 finished in 79.1 seconds.
-#> Chain 2 finished in 100.4 seconds.
-#> Chain 4 finished in 105.0 seconds.
+#> Chain 3 finished in 40.7 seconds.
+#> Chain 1 finished in 44.2 seconds.
+#> Chain 4 finished in 45.0 seconds.
+#> Chain 2 finished in 58.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 90.2 seconds.
-#> Total execution time: 105.3 seconds.
+#> Mean chain execution time: 47.1 seconds.
+#> Total execution time: 58.7 seconds.
 #> 
-#> Warning: 5 of 4000 (0.0%) transitions ended with a divergence.
+#> Warning: 9 of 4000 (0.0%) transitions ended with a divergence.
 #> This may indicate insufficient exploration of the posterior distribution.
 #> Possible remedies include: 
 #>   * Increasing adapt_delta closer to 1 (default is 0.8) 
 #>   * Reparameterizing the model (e.g. using a non-centered parameterization)
 #>   * Using informative or weakly informative prior distributions
+
 posterior <- summarise_posterior(fit)
 posterior <- update_voc_label(posterior, "Delta")
 ```
@@ -113,24 +116,24 @@ results <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 28.0 seconds.
-#> Chain 4 finished in 28.2 seconds.
-#> Chain 1 finished in 32.8 seconds.
-#> Chain 3 finished in 36.4 seconds.
+#> Chain 1 finished in 14.9 seconds.
+#> Chain 4 finished in 15.1 seconds.
+#> Chain 2 finished in 15.4 seconds.
+#> Chain 3 finished in 17.6 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 31.3 seconds.
-#> Total execution time: 36.6 seconds.
+#> Mean chain execution time: 15.7 seconds.
+#> Total execution time: 17.7 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 70.3 seconds.
-#> Chain 2 finished in 77.3 seconds.
-#> Chain 3 finished in 80.2 seconds.
-#> Chain 4 finished in 91.1 seconds.
+#> Chain 4 finished in 37.9 seconds.
+#> Chain 3 finished in 39.2 seconds.
+#> Chain 2 finished in 39.8 seconds.
+#> Chain 1 finished in 41.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 79.7 seconds.
-#> Total execution time: 91.3 seconds.
+#> Mean chain execution time: 39.7 seconds.
+#> Total execution time: 42.0 seconds.
 ```
 
 Update variant of concern labels for the summarised posterior estimates.
