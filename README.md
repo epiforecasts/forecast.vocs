@@ -5,7 +5,7 @@
 
 [![R-CMD-check](https://github.com/epiforecasts/forecast.vocs/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)]
+coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/forecast.vocs)
 
 This package contains models and processing code to allow sequencing of
 variants of concern to be used to forecast case notifications.
