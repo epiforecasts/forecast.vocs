@@ -95,7 +95,10 @@ filter_by_availability <- function(obs, date = max(obs$date),
   ]
   obs <- rbind(
     obs_max_pres_cases,
-    obs_max_cases[!(date %in% obs_max_pres_cases$date)]
+    obs_max_cases[!(date %in% obs_max_pres_cases$date)][,
+      .SD[1, ],
+      by = "date"
+    ]
   )
   # make sure the data is in the correct order
   setorderv(obs, cols = c("date"))
