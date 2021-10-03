@@ -35,6 +35,9 @@ forecast_dt <- function(obs,
   if (length(strains) > 1) {
     stop("forecast_dt only supports fitting a single strain model at one time")
   }
+  check_param(keep_forecast, "keep_forecast", type = "logical")
+  check_param(keep_fit, "keep_fit", type = "logical")
+
   safe_forecast <- purrr::safely(forecast)
   obj <- do.call(
     safe_forecast,

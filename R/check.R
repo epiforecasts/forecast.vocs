@@ -1,34 +1,21 @@
-#' @title Check a parameter is a length is 2 numeric vector
-#' @description Check a parameter is a length 2 numeric vector
-#' defining a mean and a standard deviation.
+#' @title Check a parameter is the correct type and length
 #' @param param A parameter to check the format of.
 #' @param name A character string naming the variable
 #' to check.
+#' @param type A character string identifying the allowed parameter
+#' type (must be a type with an is.type function).)
+#' @param length Numeric, allowed length of the variable.
 #' @return NULL
-check_mean_sd <- function(param, name = "r_init") {
-  if (!is.numeric(param)) {
-    stop(name, " is not numeric")
+#' @export
+#' @keywords internal
+check_param <- function(param, name = "param",
+                        type = "numeric", length = 1) {
+  if (!do.call(paste0("is.", type), list(param))) {
+    stop(name, " is not ", type)
   }
 
-  if (length(param) != 2) {
-    stop(
-      name,
-      " must be of length 2 (mean followed by standard deviation)"
-    )
-  }
-  return(invisible(NULL))
-}
-
-#' @title Check a parameter is logical
-#' @inheritparams check_mean_sd
-#' @return NULL
-check_logical <- function(param, name = "r_init") {
-  if (!is.logical(param)) {
-    stop(name, " is not logical")
-  }
-
-  if (length(param) != 1) {
-    stop(name, " must be of length 1")
+  if (length(param) != length) {
+    stop(name, " must be of length ", length)
   }
   return(invisible(NULL))
 }
