@@ -42,11 +42,10 @@ RUN apt-get update \
      && apt-get -y install --no-install-recommends libglpk-dev libv8-dev \
             pandoc-citeproc
 
-# add docthis
+# install vscode dev deps
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
-
-# install precommit
 RUN Rscript -e 'devtools::install_github("lorenzwalthert/precommit")'
+RUN Rscript -e 'devtools::install_github("milesmcbain/fnmate")'
 
 # install dependencies
 COPY DESCRIPTION /tmp/package/DESCRIPTION

@@ -35,6 +35,13 @@ stan_data <- function(obs, horizon = 4,
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
   )
+  check_obs(obs)
+  check_mean_sd(r_init, "r_init")
+  check_mean_sd(voc_scale, "voc_scale")
+  check_logical(overdispersion, "overdispersion")
+  check_logical(likelihood, "likelihood")
+  check_logical(output_loglik, "output_loglike")
+  check_logical(debug, "debug")
 
   obs <- data.table::as.data.table(obs)
   data <- list(
