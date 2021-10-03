@@ -4,7 +4,7 @@
 \alias{check_param}
 \title{Check a parameter is the correct type and length}
 \usage{
-check_param(param, name = "param", type = "numeric", length = 1)
+check_param(param, name = "param", type = "numeric", length)
 }
 \arguments{
 \item{param}{A parameter to check the format of.}
@@ -13,9 +13,10 @@ check_param(param, name = "param", type = "numeric", length = 1)
 to check.}
 
 \item{type}{A character string identifying the allowed parameter
-type (must be a type with an is.type function).)}
+type (must be a type with a is.type function except for a Date).}
 
-\item{length}{Numeric, allowed length of the variable.}
+\item{length}{Numeric, allowed length of the variable. Defaults to
+any allowed length}
 }
 \description{
 Check a parameter is the correct type and length

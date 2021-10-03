@@ -3,19 +3,76 @@
 #' @param name A character string naming the variable
 #' to check.
 #' @param type A character string identifying the allowed parameter
-#' type (must be a type with an is.type function).)
-#' @param length Numeric, allowed length of the variable.
+#' type (must be a type with a is.type function except for a Date).
+#' @param length Numeric, allowed length of the variable. Defaults to
+#' any allowed length
 #' @return NULL
 #' @export
 #' @keywords internal
 check_param <- function(param, name = "param",
-                        type = "numeric", length = 1) {
+                        type = "numeric", length) {
+  if (is.null(param)) {
+    stop(name, " does not exist")
+  }
+  is.Date <- function(x) { # nolint
+    inherits(x, "Date")
+  }
   if (!do.call(paste0("is.", type), list(param))) {
     stop(name, " is not ", type)
   }
+  if (!missing(length)) {
+    if (length(param) != length) {
+      stop(name, " must be of length ", length)
+    }
+  }
+  return(invisible(NULL))
+}
 
-  if (length(param) != length) {
-    stop(name, " must be of length ", length)
+#' @title Check a data.frame
+#' @param dataframe A data.frame to check.
+#' @param req_vars A character vector of variables that are required.
+#' @param req_types A character vector of types for each required variable.
+#' @export
+#' @return NULL
+#' @importFrom purrr walk2
+#' @keywords internal
+check_dataframe <- function(dataframe, req_vars, req_types) {
+  if (!is.data.frame(dataframe)) {
+    stop("The inputs is not a data.frame")
+  }
+  if (!missing(req_vars) | !missing(req_types)) {
+    if (length(req_vars) != length(req_types)) {
+      stop("req_vars is not the same length as req_types")
+    }
+    check_param(req_vars, "req_vars", type = "character")
+    check_param(req_types, "req_types", type = "character")
+    purrr::walk2(
+      req_vars, req_types,
+      ~ check_param(param = dataframe[[.x]], name = .x, type = .y)
+    )
+  }
+  return(invisible(NULL))
+}
+
+#' @title Check observations are in the correct format
+#' @param obs A data.frame of observations to check for formatting issues
+#' @export
+#' @return NULL
+#' @examples
+#' obs <- latest_obs(germany_covid19_delta_obs)
+#' check_observations(obs)
+check_observations <- function(obs) {
+  req_vars <- c(
+    "date", "cases", "cases_available", "seq_total",
+    "seq_voc", "share_voc", "seq_available"
+  )
+  req_types <- c(
+    "Date", "numeric", "Date", "numeric", "numeric",
+    "numeric", "Date"
+  )
+  check_dataframe(obs, req_vars, req_types)
+  if (length(obs$date) != length(unique(obs$date))) {
+    stop("Dates are duplicated")
   }
   return(invisible(NULL))
 }

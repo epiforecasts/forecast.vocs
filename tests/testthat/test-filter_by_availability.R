@@ -1,4 +1,4 @@
-library(data.table)
+library(data.table, quietly = TRUE)
 
 # construct test data
 dt <- rbind(

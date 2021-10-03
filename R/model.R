@@ -35,7 +35,7 @@ stan_data <- function(obs, horizon = 4,
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
   )
-
+  check_observations(obs)
   check_param(r_init, "r_init", length = 2, type = "numeric")
   check_param(voc_scale, "voc_scale", length = 2, type = "numeric")
   check_param(overdispersion, "overdispersion", type = "logical")
@@ -44,6 +44,7 @@ stan_data <- function(obs, horizon = 4,
   check_param(debug, "debug", type = "logical")
 
   obs <- data.table::as.data.table(obs)
+  data.table::setorderv(obs, cols = c("date"))
   data <- list(
     # time indices
     t = nrow(obs) + horizon,
@@ -137,6 +138,8 @@ stan_inits <- function(data, strains = 2) {
 #' two_strain_mod <- load_model(strains = 2)
 #' }
 load_model <- function(strains = 2, compile = TRUE, ...) {
+  check_param(strains, "strains", "numeric")
+  check_param(compile, "compile", "logical")
   if (strains == 1) {
     model <- "stan/bp.stan"
   } else if (strains == 2) {
@@ -193,6 +196,9 @@ stan_fit <- function(data,
                      model = forecast.vocs::load_model(strains = 2),
                      save_path = NULL, diagnostics = TRUE,
                      include_posterior = TRUE, ...) {
+  check_param(data, "data", "list")
+  check_param(diagnostics, "diagnostics", "logical")
+  check_param(include_posterior, "include_posterior", "logical")
   cdata <- data
   cdata$start_date <- NULL
   model <- cmdstanr::cmdstan_model(model)
