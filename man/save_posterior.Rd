@@ -13,7 +13,7 @@ which contains the following character string options: "non-VOC",
 "VOC", "Combined", "Overall".}
 
 \item{save_path}{A character string giving the path to save the
-posterior to as a series of csv's.}
+posterior to as a csv.}
 }
 \description{
 Save a summarised posterior

@@ -4,7 +4,13 @@
 \alias{combine_posteriors_dt}
 \title{Combine posteriors from a data frame}
 \usage{
-combine_posteriors_dt(forecasts, target = "forecast")
+combine_posteriors_dt(
+  forecasts,
+  target = "forecast",
+  combine = TRUE,
+  combine_by = c("id", "forecast_date", "strains", "overdispersion",
+    "variant_relationship")
+)
 }
 \arguments{
 \item{forecasts}{A data frame of forecasts as produced by \code{forecast_dt()}}
@@ -27,6 +33,12 @@ library(data.table)
 options(mc.cores = 4)
 dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 dt <- rbind(dt, copy(dt)[, overdispersion := FALSE])
+
+# combine into an unnested data.frame
 dt <- combine_posteriors_dt(dt, target = "forecast")
+
+# combine at the lowest level but leave the list structure  from
+# summarise posterior  intact (maybe useful for plotting).
+dt_list <- combine_posteriors_dt(dt, target = "FALSE", combine = FALSE)
 }
 }

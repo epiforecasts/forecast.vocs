@@ -214,7 +214,11 @@ summarise_posterior <- function(fit,
   out <- list(cases = cases, voc = voc, growth = growth, rt = rt)
   out <- purrr::map(out, ~ .x[, variable := NULL])
   out$model <- model
-  return(out)
+  out <- rbindlist(
+    out,
+    use.names = TRUE, fill = TRUE, idcol = "value_type"
+  )
+  return(out[])
 }
 
 #' Combine multiple summarised posteriors
@@ -223,43 +227,29 @@ summarise_posterior <- function(fit,
 #'  `summarise_posterior()`.
 #' @param list_id A character string naming the variable used to identify
 #' list parameters
-#' @param combine_variables Logical, defaults to FALSE. Should variables
-#' be combined into a single data frame (labelled using `variable_id`).
-#' @param variable_id A character string naming the variable used to identify
-#' variables. Defaults to `value_type`
 #' @export
-#' @importFrom purrr map transpose
-combine_posteriors <- function(posteriors_list, list_id = "model",
-                               combine_variables = FALSE,
-                               variable_id = "value_type") {
-  posteriors <- purrr::transpose(posteriors_list)
-  posteriors <- purrr::map(posteriors, rbindlist,
+#' @importFrom purrr map
+combine_posteriors <- function(posteriors_list, list_id = "model") {
+  posteriors <- rbindlist(
+    posteriors_list,
     use.names = TRUE, fill = TRUE, idcol = list_id
   )
-  if (combine_variables) {
-    posteriors <- rbindlist(posteriors,
-      use.names = TRUE, fill = TRUE,
-      idcol = variable_id
-    )
-  }
   return(posteriors)
 }
 
 #' Save a summarised posterior
 #' @param save_path A character string giving the path to save the
-#' posterior to as a series of csv's.
+#' posterior to as a csv.
 #' @export
 #' @inheritParams link_dates_with_posterior
-#' @importFrom purrr safely walk2
+#' @importFrom purrr safely
 #' @importFrom data.table fwrite
 save_posterior <- function(posterior, save_path = tempdir()) {
   if (!is.null(save_path)) {
-    file_names <- names(posterior)
     sfwrite <- purrr::safely(fwrite)
-    purrr::walk2(
-      posterior, file_names,
-      ~ sfwrite(.x, paste0(save_path, "/", .y, ".csv"))
-    )
+    save_path <- paste0(save_path, "/", "posterior.csv")
+    message("Saving posterior to: ", save_path)
+    sfwrite(posterior, save_path)
   }
   return(invisible(NULL))
 }
@@ -298,14 +288,15 @@ save_posterior <- function(posterior, save_path = tempdir()) {
 #' }
 extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
   dates <- NULL
-  if (!is.null(posterior$cases[["observed"]])) {
+  cases <- posterior[value_type == "cases"]
+  if (!is.null(cases[["observed"]])) {
     dates <- suppressWarnings(
       c(
-        posterior$cases[
+        cases[
           observed == TRUE & type %in% c("Combined", "Overall"),
           .(date = max(date))
         ]$date[1],
-        posterior$cases[
+        cases[
           observed == TRUE & !(type %in% c("Combined", "Overall")),
           .(date = max(date))
         ]$date[1]
@@ -379,22 +370,21 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
     forecast_dates = forecast_dates
   )
 
-  forecast <- list(
-    cases = extract_forecast_by_type(copy(posterior$cases), forecast_dates),
-    rt = extract_forecast_by_type(copy(posterior$rt), forecast_dates),
-    growth = extract_forecast_by_type(copy(posterior$growth), forecast_dates)
+  forecast <- extract_forecast_by_type(
+    posterior[!(value_type %in% "model")], forecast_dates
   )
-  if (nrow(posterior$voc) > 0) {
-    forecast$voc <- posterior$voc[date > forecast_dates["Sequences"]]
-  }
-  cols <- c("obs", "observed", "rhat", "ess_bulk", "ess_tail")
-  forecast <- suppressWarnings(purrr::map(forecast, ~ .[, (cols) := NULL]))
-  forecast <- purrr::map(forecast, ~ .[, horizon := 1:.N, by = "type"])
-  forecast <- purrr::map(
+
+  cols <- c(
+    "obs", "observed", "rhat", "ess_bulk", "ess_tail",
+    "variable", "clean_name", "exponentiated"
+  )
+  forecast <- suppressWarnings(forecast[, (cols) := NULL])
+  forecast <- forecast[, horizon := 1:.N, by = c("value_type", "type")]
+  forecast <- setcolorder(
     forecast,
-    ~ setcolorder(., neworder = c("type", "date", "horizon"))
+    neworder = c("value_type", "type", "date", "horizon")
   )
-  return(forecast)
+  return(forecast[])
 }
 
 
@@ -408,7 +398,6 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
 #' variant of concern.
 #' @param target_label A character string defaulting to "VOC". Indicates the
 #' current label for the variant of concern.
-#' @importFrom purrr map map_dbl
 #' @return A list of data frames as returned by `summarise_posterior()` but
 #' with updated labels.
 #' @export
@@ -420,13 +409,12 @@ extract_forecast <- function(posterior, forecast_dates = NULL) {
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' p <- summarise_posterior(fit)
 #' p <- update_voc_label(p, "Delta")
-#' p$model[]
+#' p[value_type == "model"][]
 #' }
 update_voc_label <- function(posterior, label, target_label = "VOC") {
   if (!missing(label)) {
     stopifnot(is.character(label))
-
-    posterior <- purrr::map(posterior, function(dt) {
+    replace_label <- function(dt) {
       char_cols <- names(Filter(
         function(f) {
           any(class(f) %in% c("character", "factor"))
@@ -443,7 +431,8 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
         ),
         .SDcols = char_cols
       ]
-    })
+    }
+    posterior <- replace_label(posterior)
   }
   return(posterior)
 }

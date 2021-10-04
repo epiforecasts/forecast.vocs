@@ -93,24 +93,41 @@ forecast_dt <- function(obs,
 #' options(mc.cores = 4)
 #' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
 #' dt <- rbind(dt, copy(dt)[, overdispersion := FALSE])
+#'
+#' # combine into an unnested data.frame
 #' dt <- combine_posteriors_dt(dt, target = "forecast")
+#'
+#' # combine at the lowest level but leave the list structure  from
+#' # summarise posterior  intact (maybe useful for plotting).
+#' dt_list <- combine_posteriors_dt(dt, target = "FALSE", combine = FALSE)
 #' }
-combine_posteriors_dt <- function(forecasts, target = "forecast") {
+combine_posteriors_dt <- function(forecasts, target = "forecast",
+                                  combine = TRUE,
+                                  combine_by = c(
+                                    "id", "forecast_date",
+                                    "strains", "overdispersion",
+                                    "variant_relationship"
+                                  )) {
   target <- match.arg(target, choices = c("posterior", "forecast"))
-  posteriors <- copy(forecasts)[
-    ,
-    target := purrr::map(
-      get(target),
-      ~ combine_posteriors(list(.), combine_variables = TRUE, list_id = "model")
-    )
-  ]
-  posteriors <- posteriors[,
-    rbindlist(target),
-    by = c(
-      "id", "forecast_date", "strains", "overdispersion",
-      "variant_relationship"
-    )
-  ]
-  posteriors[, model := NULL]
+  check_param(combine, "combine", type = "logical", length = 1)
+  if (combine) {
+    posteriors <- copy(forecasts)[
+      ,
+      target := purrr::map(
+        get(target),
+        ~ combine_posteriors(list(.),
+          combine_variables = combine,
+          list_id = "join_id"
+        )
+      )
+    ]
+    posteriors <- posteriors[,
+      rbindlist(target),
+      by = combine_by
+    ]
+    posteriors[, join_id := NULL]
+  } else {
+    posteriors[, (target)]
+  }
   return(posteriors)
 }
