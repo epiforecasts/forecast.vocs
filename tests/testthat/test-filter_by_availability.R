@@ -42,6 +42,8 @@ test_filter_by_availability <- function(dt, message, tar_date = max(dt$date),
     if (nrow(dt[date < tar_date & is.na(seq_available)]) > 0) {
       expect_true(nrow(fdt[date < tar_date & is.na(seq_available)]) > 0)
     }
+    # Processed data passes observations checks
+    expect_error(check_observations(fdt), NA)
   })
 }
 

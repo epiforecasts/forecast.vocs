@@ -1,4 +1,9 @@
-# forecast.vocs 0.0.2.100
+# forecast.vocs 0.0.03
+
+* Added check functions to make sure input observation and arguments have the correct format.
+* Added unit tests for  all preprocessing functions.
+
+# forecast.vocs 0.0.2
 
 * Package generalised to all variants of concern beyond Delta.
 * Tooling added to forecast across dates and  scenarios.
@@ -6,7 +11,7 @@
 * Tooling added for simulating data from the model (useful for simulation-based calibration amongst other things).
 * Example data updated to use snapshots of COVID-19 notifications and Delta sequences sourced for  the RKI (Germany).
 
-# forecast.vocs 0.0.1.1000
+# forecast.vocs 0.0.1
 
 * Extracted package code from analysis code and started work on generalising use case.
 * Added initial version of forecasting model for  1 and 2 strains with optional independence, partial pooling, and scaled relationships.

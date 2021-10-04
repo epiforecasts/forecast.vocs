@@ -76,3 +76,19 @@ check_observations <- function(obs) {
   }
   return(invisible(NULL))
 }
+
+#' Check Quantiles Required are Present
+#' @param posterior A dataframe containing quantiles identified using
+#' the "q5" approach.
+#' @param req_probs A numeric vector of required probabilties.
+#' @export
+check_quantiles <- function(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8)) {
+  cols <- colnames(posterior)
+  if (sum(cols %in% c("q5", "q95", "q20", "q80")) != 4) {
+    stop(
+      "Following quantiles must be present (set with probs): ",
+      paste(req_probs, collapse = ", ")
+    )
+  }
+  return(invisible(NULL))
+}
