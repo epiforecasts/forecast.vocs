@@ -46,13 +46,16 @@ stan_data <- function(obs, horizon = 4,
 
   obs <- data.table::as.data.table(obs)
   data.table::setorderv(obs, cols = c("date"))
+  seq_start_date <- obs[!is.na(seq_voc)][date == min(date)]$date
+
+  # find initial dates with no sequences
   data <- list(
     # time indices
     t = nrow(obs) + horizon,
     t_nots = nrow(obs[!is.na(cases)]),
-    t_nseq = nrow(obs[is.na(seq_available)]),
+    t_nseq = nrow(obs[date < seq_start_date]),
     t_seq = nrow(obs[!is.na(seq_voc)]),
-    t_seqf = nrow(obs) + horizon - nrow(obs[is.na(seq_available)]),
+    t_seqf = nrow(obs) + horizon - nrow(obs[date < seq_start_date]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
@@ -62,6 +65,7 @@ stan_data <- function(obs, horizon = 4,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
+    seq_start_date = seq_start_date,
     r_init_mean = r_init[1],
     r_init_sd = r_init[2],
     voc_mean = voc_scale[1],
@@ -173,7 +177,8 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' # parallisation
 #' options(mc.cores = 4)
 #' # format example data
-#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
+#' obs <- latest_obs(germany_covid19_delta_obs)
+#' dt <- stan_data(obs)
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
@@ -202,6 +207,7 @@ stan_fit <- function(data,
   check_param(include_posterior, "include_posterior", "logical")
   cdata <- data
   cdata$start_date <- NULL
+  cdata$seq_start_date <- NULL
   model <- cmdstanr::cmdstan_model(model)
   fit <- model$sample(data = cdata, ...)
 

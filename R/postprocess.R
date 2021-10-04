@@ -227,9 +227,13 @@ summarise_posterior <- function(fit,
 #'  `summarise_posterior()`.
 #' @param list_id A character string naming the variable used to identify
 #' list parameters
+#' @param ids A character vector of the same lebngth
 #' @export
 #' @importFrom purrr map
-combine_posteriors <- function(posteriors_list, list_id = "model") {
+combine_posteriors <- function(posteriors_list, list_id = "model", ids) {
+  if (!missing(ids)) {
+    names(posteriors_list) <- ids
+  }
   posteriors <- rbindlist(
     posteriors_list,
     use.names = TRUE, fill = TRUE, idcol = list_id

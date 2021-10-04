@@ -4,7 +4,7 @@
 \alias{combine_posteriors}
 \title{Combine multiple summarised posteriors}
 \usage{
-combine_posteriors(posteriors_list, list_id = "model")
+combine_posteriors(posteriors_list, list_id = "model", ids)
 }
 \arguments{
 \item{posteriors_list}{A list of posteriors as produced by
@@ -12,6 +12,8 @@ combine_posteriors(posteriors_list, list_id = "model")
 
 \item{list_id}{A character string naming the variable used to identify
 list parameters}
+
+\item{ids}{A character vector of the same lebngth}
 }
 \description{
 Combine multiple summarised posteriors

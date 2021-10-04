@@ -46,7 +46,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
                          all_obs = FALSE, ...) {
-  data <- copy(posterior[[target]])
+  data <- posterior[value_type %in% target]
   setnames(data, "type", "Type", skip_absent = TRUE)
 
   forecast_dates <- extract_forecast_dates(posterior, forecast_dates)
@@ -175,10 +175,10 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' @importFrom purrr walk2
 #' @examples
 #' \dontrun{
-#' obs <- latest_obs(germany_covid19_voc_obs)
+#' obs <- latest_obs(germany_covid19_delta_obs)
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior)
 #' }
@@ -193,7 +193,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
   plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
     log = TRUE, all_obs = all_obs
   )
-  if (nrow(posterior$voc) > 0) {
+  if (nrow(posterior[value_type %in% "voc"]) > 0) {
     plots$voc <- plot_voc(posterior, obs, forecast_dates,
       all_obs = all_obs,
       voc_label = voc_label

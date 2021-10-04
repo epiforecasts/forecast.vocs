@@ -96,10 +96,6 @@ forecast_dt <- function(obs,
 #'
 #' # combine into an unnested data.frame
 #' dt <- combine_posteriors_dt(dt, target = "forecast")
-#'
-#' # combine at the lowest level but leave the list structure  from
-#' # summarise posterior  intact (maybe useful for plotting).
-#' dt_list <- combine_posteriors_dt(dt, target = "FALSE", combine = FALSE)
 #' }
 combine_posteriors_dt <- function(forecasts, target = "forecast",
                                   combine = TRUE,

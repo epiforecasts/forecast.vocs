@@ -37,7 +37,8 @@ Fit a brancing process strain model
 # parallisation
 options(mc.cores = 4)
 # format example data
-dt <- stan_data(latest_obs(germany_covid19_delta_obs))
+obs <- latest_obs(germany_covid19_delta_obs)
+dt <- stan_data(obs)
 
 # single strain model
 inits <- stan_inits(dt, strains = 1)
