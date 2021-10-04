@@ -36,6 +36,7 @@ stan_data <- function(obs, horizon = 4,
     choices = c("pooled", "scaled", "independent")
   )
   check_observations(obs)
+  check_param(horizon, "horizon", type = "numeric")
   check_param(r_init, "r_init", length = 2, type = "numeric")
   check_param(voc_scale, "voc_scale", length = 2, type = "numeric")
   check_param(overdispersion, "overdispersion", type = "logical")
