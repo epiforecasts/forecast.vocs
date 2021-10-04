@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert to stanfit object — convert_to_stanfit • forecast.vocs</title>
+<title>Check observations are in the correct format — check_observations • forecast.vocs</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Convert to stanfit object — convert_to_stanfit" />
-<meta property="og:description" content="Convert to stanfit object" />
+<meta property="og:title" content="Check observations are in the correct format — check_observations" />
+<meta property="og:description" content="Check observations are in the correct format" />
 
 
 
@@ -113,38 +113,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert to stanfit object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/epiforecasts/forecast.vocs/blob/master/R/postprocess.R'><code>R/postprocess.R</code></a></small>
-    <div class="hidden name"><code>convert_to_stanfit.Rd</code></div>
+    <h1>Check observations are in the correct format</h1>
+    <small class="dont-index">Source: <a href='https://github.com/epiforecasts/forecast.vocs/blob/master/R/check.R'><code>R/check.R</code></a></small>
+    <div class="hidden name"><code>check_observations.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert to stanfit object</p>
+    <p>Check observations are in the correct format</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>convert_to_stanfit</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>check_observations</span><span class='op'>(</span><span class='va'>obs</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fit</th>
-      <td><p>List of output as returned by <code><a href='stan_fit.html'>stan_fit()</a></code>.</p></td>
+      <th>obs</th>
+      <td><p>A data.frame of observations to check for formatting issues</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The model fit as a stanfit object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'><span class='va'>obs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_delta_obs</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_data.html'>stan_data</a></span><span class='op'>(</span><span class='va'>obs</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_inits.html'>stan_inits</a></span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_fit.html'>stan_fit</a></span><span class='op'>(</span><span class='va'>dt</span>, init <span class='op'>=</span> <span class='va'>inits</span>, adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span>, max_treedepth <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'>convert_to_stanfit</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>obs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_delta_obs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>check_observations</span><span class='op'>(</span><span class='va'>obs</span><span class='op'>)</span></span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -25,6 +25,15 @@
     <loc>epiforecasts.io/forecast.vocs/reference/bp_launch_shinystan.html</loc>
   </url>
   <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/check_dataframe.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/check_observations.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/check_param.html</loc>
+  </url>
+  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/check_quantiles.html</loc>
   </url>
   <url>
