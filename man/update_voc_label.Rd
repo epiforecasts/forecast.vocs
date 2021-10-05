@@ -32,6 +32,6 @@ inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 p <- summarise_posterior(fit)
 p <- update_voc_label(p, "Delta")
-p$model[]
+p[value_type == "model"][]
 }
 }

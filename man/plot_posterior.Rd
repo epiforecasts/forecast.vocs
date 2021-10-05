@@ -42,10 +42,10 @@ Plot posterior predictions
 }
 \examples{
 \dontrun{
-obs <- latest_obs(germany_covid19_voc_obs)
+obs <- latest_obs(germany_covid19_delta_obs)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
+fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 posterior <- summarise_posterior(fit)
 plot_posterior(posterior)
 }

@@ -49,7 +49,7 @@ RUN Rscript -e 'devtools::install_github("milesmcbain/fnmate")'
 
 # install dependencies
 COPY DESCRIPTION /tmp/package/DESCRIPTION
-RUN Rscript -e "devtools::install_dev_deps('/tmp/package')"
+RUN Rscript -e "devtools::install_deps('/tmp/package', dependencies = TRUE)"
 
 # install cmdstan
 RUN Rscript -e "cmdstanr::install_cmdstan()"

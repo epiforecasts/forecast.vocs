@@ -17,10 +17,11 @@ generate_obs(
 \item{obs}{Observed data to use to parameterise the model and used for
 fitting when the posterior is required.}
 
-\item{strains}{Integer number of strains. Defaults to 2. Current
-maximum is 2.}
+\item{strains}{Integer number of strains to use. Defaults to 2. Current
+maximum is 2. A numeric vector can be passed if forecasts from multiple
+strain models are desired.}
 
-\item{model}{A model as loaded by \code{load_model()}.}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
 
 \item{type}{A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the

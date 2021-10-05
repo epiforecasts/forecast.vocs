@@ -27,9 +27,9 @@ test_that("Check for NA or NULL entries in the list output", {
 test_that("Index variables are correctly defined", {
   expect_equal(nlist$t, t + h)
   expect_equal(nlist$t_nots, t - burn_in + h)
-  expect_equal(nlist$t_nseq, seq_na)
-  expect_equal(nlist$t_seqf, t - seq_na + h)
-  expect_equal(nlist$t_seq, t - seq_na - burn_in + h)
+  expect_equal(nlist$t_nseq, 4)
+  expect_equal(nlist$t_seqf, t - 4 + h)
+  expect_equal(nlist$t_seq, t - seq_na)
   expect_equal(nlist$t_dep, t - 2 + h)
 })
 

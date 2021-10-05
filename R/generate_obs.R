@@ -48,12 +48,18 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param obs Observed data to use to parameterise the model and used for
 #' fitting when the posterior is required.
-#' @inheritParams forecast_dt
+#'
+#'
 #' @param type A character string indicating the type of data to generate.
 #' Supported options are data based on the "prior" or data based on  the
 #' "posterior" with the default being the prior.
+#'
 #' @param datasets Numeric, defaults to 10. Number of datasets to generate.
+#'
 #' @param ... Additional arguments to pass `stan_data()`.
+#'
+#' @inheritParams forecast
+#' @inheritParams stan_fit
 #' @export
 #' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),

@@ -4,7 +4,7 @@
 \alias{check_dataframe}
 \title{Check a data.frame}
 \usage{
-check_dataframe(dataframe, req_vars, req_types)
+check_dataframe(dataframe, req_vars, req_types, rows)
 }
 \arguments{
 \item{dataframe}{A data.frame to check.}
@@ -12,6 +12,8 @@ check_dataframe(dataframe, req_vars, req_types)
 \item{req_vars}{A character vector of variables that are required.}
 
 \item{req_types}{A character vector of types for each required variable.}
+
+\item{rows}{Integer specifying the number of rows the data.frame should have.}
 }
 \description{
 Check a data.frame

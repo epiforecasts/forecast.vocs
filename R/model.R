@@ -46,13 +46,16 @@ stan_data <- function(obs, horizon = 4,
 
   obs <- data.table::as.data.table(obs)
   data.table::setorderv(obs, cols = c("date"))
+  seq_start_date <- obs[!is.na(seq_voc)][date == min(date)]$date
+
+  # find initial dates with no sequences
   data <- list(
     # time indices
     t = nrow(obs) + horizon,
     t_nots = nrow(obs[!is.na(cases)]),
-    t_nseq = nrow(obs[is.na(seq_available)]),
+    t_nseq = nrow(obs[date < seq_start_date]),
     t_seq = nrow(obs[!is.na(seq_voc)]),
-    t_seqf = nrow(obs) + horizon - nrow(obs[is.na(seq_available)]),
+    t_seqf = nrow(obs) + horizon - nrow(obs[date < seq_start_date]),
     # weekly incidences
     X = obs[!is.na(cases)]$cases,
     # total number of sequenced samples
@@ -62,6 +65,7 @@ stan_data <- function(obs, horizon = 4,
     likelihood = as.numeric(likelihood),
     output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
+    seq_start_date = seq_start_date,
     r_init_mean = r_init[1],
     r_init_sd = r_init[2],
     voc_mean = voc_scale[1],
@@ -163,17 +167,17 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' if required. Defaults to empty meaning that nothing is saved
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be returned as a data frame.
-#' @param include_posterior Logical, defaults to `FALSE`. Should posterior
-#' summaries be included.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #' @export
+#' @importFrom cmdstanr cmdstan_model
 #' @importFrom posterior rhat
 #' @examples
 #' \dontrun{
 #' # parallisation
 #' options(mc.cores = 4)
 #' # format example data
-#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
+#' obs <- latest_obs(germany_covid19_delta_obs)
+#' dt <- stan_data(obs)
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
@@ -195,13 +199,12 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' }
 stan_fit <- function(data,
                      model = forecast.vocs::load_model(strains = 2),
-                     save_path = NULL, diagnostics = TRUE,
-                     include_posterior = TRUE, ...) {
+                     save_path = NULL, diagnostics = TRUE, ...) {
   check_param(data, "data", "list")
   check_param(diagnostics, "diagnostics", "logical")
-  check_param(include_posterior, "include_posterior", "logical")
   cdata <- data
   cdata$start_date <- NULL
+  cdata$seq_start_date <- NULL
   model <- cmdstanr::cmdstan_model(model)
   fit <- model$sample(data = cdata, ...)
 
@@ -209,9 +212,10 @@ stan_fit <- function(data,
     fit$save_object(file = file.path(save_path, "fit.rds"))
   }
 
-  out <- list(
-    fit = fit,
-    data = data
+  out <- data.table(
+    fit = list(fit),
+    data = list(data),
+    fit_args = list(list(...))
   )
 
   if (diagnostics) {
@@ -230,17 +234,7 @@ stan_fit <- function(data,
     )
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]
     diagnostics[, per_at_max_treedepth := no_at_max_treedepth / nrow(diag)]
-    out$diagnostics <- diagnostics
+    out <- cbind(out, diagnostics)
   }
-
-  if (include_posterior) {
-    sfit <- fit$summary(.args = list(na.rm = TRUE))
-    sfit <- data.table::setDT(sfit)
-    out$posterior <- sfit
-  }
-
-  if (!is.null(save_path) & include_posterior) {
-    data.table::fwrite(sfit, file.path(save_path, "summarised_posterior.csv"))
-  }
-  return(out)
+  return(out[])
 }
