@@ -1,5 +1,10 @@
-# forecast.vocs 0.0.03
+# forecast.vocs 0.0.3
 
+* `summarise_posterior` now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma
+* `forecast` has been updated to use the framework from `forecast_dt` and `forecast_dt` has been removed.
+* `combine_posteriors_dt` has been removed in favour of `unnest_posterior`. This allows for the output of `forecast` (and wrappers that produce a data.table) to be easily untested and then used without additional changes in downstream plotting and processing functions.
+* add `update_voc_label` as part of the workflow in `forecast` and exposed a user facing argument to control the label.
+* Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.
 * Added check functions to make sure input observation and arguments have the correct format.
 * Added unit tests for  all preprocessing functions.
 
