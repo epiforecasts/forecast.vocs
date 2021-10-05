@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -127,7 +127,6 @@
   model <span class='op'>=</span> <span class='fu'>forecast.vocs</span><span class='fu'>::</span><span class='fu'><a href='load_model.html'>load_model</a></span><span class='op'>(</span>strains <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
   save_path <span class='op'>=</span> <span class='cn'>NULL</span>,
   diagnostics <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  include_posterior <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
 
@@ -153,11 +152,6 @@ if required. Defaults to empty meaning that nothing is saved</p></td>
 be returned as a data frame.</p></td>
     </tr>
     <tr>
-      <th>include_posterior</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should posterior
-summaries be included.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Additional parameters passed to the <code>sample</code> method of <code>cmdstanr</code>.</p></td>
     </tr>
@@ -169,7 +163,8 @@ summaries be included.</p></td>
 <span class='r-in'><span class='co'># parallisation</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># format example data</span></span>
-<span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_data.html'>stan_data</a></span><span class='op'>(</span><span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_delta_obs</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>obs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_delta_obs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_data.html'>stan_data</a></span><span class='op'>(</span><span class='va'>obs</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># single strain model</span></span>
 <span class='r-in'><span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_inits.html'>stan_inits</a></span><span class='op'>(</span><span class='va'>dt</span>, strains <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>

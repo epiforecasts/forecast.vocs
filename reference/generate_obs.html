@@ -81,7 +81,7 @@ distributions of a forecast.vocs model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -143,12 +143,13 @@ fitting when the posterior is required.</p></td>
     </tr>
     <tr>
       <th>strains</th>
-      <td><p>Integer number of strains. Defaults to 2. Current
-maximum is 2.</p></td>
+      <td><p>Integer number of strains to use. Defaults to 2. Current
+maximum is 2. A numeric vector can be passed if forecasts from multiple
+strain models are desired.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>A model as loaded by <code><a href='load_model.html'>load_model()</a></code>.</p></td>
+      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href='load_model.html'>load_model()</a></code></p></td>
     </tr>
     <tr>
       <th>type</th>

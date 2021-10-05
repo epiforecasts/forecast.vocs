@@ -40,9 +40,6 @@
     <loc>epiforecasts.io/forecast.vocs/reference/combine_posteriors.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/combine_posteriors_dt.html</loc>
-  </url>
-  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/convert_to_stanfit.html</loc>
   </url>
   <url>
@@ -67,13 +64,13 @@
     <loc>epiforecasts.io/forecast.vocs/reference/forecast.html</loc>
   </url>
   <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/forecast.vocs-package.html</loc>
+  </url>
+  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/forecast_across_dates.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/forecast_across_scenarios.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast_dt.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/forecast_n_strain.html</loc>
@@ -130,9 +127,6 @@
     <loc>epiforecasts.io/forecast.vocs/reference/sample_sequences.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/save_posterior.html</loc>
-  </url>
-  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/stan_data.html</loc>
   </url>
   <url>
@@ -143,6 +137,9 @@
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/summarise_posterior.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/unnest_posterior.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/update_obs_availability.html</loc>

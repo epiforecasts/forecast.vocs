@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -176,10 +176,10 @@ of concern. Defaults to  "variant of concern".</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'><span class='va'>obs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_voc_obs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>obs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='latest_obs.html'>latest_obs</a></span><span class='op'>(</span><span class='va'>germany_covid19_delta_obs</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_data.html'>stan_data</a></span><span class='op'>(</span><span class='va'>obs</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_inits.html'>stan_inits</a></span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_fit.html'>stan_fit</a></span><span class='op'>(</span><span class='va'>dt</span>, init <span class='op'>=</span> <span class='va'>inits</span>, adapt_voc <span class='op'>=</span> <span class='fl'>0.99</span>, max_treedepth <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stan_fit.html'>stan_fit</a></span><span class='op'>(</span><span class='va'>dt</span>, init <span class='op'>=</span> <span class='va'>inits</span>, adapt_delta <span class='op'>=</span> <span class='fl'>0.99</span>, max_treedepth <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='summarise_posterior.html'>summarise_posterior</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'>plot_posterior</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>

@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -113,21 +113,21 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 40.7 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 44.2 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 45.0 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 58.5 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 42.2 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 43.4 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 47.5 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 55.6 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 47.1 seconds.</span>
-<span class="co">#&gt; Total execution time: 58.7 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 47.2 seconds.</span>
+<span class="co">#&gt; Total execution time: 55.7 seconds.</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Warning: 9 of 4000 (0.0%) transitions ended with a divergence.</span>
+<span class="co">#&gt; Warning: 15 of 4000 (0.0%) transitions ended with a divergence.</span>
 <span class="co">#&gt; This may indicate insufficient exploration of the posterior distribution.</span>
 <span class="co">#&gt; Possible remedies include: </span>
 <span class="co">#&gt;   * Increasing adapt_delta closer to 1 (default is 0.8) </span>
 <span class="co">#&gt;   * Reparameterizing the model (e.g. using a non-centered parameterization)</span>
-<span class="co">#&gt;   * Using informative or weakly informative prior distributions</span>
+<span class="co">#&gt;   * Using informative or weakly informative prior distributions               </span>
 
 <span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_posterior.html">summarise_posterior</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 <span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_voc_label.html">update_voc_label</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
@@ -147,50 +147,70 @@
 <div id="forecast-wrapper" class="section level3">
 <h3 class="hasAnchor">
 <a href="#forecast-wrapper" class="anchor" aria-hidden="true"></a>Forecast wrapper</h3>
-<p>Run a complete forecast for both the one and two strain models using the <code>forecast</code> function (change the <code>save_path</code> argument to alter the location where results are saved). See <code>names(results)</code> for a breakdown of the output (including summarised posteriors and plots).</p>
+<p>Run a complete forecast for both the one and two strain models using the <code>forecast</code> function. This provides a wrapper around the individual functions used above. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code>forecast_accross_scenarios()</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">obs</span>,
+<code class="sourceCode R"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">obs</span>,
   strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
   adapt_delta <span class="op">=</span> <span class="fl">0.99</span>, max_treedepth <span class="op">=</span> <span class="fl">15</span>,
-  refresh <span class="op">=</span> <span class="fl">0</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span>
+  refresh <span class="op">=</span> <span class="fl">0</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span>,
+  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 1 finished in 14.9 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 15.1 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 15.4 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 17.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 16.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 17.4 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 18.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 19.9 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 15.7 seconds.</span>
-<span class="co">#&gt; Total execution time: 17.7 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 18.1 seconds.</span>
+<span class="co">#&gt; Total execution time: 20.0 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 37.9 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 39.2 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 39.8 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 41.9 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 40.7 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 41.7 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 44.3 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 53.4 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 39.7 seconds.</span>
-<span class="co">#&gt; Total execution time: 42.0 seconds.</span></code></pre></div>
-<p>Update variant of concern labels for the summarised posterior estimates.</p>
+<span class="co">#&gt; Mean chain execution time: 45.0 seconds.</span>
+<span class="co">#&gt; Total execution time: 53.4 seconds.</span>
+<span class="va">forecasts</span>
+<span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
+<span class="co">#&gt; 1:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt; 2:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
+<span class="co">#&gt; 1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.006131</span>
+<span class="co">#&gt; 2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004719</span>
+<span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
+<span class="co">#&gt; 1:                     2                  0.00050            11</span>
+<span class="co">#&gt; 2:                     7                  0.00175            11</span>
+<span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
+<span class="co">#&gt; 1:                 782               0.1955 &lt;data.table[164x19]&gt;</span>
+<span class="co">#&gt; 2:                 740               0.1850 &lt;data.table[448x19]&gt;</span>
+<span class="co">#&gt;               forecast</span>
+<span class="co">#&gt; 1: &lt;data.table[10x12]&gt;</span>
+<span class="co">#&gt; 2: &lt;data.table[48x12]&gt;</span></code></pre></div>
+<p>Unnest posterior estimates from each model.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">results</span><span class="op">$</span><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_voc_label.html">update_voc_label</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">posteriors</span>, <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
-<p>Generate summary plots for the forecasts:</p>
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/unnest_posterior.html">unnest_posterior</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span></code></pre></div>
+<p>Update variant of concern labels for the summarised posterior estimates.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_voc_label.html">update_voc_label</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
+<p>Generate summary plots for the forecasts:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_posterior.html">plot_posterior</a></span><span class="op">(</span>
-  <span class="va">results</span><span class="op">$</span><span class="va">posteriors</span>, <span class="va">curr_obs</span>,
+  <span class="va">posteriors</span>, <span class="va">curr_obs</span>,
   voc_label <span class="op">=</span> <span class="st">"Delta variant"</span>
 <span class="op">)</span></code></pre></div>
 <p>Plot the posterior prediction for cases for both models.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">log_cases</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
-<p>Plot the posterior estimate for the effective reproduction number of Delta, non-Delta cases, and overall.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">rt</span></code></pre></div>
+<code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">log_cases</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
+<p>Plot the posterior estimate for the effective reproduction number of Delta, non-Delta cases, and overall.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">rt</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
 </div>
 </div>
 </div>

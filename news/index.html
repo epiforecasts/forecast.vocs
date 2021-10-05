@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -116,10 +116,18 @@
       <small>Source: <a href='https://github.com/epiforecasts/forecast.vocs/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="forecastvocs-0003" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.03">
-<a href="#forecastvocs-0003" class="anchor" aria-hidden="true"></a>forecast.vocs 0.0.03</h1>
-<ul><li>Added check functions to make sure input observation and arguments have the correct format.</li>
+    <div id="forecastvocs-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#forecastvocs-003" class="anchor" aria-hidden="true"></a>forecast.vocs 0.0.3</h1>
+<ul><li>
+<code>summarise_posterior</code> now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma</li>
+<li>
+<code>forecast</code> has been updated to use the framework from <code>forecast_dt</code> and <code>forecast_dt</code> has been removed.</li>
+<li>
+<code>combine_posteriors_dt</code> has been removed in favour of <code>unnest_posterior</code>. This allows for the output of <code>forecast</code> (and wrappers that produce a data.table) to be easily untested and then used without additional changes in downstream plotting and processing functions.</li>
+<li>add <code>update_voc_label</code> as part of the workflow in <code>forecast</code> and exposed a user facing argument to control the label.</li>
+<li>Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.</li>
+<li>Added check functions to make sure input observation and arguments have the correct format.</li>
 <li>Added unit tests for all preprocessing functions.</li>
 </ul></div>
     <div id="forecastvocs-002" class="section level1">

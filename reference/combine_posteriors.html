@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -122,12 +122,7 @@
     <p>Combine multiple summarised posteriors</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>combine_posteriors</span><span class='op'>(</span>
-  <span class='va'>posteriors_list</span>,
-  list_id <span class='op'>=</span> <span class='st'>"model"</span>,
-  combine_variables <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  variable_id <span class='op'>=</span> <span class='st'>"value_type"</span>
-<span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>combine_posteriors</span><span class='op'>(</span><span class='va'>posteriors_list</span>, list_id <span class='op'>=</span> <span class='st'>"model"</span>, <span class='va'>ids</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,14 +138,8 @@
 list parameters</p></td>
     </tr>
     <tr>
-      <th>combine_variables</th>
-      <td><p>Logical, defaults to FALSE. Should variables
-be combined into a single data frame (labelled using <code>variable_id</code>).</p></td>
-    </tr>
-    <tr>
-      <th>variable_id</th>
-      <td><p>A character string naming the variable used to identify
-variables. Defaults to <code>value_type</code></p></td>
+      <th>ids</th>
+      <td><p>A character vector of the same lebngth</p></td>
     </tr>
     </table>
 

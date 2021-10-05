@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
     <p>Check a data.frame</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>check_dataframe</span><span class='op'>(</span><span class='va'>dataframe</span>, <span class='va'>req_vars</span>, <span class='va'>req_types</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>check_dataframe</span><span class='op'>(</span><span class='va'>dataframe</span>, <span class='va'>req_vars</span>, <span class='va'>req_types</span>, <span class='va'>rows</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +138,10 @@
     <tr>
       <th>req_types</th>
       <td><p>A character vector of types for each required variable.</p></td>
+    </tr>
+    <tr>
+      <th>rows</th>
+      <td><p>Integer specifying the number of rows the data.frame should have.</p></td>
     </tr>
     </table>
 

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>forecast_across_dates</span><span class='op'>(</span>
   <span class='va'>obs</span>,
-  forecast_dates <span class='op'>=</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/duplicated.html'>unique</a></span><span class='op'>(</span><span class='va'>obs</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>seq_available</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>$</span><span class='va'>date</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span>,
+  forecast_dates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>obs</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>seq_available</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>$</span><span class='va'>date</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
 
@@ -152,7 +152,7 @@ on data availability.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data table each row containing the output from running
-<code><a href='forecast_dt.html'>forecast_dt()</a></code> on a single forecast date</p>
+<code><a href='forecast.html'>forecast()</a></code> on a single forecast date</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

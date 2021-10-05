@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Forecast using a single branching process — forecast_n_strain • forecast.vocs</title>
+<title>Forecast for a single model and summarise — forecast_n_strain • forecast.vocs</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Forecast using a single branching process — forecast_n_strain" />
-<meta property="og:description" content="Forecast using a single branching process" />
+<meta property="og:title" content="Forecast for a single model and summarise — forecast_n_strain" />
+<meta property="og:description" content="Forecast for a single model and summarise" />
 
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.2000</span>
       </span>
     </div>
 
@@ -113,20 +113,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Forecast using a single branching process</h1>
+    <h1>Forecast for a single model and summarise</h1>
     <small class="dont-index">Source: <a href='https://github.com/epiforecasts/forecast.vocs/blob/master/R/forecast.R'><code>R/forecast.R</code></a></small>
     <div class="hidden name"><code>forecast_n_strain.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Forecast using a single branching process</p>
+    <p>Forecast for a single model and summarise</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>forecast_n_strain</span><span class='op'>(</span>
   <span class='va'>data</span>,
   model <span class='op'>=</span> <span class='cn'>NULL</span>,
   strains <span class='op'>=</span> <span class='fl'>2</span>,
-  save_path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>,
   probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.025</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.95</span>, by <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>, <span class='fl'>0.975</span>, <span class='fl'>0.99</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -146,11 +145,6 @@
       <th>strains</th>
       <td><p>Integer number of strains. Defaults to 2. Current
 maximum is 2.</p></td>
-    </tr>
-    <tr>
-      <th>save_path</th>
-      <td><p>Character string indicating the save path to use for results
-if required. Defaults to empty meaning that nothing is saved</p></td>
     </tr>
     <tr>
       <th>probs</th>
