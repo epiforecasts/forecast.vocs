@@ -85,27 +85,34 @@ plot_rt(posterior)
 
 ### Forecast wrapper
 
-Run a complete forecast for both the one and two strain models using the `forecast` function (change the `save_path` argument to alter the location where results are saved). See `names(results)` for a breakdown of the output (including summarised posteriors and plots).
+Run a complete forecast for both the one and two strain models using the `forecast` function. This provides a wrapper around the individual functions used above. Multiple forecasts can be performed efficiently across dates and scenarios using `forecast_across_dates()` and `forecast_accross_scenarios()`.
 
 ```{r, message = FALSE}
-results <- forecast(obs,
+forecasts <- forecast(obs,
   strains = c(1, 2),
   adapt_delta = 0.99, max_treedepth = 15,
-  refresh = 0, show_messages = FALSE
+  refresh = 0, show_messages = FALSE,
+  probs = c(0.05, 0.2, 0.8, 0.95)
 )
 ```
 
+Unnest posterior estimates from each model.
+
+```{r}
+posteriors <- unnest_posterior(forecasts)
+posteriors
+```
 Update variant of concern labels for the summarised posterior estimates.
 
 ```{r}
-results$posteriors <- update_voc_label(results$posteriors, "Delta")
+posteriors <- update_voc_label(posteriors, "Delta")
 ```
 
 Generate summary plots for the forecasts:
 
 ```{r}
 plots <- plot_posterior(
-  results$posteriors, curr_obs,
+  posteriors, curr_obs,
   voc_label = "Delta variant"
 )
 ```

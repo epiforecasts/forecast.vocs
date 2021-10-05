@@ -9,7 +9,6 @@ stan_fit(
   model = forecast.vocs::load_model(strains = 2),
   save_path = NULL,
   diagnostics = TRUE,
-  include_posterior = TRUE,
   ...
 )
 }
@@ -23,9 +22,6 @@ if required. Defaults to empty meaning that nothing is saved}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
 be returned as a data frame.}
-
-\item{include_posterior}{Logical, defaults to \code{FALSE}. Should posterior
-summaries be included.}
 
 \item{...}{Additional parameters passed to the \code{sample} method of \code{cmdstanr}.}
 }

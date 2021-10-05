@@ -103,11 +103,18 @@ summarise_posterior <- function(fit,
                                   seq(0.05, 0.95, by = 0.05),
                                   0.975, 0.99
                                 )) {
+  check_dataframe(
+    fit,
+    req_vars = c("fit", "data"),
+    req_types = c("list", "list"),
+    rows = 1
+  )
+
   # NULL out variables
   variable <- type <- NULL
   # extract useful model info
-  data <- fit$data
-  fit <- fit$fit
+  data <- fit$data[[1]]
+  fit <- fit$fit[[1]]
   case_horizon <- data$t - data$t_nots
   seq_horizon <- data$t - data$t_seq - data$t_nseq
 
@@ -211,12 +218,25 @@ summarise_posterior <- function(fit,
   model[exponentiated == TRUE, (cols) := lapply(.SD, exp), .SDcols = cols]
 
   # join output and reorganise as needed
-  out <- list(cases = cases, voc = voc, growth = growth, rt = rt)
-  out <- purrr::map(out, ~ .x[, variable := NULL])
-  out$model <- model
+  out <- list(
+    model = model,
+    cases = cases,
+    voc = voc,
+    growth = growth,
+    rt = rt,
+    raw = sfit
+  )
+
   out <- rbindlist(
     out,
     use.names = TRUE, fill = TRUE, idcol = "value_type"
+  )
+  setcolorder(
+    out,
+    c(
+      "value_type", "variable", "clean_name", "date", "type",
+      "obs", "observed"
+    )
   )
   return(out[])
 }
@@ -239,23 +259,6 @@ combine_posteriors <- function(posteriors_list, list_id = "model", ids) {
     use.names = TRUE, fill = TRUE, idcol = list_id
   )
   return(posteriors)
-}
-
-#' Save a summarised posterior
-#' @param save_path A character string giving the path to save the
-#' posterior to as a csv.
-#' @export
-#' @inheritParams link_dates_with_posterior
-#' @importFrom purrr safely
-#' @importFrom data.table fwrite
-save_posterior <- function(posterior, save_path = tempdir()) {
-  if (!is.null(save_path)) {
-    sfwrite <- purrr::safely(fwrite)
-    save_path <- paste0(save_path, "/", "posterior.csv")
-    message("Saving posterior to: ", save_path)
-    sfwrite(posterior, save_path)
-  }
-  return(invisible(NULL))
 }
 
 #' Extract forecast dates

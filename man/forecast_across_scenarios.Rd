@@ -24,7 +24,7 @@ to. Defaults to \code{tempdir()}. Each scenario will be saved in a sub folder.}
 }
 \value{
 A data table each rows containing the output from running
-\code{forecast_dt()} on a single scenario for a single forecast date.
+\code{forecast()} on a single scenario for a single forecast date.
 }
 \description{
 Forecast across multiple scenarios and dates

@@ -6,19 +6,19 @@
 #' @importFrom future.apply future_lapply
 #' @export
 #' @return A data table each row containing the output from running
-#' `forecast_dt()` on a single forecast date
+#' `forecast()` on a single forecast date
 forecast_across_dates <- function(obs,
                                   forecast_dates = unique(obs[!is.na(seq_available)])$date[-c(1:3)], # nolint
                                   ...) {
   fits <- future.apply::future_lapply(
     forecast_dates,
     function(date, ...) {
-      forecast_dt(obs, forecast_date = date, ...)
+      forecast(obs, forecast_date = date, ...)
     },
     ...,
     future.seed = TRUE
   )
-  fits <- rbindlist(fits)
+  fits <- rbindlist(fits, fill = TRUE)
   return(fits)
 }
 
@@ -35,7 +35,7 @@ forecast_across_dates <- function(obs,
 #' @importFrom future.apply future_lapply
 #' @export
 #' @return A data table each rows containing the output from running
-#' `forecast_dt()` on a single scenario for a single forecast date.
+#' `forecast()` on a single scenario for a single forecast date.
 forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
                                       ...) {
   if (missing(scenarios)) {
@@ -62,6 +62,6 @@ forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
     ...,
     future.seed = TRUE
   )
-  fits <- rbindlist(fits)
+  fits <- rbindlist(fits, fill = TRUE)
   return(fits)
 }

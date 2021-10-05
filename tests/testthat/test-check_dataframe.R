@@ -29,3 +29,8 @@ test_that("Packaged data fails when required variables have the wrong type", {
     )
   )
 })
+
+test_that("Checks for rows work expected", {
+  expect_error(check_dataframe(mtcars, rows = 1))
+  expect_error(check_dataframe(mtcars[1, ], rows = 1), NA)
+})

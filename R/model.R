@@ -167,10 +167,9 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' if required. Defaults to empty meaning that nothing is saved
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be returned as a data frame.
-#' @param include_posterior Logical, defaults to `FALSE`. Should posterior
-#' summaries be included.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #' @export
+#' @importFrom cmdstanr cmdstan_model
 #' @importFrom posterior rhat
 #' @examples
 #' \dontrun{
@@ -200,11 +199,9 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' }
 stan_fit <- function(data,
                      model = forecast.vocs::load_model(strains = 2),
-                     save_path = NULL, diagnostics = TRUE,
-                     include_posterior = TRUE, ...) {
+                     save_path = NULL, diagnostics = TRUE, ...) {
   check_param(data, "data", "list")
   check_param(diagnostics, "diagnostics", "logical")
-  check_param(include_posterior, "include_posterior", "logical")
   cdata <- data
   cdata$start_date <- NULL
   cdata$seq_start_date <- NULL
@@ -215,9 +212,10 @@ stan_fit <- function(data,
     fit$save_object(file = file.path(save_path, "fit.rds"))
   }
 
-  out <- list(
-    fit = fit,
-    data = data
+  out <- data.table(
+    fit = list(fit),
+    data = list(data),
+    fit_args = list(list(...))
   )
 
   if (diagnostics) {
@@ -236,17 +234,7 @@ stan_fit <- function(data,
     )
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]
     diagnostics[, per_at_max_treedepth := no_at_max_treedepth / nrow(diag)]
-    out$diagnostics <- diagnostics
+    out <- cbind(out, diagnostics)
   }
-
-  if (include_posterior) {
-    sfit <- fit$summary(.args = list(na.rm = TRUE))
-    sfit <- data.table::setDT(sfit)
-    out$posterior <- sfit
-  }
-
-  if (!is.null(save_path) & include_posterior) {
-    data.table::fwrite(sfit, file.path(save_path, "summarised_posterior.csv"))
-  }
-  return(out)
+  return(out[])
 }

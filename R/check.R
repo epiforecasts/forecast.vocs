@@ -32,13 +32,19 @@ check_param <- function(param, name = "param",
 #' @param dataframe A data.frame to check.
 #' @param req_vars A character vector of variables that are required.
 #' @param req_types A character vector of types for each required variable.
+#' @param rows Integer specifying the number of rows the data.frame should have.
 #' @export
 #' @return NULL
 #' @importFrom purrr walk2
 #' @keywords internal
-check_dataframe <- function(dataframe, req_vars, req_types) {
+check_dataframe <- function(dataframe, req_vars, req_types, rows) {
   if (!is.data.frame(dataframe)) {
     stop("The inputs is not a data.frame")
+  }
+  if (!missing(rows)) {
+    if (nrow(dataframe) != rows) {
+      stop("The input does not have ", rows, ".")
+    }
   }
   if (!missing(req_vars) | !missing(req_types)) {
     if (length(req_vars) != length(req_types)) {

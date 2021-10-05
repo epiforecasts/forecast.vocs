@@ -9,7 +9,6 @@ forecast(
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
-  save_path = NULL,
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
@@ -22,6 +21,7 @@ forecast(
   debug = FALSE,
   keep_fit = TRUE,
   probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
+  id = 0,
   ...
 )
 }
@@ -41,9 +41,6 @@ the forecast date.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the forecast date.}
 
-\item{save_path}{Character string indicating the save path to use for results
-if required. Defaults to empty meaning that nothing is saved}
-
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
 \item{r_init}{Numeric vector of length 2. Prior mean and
@@ -53,8 +50,9 @@ standard deviation for the initial growht rate.}
 standard deviation for the initial growth rate modifier
 due to the variant of concern.}
 
-\item{strains}{Integer number of strains. Defaults to 2. Current
-maximum is 2.}
+\item{strains}{Integer number of strains to use. Defaults to 2. Current
+maximum is 2. A numeric vector can be passed if forecasts from multiple
+strain models are desired.}
 
 \item{variant_relationship}{Character string, defaulting to "pooled".
 Controls the relationship of strains with options being "pooled" (dependence
@@ -84,7 +82,14 @@ situtations where multiple models are being fit.}
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for.}
 
+\item{id}{ID to assign to this forecast. Defaults to 0.}
+
 \item{...}{Additional parameters passed to \code{stan_fit()}.}
+}
+\value{
+A dataframe containing the output of \code{stan_fit()} in each row as
+well as the summarised posterior, forecast and information about the
+parameters specified.
 }
 \description{
 Forecast using branching processes at a target date
@@ -101,7 +106,13 @@ results <- forecast(
   max_treedepth = 15,
   variant_relationship = "scaled"
 )
-# inspect object
-names(results)
+# inspect results
+results
+
+# unnest posteriors
+results <- unnest_posterior(results)
+
+# plot case posterior predictions
+plot_cases(results, log = TRUE)
 }
 }

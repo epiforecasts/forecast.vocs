@@ -23,7 +23,7 @@ on data availability.}
 }
 \value{
 A data table each row containing the output from running
-\code{forecast_dt()} on a single forecast date
+\code{forecast()} on a single forecast date
 }
 \description{
 Forecast across multiple dates
