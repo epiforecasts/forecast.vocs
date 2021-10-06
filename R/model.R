@@ -163,8 +163,6 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' Fit a brancing process strain model
 #' @param data A list of data as produced by `stan_data()`
 #' @param model A `cmdstanr` model object as loaded by `load_model()`
-#' @param save_path Character string indicating the save path to use for results
-#' if required. Defaults to empty meaning that nothing is saved
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be returned as a data frame.
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
@@ -197,9 +195,8 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' )
 #' two_strain_fit
 #' }
-stan_fit <- function(data,
-                     model = forecast.vocs::load_model(strains = 2),
-                     save_path = NULL, diagnostics = TRUE, ...) {
+stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
+                     diagnostics = TRUE, ...) {
   check_param(data, "data", "list")
   check_param(diagnostics, "diagnostics", "logical")
   cdata <- data
@@ -207,10 +204,6 @@ stan_fit <- function(data,
   cdata$seq_start_date <- NULL
   model <- cmdstanr::cmdstan_model(model)
   fit <- model$sample(data = cdata, ...)
-
-  if (!is.null(save_path)) {
-    fit$save_object(file = file.path(save_path, "fit.rds"))
-  }
 
   out <- data.table(
     fit = list(fit),

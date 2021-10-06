@@ -447,7 +447,7 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #' extract_draws(fit)
 #' }
 extract_draws <- function(fit, ...) {
-  fit$fit$draws(...)
+  fit$fit[[1]]$draws(...)
 }
 
 #' Convert to stanfit object
@@ -464,7 +464,7 @@ extract_draws <- function(fit, ...) {
 #' convert_to_stanfit(fit)
 #' }
 convert_to_stanfit <- function(fit) {
-  stanfit <- read_stan_csv(fit$fit$output_files())
+  stanfit <- read_stan_csv(fit$fit[[1]]$output_files())
   return(stanfit)
 }
 
