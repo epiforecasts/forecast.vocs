@@ -1,7 +1,8 @@
 #' Forecast using branching processes at a target date
 #'
-#' @param models A list of models to use named by strain. If not supplied
-#' uses the package default model for that strain.
+#' @param models A model as supplied by `load_model()`. If not supplied the
+#' default for that strain is used. If multiple strain models are being forecast
+#' then `models` should be a list models.
 #'
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
@@ -64,6 +65,9 @@ forecast <- function(obs,
                      id = 0,
                      ...) {
   if (!is.null(models)) {
+    if (length(models) == 1 & length(strains) == 1) {
+      models <- list(models)
+    }
     stopifnot(
       "Number of models supplied must be equal to the numer of strain
        forecasts specified." = length(models) == length(strains)

@@ -62,8 +62,9 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 \item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
 used include overdispersion.}
 
-\item{models}{A list of models to use named by strain. If not supplied
-uses the package default model for that strain.}
+\item{models}{A model as supplied by \code{load_model()}. If not supplied the
+default for that strain is used. If multiple strain models are being forecast
+then \code{models} should be a list models.}
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
 included in the model.extract}
