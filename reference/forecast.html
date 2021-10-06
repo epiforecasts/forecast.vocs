@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.3000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.4000</span>
       </span>
     </div>
 
@@ -204,8 +204,9 @@ used include overdispersion.</p></td>
     </tr>
     <tr>
       <th>models</th>
-      <td><p>A list of models to use named by strain. If not supplied
-uses the package default model for that strain.</p></td>
+      <td><p>A model as supplied by <code><a href='load_model.html'>load_model()</a></code>. If not supplied the
+default for that strain is used. If multiple strain models are being forecast
+then <code>models</code> should be a list models.</p></td>
     </tr>
     <tr>
       <th>likelihood</th>
