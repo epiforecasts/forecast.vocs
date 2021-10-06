@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.4000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.5000</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
     <p>Forecast across multiple scenarios and dates</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>forecast_across_scenarios</span><span class='op'>(</span><span class='va'>obs</span>, <span class='va'>scenarios</span>, save_path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>forecast_across_scenarios</span><span class='op'>(</span><span class='va'>obs</span>, <span class='va'>scenarios</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,11 +140,6 @@ on data availability.</p></td>
       <td><p>A dataframe of scenarios as produced by
 <code><a href='define_scenarios.html'>define_scenarios()</a></code>. If missing uses the default scenarios
 from <code>default_scenarios()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>save_path</th>
-      <td><p>Character string indicating the path to save results
-to. Defaults to <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir()</a></code>. Each scenario will be saved in a sub folder.</p></td>
     </tr>
     <tr>
       <th>...</th>

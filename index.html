@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.4000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.5000</span>
       </span>
     </div>
 
@@ -113,24 +113,23 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 42.2 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 43.4 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 47.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 39.7 seconds.</span>
 <span class="co">#&gt; Chain 1 finished in 55.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 56.3 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 59.1 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 47.2 seconds.</span>
-<span class="co">#&gt; Total execution time: 55.7 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 52.7 seconds.</span>
+<span class="co">#&gt; Total execution time: 59.3 seconds.</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Warning: 15 of 4000 (0.0%) transitions ended with a divergence.</span>
+<span class="co">#&gt; Warning: 3 of 4000 (0.0%) transitions ended with a divergence.</span>
 <span class="co">#&gt; This may indicate insufficient exploration of the posterior distribution.</span>
 <span class="co">#&gt; Possible remedies include: </span>
 <span class="co">#&gt;   * Increasing adapt_delta closer to 1 (default is 0.8) </span>
 <span class="co">#&gt;   * Reparameterizing the model (e.g. using a non-centered parameterization)</span>
-<span class="co">#&gt;   * Using informative or weakly informative prior distributions               </span>
+<span class="co">#&gt;   * Using informative or weakly informative prior distributions</span>
 
-<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_posterior.html">summarise_posterior</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
-<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_voc_label.html">update_voc_label</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_posterior.html">summarise_posterior</a></span><span class="op">(</span><span class="va">fit</span>, voc_label <span class="op">=</span> <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
 <p>Plot the posterior prediction for cases.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/plot_cases.html">plot_cases</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="va">curr_obs</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -150,67 +149,144 @@
 <p>Run a complete forecast for both the one and two strain models using the <code>forecast</code> function. This provides a wrapper around the individual functions used above. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code>forecast_accross_scenarios()</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">obs</span>,
-  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
+  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, voc_label <span class="op">=</span> <span class="st">"Delta"</span>,
   adapt_delta <span class="op">=</span> <span class="fl">0.99</span>, max_treedepth <span class="op">=</span> <span class="fl">15</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span>,
-  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 16.5 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 17.4 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 18.5 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 19.9 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 16.4 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 16.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 17.0 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 22.7 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 18.1 seconds.</span>
-<span class="co">#&gt; Total execution time: 20.0 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 18.2 seconds.</span>
+<span class="co">#&gt; Total execution time: 22.8 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 40.7 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 41.7 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 44.3 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 53.4 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 38.4 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 43.3 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 49.9 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 87.7 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 45.0 seconds.</span>
-<span class="co">#&gt; Total execution time: 53.4 seconds.</span>
-<span class="va">forecasts</span>
-<span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
-<span class="co">#&gt; 1:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
-<span class="co">#&gt; 2:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
-<span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
-<span class="co">#&gt; 1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.006131</span>
-<span class="co">#&gt; 2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004719</span>
-<span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
-<span class="co">#&gt; 1:                     2                  0.00050            11</span>
-<span class="co">#&gt; 2:                     7                  0.00175            11</span>
-<span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
-<span class="co">#&gt; 1:                 782               0.1955 &lt;data.table[164x19]&gt;</span>
-<span class="co">#&gt; 2:                 740               0.1850 &lt;data.table[448x19]&gt;</span>
-<span class="co">#&gt;               forecast</span>
-<span class="co">#&gt; 1: &lt;data.table[10x12]&gt;</span>
-<span class="co">#&gt; 2: &lt;data.table[48x12]&gt;</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 54.9 seconds.</span>
+<span class="co">#&gt; Total execution time: 87.8 seconds.</span></code></pre></div>
 <p>Unnest posterior estimates from each model.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/unnest_posterior.html">unnest_posterior</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span></code></pre></div>
-<p>Update variant of concern labels for the summarised posterior estimates.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_voc_label.html">update_voc_label</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="st">"Delta"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/unnest_posterior.html">unnest_posterior</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span>
+<span class="va">posteriors</span>
+<span class="co">#&gt;      id forecast_date strains overdispersion variant_relationship r_init</span>
+<span class="co">#&gt;   1:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;   2:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;   3:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;   4:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;   5:  0    2021-07-03       1           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;  ---                                                                    </span>
+<span class="co">#&gt; 608:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt; 609:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt; 610:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt; 611:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt; 612:  0    2021-07-03       2           TRUE               pooled 0,0.25</span>
+<span class="co">#&gt;      voc_scale error               fit       data  fit_args samples max_rhat</span>
+<span class="co">#&gt;   1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005186</span>
+<span class="co">#&gt;   2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005186</span>
+<span class="co">#&gt;   3:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005186</span>
+<span class="co">#&gt;   4:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005186</span>
+<span class="co">#&gt;   5:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005186</span>
+<span class="co">#&gt;  ---                                                                        </span>
+<span class="co">#&gt; 608:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003409</span>
+<span class="co">#&gt; 609:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003409</span>
+<span class="co">#&gt; 610:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003409</span>
+<span class="co">#&gt; 611:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003409</span>
+<span class="co">#&gt; 612:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003409</span>
+<span class="co">#&gt;      divergent_transitions per_divergent_transitons max_treedepth</span>
+<span class="co">#&gt;   1:                     5                  0.00125            11</span>
+<span class="co">#&gt;   2:                     5                  0.00125            11</span>
+<span class="co">#&gt;   3:                     5                  0.00125            11</span>
+<span class="co">#&gt;   4:                     5                  0.00125            11</span>
+<span class="co">#&gt;   5:                     5                  0.00125            11</span>
+<span class="co">#&gt;  ---                                                             </span>
+<span class="co">#&gt; 608:                     8                  0.00200            12</span>
+<span class="co">#&gt; 609:                     8                  0.00200            12</span>
+<span class="co">#&gt; 610:                     8                  0.00200            12</span>
+<span class="co">#&gt; 611:                     8                  0.00200            12</span>
+<span class="co">#&gt; 612:                     8                  0.00200            12</span>
+<span class="co">#&gt;      no_at_max_treedepth per_at_max_treedepth            forecast value_type</span>
+<span class="co">#&gt;   1:                 755              0.18875 &lt;data.table[10x12]&gt;      model</span>
+<span class="co">#&gt;   2:                 755              0.18875 &lt;data.table[10x12]&gt;      model</span>
+<span class="co">#&gt;   3:                 755              0.18875 &lt;data.table[10x12]&gt;      model</span>
+<span class="co">#&gt;   4:                 755              0.18875 &lt;data.table[10x12]&gt;      model</span>
+<span class="co">#&gt;   5:                 755              0.18875 &lt;data.table[10x12]&gt;      cases</span>
+<span class="co">#&gt;  ---                                                                        </span>
+<span class="co">#&gt; 608:                 998              0.24950 &lt;data.table[48x12]&gt;        raw</span>
+<span class="co">#&gt; 609:                 998              0.24950 &lt;data.table[48x12]&gt;        raw</span>
+<span class="co">#&gt; 610:                 998              0.24950 &lt;data.table[48x12]&gt;        raw</span>
+<span class="co">#&gt; 611:                 998              0.24950 &lt;data.table[48x12]&gt;        raw</span>
+<span class="co">#&gt; 612:                 998              0.24950 &lt;data.table[48x12]&gt;        raw</span>
+<span class="co">#&gt;           variable                  clean_name       date    type   obs</span>
+<span class="co">#&gt;   1:          beta                        Beta       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt;   2:        phi[1] Notification overdispersion       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt;   3:        r_init              Initial growth       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt;   4:       r_noise                 Growth (sd)       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt;   5:  sim_cases[1]                        &lt;NA&gt; 2021-03-20 Overall 87328</span>
+<span class="co">#&gt;  ---                                                                   </span>
+<span class="co">#&gt; 608: sim_cases[16]                        &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt; 609: sim_cases[17]                        &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt; 610: sim_cases[18]                        &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt; 611: sim_cases[19]                        &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt; 612: sim_cases[20]                        &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;    NA</span>
+<span class="co">#&gt;      observed exponentiated         mean       median           sd          mad</span>
+<span class="co">#&gt;   1:       NA         FALSE 1.731518e-01 2.112630e-01 4.691284e-01 5.451431e-01</span>
+<span class="co">#&gt;   2:       NA         FALSE 9.859423e+01 7.496235e+01 1.025173e+02 4.742756e+01</span>
+<span class="co">#&gt;   3:       NA         FALSE 1.376726e-01 1.375165e-01 7.377239e-02 7.168208e-02</span>
+<span class="co">#&gt;   4:       NA         FALSE 1.196517e-01 1.129010e-01 5.787825e-02 5.915055e-02</span>
+<span class="co">#&gt;   5:     TRUE            NA 9.006464e+04 8.922600e+04 1.337581e+04 1.167918e+04</span>
+<span class="co">#&gt;  ---                                                                           </span>
+<span class="co">#&gt; 608:       NA            NA 4.251785e+03 4.187000e+03 7.874036e+02 5.678358e+02</span>
+<span class="co">#&gt; 609:       NA            NA 3.970601e+03 3.791000e+03 1.165540e+03 9.770334e+02</span>
+<span class="co">#&gt; 610:       NA            NA 4.107717e+03 3.677000e+03 2.086436e+03 1.573780e+03</span>
+<span class="co">#&gt; 611:       NA            NA 4.687944e+03 3.776000e+03 4.102238e+03 2.318045e+03</span>
+<span class="co">#&gt; 612:       NA            NA 5.982679e+03 3.855500e+03 9.713122e+03 3.177212e+03</span>
+<span class="co">#&gt;                 q5           q20          q80          q95      rhat ess_bulk</span>
+<span class="co">#&gt;   1: -6.427214e-01 -2.686274e-01 6.198720e-01 8.723930e-01 1.0010027 1550.619</span>
+<span class="co">#&gt;   2:  2.326636e+01  4.232796e+01 1.278786e+02 2.376844e+02 1.0038973 1114.907</span>
+<span class="co">#&gt;   3:  1.687728e-02  7.818434e-02 1.988848e-01 2.587547e-01 1.0011228 1804.901</span>
+<span class="co">#&gt;   4:  4.090853e-02  6.697418e-02 1.660348e-01 2.245749e-01 1.0024508 1472.056</span>
+<span class="co">#&gt;   5:  6.949270e+04  7.973560e+04 9.992880e+04 1.128736e+05 0.9997794 3524.518</span>
+<span class="co">#&gt;  ---                                                                         </span>
+<span class="co">#&gt; 608:  3.330850e+03  3.724000e+03 4.698200e+03 5.388150e+03 0.9997712 3897.544</span>
+<span class="co">#&gt; 609:  2.449950e+03  3.059000e+03 4.760000e+03 6.072050e+03 1.0006151 4038.941</span>
+<span class="co">#&gt; 610:  1.726950e+03  2.559800e+03 5.336200e+03 7.775300e+03 0.9994742 4134.009</span>
+<span class="co">#&gt; 611:  1.149950e+03  2.127800e+03 6.377600e+03 1.081515e+04 0.9998705 4264.314</span>
+<span class="co">#&gt; 612:  7.249500e+02  1.727000e+03 7.989400e+03 1.645260e+04 0.9996070 4342.985</span>
+<span class="co">#&gt;       ess_tail</span>
+<span class="co">#&gt;   1: 1826.0841</span>
+<span class="co">#&gt;   2:  949.7581</span>
+<span class="co">#&gt;   3: 2396.5365</span>
+<span class="co">#&gt;   4: 2037.4316</span>
+<span class="co">#&gt;   5: 3418.5038</span>
+<span class="co">#&gt;  ---          </span>
+<span class="co">#&gt; 608: 3193.2378</span>
+<span class="co">#&gt; 609: 3744.9236</span>
+<span class="co">#&gt; 610: 3612.7405</span>
+<span class="co">#&gt; 611: 3299.0010</span>
+<span class="co">#&gt; 612: 3241.6141</span></code></pre></div>
 <p>Generate summary plots for the forecasts:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_posterior.html">plot_posterior</a></span><span class="op">(</span>
   <span class="va">posteriors</span>, <span class="va">curr_obs</span>,
   voc_label <span class="op">=</span> <span class="st">"Delta variant"</span>
 <span class="op">)</span></code></pre></div>
 <p>Plot the posterior prediction for cases for both models.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">log_cases</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 <p>Plot the posterior estimate for the effective reproduction number of Delta, non-Delta cases, and overall.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plots</span><span class="op">$</span><span class="va">rt</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 </div>
 </div>

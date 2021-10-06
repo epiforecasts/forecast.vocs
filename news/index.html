@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.4000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.5000</span>
       </span>
     </div>
 
@@ -132,6 +132,7 @@
 <li>Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.</li>
 <li>Added check functions to make sure input observation and arguments have the correct format.</li>
 <li>Added unit tests for all preprocessing functions.</li>
+<li>Custom VOC labelling is now a feature of <code><a href="../reference/summarise_posterior.html">summarise_posterior()</a></code> (and hence <code><a href="../reference/forecast.html">forecast()</a></code>) as well as a standalone option via <code><a href="../reference/update_voc_label.html">update_voc_label()</a></code>.</li>
 </ul></div>
 <div id="infrastructure" class="section level2">
 <h2 class="hasAnchor">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.4000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.5000</span>
       </span>
     </div>
 
@@ -130,6 +130,7 @@
   horizon <span class='op'>=</span> <span class='fl'>4</span>,
   r_init <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.25</span><span class='op'>)</span>,
   voc_scale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.2</span><span class='op'>)</span>,
+  voc_label <span class='op'>=</span> <span class='st'>"VOC"</span>,
   strains <span class='op'>=</span> <span class='fl'>2</span>,
   variant_relationship <span class='op'>=</span> <span class='st'>"pooled"</span>,
   overdispersion <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -138,7 +139,7 @@
   output_loglik <span class='op'>=</span> <span class='cn'>FALSE</span>,
   debug <span class='op'>=</span> <span class='cn'>FALSE</span>,
   keep_fit <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.025</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.95</span>, by <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>, <span class='fl'>0.975</span>, <span class='fl'>0.99</span><span class='op'>)</span>,
+  probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.2</span>, <span class='fl'>0.8</span>, <span class='fl'>0.95</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='fl'>0</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -183,6 +184,12 @@ standard deviation for the initial growht rate.</p></td>
       <td><p>Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant of concern.</p></td>
+    </tr>
+    <tr>
+      <th>voc_label</th>
+      <td><p>A character string, default to "VOC". Defines the label
+to assign to variant of concern specific parameters. Example usage is to
+rename parameters to use variant specific terminology.</p></td>
     </tr>
     <tr>
       <th>strains</th>
@@ -233,7 +240,10 @@ situtations where multiple models are being fit.</p></td>
     <tr>
       <th>probs</th>
       <td><p>A vector of numeric probabilities to produce
-quantile summaries for.</p></td>
+quantile summaries for. By default these are the 5%, 20%, 80%,
+and 95% quantiles which are also the minimum set required for
+plotting functions to work (such as <code><a href='plot_cases.html'>plot_cases()</a></code>, <code>plot_rt</code>,
+and <code>plot_voc</code>).</p></td>
     </tr>
     <tr>
       <th>id</th>
