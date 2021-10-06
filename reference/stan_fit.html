@@ -125,7 +125,6 @@
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>stan_fit</span><span class='op'>(</span>
   <span class='va'>data</span>,
   model <span class='op'>=</span> <span class='fu'>forecast.vocs</span><span class='fu'>::</span><span class='fu'><a href='load_model.html'>load_model</a></span><span class='op'>(</span>strains <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  save_path <span class='op'>=</span> <span class='cn'>NULL</span>,
   diagnostics <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -140,11 +139,6 @@
     <tr>
       <th>model</th>
       <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href='load_model.html'>load_model()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>save_path</th>
-      <td><p>Character string indicating the save path to use for results
-if required. Defaults to empty meaning that nothing is saved</p></td>
     </tr>
     <tr>
       <th>diagnostics</th>
