@@ -9,6 +9,7 @@
 * Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.
 * Added check functions to make sure input observation and arguments have the correct format.
 * Added unit tests for  all preprocessing functions.
+* Custom VOC labelling is now a feature of `summarise_posterior()` (and hence `forecast()`) as well as a standalone option via `update_voc_label()`.
 
 ## Infrastructure
 
