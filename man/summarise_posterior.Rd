@@ -4,16 +4,20 @@
 \alias{summarise_posterior}
 \title{Summarise the posterior}
 \usage{
-summarise_posterior(
-  fit,
-  probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99)
-)
+summarise_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), voc_label = "VOC")
 }
 \arguments{
 \item{fit}{List of output as returned by \code{stan_fit()}.}
 
 \item{probs}{A vector of numeric probabilities to produce
-quantile summaries for.}
+quantile summaries for. By default these are the 5\%, 20\%, 80\%,
+and 95\% quantiles which are also the minimum set required for
+plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
+and \code{plot_voc}).}
+
+\item{voc_label}{A character string, default to "VOC". Defines the label
+to assign to variant of concern specific parameters. Example usage is to
+rename parameters to use variant specific terminology.}
 }
 \description{
 Summarise the posterior

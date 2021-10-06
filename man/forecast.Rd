@@ -12,6 +12,7 @@ forecast(
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
+  voc_label = "VOC",
   strains = 2,
   variant_relationship = "pooled",
   overdispersion = TRUE,
@@ -20,7 +21,7 @@ forecast(
   output_loglik = FALSE,
   debug = FALSE,
   keep_fit = TRUE,
-  probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
+  probs = c(0.05, 0.2, 0.8, 0.95),
   id = 0,
   ...
 )
@@ -49,6 +50,10 @@ standard deviation for the initial growht rate.}
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant of concern.}
+
+\item{voc_label}{A character string, default to "VOC". Defines the label
+to assign to variant of concern specific parameters. Example usage is to
+rename parameters to use variant specific terminology.}
 
 \item{strains}{Integer number of strains to use. Defaults to 2. Current
 maximum is 2. A numeric vector can be passed if forecasts from multiple
@@ -81,7 +86,10 @@ kept and returned. Dropping this can substantially reduce memory usage in
 situtations where multiple models are being fit.}
 
 \item{probs}{A vector of numeric probabilities to produce
-quantile summaries for.}
+quantile summaries for. By default these are the 5\%, 20\%, 80\%,
+and 95\% quantiles which are also the minimum set required for
+plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
+and \code{plot_voc}).}
 
 \item{id}{ID to assign to this forecast. Defaults to 0.}
 

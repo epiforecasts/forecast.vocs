@@ -61,8 +61,7 @@ fit <- stan_fit(
   refresh = 0, show_messages = FALSE
 )
 
-posterior <- summarise_posterior(fit)
-posterior <- update_voc_label(posterior, "Delta")
+posterior <- summarise_posterior(fit, voc_label = "Delta")
 ```
 
 Plot the posterior prediction for cases.
@@ -89,10 +88,9 @@ Run a complete forecast for both the one and two strain models using the `foreca
 
 ```{r, message = FALSE}
 forecasts <- forecast(obs,
-  strains = c(1, 2),
+  strains = c(1, 2), voc_label = "Delta",
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE,
-  probs = c(0.05, 0.2, 0.8, 0.95)
 )
 ```
 
@@ -101,11 +99,6 @@ Unnest posterior estimates from each model.
 ```{r}
 posteriors <- unnest_posterior(forecasts)
 posteriors
-```
-Update variant of concern labels for the summarised posterior estimates.
-
-```{r}
-posteriors <- update_voc_label(posteriors, "Delta")
 ```
 
 Generate summary plots for the forecasts:

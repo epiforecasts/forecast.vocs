@@ -8,7 +8,8 @@ forecast_n_strain(
   data,
   model = NULL,
   strains = 2,
-  probs = c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99),
+  voc_label = "VOC",
+  probs = c(0.05, 0.2, 0.8, 0.95),
   ...
 )
 }
@@ -20,8 +21,15 @@ forecast_n_strain(
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
 
+\item{voc_label}{A character string, default to "VOC". Defines the label
+to assign to variant of concern specific parameters. Example usage is to
+rename parameters to use variant specific terminology.}
+
 \item{probs}{A vector of numeric probabilities to produce
-quantile summaries for.}
+quantile summaries for. By default these are the 5\%, 20\%, 80\%,
+and 95\% quantiles which are also the minimum set required for
+plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
+and \code{plot_voc}).}
 
 \item{...}{Additional parameters passed to \code{stan_fit()}.}
 }
