@@ -4,7 +4,7 @@
 \alias{forecast_across_scenarios}
 \title{Forecast across multiple scenarios and dates}
 \usage{
-forecast_across_scenarios(obs, scenarios, save_path = tempdir(), ...)
+forecast_across_scenarios(obs, scenarios, ...)
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
@@ -16,9 +16,6 @@ on data availability.}
 \item{scenarios}{A dataframe of scenarios as produced by
 \code{define_scenarios()}. If missing uses the default scenarios
 from \code{default_scenarios()}.}
-
-\item{save_path}{Character string indicating the path to save results
-to. Defaults to \code{tempdir()}. Each scenario will be saved in a sub folder.}
 
 \item{...}{Additional parameters passed to \code{forecast_across_dates()}}
 }

@@ -25,7 +25,6 @@
 #'
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
-#' @inheritParams forecast_n_strain
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @export
@@ -56,14 +55,11 @@ forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
                      horizon = 4, r_init = c(0, 0.25), voc_scale = c(0, 0.2),
-                     strains = 2, variant_relationship = "pooled",
-                     overdispersion = TRUE, models = NULL, likelihood = TRUE,
-                     output_loglik = FALSE, debug = FALSE, keep_fit = TRUE,
-                     probs = c(
-                       0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99
-                     ),
-                     id = 0,
-                     ...) {
+                     voc_label = "VOC", strains = 2,
+                     variant_relationship = "pooled", overdispersion = TRUE,
+                     models = NULL, likelihood = TRUE, output_loglik = FALSE,
+                     debug = FALSE, keep_fit = TRUE,
+                     probs = c(0.05, 0.2, 0.8, 0.95), id = 0, ...) {
   if (!is.null(models)) {
     if (length(models) == 1 & length(strains) == 1) {
       models <- list(models)
@@ -140,11 +136,8 @@ forecast <- function(obs,
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 forecast_n_strain <- function(data, model = NULL, strains = 2,
-                              probs = c(
-                                0.01, 0.025, seq(0.05, 0.95, by = 0.05),
-                                0.975, 0.99
-                              ),
-                              ...) {
+                              voc_label = "VOC",
+                              probs = c(0.05, 0.2, 0.8, 0.95), ...) {
   inits <- stan_inits(data, strains = strains)
 
   if (is.null(model)) {
@@ -155,7 +148,10 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
   fit <- stan_fit(
     model = model, data = data, init = inits, ...
   )
-  fit$posterior <- list(summarise_posterior(fit, probs = probs))
+  fit$posterior <- list(summarise_posterior(
+    fit,
+    probs = probs, voc_label = voc_label
+  ))
   fit$forecast <- list(extract_forecast(fit$posterior[[1]]))
   return(fit)
 }

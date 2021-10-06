@@ -83,8 +83,17 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' Summarise the posterior
 #'
 #' @param fit List of output as returned by `stan_fit()`.
+#'
 #' @param probs A vector of numeric probabilities to produce
-#' quantile summaries for.
+#' quantile summaries for. By default these are the 5%, 20%, 80%,
+#' and 95% quantiles which are also the minimum set required for
+#' plotting functions to work (such as `plot_cases()`, `plot_rt`,
+#' and `plot_voc`).
+#'
+#' @param voc_label A character string, default to "VOC". Defines the label
+#' to assign to variant of concern specific parameters. Example usage is to
+#' rename parameters to use variant specific terminology.
+#'
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -97,18 +106,15 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' summarise_posterior(fit)
 #' }
-summarise_posterior <- function(fit,
-                                probs = c(
-                                  0.01, 0.025,
-                                  seq(0.05, 0.95, by = 0.05),
-                                  0.975, 0.99
-                                )) {
+summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
+                                voc_label = "VOC") {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
     req_types = c("list", "list"),
     rows = 1
   )
+  check_param(voc_label, "voc_label", type = "character", length = 1)
 
   # NULL out variables
   variable <- type <- NULL
@@ -238,27 +244,10 @@ summarise_posterior <- function(fit,
       "obs", "observed"
     )
   )
-  return(out[])
-}
-
-#' Combine multiple summarised posteriors
-#'
-#' @param posteriors_list A list of posteriors as produced by
-#'  `summarise_posterior()`.
-#' @param list_id A character string naming the variable used to identify
-#' list parameters
-#' @param ids A character vector of the same lebngth
-#' @export
-#' @importFrom purrr map
-combine_posteriors <- function(posteriors_list, list_id = "model", ids) {
-  if (!missing(ids)) {
-    names(posteriors_list) <- ids
+  if (!(voc_label %in% "VOC")) {
+    out <- update_voc_label(out, voc_label)
   }
-  posteriors <- rbindlist(
-    posteriors_list,
-    use.names = TRUE, fill = TRUE, idcol = list_id
-  )
-  return(posteriors)
+  return(out[])
 }
 
 #' Extract forecast dates

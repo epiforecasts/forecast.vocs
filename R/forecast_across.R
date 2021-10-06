@@ -27,8 +27,6 @@ forecast_across_dates <- function(obs,
 #' @param scenarios A dataframe of scenarios as produced by
 #' `define_scenarios()`. If missing uses the default scenarios
 #' from `default_scenarios()`.
-#' @param save_path Character string indicating the path to save results
-#' to. Defaults to `tempdir()`. Each scenario will be saved in a sub folder.
 #' @param ... Additional parameters passed to `forecast_across_dates()`
 #' @inheritParams forecast_across_dates
 #' @importFrom purrr map2
@@ -36,8 +34,7 @@ forecast_across_dates <- function(obs,
 #' @export
 #' @return A data table each rows containing the output from running
 #' `forecast()` on a single scenario for a single forecast date.
-forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
-                                      ...) {
+forecast_across_scenarios <- function(obs, scenarios, ...) {
   if (missing(scenarios)) {
     scenarios <- forecast.vocs::define_scenarios()
   }
@@ -51,7 +48,6 @@ forecast_across_scenarios <- function(obs, scenarios, save_path = tempdir(),
     forecast_across_dates(
       obs = scenario$obs[[1]],
       voc_scale = scenario$voc_scale[[1]],
-      save_path = file.path(save_path, scenario$id[[1]]),
       id = scenario$id[[1]],
       ...
     )
