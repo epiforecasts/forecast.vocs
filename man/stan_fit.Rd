@@ -7,7 +7,6 @@
 stan_fit(
   data,
   model = forecast.vocs::load_model(strains = 2),
-  save_path = NULL,
   diagnostics = TRUE,
   ...
 )
@@ -16,9 +15,6 @@ stan_fit(
 \item{data}{A list of data as produced by \code{stan_data()}}
 
 \item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
-
-\item{save_path}{Character string indicating the save path to use for results
-if required. Defaults to empty meaning that nothing is saved}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
 be returned as a data frame.}
