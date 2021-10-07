@@ -14,8 +14,7 @@ transformed data {
   // initialise cases using observed data
   real mean_init_cases;
   real sd_init_cases;
-  mean_init_cases = X[1];
-  mean_init_cases = log(mean_init_cases);
+  mean_init_cases = log(X[1]);
   sd_init_cases = 0.1;
 }
 

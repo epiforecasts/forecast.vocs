@@ -9,7 +9,6 @@ plot_voc(
   posterior,
   obs = NULL,
   forecast_dates = NULL,
-  all_obs = FALSE,
   voc_label = "variant of concern"
 )
 }
@@ -24,9 +23,6 @@ output is a forecast vs an estimate. Defaults to empty in which case
 forecast dates are inferred from the \code{posterior} list based on data
 availability for cases and sequences. These dates can be overridden
 by supplying a replacement data with a duplicate name (see the examples).}
-
-\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
-or just those in the date range of the estimates being plot.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}

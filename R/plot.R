@@ -39,13 +39,11 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @param obs A data frame of observed data as produced by `latest_obs()`.
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
-#' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
-#' or just those in the date range of the estimates being plot.
 #' @param ... Additional arguments passed to `ggplot2::aes()`
 #' @inheritParams extract_forecast_dates
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
-                         all_obs = FALSE, ...) {
+                         ...) {
   data <- posterior[value_type %in% target]
   setnames(data, "type", "Type", skip_absent = TRUE)
 
@@ -67,15 +65,12 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
     if (is.null(data[["obs"]])) {
       data[, obs := NA_real_]
     }
-    obs <- data[, .(date, value = obs)]
+    obs <- data[, value := obs]
   }
   obs <- unique(obs)
   obs <- obs[!is.na(value)]
 
   if (nrow(obs) > 0) {
-    if (!all_obs) {
-      obs <- obs[date <= max(data$date) & date >= min(data$date)]
-    }
     plot <- plot +
       geom_point(data = obs, aes(y = value, col = NULL, fill = NULL))
   }
@@ -89,12 +84,12 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @export
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       log = TRUE, all_obs = FALSE) {
+                       log = TRUE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = cases)]
   }
   plot <- plot_default(posterior, "cases", obs, forecast_dates,
-    all_obs = all_obs, x = date, col = Type, fill = Type
+    x = date, col = Type, fill = Type
   )
 
   if (log) {
@@ -123,12 +118,12 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @export
 #' @importFrom scales percent
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
-                     all_obs = FALSE, voc_label = "variant of concern") {
+                     voc_label = "variant of concern") {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = share_voc)]
   }
   plot <- plot_default(posterior, "voc", obs, forecast_dates,
-    all_obs = FALSE, x = date
+    x = date
   )
 
   plot <- plot +
@@ -183,21 +178,13 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' plot_posterior(posterior)
 #' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           all_obs = FALSE, save_path = NULL, type = "png",
+                           save_path = NULL, type = "png",
                            voc_label = "variant of concern") {
   plots <- list()
-  plots$cases <- plot_cases(posterior, obs, forecast_dates,
-    log = FALSE,
-    all_obs = all_obs
-  )
-  plots$log_cases <- plot_cases(posterior, obs, forecast_dates,
-    log = TRUE, all_obs = all_obs
-  )
+  plots$cases <- plot_cases(posterior, obs, forecast_dates, log = FALSE)
+  plots$log_cases <- plot_cases(posterior, obs, forecast_dates, log = TRUE)
   if (nrow(posterior[value_type %in% "voc"]) > 0) {
-    plots$voc <- plot_voc(posterior, obs, forecast_dates,
-      all_obs = all_obs,
-      voc_label = voc_label
-    )
+    plots$voc <- plot_voc(posterior, obs, forecast_dates, voc_label = voc_label)
   }
   plots$rt <- plot_rt(posterior, forecast_dates)
 

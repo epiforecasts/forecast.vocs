@@ -4,13 +4,7 @@
 \alias{plot_cases}
 \title{Plot the posterior prediction for cases}
 \usage{
-plot_cases(
-  posterior,
-  obs = NULL,
-  forecast_dates = NULL,
-  log = TRUE,
-  all_obs = FALSE
-)
+plot_cases(posterior, obs = NULL, forecast_dates = NULL, log = TRUE)
 }
 \arguments{
 \item{posterior}{A list of posterior output as produced by
@@ -26,9 +20,6 @@ by supplying a replacement data with a duplicate name (see the examples).}
 
 \item{log}{Logical, defaults to \code{TRUE}. Should cases be plot on
 a log scale?}
-
-\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
-or just those in the date range of the estimates being plot.}
 }
 \description{
 Plot the posterior prediction for cases
