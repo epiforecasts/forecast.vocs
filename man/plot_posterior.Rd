@@ -10,6 +10,7 @@ plot_posterior(
   forecast_dates = NULL,
   save_path = NULL,
   type = "png",
+  all_obs = FALSE,
   voc_label = "variant of concern"
 )
 }
@@ -29,6 +30,9 @@ by supplying a replacement data with a duplicate name (see the examples).}
 if required.}
 
 \item{type}{A character string indicating the format to use to save plots.}
+
+\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
+or just those in the date range of the estimates being plot.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}

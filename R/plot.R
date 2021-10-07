@@ -1,5 +1,7 @@
 #' Add the default plot theme
+#'
 #' @param plot `ggplot2` object
+#'
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -37,13 +39,19 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' Default posterior plot
 #'
 #' @param obs A data frame of observed data as produced by `latest_obs()`.
+#'
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
+#'
+#' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
+#' or just those in the date range of the estimates being plot.
+#'
 #' @param ... Additional arguments passed to `ggplot2::aes()`
+#'
 #' @inheritParams extract_forecast_dates
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
-                         ...) {
+                         all_obs = FALSE, ...) {
   data <- posterior[value_type %in% target]
   setnames(data, "type", "Type", skip_absent = TRUE)
 
@@ -71,6 +79,10 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
   obs <- obs[!is.na(value)]
 
   if (nrow(obs) > 0) {
+    if (!all_obs) {
+      obs <- obs[date <= max(data$date, na.rm = TRUE) &
+        date >= min(data$date, na.rm = TRUE)]
+    }
     plot <- plot +
       geom_point(data = obs, aes(y = value, col = NULL, fill = NULL))
   }
@@ -78,18 +90,20 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 }
 
 #' Plot the posterior prediction for cases
+#'
 #' @param log Logical, defaults to `TRUE`. Should cases be plot on
 #' a log scale?
+#'
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       log = TRUE) {
+                       all_obs = FALSE, log = TRUE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = cases)]
   }
   plot <- plot_default(posterior, "cases", obs, forecast_dates,
-    x = date, col = Type, fill = Type
+    all_obs = all_obs, x = date, col = Type, fill = Type
   )
 
   if (log) {
@@ -112,18 +126,20 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 
 #' Plot the posterior prediction for the fraction of samples with the variant
 #' of concern
+#'
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
+#'
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
-                     voc_label = "variant of concern") {
+                     all_obs = FALSE, voc_label = "variant of concern") {
   if (!is.null(obs)) {
     obs <- copy(obs)[, .(date, value = share_voc)]
   }
   plot <- plot_default(posterior, "voc", obs, forecast_dates,
-    x = date
+    all_obs = all_obs, x = date
   )
 
   plot <- plot +
@@ -163,7 +179,9 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #'
 #' @param save_path A character string indicating where to save plots
 #' if required.
+#'
 #' @param type A character string indicating the format to use to save plots.
+#'
 #' @export
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc
@@ -179,12 +197,21 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
 #' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path = NULL, type = "png",
-                           voc_label = "variant of concern") {
+                           all_obs = FALSE, voc_label = "variant of concern") {
   plots <- list()
-  plots$cases <- plot_cases(posterior, obs, forecast_dates, log = FALSE)
-  plots$log_cases <- plot_cases(posterior, obs, forecast_dates, log = TRUE)
+  plots$cases <- plot_cases(
+    posterior, obs, forecast_dates,
+    log = FALSE, all_obs = all_obs
+  )
+  plots$log_cases <- plot_cases(
+    posterior, obs, forecast_dates,
+    log = TRUE, all_obs = all_obs
+  )
   if (nrow(posterior[value_type %in% "voc"]) > 0) {
-    plots$voc <- plot_voc(posterior, obs, forecast_dates, voc_label = voc_label)
+    plots$voc <- plot_voc(
+      posterior, obs, forecast_dates,
+      voc_label = voc_label, all_obs = all_obs
+    )
   }
   plots$rt <- plot_rt(posterior, forecast_dates)
 
@@ -203,7 +230,9 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @param pars Character vector of parameters to try and include
 #' in the plot. Will only be included if present in the fitted model.
+#'
 #' @param ... Additional parameters passed to `mcmc_pairs()`.
+#'
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
