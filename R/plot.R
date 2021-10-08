@@ -198,6 +198,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 
 #' Plot the posterior prediction for the growth rate
 #' @inheritParams plot_default
+#' @inheritParams plot_cases
 #' @export
 plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {

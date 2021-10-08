@@ -15,6 +15,10 @@ plot_growth(posterior, forecast_dates = NULL, col = NULL)
 \code{extract_forecast_dates()} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain facetting variables.}
+
+\item{col}{A character string denoting the variable to use to
+stratify the ribbon plot. Defaults to "type" which indicates the
+data stream.}
 }
 \description{
 Plot the posterior prediction for the growth rate
