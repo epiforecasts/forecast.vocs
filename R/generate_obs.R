@@ -3,15 +3,19 @@
 #'
 #' @param frac_voc A numeric vector of expected proportions positive for the
 #' variant of concern.
+#'
 #' @param seq_total An integer vector of total sequences available.
+#'
 #' @param phi The overdispersion of the sampling process. If not supplied
 #' then no overdispersion is used (i.e a binomial observation model vs a
 #' beta binomial observation model).
 #'
+#' @return A vector of observed sequences positive for the variant of
+#' concern.
+#'
+#' @concept modelvalidation
 #' @importFrom purrr map2_dbl
 #' @export
-#' @return A vector of observed sequences positive for the variant of
-#' concern
 #' @examples
 #' # dummy sequence data
 #' frac_voc <- seq(0, 1, by = 0.1)
@@ -58,13 +62,15 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param ... Additional arguments to pass `stan_data()`.
 #'
-#' @inheritParams forecast
-#' @inheritParams stan_fit
-#' @export
-#' @return A dataframe with a sampled dataset on each row with the following
+#' #' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),
 #' obs (simulated observed data), stan_data, (the simulated data formatted
 #' using `stan_data()` using the same arguments as specified  for simulation.)
+#'
+#' @concept modelvalidation
+#' @inheritParams forecast
+#' @inheritParams stan_fit
+#' @export
 #' @importFrom posterior as_draws_df
 #' @importFrom purrr map
 #' @examples

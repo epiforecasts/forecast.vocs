@@ -2,6 +2,8 @@
 #'
 #' @param plot `ggplot2` object
 #'
+#' @return A `ggplot2` plot with the package theme applied.
+#' @concept plot
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -18,6 +20,10 @@ plot_theme <- function(plot) {
 #' `extract_forecast_dates()` (with at least a date variable and a
 #' Data unavailable variable)). Specifies when date availability should be
 #' add to plots. May contain facetting variables.
+#'
+#' @return A `ggplot2` plot with dates of data unavailability added.
+#'
+#' @concept plot
 #' @inheritParams plot_theme
 #' @export
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
@@ -50,6 +56,9 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #'
 #' @param ... Additional arguments passed to `ggplot2::aes()`
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @concept plot
 #' @inheritParams add_forecast_dates
 #' @inheritParams extract_forecast_dates
 #' @importFrom purrr map_lgl
@@ -106,6 +115,9 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' stratify the ribbon plot. Defaults to "type" which indicates the
 #' data stream.
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @concept plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
@@ -147,6 +159,9 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @param ... Additional parameters passed to `plot_default()`.
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @concept plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
@@ -171,6 +186,10 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 }
 
 #' Plot the posterior prediction for the reproduction number
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @concept plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
@@ -197,6 +216,10 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 }
 
 #' Plot the posterior prediction for the growth rate
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @concept plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
@@ -231,6 +254,9 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #'
 #' @param type A character string indicating the format to use to save plots.
 #'
+#' @return A named list of all supported package plots with sensible defaults
+#'
+#' @concept plot
 #' @export
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc

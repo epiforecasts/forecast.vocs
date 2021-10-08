@@ -14,3 +14,38 @@ authors:
     href: "https://www.samabbott.co.uk/"
   Sebastian Funk:
     href: "https://www.lshtm.ac.uk/aboutus/people/funk.sebastian"
+
+reference:
+  - title: Get Covid-19 Data
+    desc: Functions that provide interfaces to download cleaned and processed datasets. Internally many of these functions call the classes documented below and so optional class specific arguments can also be used.
+    contents:
+      - get_available_datasets
+      - get_national_data
+      - get_regional_data
+      - initialise_dataclass
+      - DataClass
+      - CountryDataClass
+  - title: Dataset Classes
+    desc: Classes that define individual datasets and contain all the methods needed to download, process, and clean them.
+    contents:
+      - has_concept("dataset")
+  - title: Dataset processing
+    desc: Functions used to process data once it has been cleaned into a standardised format. These functions are split into compulsory processing options, which are always used, and optional processing functions which may be added/removed by the user.
+  - subtitle: Compulsory processing
+    contents:
+      - has_concept("compulsory_processing")
+  - subtitle: Optional processing
+    contents:
+      - has_concept("optional_processing")
+  - title: Utilities
+    desc: Utility functions that either help manage data, provide additional information, or convert the data into new formats.
+    contents:
+      - has_concept("utility")
+  - title: Tests
+    desc: Testing functions that check at each step (cleaning, processing, returning) the data structure and types are as expected. Requires `testthat` to be installed.
+    contents:
+      - has_concept("tests")
+  - title: Datasets
+    desc: Package datasets
+    contents:
+      - ends_with("_codes")

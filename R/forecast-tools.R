@@ -8,6 +8,8 @@
 #'
 #' @return An unnested data.frame of posterior estimates and other variables
 #' produced by `forecast()`.
+#'
+#' @concept forecast
 #' @export
 #' @importFrom purrr map
 #' @examples

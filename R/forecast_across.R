@@ -1,12 +1,16 @@
 #' Forecast across multiple dates
 #'
 #' @param forecast_dates A list of dates to forecast at.
+#'
 #' @param ... Additional parameters passed to `forecast()`
+#'
+#' @return A data table each row containing the output from running
+#' `forecast()` on a single forecast date.
+#'
+#' @concept forecast
 #' @inheritParams forecast
 #' @importFrom future.apply future_lapply
 #' @export
-#' @return A data table each row containing the output from running
-#' `forecast()` on a single forecast date
 forecast_across_dates <- function(obs,
                                   forecast_dates = unique(obs[!is.na(seq_available)])$date[-c(1:3)], # nolint
                                   ...) {
@@ -27,13 +31,17 @@ forecast_across_dates <- function(obs,
 #' @param scenarios A dataframe of scenarios as produced by
 #' `define_scenarios()`. If missing uses the default scenarios
 #' from `default_scenarios()`.
-#' @param ... Additional parameters passed to `forecast_across_dates()`
+#'
+#' @param ... Additional parameters passed to `forecast_across_dates()`.
+#'
+#' @return A data table each rows containing the output from running
+#' `forecast()` on a single scenario for a single forecast date.
+#'
+#' @concept forecast
 #' @inheritParams forecast_across_dates
 #' @importFrom purrr map2
 #' @importFrom future.apply future_lapply
 #' @export
-#' @return A data table each rows containing the output from running
-#' `forecast()` on a single scenario for a single forecast date.
 forecast_across_scenarios <- function(obs, scenarios, ...) {
   if (missing(scenarios)) {
     scenarios <- forecast.vocs::define_scenarios()

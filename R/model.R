@@ -1,25 +1,39 @@
 #' Format data for use with stan
+#'
+#'
 #' @param obs A data frame with the following variables:
 #'  date, cases, seq_voc, and seq_total.
+#'
 #' @param horizon Integer forecast horizon. Defaults to 4.
+#'
 #' @param r_init Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growht rate.
+#'
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
+#'
 #' @param variant_relationship Character string, defaulting to "pooled".
 #' Controls the relationship of strains with options being "pooled" (dependence
 #' determined from the data), "scaled" (a fixed scaling between strains), and
 #' "independent" (fully independent strains after initial scaling).
+#'
 #' @param overdispersion Logical, defaults to `TRUE`. Should the observations
 #' used include overdispersion.
+#'
 #' @param likelihood Logical, defaults to `TRUE`. Should the likelihood be
-#' included in the model.extract
+#' included in the model.extract.
+#'
 #' @param output_loglik Logical, defaults to `FALSE`. Should the log
 #' likelihood be output. Disabling this will speed up fitting if evaluating the
 #' model fit is not required.
+#'
 #' @param debug Logical, defaults to `FALSE`. Should within model debug
 #' information be returned.
+#'
+#' @return A list as required by stan.
+#'
+#' @concept model
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_covid19_delta_obs))
@@ -84,8 +98,14 @@ stan_data <- function(obs, horizon = 4,
 }
 
 #' Set up initial conditions for model
-#' @export
+#'
 #' @param data A list of data as produced by `stan_data()`.
+#'
+#' @return A function that when called returns a list of initial conditions
+#' for the package stan models.
+#'
+#' @concept model
+#' @export
 #' @inheritParams load_model
 #' @importFrom purrr map_dbl
 #' @examples
@@ -128,11 +148,18 @@ stan_inits <- function(data, strains = 2) {
 }
 
 #' Load and compile a strain model
+#'
 #' @param strains Integer number of strains. Defaults to 2. Current
 #' maximum is 2.
+#'
 #' @param compile Logical, defaults to `TRUE`. Should the model
 #' be loaded and compiled using `cmdstanr::cmstan_model()`.
+#'
 #' @param ... Additional arguments passed to `cmdstanr::cmstan_model()`.
+#'
+#' @return A `cmdstanr` model.
+#'
+#' @concept model
 #' @export
 #' @examples
 #' \dontrun{
@@ -162,10 +189,18 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 
 #' Fit a brancing process strain model
 #' @param data A list of data as produced by `stan_data()`
+#'
 #' @param model A `cmdstanr` model object as loaded by `load_model()`
+#'
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be returned as a data frame.
+#'
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
+#'
+#' @return A data.frame containing the `cmdstanr` fit, the input data, the
+#' fitting arguements, and optionally summary diagnostics.
+#'
+#' @concept model
 #' @export
 #' @importFrom cmdstanr cmdstan_model
 #' @importFrom posterior rhat
