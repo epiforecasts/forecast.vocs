@@ -3,10 +3,13 @@
 #' as returned by `cmdstanr::summary` with  an additional type variable
 #' which contains the following character string options: "non-VOC",
 #' "VOC", "Combined", "Overall".
+#'
 #' @param data A list of data as returned in the "data" entry of the output
 #' returned by `stan_fit()`.
+#'
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
-#' estimates
+#' estimates.
+#'
 #' @export
 #' @return A dataframe with an additional data column
 link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
@@ -42,10 +45,13 @@ link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
 #' or not.
 #'
 #' @param obs Numeric vector of observed data to link to posterior estimates.
+#'
 #' @param horizon Integer indicating the horizon of unobserved forecasts. If not
 #' specified will be inferred from `obs`.
+#'
 #' @param target_types A character vector of types (as specified in the `type`
-#' variable) to modify
+#' variable) to modify.
+#'
 #' @inheritParams link_dates_with_posterior
 #' @return The input data.frame combined with `obs` and `observed` variables.
 link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
@@ -71,10 +77,14 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
       by = "type"
     ]
   }
+  posterior[type %in% target_types, forecast_start := FALSE]
+  posterior[type %in% target_types & observed == TRUE &
+             shift(observed ==  FALSE, type = "lead"), forecast_start := TRUE]
+
   setcolorder(posterior,
     neworder = intersect(
       colnames(posterior),
-      c("type", "date", "obs", "observed")
+      c("type", "date", "obs", "observed", "forecast_start")
     )
   )
   return(posterior)
@@ -94,6 +104,11 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' to assign to variant of concern specific parameters. Example usage is to
 #' rename parameters to use variant specific terminology.
 #'
+#' @param scale_r Numeric, defaults to 1. Rescale the timespan over which
+#' the growth rate and reproduction number is calculated. An example use case
+#' is rescaling the growth rate from weekly to be scaled by the mean of
+#' the generation time (for COVID-19 for example this would be 5.5 / 7.
+#'
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -107,7 +122,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' summarise_posterior(fit)
 #' }
 summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
-                                voc_label = "VOC") {
+                                voc_label = "VOC", scale_r = 1) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
@@ -194,6 +209,12 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     posterior = rt, horizon = seq_horizon,
     target_types = c("VOC", "non-VOC")
   )
+
+  # rescale growth rate to desired range
+  cols <- c("mean", "median", paste0("q", probs * 100))
+  rt[, (cols) := purrr::map(.SD, ~ . * scale_r),
+       .SDcols = cols, by = "type"]
+
   # copy into growth
   growth <- copy(rt)
 
@@ -241,7 +262,7 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     out,
     c(
       "value_type", "variable", "clean_name", "date", "type",
-      "obs", "observed"
+      "obs", "observed", "forecast_start"
     )
   )
   if (!(voc_label %in% "VOC")) {
@@ -253,18 +274,17 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' Extract forecast dates
 #'
 #' Extract forecast dates based on the availability of both case
-#' and sequence data. Custom forecasts dates can also be defined and the
-#' automated forecasts can be overridden as desired.
+#' and sequence data.
 #'
-#' @param posterior A list of posterior output as produced by
-#'  `summarise_posterior()`.
-#' @param forecast_dates A named vector of dates to use to identify when
-#' output is a forecast vs an estimate. Defaults to empty in which case
-#' forecast dates are inferred from the `posterior` list based on data
-#' availability for cases and sequences. These dates can be overridden
-#'  by supplying a replacement data with a duplicate name (see the examples).
+#' @param posterior A dataframe of posterior output as produced by
+#'  `summarise_posterior()`. For forecast dates to be extracted data with
+#' `value_type == "cases"` must be present.
+#'
 #' @export
-#' @return A named vector of dates.
+#' @return A data.frame containing at least two vectors: Data unavailable
+#' indicating the type of data that is missing, and date giving the date
+#' data was last available for.
+#' @importFrom purrr map_lgl
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)
@@ -273,75 +293,45 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 #' p <- summarise_posterior(fit)
-#' # default
+#'
 #' extract_forecast_dates(p)
-#'
-#' # add a custom date
-#' extract_forecast_dates(p, c("custom" = "2021-08-01"))
-#'
-#' # overwrite a date
-#' extract_forecast_dates(p, c("Cases" = "2021-08-01"))
 #' }
-extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
-  dates <- NULL
-  cases <- posterior[value_type == "cases"]
-  if (!is.null(cases[["observed"]])) {
-    dates <- suppressWarnings(
-      c(
-        cases[
-          observed == TRUE & type %in% c("Combined", "Overall"),
-          .(date = max(date))
-        ]$date[1],
-        cases[
-          observed == TRUE & !(type %in% c("Combined", "Overall")),
-          .(date = max(date))
-        ]$date[1]
-      )
-    )
-    names(dates) <- c("Cases", "Sequences")
-  }
+extract_forecast_dates <- function(posterior) {
+  cases <- posterior[value_type == "cases"][, value_type := NULL]
+  non_list_cols <- names(cases)[
+    purrr::map_lgl(names(cases), ~ !is.list(cases[[.]]))
+  ]
+  cases <- cases[, ..non_list_cols]
 
-  if (!is.null(forecast_dates)) {
-    date_names <- names(forecast_dates)
-    forecast_dates <- as.Date(forecast_dates)
-    names(forecast_dates) <- date_names
-    if (is.null(dates)) {
-      dates <- forecast_dates
-    } else {
-      dates <- c(
-        forecast_dates,
-        dates[setdiff(names(dates), names(forecast_dates))]
-      )
-    }
+  if (nrow(cases) == 0 | is.null(cases$forecast_start)) {
+    message(
+      "Cannot extract forecast dates to plot as case data with a forecast_date variable is not present.") # nolint
+    dates <- data.table(`Data unavailable` = list(), date = list())
+  }else{
+    dates <- cases[forecast_start == TRUE]
+    cols <- c("variable", "clean_name", "obs", "observed", "forecast_start",
+      "exponentiated", "mean", "median", "sd", "mad", "rhat",
+      "ess_bulk", "ess_tail", grep("^q[0-9]", names(dates), value = TRUE)
+    )
+    dates[, (cols) := NULL]
+    dates[, type := fcase(type %in% c("Overall", "Combined"), "Cases",
+                          !type %in% c("Overall", "Combined"), "Sequences")]
+    dates <- unique(dates)
+    setnames(dates, "type", "Data unavailable")
+    setcolorder(dates, "Data unavailable")
   }
   return(dates)
-}
-
-#' Extract forecasts from a posterior data frame by type
-#'
-#' @inheritParams link_dates_with_posterior
-#' @inheritParams extract_forecast
-#' @return A data frame of forecasts from the posterior data frame.
-extract_forecast_by_type <- function(posterior, forecast_dates) {
-  posterior <- rbind(
-    posterior[
-      type %in% c("Overall", "Combined") & date > forecast_dates["Cases"]
-    ],
-    posterior[
-      !(type %in% c("Overall", "Combined")) & date > forecast_dates["Sequences"]
-    ]
-  )
-  return(posterior)
 }
 
 #' Extract forecasts from a summarised posterior
 #'
 #'
-#' @param forecast_dates A named vector of dates to use to identify when
-#' output is a forecast. Must contain a "Cases" date and a "Sequence" date.
-#' Default is to infer these dates from the summarised posterior.
+#' @description Uses the `observed` variable returned by
+#' `summarise_posterior()` to return posterior predictions
+#' for forecast dates only.
 #' @inheritParams extract_forecast_dates
-#' @return A list containing a forecast for each parameter
+#' @return A data.frame of forecasts in the format returned
+#' by `summarise_posterior` but with fitting variables dropped.
 #' @examples
 #' \dontrun{
 #' obs <- latest_obs(germany_covid19_delta_obs)
@@ -351,27 +341,12 @@ extract_forecast_by_type <- function(posterior, forecast_dates) {
 #' p <- summarise_posterior(fit)
 #' extract_forecast(p)
 #' }
-extract_forecast <- function(posterior, forecast_dates = NULL) {
-  if (!is.null(forecast_dates)) {
-    names(forecast_dates) <- match.arg(names(forecast_dates),
-      c("Sequences", "Cases"),
-      several.ok = TRUE
-    )
-    if (length(forecast_dates) != 2) {
-      stop("forecast_dates must contain a date for both cases and sequences")
-    }
-  }
-  forecast_dates <- extract_forecast_dates(
-    posterior,
-    forecast_dates = forecast_dates
-  )
+extract_forecast <- function(posterior) {
 
-  forecast <- extract_forecast_by_type(
-    posterior[!(value_type %in% "model")], forecast_dates
-  )
+  forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
 
   cols <- c(
-    "obs", "observed", "rhat", "ess_bulk", "ess_tail",
+    "obs", "observed", "forecast_date", "rhat", "ess_bulk", "ess_tail",
     "variable", "clean_name", "exponentiated"
   )
   forecast <- suppressWarnings(forecast[, (cols) := NULL])

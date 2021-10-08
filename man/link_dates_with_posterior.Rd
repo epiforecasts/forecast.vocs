@@ -16,7 +16,7 @@ which contains the following character string options: "non-VOC",
 returned by \code{stan_fit()}.}
 
 \item{mod_end}{Integer, defaults to 0. Amount to shift the end date of
-estimates}
+estimates.}
 }
 \value{
 A dataframe with an additional data column

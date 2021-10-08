@@ -10,6 +10,7 @@ forecast_n_strain(
   strains = 2,
   voc_label = "VOC",
   probs = c(0.05, 0.2, 0.8, 0.95),
+  scale_r = 1,
   ...
 )
 }
@@ -30,6 +31,11 @@ quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
 and \code{plot_voc}).}
+
+\item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
+the growth rate and reproduction number is calculated. An example use case
+is rescaling the growth rate from weekly to be scaled by the mean of
+the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
 \item{...}{Additional parameters passed to \code{stan_fit()}.}
 }

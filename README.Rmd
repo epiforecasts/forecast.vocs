@@ -61,7 +61,7 @@ fit <- stan_fit(
   refresh = 0, show_messages = FALSE
 )
 
-posterior <- summarise_posterior(fit, voc_label = "Delta")
+posterior <- summarise_posterior(fit, voc_label = "Delta", scale_r = 5.5 / 7)
 ```
 
 Plot the posterior prediction for cases.
@@ -76,6 +76,12 @@ Plot the posterior prediction for the fraction of cases that have the Delta vari
 plot_voc(posterior, curr_obs, voc_label = "Delta variant")
 ```
 
+Plot the posterior estimate for the growth rate over the mean of the generation time for COVID-19 cases (here assumed to be 5.5 days).
+
+```{r}
+plot_growth(posterior)
+```
+
 Plot the posterior estimate for the effective reproduction number of Delta and non-Delta cases.
 
 ```{r}
@@ -88,17 +94,17 @@ Run a complete forecast for both the one and two strain models using the `foreca
 
 ```{r, message = FALSE}
 forecasts <- forecast(obs,
-  strains = c(1, 2), voc_label = "Delta",
+  strains = c(1, 2), voc_label = "Delta", scale_r = 5.5 / 7,
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE,
 )
+forecasts
 ```
 
 Unnest posterior estimates from each model.
 
 ```{r}
 posteriors <- unnest_posterior(forecasts)
-posteriors
 ```
 
 Generate summary plots for the forecasts:
@@ -116,8 +122,14 @@ Plot the posterior prediction for cases for both models.
 plots$log_cases
 ```
 
-Plot the posterior estimate for the effective reproduction number of
-Delta, non-Delta cases, and overall.
+Plot posterior estimates for the growth rate over the mean of the generation time for COVID-19 cases (here assumed to be 5.5 days).
+
+```{r}
+plots$growth
+```
+
+Plot posterior estimates for the effective reproduction number of
+Delta, non-Delta cases, combined, and overall (i.e without using strain data).
 
 ```{r}
 plots$rt

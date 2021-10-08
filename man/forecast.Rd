@@ -21,6 +21,7 @@ forecast(
   output_loglik = FALSE,
   debug = FALSE,
   keep_fit = TRUE,
+  scale_r = 1,
   probs = c(0.05, 0.2, 0.8, 0.95),
   id = 0,
   ...
@@ -84,6 +85,11 @@ information be returned.}
 \item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
 kept and returned. Dropping this can substantially reduce memory usage in
 situtations where multiple models are being fit.}
+
+\item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
+the growth rate and reproduction number is calculated. An example use case
+is rescaling the growth rate from weekly to be scaled by the mean of
+the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,

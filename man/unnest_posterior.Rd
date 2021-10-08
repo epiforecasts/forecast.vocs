@@ -7,7 +7,7 @@
 unnest_posterior(forecasts, target = "posterior")
 }
 \arguments{
-\item{forecasts}{A data frame of forecasts as produced by \code{forecast()}}
+\item{forecasts}{A data frame of forecasts as produced by \code{forecast()}.}
 
 \item{target}{A character string indicating the list of outpuuts to
 unnest. This can currently be either "posterior", or "forecast".}

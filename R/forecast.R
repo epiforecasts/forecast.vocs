@@ -57,7 +57,7 @@ forecast <- function(obs,
                      voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
-                     debug = FALSE, keep_fit = TRUE,
+                     debug = FALSE, keep_fit = TRUE, scale_r = 1,
                      probs = c(0.05, 0.2, 0.8, 0.95), id = 0, ...) {
   if (!is.null(models)) {
     if (length(models) == 1 & length(strains) == 1) {
@@ -111,6 +111,7 @@ forecast <- function(obs,
           strains = strains[strain],
           data = data,
           probs = probs,
+          scale_r = scale_r,
           ...
         )
       out <- out[, `:=`(results = list(fit$result), error = list(fit$error))]
@@ -136,7 +137,8 @@ forecast <- function(obs,
 #' @inheritParams summarise_posterior
 forecast_n_strain <- function(data, model = NULL, strains = 2,
                               voc_label = "VOC",
-                              probs = c(0.05, 0.2, 0.8, 0.95), ...) {
+                              probs = c(0.05, 0.2, 0.8, 0.95),
+                              scale_r = 1, ...) {
   inits <- stan_inits(data, strains = strains)
 
   if (is.null(model)) {
@@ -149,7 +151,7 @@ forecast_n_strain <- function(data, model = NULL, strains = 2,
   )
   fit$posterior <- list(summarise_posterior(
     fit,
-    probs = probs, voc_label = voc_label
+    probs = probs, voc_label = voc_label, scale_r = scale_r
   ))
   fit$forecast <- list(extract_forecast(fit$posterior[[1]]))
   return(fit)

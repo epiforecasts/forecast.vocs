@@ -7,8 +7,9 @@
 update_voc_label(posterior, label, target_label = "VOC")
 }
 \arguments{
-\item{posterior}{A list of posterior output as produced by
-\code{summarise_posterior()}.}
+\item{posterior}{A dataframe of posterior output as produced by
+\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{value_type == "cases"} must be present.}
 
 \item{label}{Character string  indicating the new label to use for the
 variant of concern.}

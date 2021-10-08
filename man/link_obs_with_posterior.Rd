@@ -18,7 +18,7 @@ which contains the following character string options: "non-VOC",
 specified will be inferred from \code{obs}.}
 
 \item{target_types}{A character vector of types (as specified in the \code{type}
-variable) to modify}
+variable) to modify.}
 }
 \value{
 The input data.frame combined with \code{obs} and \code{observed} variables.
