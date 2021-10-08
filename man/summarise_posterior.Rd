@@ -4,7 +4,12 @@
 \alias{summarise_posterior}
 \title{Summarise the posterior}
 \usage{
-summarise_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), voc_label = "VOC")
+summarise_posterior(
+  fit,
+  probs = c(0.05, 0.2, 0.8, 0.95),
+  voc_label = "VOC",
+  scale_r = 1
+)
 }
 \arguments{
 \item{fit}{List of output as returned by \code{stan_fit()}.}
@@ -18,6 +23,11 @@ and \code{plot_voc}).}
 \item{voc_label}{A character string, default to "VOC". Defines the label
 to assign to variant of concern specific parameters. Example usage is to
 rename parameters to use variant specific terminology.}
+
+\item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
+the growth rate and reproduction number is calculated. An example use case
+is rescaling the growth rate from weekly to be scaled by the mean of
+the generation time (for COVID-19 for example this would be 5.5 / 7.}
 }
 \description{
 Summarise the posterior

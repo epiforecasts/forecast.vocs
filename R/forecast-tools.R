@@ -1,7 +1,8 @@
 #' Unnest posterior estimates from a forecast data.frame
 #'
 #'
-#' @param forecasts A data frame of forecasts as produced by `forecast()`
+#' @param forecasts A data frame of forecasts as produced by `forecast()`.
+#'
 #' @param target A character string indicating the list of outpuuts to
 #' unnest. This can currently be either "posterior", or "forecast".
 #'

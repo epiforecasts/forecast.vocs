@@ -9,6 +9,7 @@ plot_cases(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
+  col = NULL,
   log = TRUE
 )
 }
@@ -26,6 +27,10 @@ add to plots. May contain facetting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
+
+\item{col}{A character string denoting the variable to use to
+stratify the ribbon plot. Defaults to "type" which indicates the
+data stream.}
 
 \item{log}{Logical, defaults to \code{TRUE}. Should cases be plot on
 a log scale?}

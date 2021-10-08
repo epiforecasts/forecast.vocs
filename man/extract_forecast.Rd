@@ -4,22 +4,21 @@
 \alias{extract_forecast}
 \title{Extract forecasts from a summarised posterior}
 \usage{
-extract_forecast(posterior, forecast_dates = NULL)
+extract_forecast(posterior)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
 \code{summarise_posterior()}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
-
-\item{forecast_dates}{A named vector of dates to use to identify when
-output is a forecast. Must contain a "Cases" date and a "Sequence" date.
-Default is to infer these dates from the summarised posterior.}
 }
 \value{
-A list containing a forecast for each parameter
+A data.frame of forecasts in the format returned
+by \code{summarise_posterior} but with fitting variables dropped.
 }
 \description{
-Extract forecasts from a summarised posterior
+Uses the \code{observed} variable returned by
+\code{summarise_posterior()} to return posterior predictions
+for forecast dates only.
 }
 \examples{
 \dontrun{

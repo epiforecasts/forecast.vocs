@@ -1,6 +1,10 @@
-# forecast.vocs 0.0.3
+# forecast.vocs 0.0.4
 
-## Functionality
+* Improve the robustness of plotting observations and forecast dates so that they can be facetted using the same variables as used for plotting estimates/forecasts.
+* Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.
+* Surfaced more options when plotting to allow for increased generalisability.
+
+# forecast.vocs 0.0.3
 
 * `summarise_posterior` now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma
 * `forecast` has been updated to use the framework from `forecast_dt` and `forecast_dt` has been removed.

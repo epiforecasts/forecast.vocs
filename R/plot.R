@@ -52,6 +52,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #'
 #' @inheritParams add_forecast_dates
 #' @inheritParams extract_forecast_dates
+#' @importFrom purrr map_lgl
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
                          all_obs = FALSE, ...) {
@@ -81,7 +82,8 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
     }
     obs <- data[, value := obs]
   }
-  obs <- unique(obs)
+  non_list_cols <- names(obs)[purrr::map_lgl(names(obs), ~ !is.list(obs[[.]]))]
+  obs <- unique(obs[, ..non_list_cols])
   obs <- obs[!is.na(value)]
 
   if (nrow(obs) > 0) {
@@ -100,16 +102,23 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @param log Logical, defaults to `TRUE`. Should cases be plot on
 #' a log scale?
 #'
+#' @param col A character string denoting the variable to use to
+#' stratify the ribbon plot. Defaults to "type" which indicates the
+#' data stream.
+#'
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       all_obs = FALSE, log = TRUE) {
+                       all_obs = FALSE, col = NULL, log = TRUE) {
   if (!is.null(obs)) {
-    obs <- copy(obs)[, .(date, value = cases)]
+    obs <- copy(obs)[, value := cases]
+  }
+  if (is.null(col)) {
+    col <- "Type"
   }
   plot <- plot_default(posterior, "cases", obs, forecast_dates,
-    all_obs = all_obs, x = date, col = Type, fill = Type
+    all_obs = all_obs, x = date, col = .data[[col]], fill = .data[[col]]
   )
 
   if (log) {
@@ -136,16 +145,18 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
 #'
+#' @param ... Additional parameters passed to `plot_default()`.
+#'
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
-                     all_obs = FALSE, voc_label = "variant of concern") {
+                     all_obs = FALSE, voc_label = "variant of concern", ...) {
   if (!is.null(obs)) {
-    obs <- copy(obs)[, .(date, value = share_voc)]
+    obs <- copy(obs)[, value := share_voc]
   }
   plot <- plot_default(posterior, "voc", obs, forecast_dates,
-    all_obs = all_obs, x = date
+    all_obs = all_obs, x = date, ...
   )
 
   plot <- plot +
@@ -161,12 +172,16 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 
 #' Plot the posterior prediction for the reproduction number
 #' @inheritParams plot_default
+#' @inheritParams plot_cases
 #' @export
-plot_rt <- function(posterior, forecast_dates = NULL) {
-  plot <- plot_default(posterior, "rt",
+plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
+  if (is.null(col)) {
+    col <- "Type"
+  }
+  plot <- plot_default(
+    posterior, "rt",
     obs = NULL,
-    forecast_dates, x = date, col = Type,
-    fill = Type
+    forecast_dates, x = date, col = .data[[col]], fill = .data[[col]]
   )
   plot <- plot +
     geom_hline(yintercept = 1, linetype = 3, col = "black")
@@ -180,6 +195,33 @@ plot_rt <- function(posterior, forecast_dates = NULL) {
   plot <- plot_theme(plot)
   return(plot)
 }
+
+#' Plot the posterior prediction for the growth rate
+#' @inheritParams plot_default
+#' @export
+plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
+  if (is.null(col)) {
+    col <- "Type"
+  }
+  plot <- plot_default(
+    posterior, "growth",
+    obs = NULL,
+    forecast_dates, x = date, col = .data[[col]],
+    fill = .data[[col]]
+  )
+  plot <- plot +
+    geom_hline(yintercept = 0, linetype = 3, col = "black")
+
+  plot <- plot +
+    scale_y_continuous() +
+    labs(
+      y = "Growth rate of observed cases",
+      x = "Date"
+    )
+  plot <- plot_theme(plot)
+  return(plot)
+}
+
 
 #' Plot posterior predictions
 #'
@@ -219,6 +261,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
       voc_label = voc_label, all_obs = all_obs
     )
   }
+  plots$growth <- plot_growth(posterior, forecast_dates)
   plots$rt <- plot_rt(posterior, forecast_dates)
 
   if (!is.null(save_path)) {

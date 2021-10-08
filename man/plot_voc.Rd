@@ -10,7 +10,8 @@ plot_voc(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
-  voc_label = "variant of concern"
+  voc_label = "variant of concern",
+  ...
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ or just those in the date range of the estimates being plot.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}
+
+\item{...}{Additional parameters passed to \code{plot_default()}.}
 }
 \description{
 Plot the posterior prediction for the fraction of samples with the variant
