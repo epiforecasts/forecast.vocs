@@ -49,9 +49,6 @@
     <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast_by_type.html</loc>
-  </url>
-  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast_dates.html</loc>
   </url>
   <url>
@@ -101,6 +98,9 @@
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/plot_default.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/plot_growth.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/plot_pairs.html</loc>
