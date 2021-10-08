@@ -24,7 +24,9 @@ transformed data {
   // initialise cases using observed data
   vector[2] mean_init_cases;
   vector[2] sd_init_cases;
-  mean_init_cases = {X[1], max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})};
+  mean_init_cases = to_vector(
+    {X[1], max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})}
+  );
   mean_init_cases = log(mean_init_cases);
   sd_init_cases = rep_vector(0.1, 2);
 }
