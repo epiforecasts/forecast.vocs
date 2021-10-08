@@ -4,25 +4,21 @@
 \alias{extract_forecast_dates}
 \title{Extract forecast dates}
 \usage{
-extract_forecast_dates(posterior, forecast_dates = NULL)
+extract_forecast_dates(posterior)
 }
 \arguments{
-\item{posterior}{A list of posterior output as produced by
-\code{summarise_posterior()}.}
-
-\item{forecast_dates}{A named vector of dates to use to identify when
-output is a forecast vs an estimate. Defaults to empty in which case
-forecast dates are inferred from the \code{posterior} list based on data
-availability for cases and sequences. These dates can be overridden
-by supplying a replacement data with a duplicate name (see the examples).}
+\item{posterior}{A dataframe of posterior output as produced by
+\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{value_type == "cases"} must be present.}
 }
 \value{
-A named vector of dates.
+A data.frame containing at least two vectors: Data unavailable
+indicating the type of data that is missing, and date giving the date
+data was last available for.
 }
 \description{
 Extract forecast dates based on the availability of both case
-and sequence data. Custom forecasts dates can also be defined and the
-automated forecasts can be overridden as desired.
+and sequence data.
 }
 \examples{
 \dontrun{
@@ -32,13 +28,7 @@ dt <- stan_data(obs, overdispersion = FALSE)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 p <- summarise_posterior(fit)
-# default
+
 extract_forecast_dates(p)
-
-# add a custom date
-extract_forecast_dates(p, c("custom" = "2021-08-01"))
-
-# overwrite a date
-extract_forecast_dates(p, c("Cases" = "2021-08-01"))
 }
 }

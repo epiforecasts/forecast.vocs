@@ -71,10 +71,14 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
       by = "type"
     ]
   }
+  posterior[type %in% target_types, forecast_date := FALSE]
+  posterior[type %in% target_types & observed == TRUE &
+             shift(observed ==  FALSE, type = "lead"), forecast_date := TRUE]
+
   setcolorder(posterior,
     neworder = intersect(
       colnames(posterior),
-      c("type", "date", "obs", "observed")
+      c("type", "date", "obs", "observed", "forecast_start")
     )
   )
   return(posterior)
@@ -241,7 +245,7 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     out,
     c(
       "value_type", "variable", "clean_name", "date", "type",
-      "obs", "observed"
+      "obs", "observed", "forecast_date"
     )
   )
   if (!(voc_label %in% "VOC")) {
@@ -253,18 +257,16 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' Extract forecast dates
 #'
 #' Extract forecast dates based on the availability of both case
-#' and sequence data. Custom forecasts dates can also be defined and the
-#' automated forecasts can be overridden as desired.
+#' and sequence data.
 #'
-#' @param posterior A list of posterior output as produced by
-#'  `summarise_posterior()`.
-#' @param forecast_dates A named vector of dates to use to identify when
-#' output is a forecast vs an estimate. Defaults to empty in which case
-#' forecast dates are inferred from the `posterior` list based on data
-#' availability for cases and sequences. These dates can be overridden
-#'  by supplying a replacement data with a duplicate name (see the examples).
+#' @param posterior A dataframe of posterior output as produced by
+#'  `summarise_posterior()`. For forecast dates to be extracted data with
+#' `value_type == "cases"` must be present.
+#'
 #' @export
-#' @return A named vector of dates.
+#' @return A data.frame containing at least two vectors: Data unavailable
+#' indicating the type of data that is missing, and date giving the date
+#' data was last available for.
 #' @examples
 #' \dontrun{
 #' options(mc.cores = 4)
@@ -273,46 +275,26 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 #' p <- summarise_posterior(fit)
-#' # default
+#'
 #' extract_forecast_dates(p)
-#'
-#' # add a custom date
-#' extract_forecast_dates(p, c("custom" = "2021-08-01"))
-#'
-#' # overwrite a date
-#' extract_forecast_dates(p, c("Cases" = "2021-08-01"))
 #' }
-extract_forecast_dates <- function(posterior, forecast_dates = NULL) {
-  dates <- NULL
-  cases <- posterior[value_type == "cases"]
-  if (!is.null(cases[["observed"]])) {
-    dates <- suppressWarnings(
-      c(
-        cases[
-          observed == TRUE & type %in% c("Combined", "Overall"),
-          .(date = max(date))
-        ]$date[1],
-        cases[
-          observed == TRUE & !(type %in% c("Combined", "Overall")),
-          .(date = max(date))
-        ]$date[1]
-      )
+extract_forecast_dates <- function(posterior) {
+  cases <- posterior[value_type == "cases"][, value_type := NULL]
+  if (nrow(cases) == 0) {
+    message("Cannot extract forecast dates to plot as case data is not available.") # nolint
+    dates <- data.table(`Data unavailable` = list(), date = list())
+  }else{
+    dates <- cases[forecast_date == TRUE]
+    cols <- c("variable", "clean_name", "obs", "observed", "forecast_date",
+      "exponentiated", "mean", "median", "sd", "mad", "rhat",
+      "ess_bulk", "ess_tail", grep("^q[0-9]", names(dates), value = TRUE)
     )
-    names(dates) <- c("Cases", "Sequences")
-  }
-
-  if (!is.null(forecast_dates)) {
-    date_names <- names(forecast_dates)
-    forecast_dates <- as.Date(forecast_dates)
-    names(forecast_dates) <- date_names
-    if (is.null(dates)) {
-      dates <- forecast_dates
-    } else {
-      dates <- c(
-        forecast_dates,
-        dates[setdiff(names(dates), names(forecast_dates))]
-      )
-    }
+    dates[, (cols) := NULL]
+    dates[, type := fcase(type %in% c("Overall", "Combined"), "Cases",
+                          !type %in% c("Overall", "Combined"), "Sequences")]
+    dates <- unique(dates)
+    setnames(dates, "type", "Data unavailable")
+    setcolorder(dates, "Data unavailable")
   }
   return(dates)
 }

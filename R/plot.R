@@ -13,25 +13,27 @@ plot_theme <- function(plot) {
 }
 
 #' Add the forecast dates to a plot
+#'
+#' @param forecast_dates A data.frame in the format produced by
+#' `extract_forecast_dates()` (with at least a date variable and a
+#' Data unavailable variable)). Specifies when date availability should be
+#' add to plots. May contain facetting variables.
 #' @inheritParams plot_theme
-#' @inheritParams plot_default
 #' @export
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
   if (!is.null(forecast_dates)) {
-    forecast_dates <- data.table(
-      "Date unavailable" = names(forecast_dates),
-      dates = as.Date(forecast_dates)
-    )
-    plot <- plot +
-      geom_vline(
-        data = forecast_dates,
-        aes(
-          xintercept = dates,
-          linetype = .data[["Date unavailable"]]
-        ),
-        size = 1.1, alpha = 0.9
-      ) +
-      scale_linetype_manual(values = 2:6)
+    if (!nrow(forecast_dates) == 0) {
+      plot <- plot +
+        geom_vline(
+          data = forecast_dates,
+          aes(
+            xintercept = date,
+            linetype = .data[["Data unavailable"]]
+          ),
+          size = 1.1, alpha = 0.9
+        ) +
+        scale_linetype_manual(values = 2:6)
+    }
   }
   return(plot)
 }
@@ -48,6 +50,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #'
 #' @param ... Additional arguments passed to `ggplot2::aes()`
 #'
+#' @inheritParams add_forecast_dates
 #' @inheritParams extract_forecast_dates
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
@@ -55,11 +58,14 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
   data <- posterior[value_type %in% target]
   setnames(data, "type", "Type", skip_absent = TRUE)
 
-  forecast_dates <- extract_forecast_dates(posterior, forecast_dates)
-
   check_quantiles(data, req_probs = c(0.05, 0.2, 0.8, 0.95))
+
   plot <- ggplot(data) +
     aes(...)
+
+  if (is.null(forecast_dates)) {
+    forecast_dates <- extract_forecast_dates(posterior)
+  }
 
   plot <- add_forecast_dates(plot, forecast_dates)
 

@@ -13,16 +13,16 @@ plot_cases(
 )
 }
 \arguments{
-\item{posterior}{A list of posterior output as produced by
-\code{summarise_posterior()}.}
+\item{posterior}{A dataframe of posterior output as produced by
+\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{value_type == "cases"} must be present.}
 
 \item{obs}{A data frame of observed data as produced by \code{latest_obs()}.}
 
-\item{forecast_dates}{A named vector of dates to use to identify when
-output is a forecast vs an estimate. Defaults to empty in which case
-forecast dates are inferred from the \code{posterior} list based on data
-availability for cases and sequences. These dates can be overridden
-by supplying a replacement data with a duplicate name (see the examples).}
+\item{forecast_dates}{A data.frame in the format produced by
+\code{extract_forecast_dates()} (with at least a date variable and a
+Data unavailable variable)). Specifies when date availability should be
+add to plots. May contain facetting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}

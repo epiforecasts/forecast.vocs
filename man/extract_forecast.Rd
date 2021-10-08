@@ -7,8 +7,9 @@
 extract_forecast(posterior, forecast_dates = NULL)
 }
 \arguments{
-\item{posterior}{A list of posterior output as produced by
-\code{summarise_posterior()}.}
+\item{posterior}{A dataframe of posterior output as produced by
+\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{value_type == "cases"} must be present.}
 
 \item{forecast_dates}{A named vector of dates to use to identify when
 output is a forecast. Must contain a "Cases" date and a "Sequence" date.
