@@ -13,6 +13,8 @@ license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/
 [![GitHub
 contributors](https://img.shields.io/github/contributors/epiforecasts/forecast.vocs)](https://github.com/epiforecasts/forecast.vocs/graphs/contributors)
 
+[![DOI](https://zenodo.org/badge/383161374.svg)](https://zenodo.org/badge/latestdoi/383161374)
+
 Contains models and tools to produce short-term forecasts for both case
 and sequence notifications assuming circulation of either one or two
 variants. Tools are also provided to allow the evaluation of the use of
@@ -79,37 +81,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 10.0 seconds.
-#> Chain 4 finished in 11.4 seconds.
-#> Chain 1 finished in 11.5 seconds.
-#> Chain 3 finished in 11.6 seconds.
+#> Chain 3 finished in 11.5 seconds.
+#> Chain 2 finished in 13.6 seconds.
+#> Chain 4 finished in 15.6 seconds.
+#> Chain 1 finished in 17.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 11.1 seconds.
-#> Total execution time: 11.7 seconds.
+#> Mean chain execution time: 14.6 seconds.
+#> Total execution time: 18.0 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 24.7 seconds.
-#> Chain 3 finished in 25.0 seconds.
-#> Chain 4 finished in 31.9 seconds.
-#> Chain 2 finished in 35.6 seconds.
+#> Chain 1 finished in 26.2 seconds.
+#> Chain 4 finished in 26.9 seconds.
+#> Chain 2 finished in 30.9 seconds.
+#> Chain 3 finished in 31.1 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 29.3 seconds.
-#> Total execution time: 35.7 seconds.
+#> Mean chain execution time: 28.8 seconds.
+#> Total execution time: 31.2 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.003604
-#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004246
+#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004224
+#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004265
 #>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                     6                   0.0015            10
-#> 2:                    16                   0.0040            11
+#> 1:                     1                  0.00025            11
+#> 2:                     8                  0.00200            10
 #>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                2296              0.57400 <data.table[148x20]>
-#> 2:                   1              0.00025 <data.table[400x20]>
+#> 1:                 876                0.219 <data.table[148x20]>
+#> 2:                2608                0.652 <data.table[400x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>
@@ -202,6 +204,7 @@ the following,
     #> 
     #>   Sam Abbott (2021). forecast.vocs: Forecast case and sequence
     #>   notifications using variant of concern strain dynamics, DOI:
+    #>   10.5281/zenodo.5559016
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
@@ -210,6 +213,7 @@ the following,
     #>     author = {Sam Abbott},
     #>     journal = {Zenodo},
     #>     year = {2021},
+    #>     doi = {10.5281/zenodo.5559016},
     #>   }
 
 ## How to make a bug report or feature request

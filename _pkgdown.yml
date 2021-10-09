@@ -17,36 +17,36 @@ reference:
   - title: Forecast
     desc: Functions for forecasting across models, dates, and scenarios.
     contents:
-      - has_context("forecast")
+      - has_concept("forecast")
   - title: Model
     desc: Functions for fitting the forecasting models.
     contents:
-      - has_context("model")
+      - has_concept("model")
   - title: Preprocess
     desc: Functions for preprocessing observations.
     contents:
-      - has_context("preprocess")
+      - has_concept("preprocess")
   - title: Postprocess
     desc: Functions for postprocessing model output.
     contents:
-      - has_context("postprocess")
+      - has_concept("postprocess")
   - title: Plot
     desc: 
     contents: Functions for plotting postprocessed forecast model output.
-      - has_context("plot")
+      - has_concept("plot")
   - title: Model validation
     desc: Functions for validating model fits.
     contents:
-      - has_context("modelvalidation")
+      - has_concept("modelvalidation")
   - title: Generate data
     desc: Functions for generating simulated data.
     contents:
-      - has_context("generatedata")
+      - has_concept("generatedata")
   - title: Define and generate scenarios
     desc: Functions for defining and generating data scenarios.
     contents:
-      - has_context("scenarios")
+      - has_concept("scenarios")
   - title: Datasets
     desc: Package datasets used in examples and by users to explore the package functionality.
     contents:
-      - has_context("data")
+      - has_concept("data")

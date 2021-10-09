@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 
 ![Universe](https://epiforecasts.r-universe.dev/badges/forecast.vocs) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/epiforecasts/forecast.vocs/blob/master/LICENSE.md/) [![GitHub contributors](https://img.shields.io/github/contributors/epiforecasts/forecast.vocs)](https://github.com/epiforecasts/forecast.vocs/graphs/contributors) 
 
+[![DOI](https://zenodo.org/badge/383161374.svg)](https://zenodo.org/badge/latestdoi/383161374)
 
 Contains models and tools to produce short-term forecasts for both case and sequence notifications assuming circulation of either one or two variants. Tools are also provided to allow the evaluation of the use of sequence data for short-term forecasts in both real-world settings and in user generated scenarios.
 
