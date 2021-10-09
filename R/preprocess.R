@@ -17,10 +17,14 @@
 #' @inheritParams update_obs_availability
 #' @importFrom purrr map
 #' @examples
-#' latest_dt <- latest_obs(germany_covid19_delta_obs)
+#' options(mc.cores = 4)
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- rbind(
-#'   update_obs_availability(latest_dt, seq_lag = 3),
-#'   update_obs_availability(latest_dt, seq_lag = 1)
+#'   update_obs_availability(obs, seq_lag = 3),
+#'   update_obs_availability(obs, seq_lag = 1)
 #' )
 #' # filter out duplicates and up to the present date
 #' filter_by_availability(dt)
@@ -78,7 +82,7 @@ filter_by_availability <- function(obs, date = max(obs$date),
   )
   # make sure the data is in the correct order
   setorderv(obs, cols = c("date"))
-  return(obs)
+  return(obs[])
 }
 
 #' Filter for latest observations of all types
@@ -101,5 +105,5 @@ latest_obs <- function(obs) {
     max(obs$seq_available, na.rm = TRUE)
   )
   obs <- filter_by_availability(obs, date = date)
-  return(obs)
+  return(obs[])
 }

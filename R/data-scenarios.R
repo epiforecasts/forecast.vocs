@@ -35,7 +35,7 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
       obs[!is.na(seq_available), seq_available := date + seq_lag * 7]
     }
   }
-  return(obs)
+  return(obs[])
 }
 
 #' Define data availability scenarios
@@ -63,7 +63,7 @@ define_scenarios <- function(seq_lag = 0:3,
   scenarios <- CJ(seq_lag, seq_samples, voc_scale, sorted = FALSE)
   scenarios[, id := 1:.N]
   setcolorder(scenarios, neworder = "id")
-  return(scenarios)
+  return(scenarios[])
 }
 
 #' Define observed data for a scenario
@@ -91,5 +91,5 @@ generate_obs_scenario <- function(obs, seq_lag, seq_samples) {
   ]
   # apply sequence availability based on date
   scenario_obs <- update_obs_availability(scenario_obs, seq_lag = seq_lag)
-  return(scenario_obs)
+  return(scenario_obsp[])
 }

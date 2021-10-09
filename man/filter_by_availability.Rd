@@ -35,10 +35,14 @@ data for the specified dates of interest.
 Filter data based on availability and forecast date
 }
 \examples{
-latest_dt <- latest_obs(germany_covid19_delta_obs)
+options(mc.cores = 4)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- rbind(
-  update_obs_availability(latest_dt, seq_lag = 3),
-  update_obs_availability(latest_dt, seq_lag = 1)
+  update_obs_availability(obs, seq_lag = 3),
+  update_obs_availability(obs, seq_lag = 1)
 )
 # filter out duplicates and up to the present date
 filter_by_availability(dt)

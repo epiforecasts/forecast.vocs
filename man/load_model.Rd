@@ -22,13 +22,13 @@ A \code{cmdstanr} model.
 Load and compile a strain model
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # one strain model
 mod <- load_model(strains = 1)
 
 # two strain model
 two_strain_mod <- load_model(strains = 2)
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for modelling

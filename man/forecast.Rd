@@ -110,25 +110,30 @@ parameters specified.
 Forecast using branching processes at a target date
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
-results <- forecast(
-  latest_obs(germany_covid19_delta_obs),
+
+forecasts <- forecast(
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
   horizon = 4,
   strains = c(1, 2),
   adapt_delta = 0.99,
   max_treedepth = 15,
   variant_relationship = "scaled"
 )
-# inspect results
-results
+# inspect forecasts
+forecasts
 
 # unnest posteriors
-results <- unnest_posterior(results)
+forecasts <- unnest_posterior(forecasts)
 
 # plot case posterior predictions
-plot_cases(results, log = TRUE)
-}
+plot_cases(forecasts, log = TRUE)
+
+# plot voc posterior predictions
+plot_voc(forecasts)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for forecastin across models, dates, and scenarios

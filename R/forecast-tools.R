@@ -11,6 +11,29 @@
 #' @inheritParams forecast
 #' @importFrom future.apply future_lapply
 #' @export
+#' @examplesIf interactive()
+#' library(ggplot2)
+#' options(mc.cores = 4)
+#'
+#' forecasts <- forecast_across_dates(
+#'   germany_covid19_delta_obs,
+#'   forecast_dates = c(as.Date("2021-05-01"), as.Date("2021-06-12")),
+#'   horizon = 4,
+#'   strains = 2,
+#'   adapt_delta = 0.99,
+#'   max_treedepth = 15,
+#'   variant_relationship = "scaled"
+#' )
+#'
+#' # inspect forecasts
+#' forecasts
+#'
+#' # unnest posteriors
+#' posteriors <- unnest_posterior(forecasts)
+#'
+#' # plot case posterior predictions
+#' plot_cases(posteriors, log = TRUE) +
+#'   facet_grid(vars(forecast_date), vars(voc_scale))
 forecast_across_dates <- function(obs,
                                   forecast_dates = unique(obs[!is.na(seq_available)])$date[-c(1:3)], # nolint
                                   ...) {
@@ -23,14 +46,15 @@ forecast_across_dates <- function(obs,
     future.seed = TRUE
   )
   fits <- rbindlist(fits, fill = TRUE)
-  return(fits)
+  return(fits[])
 }
 
 #' Forecast across multiple scenarios and dates
 #'
 #' @param scenarios A dataframe of scenarios as produced by
-#' `define_scenarios()`. If missing uses the default scenarios
-#' from `default_scenarios()`.
+#' `define_scenarios()`. If an `obs` variable is present this is
+#' used as the scenario data but otherwise `generate_obs_scenario()`
+#' is used to generate this data from the other variables in `scenarios`.
 #'
 #' @param ... Additional parameters passed to `forecast_across_dates()`.
 #'
@@ -42,14 +66,44 @@ forecast_across_dates <- function(obs,
 #' @importFrom purrr map2
 #' @importFrom future.apply future_lapply
 #' @export
+#' @examplesIf interactive()
+#' library(ggplot2)
+#' options(mc.cores = 4)
+#'
+#' scenarios <- define_scenarios(
+#'   voc_scale = list(c(0, 0.5), c(0.5, 0.25)),
+#'   seq_lag = 1,
+#'   seq_samples = 1
+#' )
+#' scenarios
+#'
+#' forecasts <- forecast_across_scenarios(
+#'   germany_covid19_delta_obs,
+#'   scenarios,
+#'   forecast_dates = c(as.Date("2021-05-01"), as.Date("2021-06-12")),
+#'   horizon = 4,
+#'   strains = 2,
+#'   adapt_delta = 0.99,
+#'   max_treedepth = 15,
+#'   variant_relationship = "scaled"
+#' )
+#'
+#' # inspect forecasts
+#' forecasts
+#'
+#' # unnest posteriors
+#' posteriors <- unnest_posterior(forecasts)
+#'
+#' # plot case posterior predictions
+#' plot_cases(posteriors, log = TRUE) +
+#'   facet_grid(vars(forecast_date))
 forecast_across_scenarios <- function(obs, scenarios, ...) {
-  if (missing(scenarios)) {
-    scenarios <- forecast.vocs::define_scenarios()
+  if (is.null(scenarios[["obs"]])) {
+    scenarios$obs <- purrr::map2(
+      scenarios$seq_lag, scenarios$seq_samples,
+      ~ generate_obs_scenario(obs, seq_lag = .x, seq_samples = .y)
+    )
   }
-  scenarios$obs <- purrr::map2(
-    scenarios$seq_lag, scenarios$seq_samples,
-    ~ generate_obs_scenario(obs, seq_lag = .x, seq_samples = .y)
-  )
   scenarios <- split(scenarios, by = "id")
 
   forecast_scenario <- function(scenario, ...) {
@@ -67,7 +121,7 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
     future.seed = TRUE
   )
   fits <- rbindlist(fits, fill = TRUE)
-  return(fits)
+  return(fits[])
 }
 
 #' Unnest posterior estimates from a forecast data.frame
@@ -84,20 +138,22 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
 #' @family forecast
 #' @export
 #' @importFrom purrr map
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' library(data.table)
 #' options(mc.cores = 4)
-#' dt <- forecast(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
+#' dt <- forecast(
+#'   germany_covid19_delta_obs,
+#'   forecast_date = as.Date("2021-06-12"),
+#'   max_treedepth = 15, adapt_delta = 0.99
+#' )
 #'
 #' # unnest posterior predictions
-#' posterior <- unnest_posterior(dt, target = "posterior")
+#' posterior <- unnest_posterior(dt)
 #' posterior
 #'
 #' # unnest forecasts
 #' forecasts <- unnest_posterior(dt, target = "forecast")
 #' forecasts
-#' }
 unnest_posterior <- function(forecasts, target = "posterior") {
   target <- match.arg(target, choices = c("posterior", "forecast"))
   forecasts <- copy(forecasts)[, row_id := 1:.N]

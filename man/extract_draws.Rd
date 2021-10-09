@@ -18,13 +18,16 @@ A \code{draws} object from the \code{posterior} package.
 Extract posterior draws
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 extract_draws(fit)
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for postprocessing of model fits

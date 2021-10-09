@@ -121,6 +121,21 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#'
+#' # default with log transform
+#' plot_cases(posterior)
+#'
+#' # without log transform
+#' plot_cases(posterior)
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
                        all_obs = FALSE, col = NULL, log = TRUE) {
   if (!is.null(obs)) {
@@ -165,6 +180,16 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_voc(posterior)
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
   if (!is.null(obs)) {
@@ -193,6 +218,16 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_rt(posterior)
 plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
     col <- "Type"
@@ -222,7 +257,16 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @family plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
-#' @export
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_growth(posterior)
 plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
     col <- "Type"
@@ -261,15 +305,16 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc
 #' @importFrom purrr walk2
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior)
-#' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path = NULL, type = "png",
                            all_obs = FALSE, voc_label = "variant of concern") {
@@ -316,14 +361,15 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_voc_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' plot_pairs(fit)
-#' }
 plot_pairs <- function(fit,
                        pars = c(
                          "r_init", "r_noise", "beta", "voc_noise[1]",

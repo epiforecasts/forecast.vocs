@@ -26,15 +26,18 @@ Assign a custom label to the variant of concern in the
 output from \code{summarise_posterior()}.
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 p <- summarise_posterior(fit)
 p <- update_voc_label(p, "Delta")
-p[value_type == "model"][]
-}
+p[value_type == "model"]
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for postprocessing of model fits

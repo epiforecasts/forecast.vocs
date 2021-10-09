@@ -1,6 +1,5 @@
 #' Format data for use with stan
 #'
-#'
 #' @param obs A data frame with the following variables:
 #'  date, cases, seq_voc, and seq_total.
 #'
@@ -161,14 +160,12 @@ stan_inits <- function(data, strains = 2) {
 #'
 #' @family model
 #' @export
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' # one strain model
 #' mod <- load_model(strains = 1)
 #'
 #' # two strain model
 #' two_strain_mod <- load_model(strains = 2)
-#' }
 load_model <- function(strains = 2, compile = TRUE, ...) {
   check_param(strains, "strains", "numeric")
   check_param(compile, "compile", "logical")
@@ -204,32 +201,36 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' @export
 #' @importFrom cmdstanr cmdstan_model
 #' @importFrom posterior rhat
-#' @examples
-#' \dontrun{
-#' # parallisation
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
+#'
 #' # format example data
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #'
 #' # single strain model
 #' inits <- stan_inits(dt, strains = 1)
 #' mod <- load_model(strains = 1)
-#' fit <- stan_fit(dt,
-#'   model = mod, init = inits, adapt_delta = 0.99,
-#'   max_treedepth = 15
+#' fit <- stan_fit(
+#'   dt,
+#'   model = mod, init = inits,
+#'   adapt_delta = 0.99, max_treedepth = 15
 #' )
 #' fit
 #'
 #' # two strain model
 #' inits <- stan_inits(dt, strains = 2)
+#'
 #' mod <- load_model(strains = 2)
+#'
 #' two_strain_fit <- stan_fit(dt,
 #'   model = mod, init = inits,
 #'   adapt_delta = 0.99, max_treedepth = 15
 #' )
 #' two_strain_fit
-#' }
 stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
                      diagnostics = TRUE, ...) {
   check_param(data, "data", "list")

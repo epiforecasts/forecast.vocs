@@ -17,13 +17,17 @@ A data frame of quantiles in long format.
 Convert summarised quantiles from wide to long format
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
-dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
-dt <- combine_posteriors_dt(dt, target = "forecast")
-long <- quantiles_to_long(dt)
-print(long)
-}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
+dt <- forecast(obs, max_treedepth = 15, adapt_delta = 0.99)
+posterior <- unnest_posterior(dt)
+long_posterior <- quantiles_to_long(posterior)
+long_posterior
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for postprocessing of model fits

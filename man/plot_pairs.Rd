@@ -31,13 +31,16 @@ A \code{ggplot2} based pairs plot of parameters of interest
 Pairs plot of parameters of interest and fitting diagnostics
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_voc_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 plot_pairs(fit)
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Plotting functionts

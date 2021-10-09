@@ -20,19 +20,23 @@ produced by \code{forecast()}.
 Unnest posterior estimates from a forecast data.frame
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(data.table)
 options(mc.cores = 4)
-dt <- forecast(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
+dt <- forecast(
+ germany_covid19_delta_obs,
+ forecast_date = as.Date("2021-06-12"),
+ max_treedepth = 15, adapt_delta = 0.99
+)
 
 # unnest posterior predictions
-posterior <- unnest_posterior(dt, target = "posterior")
+posterior <- unnest_posterior(dt)
 posterior
 
 # unnest forecasts
 forecasts <- unnest_posterior(dt, target = "forecast")
 forecasts
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for forecastin across models, dates, and scenarios

@@ -29,31 +29,37 @@ fitting arguements, and optionally summary diagnostics.
 Fit a brancing process strain model
 }
 \examples{
-\dontrun{
-# parallisation
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
+
 # format example data
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 
 # single strain model
 inits <- stan_inits(dt, strains = 1)
 mod <- load_model(strains = 1)
-fit <- stan_fit(dt,
-  model = mod, init = inits, adapt_delta = 0.99,
-  max_treedepth = 15
+fit <- stan_fit(
+  dt,
+  model = mod, init = inits,
+  adapt_delta = 0.99, max_treedepth = 15
 )
 fit
 
 # two strain model
 inits <- stan_inits(dt, strains = 2)
+
 mod <- load_model(strains = 2)
+
 two_strain_fit <- stan_fit(dt,
   model = mod, init = inits,
   adapt_delta = 0.99, max_treedepth = 15
 )
 two_strain_fit
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions used for modelling

@@ -72,8 +72,7 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' @export
 #' @importFrom posterior as_draws_df
 #' @importFrom purrr map
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
 #' obs <- latest_obs(germany_covid19_delta_obs)
 #'
@@ -92,7 +91,6 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' plot_voc(posterior)
 #'
 #' plot_rt(posterior)
-#' }
 generate_obs <- function(obs, strains = 2,
                          model = forecast.vocs::load_model(strains = strains),
                          type = "prior", datasets = 10, ...) {

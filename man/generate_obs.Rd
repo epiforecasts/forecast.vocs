@@ -42,7 +42,7 @@ Generate simulated observations from the prior or posterior
 distributions of a \code{forecast.vocs} model.
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
 obs <- latest_obs(germany_covid19_delta_obs)
 
@@ -61,7 +61,7 @@ plot_cases(posterior, log = TRUE)
 plot_voc(posterior)
 
 plot_rt(posterior)
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Functions to generate simulated data.

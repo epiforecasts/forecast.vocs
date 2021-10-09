@@ -28,6 +28,32 @@ A data table each row containing the output from running
 \description{
 Forecast across multiple dates
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(ggplot2)
+options(mc.cores = 4)
+
+forecasts <- forecast_across_dates(
+  germany_covid19_delta_obs,
+  forecast_dates = c(as.Date("2021-05-01"), as.Date("2021-06-12")),
+  horizon = 4,
+  strains = 2,
+  adapt_delta = 0.99,
+  max_treedepth = 15,
+  variant_relationship = "scaled"
+)
+
+# inspect forecasts
+forecasts
+
+# unnest posteriors
+posteriors <- unnest_posterior(forecasts)
+
+# plot case posterior predictions
+plot_cases(posteriors, log = TRUE) +
+ facet_grid(vars(forecast_date), vars(voc_scale))
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 Functions used for forecastin across models, dates, and scenarios
 \code{\link{forecast_across_scenarios}()},

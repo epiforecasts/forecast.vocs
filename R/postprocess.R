@@ -91,7 +91,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
       c("type", "date", "obs", "observed", "forecast_start")
     )
   )
-  return(posterior)
+  return(posterior[])
 }
 
 #' Summarise the posterior
@@ -122,14 +122,16 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
 #' @importFrom data.table .SD .N := setcolorder
-#' @examples
-#' \dontrun{
-#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
-#' inits <- stan_inits(dt)
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' summarise_posterior(fit)
-#' }
 summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
                                 voc_label = "VOC", scale_r = 1) {
   check_dataframe(
@@ -297,17 +299,18 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' @family postprocess
 #' @export
 #' @importFrom purrr map_lgl
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs, overdispersion = FALSE)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 #' p <- summarise_posterior(fit)
 #'
 #' extract_forecast_dates(p)
-#' }
 extract_forecast_dates <- function(posterior) {
   cases <- posterior[value_type == "cases"][, value_type := NULL]
   non_list_cols <- names(cases)[
@@ -336,7 +339,7 @@ extract_forecast_dates <- function(posterior) {
     setnames(dates, "type", "Data unavailable")
     setcolorder(dates, "Data unavailable")
   }
-  return(dates)
+  return(dates[])
 }
 
 #' Extract forecasts from a summarised posterior
@@ -351,15 +354,16 @@ extract_forecast_dates <- function(posterior) {
 #'
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' p <- summarise_posterior(fit)
 #' extract_forecast(p)
-#' }
 extract_forecast <- function(posterior) {
   forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
 
@@ -375,7 +379,6 @@ extract_forecast <- function(posterior) {
   )
   return(forecast[])
 }
-
 
 #' Label the Variant of Concern
 #'
@@ -394,16 +397,17 @@ extract_forecast <- function(posterior) {
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
 #' @export
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' p <- summarise_posterior(fit)
 #' p <- update_voc_label(p, "Delta")
-#' p[value_type == "model"][]
-#' }
+#' p[value_type == "model"]
 update_voc_label <- function(posterior, label, target_label = "VOC") {
   if (!missing(label)) {
     stopifnot(is.character(label))
@@ -427,7 +431,7 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
     }
     posterior <- replace_label(posterior)
   }
-  return(posterior)
+  return(posterior[])
 }
 #' Extract posterior draws
 #'
@@ -438,14 +442,15 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #' @return A `draws` object from the `posterior` package.
 #'
 #' @family postprocess
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' extract_draws(fit)
-#' }
 extract_draws <- function(fit, ...) {
   fit$fit[[1]]$draws(...)
 }
@@ -459,14 +464,16 @@ extract_draws <- function(fit, ...) {
 #'
 #' @family postprocess
 #' @export
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
-#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
-#' dt <- combine_posteriors_dt(dt, target = "forecast")
-#' long <- quantiles_to_long(dt)
-#' print(long)
-#' }
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- forecast(obs, max_treedepth = 15, adapt_delta = 0.99)
+#' posterior <- unnest_posterior(dt)
+#' long_posterior <- quantiles_to_long(posterior)
+#' long_posterior
 quantiles_to_long <- function(posterior) {
   long <- melt(posterior,
     measure.vars = patterns("^q[0-9]"),
@@ -474,7 +481,7 @@ quantiles_to_long <- function(posterior) {
   )
   long[, quantile := gsub("q", "", quantile)]
   long[, quantile := as.numeric(quantile) / 100]
-  return(long)
+  return(long[])
 }
 
 #' Convert to stanfit object
@@ -484,14 +491,15 @@ quantiles_to_long <- function(posterior) {
 #' @family postprocess
 #' @inheritParams summarise_posterior
 #' @importFrom rstan read_stan_csv
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' convert_to_stanfit(fit)
-#' }
 convert_to_stanfit <- function(fit) {
   stanfit <- read_stan_csv(fit$fit[[1]]$output_files())
   return(stanfit)
