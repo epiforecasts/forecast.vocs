@@ -23,6 +23,8 @@ in user generated scenarios.
 
 ## Installation
 
+### Installing the package
+
 Install the stable development version of the package with:
 
 ``` r
@@ -35,7 +37,17 @@ Install the unstable development from GitHub using the following,
 remotes::install_github("epiforecasts/forecast.vocs", dependencies = TRUE)
 ```
 
-Install stan to enable model fitting and forecasting using:
+### Installing CmdStan
+
+If you don’t already have CmdStan installed then, in addition to
+installing `forecast.vocs`, it is also necessary to install CmdStan
+using CmdStanR’s `install_cmdstan()` function to enable model fitting in
+`forecast.vocs`. A suitable C++ toolchain is also required. Instructions
+are provided in the [*Getting started with
+CmdStanR*](https://mc-stan.org/cmdstanr/articles/cmdstanr.html)
+vignette. See the [CmdStanR
+documentation](https://mc-stan.org/cmdstanr/) for further details and
+support.
 
 ``` r
 cmdstanr::install_cmdstan()
@@ -50,7 +62,9 @@ both a one and two strain model for the 19th of June 2021 when the
 latest available data estimated that approximately 7% of COVID-19 were
 positive for the Delta variant. Note that estimated growth rates and
 reproduction numbers shown here have been rescaled using an assumed
-generation time of 5.5 days.
+generation time of 5.5 days and a weakly informative prior centred
+around Delta being 40% more transmissible than non-Delta cases has been
+used.
 
 ``` r
 library(forecast.vocs)
@@ -75,43 +89,44 @@ and scenarios using `forecast_across_dates()` and
 
 ``` r
 forecasts <- forecast(obs,
-  strains = c(1, 2), voc_label = "Delta", scale_r = 5.5 / 7,
+  strains = c(1, 2), voc_scale = c(0.4, 0.2),
+  voc_label = "Delta", scale_r = 5.5 / 7,
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 11.9 seconds.
-#> Chain 2 finished in 12.2 seconds.
-#> Chain 1 finished in 12.5 seconds.
+#> Chain 3 finished in 11.4 seconds.
+#> Chain 1 finished in 11.7 seconds.
+#> Chain 2 finished in 11.7 seconds.
 #> Chain 4 finished in 12.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 12.4 seconds.
-#> Total execution time: 13.0 seconds.
+#> Mean chain execution time: 11.9 seconds.
+#> Total execution time: 13.1 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 25.7 seconds.
-#> Chain 2 finished in 26.6 seconds.
-#> Chain 1 finished in 32.3 seconds.
-#> Chain 3 finished in 43.0 seconds.
+#> Chain 3 finished in 27.9 seconds.
+#> Chain 1 finished in 29.6 seconds.
+#> Chain 4 finished in 32.0 seconds.
+#> Chain 2 finished in 39.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 31.9 seconds.
-#> Total execution time: 43.1 seconds.
+#> Mean chain execution time: 32.2 seconds.
+#> Total execution time: 39.5 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004857
-#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.005603
+#> 1:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004669
+#> 2:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004443
 #>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                     5                  0.00125            10
-#> 2:                    13                  0.00325            11
+#> 1:                    11                  0.00275            10
+#> 2:                     6                  0.00150            11
 #>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                2648              0.66200 <data.table[148x20]>
-#> 2:                 737              0.18425 <data.table[400x20]>
+#> 1:                2209              0.55225 <data.table[148x20]>
+#> 2:                 298              0.07450 <data.table[400x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>
@@ -184,6 +199,7 @@ inits <- stan_inits(dt, strains = 2)
 
 fit <- stan_fit(
   data = dt, model = model, init = inits,
+  voc_scale = c(0.4, 0.2),
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE
 )
