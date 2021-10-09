@@ -93,20 +93,28 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<div id="installing-the-package" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installing-the-package" class="anchor" aria-hidden="true"></a>Installing the package</h3>
 <p>Install the stable development version of the package with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"forecast.vocs"</span>, repos <span class="op">=</span> <span class="st">"https://epiforecasts.r-universe.dev"</span><span class="op">)</span></code></pre></div>
 <p>Install the unstable development from GitHub using the following,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"epiforecasts/forecast.vocs"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>Install stan to enable model fitting and forecasting using:</p>
+</div>
+<div id="installing-cmdstan" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installing-cmdstan" class="anchor" aria-hidden="true"></a>Installing CmdStan</h3>
+<p>If you don’t already have CmdStan installed then, in addition to installing <code>forecast.vocs</code>, it is also necessary to install CmdStan using CmdStanR’s <code>install_cmdstan()</code> function to enable model fitting in <code>forecast.vocs</code>. A suitable C++ toolchain is also required. Instructions are provided in the <a href="https://mc-stan.org/cmdstanr/articles/cmdstanr.html" class="external-link"><em>Getting started with CmdStanR</em></a> vignette. See the <a href="https://mc-stan.org/cmdstanr/" class="external-link">CmdStanR documentation</a> for further details and support.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">cmdstanr</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/install_cmdstan.html" class="external-link">install_cmdstan</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
 </div>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor" aria-hidden="true"></a>Quick start</h2>
-<p>This quick start uses data from Germany that includes COVID-19 notificatons and sequences with sequences either being positive or negative for the Delta variant. It shows how to produce forecasts for both a one and two strain model for the 19th of June 2021 when the latest available data estimated that approximately 7% of COVID-19 were positive for the Delta variant. Note that estimated growth rates and reproduction numbers shown here have been rescaled using an assumed generation time of 5.5 days.</p>
+<p>This quick start uses data from Germany that includes COVID-19 notificatons and sequences with sequences either being positive or negative for the Delta variant. It shows how to produce forecasts for both a one and two strain model for the 19th of June 2021 when the latest available data estimated that approximately 7% of COVID-19 were positive for the Delta variant. Note that estimated growth rates and reproduction numbers shown here have been rescaled using an assumed generation time of 5.5 days and a weakly informative prior centred around Delta being 40% more transmissible than non-Delta cases has been used.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
@@ -123,43 +131,44 @@
 <p>Run a forecast for both one and two strain models (or optionally just one of these) using the <code><a href="reference/forecast.html">forecast()</a></code> function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code>forecast_accross_scenarios()</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">obs</span>,
-  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, voc_label <span class="op">=</span> <span class="st">"Delta"</span>, scale_r <span class="op">=</span> <span class="fl">5.5</span> <span class="op">/</span> <span class="fl">7</span>,
+  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span>,
+  voc_label <span class="op">=</span> <span class="st">"Delta"</span>, scale_r <span class="op">=</span> <span class="fl">5.5</span> <span class="op">/</span> <span class="fl">7</span>,
   adapt_delta <span class="op">=</span> <span class="fl">0.99</span>, max_treedepth <span class="op">=</span> <span class="fl">15</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span>,
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 11.9 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 12.2 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 12.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 11.4 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 11.7 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 11.7 seconds.</span>
 <span class="co">#&gt; Chain 4 finished in 12.9 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 12.4 seconds.</span>
-<span class="co">#&gt; Total execution time: 13.0 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 11.9 seconds.</span>
+<span class="co">#&gt; Total execution time: 13.1 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 25.7 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 26.6 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 32.3 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 43.0 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 27.9 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 29.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 32.0 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 39.5 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 31.9 seconds.</span>
-<span class="co">#&gt; Total execution time: 43.1 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 32.2 seconds.</span>
+<span class="co">#&gt; Total execution time: 39.5 seconds.</span>
 <span class="va">forecasts</span>
 <span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
 <span class="co">#&gt; 1:  0    2021-06-19       1           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt; 2:  0    2021-06-19       2           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
-<span class="co">#&gt; 1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004857</span>
-<span class="co">#&gt; 2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005603</span>
+<span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004669</span>
+<span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004443</span>
 <span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
-<span class="co">#&gt; 1:                     5                  0.00125            10</span>
-<span class="co">#&gt; 2:                    13                  0.00325            11</span>
+<span class="co">#&gt; 1:                    11                  0.00275            10</span>
+<span class="co">#&gt; 2:                     6                  0.00150            11</span>
 <span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
-<span class="co">#&gt; 1:                2648              0.66200 &lt;data.table[148x20]&gt;</span>
-<span class="co">#&gt; 2:                 737              0.18425 &lt;data.table[400x20]&gt;</span>
+<span class="co">#&gt; 1:                2209              0.55225 &lt;data.table[148x20]&gt;</span>
+<span class="co">#&gt; 2:                 298              0.07450 &lt;data.table[400x20]&gt;</span>
 <span class="co">#&gt;               forecast</span>
 <span class="co">#&gt; 1: &lt;data.table[12x13]&gt;</span>
 <span class="co">#&gt; 2: &lt;data.table[54x13]&gt;</span></code></pre></div>
@@ -202,6 +211,7 @@
 
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/stan_fit.html">stan_fit</a></span><span class="op">(</span>
   data <span class="op">=</span> <span class="va">dt</span>, model <span class="op">=</span> <span class="va">model</span>, init <span class="op">=</span> <span class="va">inits</span>,
+  voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span>,
   adapt_delta <span class="op">=</span> <span class="fl">0.99</span>, max_treedepth <span class="op">=</span> <span class="fl">15</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>, show_messages <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
