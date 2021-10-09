@@ -5,6 +5,7 @@
 #' @return NULL
 #'
 #' @family postprocess
+#' @export
 #' @inheritParams summarise_posterior
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
