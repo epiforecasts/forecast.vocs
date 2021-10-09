@@ -113,7 +113,7 @@ plot_posterior(
 
 ### Step by step forecast
 
-Rather than using the all-in-one `forecast()` function inidividual package functions can be used to produce a forecast as follows.
+Rather than using the all-in-one `forecast()` function individual package functions can be used to produce a forecast as follows.
 
 ```{r, eval = FALSE}
 dt <- stan_data(obs, horizon = 4)

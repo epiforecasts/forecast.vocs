@@ -1,3 +1,7 @@
+# forecast.vocs 0.0.6
+
+* Add a vignette defining the package models.
+
 # forecast.vocs 0.0.5
 
 * Overhaul all package documentation and examples.

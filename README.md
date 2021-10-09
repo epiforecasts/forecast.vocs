@@ -81,37 +81,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 11.6 seconds.
-#> Chain 3 finished in 12.0 seconds.
-#> Chain 1 finished in 14.5 seconds.
-#> Chain 4 finished in 17.3 seconds.
+#> Chain 3 finished in 11.9 seconds.
+#> Chain 2 finished in 12.2 seconds.
+#> Chain 1 finished in 12.5 seconds.
+#> Chain 4 finished in 12.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 13.8 seconds.
-#> Total execution time: 17.4 seconds.
+#> Mean chain execution time: 12.4 seconds.
+#> Total execution time: 13.0 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 26.1 seconds.
-#> Chain 3 finished in 29.8 seconds.
-#> Chain 4 finished in 31.4 seconds.
-#> Chain 1 finished in 33.9 seconds.
+#> Chain 4 finished in 25.7 seconds.
+#> Chain 2 finished in 26.6 seconds.
+#> Chain 1 finished in 32.3 seconds.
+#> Chain 3 finished in 43.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 30.3 seconds.
-#> Total execution time: 34.0 seconds.
+#> Mean chain execution time: 31.9 seconds.
+#> Total execution time: 43.1 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.006016
-#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.003836
+#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004857
+#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.005603
 #>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                     4                  0.00100            11
-#> 2:                     3                  0.00075            11
+#> 1:                     5                  0.00125            10
+#> 2:                    13                  0.00325            11
 #>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                 657              0.16425 <data.table[148x20]>
-#> 2:                 117              0.02925 <data.table[400x20]>
+#> 1:                2648              0.66200 <data.table[148x20]>
+#> 2:                 737              0.18425 <data.table[400x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>
@@ -172,7 +172,7 @@ plot_posterior(
 
 ### Step by step forecast
 
-Rather than using the all-in-one `forecast()` function inidividual
+Rather than using the all-in-one `forecast()` function individual
 package functions can be used to produce a forecast as follows.
 
 ``` r
