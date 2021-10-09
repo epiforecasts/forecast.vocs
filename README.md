@@ -7,7 +7,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/forecast.vocs)
 
-![Universe](https://epiforecasts.r-universe.dev/badges/forecast.vocs)
+[![Universe](https://epiforecasts.r-universe.dev/badges/forecast.vocs)](https://epiforecasts.r-universe.dev/)
 [![MIT
 license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/epiforecasts/forecast.vocs/blob/master/LICENSE.md/)
 [![GitHub
@@ -81,37 +81,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 11.5 seconds.
-#> Chain 2 finished in 13.6 seconds.
-#> Chain 4 finished in 15.6 seconds.
-#> Chain 1 finished in 17.9 seconds.
+#> Chain 2 finished in 11.6 seconds.
+#> Chain 3 finished in 12.0 seconds.
+#> Chain 1 finished in 14.5 seconds.
+#> Chain 4 finished in 17.3 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 14.6 seconds.
-#> Total execution time: 18.0 seconds.
+#> Mean chain execution time: 13.8 seconds.
+#> Total execution time: 17.4 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 26.2 seconds.
-#> Chain 4 finished in 26.9 seconds.
-#> Chain 2 finished in 30.9 seconds.
-#> Chain 3 finished in 31.1 seconds.
+#> Chain 2 finished in 26.1 seconds.
+#> Chain 3 finished in 29.8 seconds.
+#> Chain 4 finished in 31.4 seconds.
+#> Chain 1 finished in 33.9 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 28.8 seconds.
-#> Total execution time: 31.2 seconds.
+#> Mean chain execution time: 30.3 seconds.
+#> Total execution time: 34.0 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004224
-#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.004265
+#> 1:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.006016
+#> 2:     0,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.003836
 #>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                     1                  0.00025            11
-#> 2:                     8                  0.00200            10
+#> 1:                     4                  0.00100            11
+#> 2:                     3                  0.00075            11
 #>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                 876                0.219 <data.table[148x20]>
-#> 2:                2608                0.652 <data.table[400x20]>
+#> 1:                 657              0.16425 <data.table[148x20]>
+#> 2:                 117              0.02925 <data.table[400x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>
