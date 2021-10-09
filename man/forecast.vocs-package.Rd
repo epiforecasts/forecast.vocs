@@ -4,9 +4,9 @@
 \name{forecast.vocs-package}
 \alias{forecast.vocs}
 \alias{forecast.vocs-package}
-\title{forecast.vocs: Forecast Case Notifications using Variant of Concern Strain Dynamics}
+\title{forecast.vocs: Forecast Case and Sequence Notifications using Variant of Concern Strain Dynamics}
 \description{
-Forecast case notifications using variant of concern strain dynamics.
+Contains models and tools to produce short-term forecasts for both case and sequence notifications assuming circulation of either one or two variants. Tools are also provided to allow the evaluation of the use of sequence data for short-term forecasts in both real-world settings and in user generated scenarios.
 }
 \seealso{
 Useful links:
