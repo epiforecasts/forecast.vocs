@@ -91,5 +91,5 @@ generate_obs_scenario <- function(obs, seq_lag, seq_samples) {
   ]
   # apply sequence availability based on date
   scenario_obs <- update_obs_availability(scenario_obs, seq_lag = seq_lag)
-  return(scenario_obsp[])
+  return(scenario_obs)
 }

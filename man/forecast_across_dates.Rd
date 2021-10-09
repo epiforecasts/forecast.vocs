@@ -51,7 +51,7 @@ posteriors <- unnest_posterior(forecasts)
 
 # plot case posterior predictions
 plot_cases(posteriors, log = TRUE) +
- facet_grid(vars(forecast_date), vars(voc_scale))
+  facet_grid(vars(forecast_date), vars(voc_scale))
 \dontshow{\}) # examplesIf}
 }
 \seealso{

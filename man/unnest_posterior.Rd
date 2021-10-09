@@ -7,7 +7,7 @@
 unnest_posterior(forecasts, target = "posterior")
 }
 \arguments{
-\item{forecasts}{A data frame of forecasts as produced by \code{forecast()}.}
+\item{forecasts}{A data frame of forecasts as produced by \code{\link[=forecast]{forecast()}}.}
 
 \item{target}{A character string indicating the list of outpuuts to
 unnest. This can currently be either "posterior", or "forecast".}
@@ -24,9 +24,9 @@ Unnest posterior estimates from a forecast data.frame
 library(data.table)
 options(mc.cores = 4)
 dt <- forecast(
- germany_covid19_delta_obs,
- forecast_date = as.Date("2021-06-12"),
- max_treedepth = 15, adapt_delta = 0.99
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
+  max_treedepth = 15, adapt_delta = 0.99
 )
 
 # unnest posterior predictions

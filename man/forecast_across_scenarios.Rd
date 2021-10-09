@@ -33,9 +33,9 @@ library(ggplot2)
 options(mc.cores = 4)
 
 scenarios <- define_scenarios(
- voc_scale = list(c(0, 0.5), c(0.5, 0.25)),
- seq_lag = 1,
- seq_samples = 1
+  voc_scale = list(c(0, 0.5), c(0.5, 0.25)),
+  seq_lag = 1,
+  seq_samples = 1
 )
 scenarios
 
@@ -58,7 +58,7 @@ posteriors <- unnest_posterior(forecasts)
 
 # plot case posterior predictions
 plot_cases(posteriors, log = TRUE) +
- facet_grid(vars(forecast_date))
+  facet_grid(vars(forecast_date))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
