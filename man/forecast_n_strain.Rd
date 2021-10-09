@@ -42,3 +42,11 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.}
 \description{
 Forecast for a single model and summarise
 }
+\seealso{
+Functions used for forecastin across models, dates, and scenarios
+\code{\link{forecast_across_dates}()},
+\code{\link{forecast_across_scenarios}()},
+\code{\link{forecast}()},
+\code{\link{unnest_posterior}()}
+}
+\concept{forecast}

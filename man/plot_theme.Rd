@@ -16,7 +16,7 @@ A \code{ggplot2} plot with the package theme applied.
 Add the default plot theme
 }
 \seealso{
-Plotting functionts
+Plotting functions
 \code{\link{add_forecast_dates}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},

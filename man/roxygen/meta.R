@@ -3,7 +3,7 @@ list( # nolint
     preprocess = "Preprocessing functions",
     model = "Functions used for modelling",
     postprocess = "Functions used for postprocessing of model fits", # nolint
-    plot = "Plotting functionts",
+    plot = "Plotting functions",
     forecast = "Functions used for forecastin across models, dates, and scenarios", # nolint
     generatedata = "Functions to generate simulated data.",
     scenarios = "Functions to define and create data scenarios.",

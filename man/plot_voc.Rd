@@ -55,7 +55,7 @@ plot_voc(posterior)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Plotting functionts
+Plotting functions
 \code{\link{add_forecast_dates}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},

@@ -60,7 +60,7 @@ plot_cases(posterior)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Plotting functionts
+Plotting functions
 \code{\link{add_forecast_dates}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},

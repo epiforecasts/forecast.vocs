@@ -14,8 +14,6 @@
 #' @return NULL
 #'
 #' @family check
-#' @export
-#' @keywords internal
 check_param <- function(param, name = "param",
                         type = "numeric", length) {
   if (is.null(param)) {
@@ -48,9 +46,7 @@ check_param <- function(param, name = "param",
 #' @return NULL
 #'
 #' @family check
-#' @export
 #' @importFrom purrr walk2
-#' @keywords internal
 check_dataframe <- function(dataframe, req_vars, req_types, rows) {
   if (!is.data.frame(dataframe)) {
     stop("The inputs is not a data.frame")
@@ -111,7 +107,6 @@ check_observations <- function(obs) {
 #' @return NULL
 #'
 #' @family check
-#' @export
 check_quantiles <- function(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8)) {
   cols <- colnames(posterior)
   if (sum(cols %in% c("q5", "q95", "q20", "q80")) != 4) {

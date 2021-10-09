@@ -135,6 +135,7 @@ forecast <- function(obs,
 
 #' Forecast for a single model and summarise
 #'
+#' @family forecast
 #' @inheritParams stan_inits
 #' @inheritParams forecast
 #' @inheritParams stan_fit

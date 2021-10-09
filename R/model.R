@@ -185,6 +185,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 }
 
 #' Fit a brancing process strain model
+#'
 #' @param data A list of data as produced by [stan_data()].
 #'
 #' @param model A `cmdstanr` model object as loaded by [load_model()].

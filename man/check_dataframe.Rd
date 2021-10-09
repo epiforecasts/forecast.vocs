@@ -25,4 +25,3 @@ Functions used for checking inputs.
 \code{\link{check_quantiles}()}
 }
 \concept{check}
-\keyword{internal}

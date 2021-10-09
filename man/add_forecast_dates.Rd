@@ -21,7 +21,7 @@ A \code{ggplot2} plot with dates of data unavailability added.
 Add the forecast dates to a plot
 }
 \seealso{
-Plotting functionts
+Plotting functions
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},

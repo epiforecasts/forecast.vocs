@@ -31,8 +31,8 @@ reference:
     contents:
       - has_concept("postprocess")
   - title: Plot
-    desc: 
-    contents: Functions for plotting postprocessed forecast model output.
+    desc: Functions for plotting postprocessed forecast model output.
+    contents:
       - has_concept("plot")
   - title: Model validation
     desc: Functions for validating model fits.
@@ -50,3 +50,7 @@ reference:
     desc: Package datasets used in examples and by users to explore the package functionality.
     contents:
       - has_concept("data")
+  - title: Check inputs
+    desc: Functions to check the structure of user inputs.
+    contents:
+      - has_concept("check")

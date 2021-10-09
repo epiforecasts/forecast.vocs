@@ -57,6 +57,7 @@ plot_cases(posteriors, log = TRUE) +
 \seealso{
 Functions used for forecastin across models, dates, and scenarios
 \code{\link{forecast_across_scenarios}()},
+\code{\link{forecast_n_strain}()},
 \code{\link{forecast}()},
 \code{\link{unnest_posterior}()}
 }
