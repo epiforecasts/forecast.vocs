@@ -20,6 +20,21 @@ add to plots. May contain facetting variables.}
 stratify the ribbon plot. Defaults to "type" which indicates the
 data stream.}
 }
+\value{
+A \code{ggplot2} plot.
+}
 \description{
 Plot the posterior prediction for the growth rate
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

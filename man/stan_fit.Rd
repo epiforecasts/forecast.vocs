@@ -21,6 +21,10 @@ be returned as a data frame.}
 
 \item{...}{Additional parameters passed to the \code{sample} method of \code{cmdstanr}.}
 }
+\value{
+A data.frame containing the \code{cmdstanr} fit, the input data, the
+fitting arguements, and optionally summary diagnostics.
+}
 \description{
 Fit a brancing process strain model
 }
@@ -51,3 +55,10 @@ two_strain_fit <- stan_fit(dt,
 two_strain_fit
 }
 }
+\seealso{
+Functions used for modelling
+\code{\link{load_model}()},
+\code{\link{stan_data}()},
+\code{\link{stan_inits}()}
+}
+\concept{model}

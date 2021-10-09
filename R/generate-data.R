@@ -1,4 +1,3 @@
-
 #' Sample Sequence Observation Model
 #'
 #' @param frac_voc A numeric vector of expected proportions positive for the
@@ -13,7 +12,7 @@
 #' @return A vector of observed sequences positive for the variant of
 #' concern.
 #'
-#' @concept modelvalidation
+#' @family generatedata
 #' @importFrom purrr map2_dbl
 #' @export
 #' @examples
@@ -62,12 +61,12 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param ... Additional arguments to pass `stan_data()`.
 #'
-#' #' @return A dataframe with a sampled dataset on each row with the following
+#' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),
 #' obs (simulated observed data), stan_data, (the simulated data formatted
 #' using `stan_data()` using the same arguments as specified  for simulation.)
 #'
-#' @concept modelvalidation
+#' @family generatedata
 #' @inheritParams forecast
 #' @inheritParams stan_fit
 #' @export

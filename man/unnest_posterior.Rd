@@ -34,3 +34,10 @@ forecasts <- unnest_posterior(dt, target = "forecast")
 forecasts
 }
 }
+\seealso{
+Functions used for forecastin across models, dates, and scenarios
+\code{\link{forecast_across_dates}()},
+\code{\link{forecast_across_scenarios}()},
+\code{\link{forecast}()}
+}
+\concept{forecast}

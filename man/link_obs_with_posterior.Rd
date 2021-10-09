@@ -27,3 +27,16 @@ The input data.frame combined with \code{obs} and \code{observed} variables.
 Link posterior estimates with observed data and flag if values are observed
 or not.
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summarise_posterior}()},
+\code{\link{update_voc_label}()}
+}
+\concept{postprocess}

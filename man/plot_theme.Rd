@@ -9,6 +9,21 @@ plot_theme(plot)
 \arguments{
 \item{plot}{\code{ggplot2} object}
 }
+\value{
+A \code{ggplot2} plot with the package theme applied.
+}
 \description{
 Add the default plot theme
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

@@ -16,9 +16,16 @@ to check.}
 type (must be a type with a is.type function except for a Date).}
 
 \item{length}{Numeric, allowed length of the variable. Defaults to
-any allowed length}
+any allowed length.}
 }
 \description{
 Check a parameter is the correct type and length
 }
+\seealso{
+Functions used for checking inputs.
+\code{\link{check_dataframe}()},
+\code{\link{check_observations}()},
+\code{\link{check_quantiles}()}
+}
+\concept{check}
 \keyword{internal}

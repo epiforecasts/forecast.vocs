@@ -8,5 +8,6 @@
 #' @return A `data.table` with the following variables: date, location_name,
 #' location, cases, seq_total, seq_voc, share_voc, cases_available,
 #' and seq_available.
-#' @concept data
+#'
+#' @family data
 "germany_covid19_delta_obs"

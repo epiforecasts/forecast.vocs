@@ -16,36 +16,39 @@ authors:
     href: "https://www.lshtm.ac.uk/aboutus/people/funk.sebastian"
 
 reference:
-  - title: Get Covid-19 Data
-    desc: Functions that provide interfaces to download cleaned and processed datasets. Internally many of these functions call the classes documented below and so optional class specific arguments can also be used.
+  - title: Forecast
+    desc: Functions for forecasting across models, dates, and scenarios.
     contents:
-      - get_available_datasets
-      - get_national_data
-      - get_regional_data
-      - initialise_dataclass
-      - DataClass
-      - CountryDataClass
-  - title: Dataset Classes
-    desc: Classes that define individual datasets and contain all the methods needed to download, process, and clean them.
+      - has_context("forecast")
+  - title: Model
+    desc: Functions for fitting the forecasting models.
     contents:
-      - has_concept("dataset")
-  - title: Dataset processing
-    desc: Functions used to process data once it has been cleaned into a standardised format. These functions are split into compulsory processing options, which are always used, and optional processing functions which may be added/removed by the user.
-  - subtitle: Compulsory processing
+      - has_context("model")
+  - title: Preprocess
+    desc: Functions for preprocessing observations.
     contents:
-      - has_concept("compulsory_processing")
-  - subtitle: Optional processing
+      - has_context("preprocess")
+  - title: Postprocess
+    desc: Functions for postprocessing model output.
     contents:
-      - has_concept("optional_processing")
-  - title: Utilities
-    desc: Utility functions that either help manage data, provide additional information, or convert the data into new formats.
+      - has_context("postprocess")
+  - title: Plot
+    desc: 
+    contents: Functions for plotting postprocessed forecast model output.
+      - has_context("plot")
+  - title: Model validation
+    desc: Functions for validating model fits.
     contents:
-      - has_concept("utility")
-  - title: Tests
-    desc: Testing functions that check at each step (cleaning, processing, returning) the data structure and types are as expected. Requires `testthat` to be installed.
+      - has_context("modelvalidation")
+  - title: Generate data
+    desc: Functions for generating simulated data.
     contents:
-      - has_concept("tests")
+      - has_context("generatedata")
+  - title: Define and generate scenarios
+    desc: Functions for defining and generating data scenarios.
+    contents:
+      - has_context("scenarios")
   - title: Datasets
-    desc: Package datasets
+    desc: Package datasets used in examples and by users to explore the package functionality.
     contents:
-      - ends_with("_codes")
+      - has_context("data")

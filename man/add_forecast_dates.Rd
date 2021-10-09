@@ -14,6 +14,21 @@ add_forecast_dates(plot, forecast_dates = NULL)
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain facetting variables.}
 }
+\value{
+A \code{ggplot2} plot with dates of data unavailability added.
+}
 \description{
 Add the forecast dates to a plot
 }
+\seealso{
+Plotting functionts
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

@@ -34,7 +34,22 @@ of concern. Defaults to  "variant of concern".}
 
 \item{...}{Additional parameters passed to \code{plot_default()}.}
 }
+\value{
+A \code{ggplot2} plot.
+}
 \description{
 Plot the posterior prediction for the fraction of samples with the variant
 of concern
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()}
+}
+\concept{plot}

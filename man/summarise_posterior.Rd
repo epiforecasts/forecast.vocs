@@ -29,6 +29,11 @@ the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
 }
+\value{
+A dataframe summarising the model posterior. Output is stratified
+by \code{value_type} with posterior summaries by case, voc, rt, growth, model,
+and the raw posterior summary.
+}
 \description{
 Summarise the posterior
 }
@@ -41,3 +46,16 @@ fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 summarise_posterior(fit)
 }
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{update_voc_label}()}
+}
+\concept{postprocess}

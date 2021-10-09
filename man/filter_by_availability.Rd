@@ -27,6 +27,10 @@ the forecast date.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the forecast date.}
 }
+\value{
+A data.frame of observations filter for the latest available
+data for the specified dates of interest.
+}
 \description{
 Filter data based on availability and forecast date
 }
@@ -48,3 +52,8 @@ filter_by_availability(dt,
   case_date = "2021-07-01"
 )
 }
+\seealso{
+Preprocessing functions
+\code{\link{latest_obs}()}
+}
+\concept{preprocess}

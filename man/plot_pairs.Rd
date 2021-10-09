@@ -25,7 +25,7 @@ be returned as a data frame.}
 \item{...}{Additional parameters passed to \code{mcmc_pairs()}.}
 }
 \value{
-A ggplot2 based pairs plot of parameters of interest
+A \code{ggplot2} based pairs plot of parameters of interest
 }
 \description{
 Pairs plot of parameters of interest and fitting diagnostics
@@ -39,3 +39,16 @@ fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 plot_pairs(fit)
 }
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{modelvalidation}
+\concept{plot}

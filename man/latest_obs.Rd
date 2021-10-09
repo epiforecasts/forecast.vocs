@@ -13,6 +13,10 @@ and seq_available. seq_available and case_available must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 }
+\value{
+A data.frame of observations filtered for the
+latest available data.
+}
 \description{
 Filter for latest observations of all types
 }
@@ -23,3 +27,8 @@ dt <- rbind(
 )
 latest_obs(dt)
 }
+\seealso{
+Preprocessing functions
+\code{\link{filter_by_availability}()}
+}
+\concept{preprocess}

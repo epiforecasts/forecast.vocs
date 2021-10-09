@@ -7,7 +7,7 @@
 check_observations(obs)
 }
 \arguments{
-\item{obs}{A data.frame of observations to check for formatting issues}
+\item{obs}{A data.frame of observations to check for formatting issues.}
 }
 \description{
 Check observations are in the correct format
@@ -16,3 +16,10 @@ Check observations are in the correct format
 obs <- latest_obs(germany_covid19_delta_obs)
 check_observations(obs)
 }
+\seealso{
+Functions used for checking inputs.
+\code{\link{check_dataframe}()},
+\code{\link{check_param}()},
+\code{\link{check_quantiles}()}
+}
+\concept{check}

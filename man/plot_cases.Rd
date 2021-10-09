@@ -35,6 +35,21 @@ data stream.}
 \item{log}{Logical, defaults to \code{TRUE}. Should cases be plot on
 a log scale?}
 }
+\value{
+A \code{ggplot2} plot.
+}
 \description{
 Plot the posterior prediction for cases
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

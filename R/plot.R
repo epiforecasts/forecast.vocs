@@ -3,7 +3,7 @@
 #' @param plot `ggplot2` object
 #'
 #' @return A `ggplot2` plot with the package theme applied.
-#' @concept plot
+#' @family plot
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -23,7 +23,7 @@ plot_theme <- function(plot) {
 #'
 #' @return A `ggplot2` plot with dates of data unavailability added.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams plot_theme
 #' @export
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
@@ -58,7 +58,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #'
 #' @return A `ggplot2` plot.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams add_forecast_dates
 #' @inheritParams extract_forecast_dates
 #' @importFrom purrr map_lgl
@@ -117,7 +117,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #'
 #' @return A `ggplot2` plot.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
@@ -161,7 +161,7 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @return A `ggplot2` plot.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
@@ -189,7 +189,7 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @return A `ggplot2` plot.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
@@ -219,7 +219,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #'
 #' @return A `ggplot2` plot.
 #'
-#' @concept plot
+#' @family plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
@@ -256,7 +256,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #'
 #' @return A named list of all supported package plots with sensible defaults
 #'
-#' @concept plot
+#' @family plot
 #' @export
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc
@@ -309,10 +309,13 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @param ... Additional parameters passed to `mcmc_pairs()`.
 #'
+#' @return  A `ggplot2` based pairs plot of parameters of interest
+#'
+#' @family plot
+#' @family modelvalidation
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
-#' @return  A ggplot2 based pairs plot of parameters of interest
 #' @examples
 #' \dontrun{
 #' obs <- latest_obs(germany_covid19_voc_obs)

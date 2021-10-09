@@ -37,6 +37,9 @@ or just those in the date range of the estimates being plot.}
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}
 }
+\value{
+A named list of all supported package plots with sensible defaults
+}
 \description{
 Plot posterior predictions
 }
@@ -50,3 +53,15 @@ posterior <- summarise_posterior(fit)
 plot_posterior(posterior)
 }
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

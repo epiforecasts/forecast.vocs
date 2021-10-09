@@ -1,42 +1,18 @@
-#' Update observations based on availability
-#' @param obs A data frame with the following variables:
-#'  date, cases, seq_voc, and seq_total, cases_available,
-#' and seq_available. seq_available and case_available must be
-#' uniquely define data rows but other rows can be duplicated based
-#' on data availability.
-#' @param cases_lag Number of weeks that case data takes to be reported.
-#' Defaults to not alter the input data.
-#' @param seq_lag Number of weeks that sequence data takes to be reported.
-#' Defaults to not alter the input data.
-#' @export
-#' @examples
-#' update_obs_availability(
-#'   germany_covid19_delta_obs,
-#'   cases_lag = 2, seq_lag = 3
-#' )
-update_obs_availability <- function(obs, cases_lag, seq_lag) {
-  obs <- as.data.table(obs)
-  obs <- copy(obs)
-  if (!missing(cases_lag)) {
-    if (!is.null(cases_lag)) {
-      obs[!is.na(cases_available), cases_available := date + cases_lag * 7]
-    }
-  }
-  if (!missing(seq_lag)) {
-    if (!is.null(seq_lag)) {
-      obs[!is.na(seq_available), seq_available := date + seq_lag * 7]
-    }
-  }
-  return(obs)
-}
-
 #' Filter data based on availability and forecast date
+#'
 #' @param date Date at which to filter. Defaults to the
 #' maximum date in `obs`.
+#'
 #' @param seq_date Date from which to use available sequence data. Defaults to
 #' the forecast date.
+#'
 #' @param case_date Date from which to use available case data. Defaults to
 #' the forecast date.
+#'
+#' @return A data.frame of observations filter for the latest available
+#' data for the specified dates of interest.
+#'
+#' @family preprocess
 #' @export
 #' @inheritParams update_obs_availability
 #' @importFrom purrr map
@@ -106,6 +82,11 @@ filter_by_availability <- function(obs, date = max(obs$date),
 }
 
 #' Filter for latest observations of all types
+#'
+#' @return A data.frame of observations filtered for the
+#' latest available data.
+#'
+#' @family preprocess
 #' @export
 #' @inheritParams filter_by_availability
 #' @examples

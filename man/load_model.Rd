@@ -15,6 +15,9 @@ be loaded and compiled using \code{cmdstanr::cmstan_model()}.}
 
 \item{...}{Additional arguments passed to \code{cmdstanr::cmstan_model()}.}
 }
+\value{
+A \code{cmdstanr} model.
+}
 \description{
 Load and compile a strain model
 }
@@ -27,3 +30,10 @@ mod <- load_model(strains = 1)
 two_strain_mod <- load_model(strains = 2)
 }
 }
+\seealso{
+Functions used for modelling
+\code{\link{stan_data}()},
+\code{\link{stan_fit}()},
+\code{\link{stan_inits}()}
+}
+\concept{model}

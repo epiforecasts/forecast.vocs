@@ -38,7 +38,7 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 used include overdispersion.}
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
-included in the model.extract}
+included in the model.extract.}
 
 \item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
 likelihood be output. Disabling this will speed up fitting if evaluating the
@@ -47,9 +47,19 @@ model fit is not required.}
 \item{debug}{Logical, defaults to \code{FALSE}. Should within model debug
 information be returned.}
 }
+\value{
+A list as required by stan.
+}
 \description{
 Format data for use with stan
 }
 \examples{
 stan_data(latest_obs(germany_covid19_delta_obs))
 }
+\seealso{
+Functions used for modelling
+\code{\link{load_model}()},
+\code{\link{stan_fit}()},
+\code{\link{stan_inits}()}
+}
+\concept{model}

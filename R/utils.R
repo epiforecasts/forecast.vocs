@@ -4,26 +4,13 @@
 #' @importFrom stats median rnorm
 NULL
 
-#' Convert summarised quantiles from wide to long format
-#'
-#' @param posterior A dataframe as output by `summarise_posterior()`,
-#' extract_forecast(), combine_posteriors_dt(), etc.
-#' @export
-#' @return A data frame of quantiles in long format.
-#' @examples
-#' \dontrun{
-#' options(mc.cores = 4)
-#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
-#' dt <- combine_posteriors_dt(dt, target = "forecast")
-#' long <- quantiles_to_long(dt)
-#' print(long)
-#' }
-quantiles_to_long <- function(posterior) {
-  long <- melt(posterior,
-    measure.vars = patterns("^q[0-9]"),
-    value.name = "prediction", variable.name = "quantile"
+utils::globalVariables(
+  c(
+    ".", ".draw", "cases", "cases_available", "dates", "end", "exponentiated",
+    "horizon", "id", "mad", "max_treedepth", "mean_share_voc",
+    "no_at_max_treedepth", "observed", "patterns", "per_at_max_treedepth",
+    "q20", "q5", "q80", "q95", "quantile", "results", "row_id", "sd",
+    "seq_available", "seq_total", "seq_voc", "share_voc", "start", "type",
+    "Type", "value", "value_type", "..non_list_cols", "forecast_start"
   )
-  long[, quantile := gsub("q", "", quantile)]
-  long[, quantile := as.numeric(quantile) / 100]
-  return(long)
-}
+)

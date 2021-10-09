@@ -33,7 +33,7 @@
 #'
 #' @return A list as required by stan.
 #'
-#' @concept model
+#' @family model
 #' @export
 #' @examples
 #' stan_data(latest_obs(germany_covid19_delta_obs))
@@ -104,7 +104,7 @@ stan_data <- function(obs, horizon = 4,
 #' @return A function that when called returns a list of initial conditions
 #' for the package stan models.
 #'
-#' @concept model
+#' @family model
 #' @export
 #' @inheritParams load_model
 #' @importFrom purrr map_dbl
@@ -159,7 +159,7 @@ stan_inits <- function(data, strains = 2) {
 #'
 #' @return A `cmdstanr` model.
 #'
-#' @concept model
+#' @family model
 #' @export
 #' @examples
 #' \dontrun{
@@ -200,7 +200,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' @return A data.frame containing the `cmdstanr` fit, the input data, the
 #' fitting arguements, and optionally summary diagnostics.
 #'
-#' @concept model
+#' @family model
 #' @export
 #' @importFrom cmdstanr cmdstan_model
 #' @importFrom posterior rhat

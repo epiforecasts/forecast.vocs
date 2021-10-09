@@ -1,4 +1,5 @@
 #' Link dates by time for posterior parameter estimates
+#'
 #' @param posterior A data frame of summarised posterior estimates
 #' as returned by `cmdstanr::summary` with  an additional type variable
 #' which contains the following character string options: "non-VOC",
@@ -10,8 +11,9 @@
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
 #' estimates.
 #'
-#' @export
-#' @return A dataframe with an additional data column
+#' @return A posterior dataframe with an additional data column.
+#'
+#' @family postprocess
 link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
   # extract info from lis
   t <- data$t
@@ -52,8 +54,10 @@ link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
 #' @param target_types A character vector of types (as specified in the `type`
 #' variable) to modify.
 #'
-#' @inheritParams link_dates_with_posterior
 #' @return The input data.frame combined with `obs` and `observed` variables.
+#'
+#' @family postprocess
+#' @inheritParams link_dates_with_posterior
 link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
   posterior <- setDT(posterior)
   if (missing(horizon) & !missing(obs)) {
@@ -79,7 +83,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
   }
   posterior[type %in% target_types, forecast_start := FALSE]
   posterior[type %in% target_types & observed == TRUE &
-             shift(observed ==  FALSE, type = "lead"), forecast_start := TRUE]
+    shift(observed == FALSE, type = "lead"), forecast_start := TRUE]
 
   setcolorder(posterior,
     neworder = intersect(
@@ -109,6 +113,11 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' is rescaling the growth rate from weekly to be scaled by the mean of
 #' the generation time (for COVID-19 for example this would be 5.5 / 7.
 #'
+#' @return A dataframe summarising the model posterior. Output is stratified
+#' by `value_type` with posterior summaries by case, voc, rt, growth, model,
+#' and the raw posterior summary.
+#'
+#' @family postprocess
 #' @export
 #' @importFrom purrr reduce map walk
 #' @importFrom posterior quantile2 default_convergence_measures
@@ -213,7 +222,8 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   # rescale growth rate to desired range
   cols <- c("mean", "median", paste0("q", probs * 100))
   rt[, (cols) := purrr::map(.SD, ~ . * scale_r),
-       .SDcols = cols, by = "type"]
+    .SDcols = cols, by = "type"
+  ]
 
   # copy into growth
   growth <- copy(rt)
@@ -280,10 +290,12 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #'  `summarise_posterior()`. For forecast dates to be extracted data with
 #' `value_type == "cases"` must be present.
 #'
-#' @export
 #' @return A data.frame containing at least two vectors: Data unavailable
 #' indicating the type of data that is missing, and date giving the date
 #' data was last available for.
+#'
+#' @family postprocess
+#' @export
 #' @importFrom purrr map_lgl
 #' @examples
 #' \dontrun{
@@ -305,17 +317,21 @@ extract_forecast_dates <- function(posterior) {
 
   if (nrow(cases) == 0 | is.null(cases$forecast_start)) {
     message(
-      "Cannot extract forecast dates to plot as case data with a forecast_date variable is not present.") # nolint
+      "Cannot extract forecast dates to plot as case data with a forecast_date variable is not present." # nolint
+    )
     dates <- data.table(`Data unavailable` = list(), date = list())
-  }else{
+  } else {
     dates <- cases[forecast_start == TRUE]
-    cols <- c("variable", "clean_name", "obs", "observed", "forecast_start",
+    cols <- c(
+      "variable", "clean_name", "obs", "observed", "forecast_start",
       "exponentiated", "mean", "median", "sd", "mad", "rhat",
       "ess_bulk", "ess_tail", grep("^q[0-9]", names(dates), value = TRUE)
     )
     dates[, (cols) := NULL]
-    dates[, type := fcase(type %in% c("Overall", "Combined"), "Cases",
-                          !type %in% c("Overall", "Combined"), "Sequences")]
+    dates[, type := fcase(
+      type %in% c("Overall", "Combined"), "Cases",
+      !type %in% c("Overall", "Combined"), "Sequences"
+    )]
     dates <- unique(dates)
     setnames(dates, "type", "Data unavailable")
     setcolorder(dates, "Data unavailable")
@@ -326,12 +342,15 @@ extract_forecast_dates <- function(posterior) {
 #' Extract forecasts from a summarised posterior
 #'
 #'
-#' @description Uses the `observed` variable returned by
+#' Uses the `observed` variable returned by
 #' `summarise_posterior()` to return posterior predictions
 #' for forecast dates only.
-#' @inheritParams extract_forecast_dates
+#'
 #' @return A data.frame of forecasts in the format returned
 #' by `summarise_posterior` but with fitting variables dropped.
+#'
+#' @family postprocess
+#' @inheritParams extract_forecast_dates
 #' @examples
 #' \dontrun{
 #' obs <- latest_obs(germany_covid19_delta_obs)
@@ -342,7 +361,6 @@ extract_forecast_dates <- function(posterior) {
 #' extract_forecast(p)
 #' }
 extract_forecast <- function(posterior) {
-
   forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
 
   cols <- c(
@@ -364,13 +382,17 @@ extract_forecast <- function(posterior) {
 #' Assign a custom label to the variant of concern in the
 #' output from `summarise_posterior()`.
 #'
-#' @inheritParams extract_forecast_dates
 #' @param label Character string  indicating the new label to use for the
 #' variant of concern.
+#'
 #' @param target_label A character string defaulting to "VOC". Indicates the
 #' current label for the variant of concern.
+#'
 #' @return A list of data frames as returned by `summarise_posterior()` but
 #' with updated labels.
+#'
+#' @family postprocess
+#' @inheritParams extract_forecast_dates
 #' @export
 #' @examples
 #' \dontrun{
@@ -410,9 +432,12 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #' Extract posterior draws
 #'
 #' @param fit A list as produced by `stan_fit()`.
+#'
 #' @param ... Additional parameters passed to `cmdstanr::draws`
 #'
 #' @return A `draws` object from the `posterior` package.
+#'
+#' @family postprocess
 #' @examples
 #' \dontrun{
 #' obs <- latest_obs(germany_covid19_delta_obs)
@@ -425,10 +450,39 @@ extract_draws <- function(fit, ...) {
   fit$fit[[1]]$draws(...)
 }
 
+#' Convert summarised quantiles from wide to long format
+#'
+#' @param posterior A dataframe as output by `summarise_posterior()`,
+#' extract_forecast(), etc.
+#'
+#' @return A data frame of quantiles in long format.
+#'
+#' @family postprocess
+#' @export
+#' @examples
+#' \dontrun{
+#' options(mc.cores = 4)
+#' dt <- forecast_dt(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
+#' dt <- combine_posteriors_dt(dt, target = "forecast")
+#' long <- quantiles_to_long(dt)
+#' print(long)
+#' }
+quantiles_to_long <- function(posterior) {
+  long <- melt(posterior,
+    measure.vars = patterns("^q[0-9]"),
+    value.name = "prediction", variable.name = "quantile"
+  )
+  long[, quantile := gsub("q", "", quantile)]
+  long[, quantile := as.numeric(quantile) / 100]
+  return(long)
+}
+
 #' Convert to stanfit object
 #'
-#' @inheritParams summarise_posterior
 #' @return The model fit as a stanfit object
+#'
+#' @family postprocess
+#' @inheritParams summarise_posterior
 #' @importFrom rstan read_stan_csv
 #' @examples
 #' \dontrun{
@@ -441,25 +495,4 @@ extract_draws <- function(fit, ...) {
 convert_to_stanfit <- function(fit) {
   stanfit <- read_stan_csv(fit$fit[[1]]$output_files())
   return(stanfit)
-}
-
-#' Launch shinystan
-#'
-#' Launch shinystan an interactive tool for stan model evaluation
-#'
-#' @inheritParams summarise_posterior
-#' @return NULL
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' bp_launch_shinystan(fit)
-#' }
-bp_launch_shinystan <- function(fit) {
-  requireNamespace("shinystan", quietly = TRUE)
-  stanfit <- convert_to_stanfit(fit)
-  shinystan::launch_shinystan(stanfit)
-  return(invisible(NULL))
 }

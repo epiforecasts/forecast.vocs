@@ -73,7 +73,7 @@ default for that strain is used. If multiple strain models are being forecast
 then \code{models} should be a list models.}
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
-included in the model.extract}
+included in the model.extract.}
 
 \item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
 likelihood be output. Disabling this will speed up fitting if evaluating the
@@ -130,3 +130,10 @@ results <- unnest_posterior(results)
 plot_cases(results, log = TRUE)
 }
 }
+\seealso{
+Functions used for forecastin across models, dates, and scenarios
+\code{\link{forecast_across_dates}()},
+\code{\link{forecast_across_scenarios}()},
+\code{\link{unnest_posterior}()}
+}
+\concept{forecast}

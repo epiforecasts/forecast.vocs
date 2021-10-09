@@ -14,7 +14,9 @@ fit <- stan_fit(dt,
 )
 
 p <- summarise_posterior(fit)
+
 plot_rt(p)
+
 plot_cases(p, latest_obs(germany_covid19_delta_obs), log = TRUE)
 
 plot_pairs(fit)

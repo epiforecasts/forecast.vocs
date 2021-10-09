@@ -23,6 +23,7 @@
 #' well as the summarised posterior, forecast and information about the
 #' parameters specified.
 #'
+#' @family forecast
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
 #' @inheritParams stan_fit
