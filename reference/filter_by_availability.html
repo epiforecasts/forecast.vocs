@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -61,9 +61,9 @@
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
-      <td><p>A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+      <td><p>A <code>data.frame</code> with the following variables:
+<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
+and <code>seq_available</code>. <code>seq_available</code> and <code>case_available</code> must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.</p></td>
     </tr><tr><th>date</th>
@@ -71,15 +71,28 @@ on data availability.</p></td>
 maximum date in <code>obs</code>.</p></td>
     </tr><tr><th>seq_date</th>
       <td><p>Date from which to use available sequence data. Defaults to
-the forecast date.</p></td>
+the <code>date</code>.</p></td>
     </tr><tr><th>case_date</th>
       <td><p>Date from which to use available case data. Defaults to
-the forecast date.</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">latest_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span></span>
+the <code>date</code>.</p></td>
+    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>data.frame</code> of observations filter for the latest available
+data for the specified dates of interest.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Preprocessing functions
+<code><a href="latest_obs.html">latest_obs</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu">filter_by_availability</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">germany_covid19_delta_obs</span>,</span>
+<span class="r-in">  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021-06-12"</span><span class="op">)</span>,</span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">latest_dt</span>, seq_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">latest_dt</span>, seq_lag <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">obs</span>, seq_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">obs</span>, seq_lag <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="co"># filter out duplicates and up to the present date</span></span>
 <span class="r-in"><span class="fu">filter_by_availability</span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></span>
@@ -88,57 +101,29 @@ the forecast date.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2021-03-27       Germany       DE 109442      2021-03-27        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3: 2021-04-03       Germany       DE 117965      2021-04-03        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4: 2021-04-10       Germany       DE 107223      2021-04-10        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4108       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4539      34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3667      54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4547      89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3688     101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3817     119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      2781     102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05      2197     181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2021-06-12       Germany       DE  15553      2021-06-12      1566     309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 2021-06-19       Germany       DE   7659      2021-06-19       991     414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 2021-06-26       Germany       DE   5033      2021-06-26       706     451</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 2021-07-03       Germany       DE   4181      2021-07-03       803     631</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 2021-07-10       Germany       DE   5067      2021-07-10       735     643</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 2021-07-17       Germany       DE   7969      2021-07-17       564     521</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 2021-07-24       Germany       DE  11122      2021-07-24        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2021-07-31       Germany       DE  14654      2021-07-31        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2021-08-07       Germany       DE  18474      2021-08-07        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2021-08-14       Germany       DE  28646      2021-08-14        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2021-08-21       Germany       DE  44862      2021-08-21        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2021-08-28       Germany       DE  62984      2021-08-28        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2021-09-04       Germany       DE  71057      2021-09-04        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2021-09-11       Germany       DE  75107      2021-09-11        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           date location_name location  cases cases_available seq_total seq_voc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4066       5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4494      31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3615      55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4479      86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3399      93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3275     108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      1328      34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05        NA      NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2021-06-12       Germany       DE  15553      2021-06-12        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001460565    2021-05-08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.007490637    2021-05-15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.014725934    2021-05-22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019573345    2021-05-29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027386117    2021-06-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.031176316    2021-06-12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.036677454    2021-06-19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 0.082385071    2021-06-26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 0.197318008    2021-07-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 0.417759839    2021-07-10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 0.638810198    2021-07-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 0.785803238    2021-07-24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 0.874829932    2021-07-31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 0.923758865    2021-08-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001229710    2021-05-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.006898086    2021-05-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.015214385    2021-05-22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019200714    2021-05-29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027360989    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.032977099    2021-06-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.025602410    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:          NA    2021-06-26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:          NA    2021-07-03</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># filter to only use sequence data up the the 12th of June</span></span>
 <span class="r-in"><span class="fu">filter_by_availability</span><span class="op">(</span><span class="va">dt</span>, seq_date <span class="op">=</span> <span class="st">"2021-06-12"</span><span class="op">)</span></span>
@@ -147,57 +132,29 @@ the forecast date.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2021-03-27       Germany       DE 109442      2021-03-27        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3: 2021-04-03       Germany       DE 117965      2021-04-03        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4: 2021-04-10       Germany       DE 107223      2021-04-10        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4108       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4539      34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3667      54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4547      89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3688     101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3817     119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      2781     102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05      2197     181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4066       5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4494      31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3615      55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4479      86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3399      93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3275     108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      1328      34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2021-06-12       Germany       DE  15553      2021-06-12        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 2021-06-19       Germany       DE   7659      2021-06-19        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 2021-06-26       Germany       DE   5033      2021-06-26        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 2021-07-03       Germany       DE   4181      2021-07-03        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 2021-07-10       Germany       DE   5067      2021-07-10        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 2021-07-17       Germany       DE   7969      2021-07-17        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 2021-07-24       Germany       DE  11122      2021-07-24        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2021-07-31       Germany       DE  14654      2021-07-31        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2021-08-07       Germany       DE  18474      2021-08-07        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2021-08-14       Germany       DE  28646      2021-08-14        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2021-08-21       Germany       DE  44862      2021-08-21        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2021-08-28       Germany       DE  62984      2021-08-28        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2021-09-04       Germany       DE  71057      2021-09-04        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2021-09-11       Germany       DE  75107      2021-09-11        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           date location_name location  cases cases_available seq_total seq_voc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001460565    2021-05-08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.007490637    2021-05-15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.014725934    2021-05-22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019573345    2021-05-29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027386117    2021-06-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.031176316    2021-06-12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.036677454    2021-06-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 0.082385071    2021-06-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001229710    2021-05-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.006898086    2021-05-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.015214385    2021-05-22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019200714    2021-05-29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027360989    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.032977099    2021-06-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.025602410    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:          NA    2021-06-26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13:          NA    2021-07-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:          NA    2021-07-10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:          NA    2021-07-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:          NA    2021-07-24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:          NA    2021-07-31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:          NA    2021-08-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># as above but only use</span></span>
 <span class="r-in"><span class="fu">filter_by_availability</span><span class="op">(</span><span class="va">dt</span>,</span>
@@ -209,57 +166,29 @@ the forecast date.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2021-03-27       Germany       DE 109442      2021-03-27        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3: 2021-04-03       Germany       DE 117965      2021-04-03        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4: 2021-04-10       Germany       DE 107223      2021-04-10        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4108       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4539      34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3667      54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4547      89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3688     101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3817     119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      2781     102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05      2197     181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2021-04-17       Germany       DE 142664      2021-04-17      4066       5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2021-04-24       Germany       DE 145568      2021-04-24      4494      31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2021-05-01       Germany       DE 131887      2021-05-01      3615      55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2021-05-08       Germany       DE 107141      2021-05-08      4479      86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2021-05-15       Germany       DE  77261      2021-05-15      3399      93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2021-05-22       Germany       DE  57310      2021-05-22      3275     108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2021-05-29       Germany       DE  33052      2021-05-29      1328      34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2021-06-05       Germany       DE  22631      2021-06-05        NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2021-06-12       Germany       DE  15553      2021-06-12        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 2021-06-19       Germany       DE   7659      2021-06-19        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 2021-06-26       Germany       DE   5033      2021-06-26        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 2021-07-03       Germany       DE     NA      2021-07-03        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 2021-07-10       Germany       DE     NA      2021-07-10        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 2021-07-17       Germany       DE     NA      2021-07-17        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 2021-07-24       Germany       DE     NA      2021-07-24        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2021-07-31       Germany       DE     NA      2021-07-31        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2021-08-07       Germany       DE     NA      2021-08-07        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2021-08-14       Germany       DE     NA      2021-08-14        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2021-08-21       Germany       DE     NA      2021-08-21        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2021-08-28       Germany       DE     NA      2021-08-28        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2021-09-04       Germany       DE     NA      2021-09-04        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2021-09-11       Germany       DE     NA      2021-09-11        NA      NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           date location_name location  cases cases_available seq_total seq_voc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:          NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001460565    2021-05-08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.007490637    2021-05-15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.014725934    2021-05-22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019573345    2021-05-29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027386117    2021-06-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.031176316    2021-06-12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.036677454    2021-06-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 0.082385071    2021-06-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 0.001229710    2021-05-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 0.006898086    2021-05-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0.015214385    2021-05-22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 0.019200714    2021-05-29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 0.027360989    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0.032977099    2021-06-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0.025602410    2021-06-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:          NA    2021-06-26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13:          NA    2021-07-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:          NA    2021-07-10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:          NA    2021-07-17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:          NA    2021-07-24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:          NA    2021-07-31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:          NA    2021-08-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:          NA          &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       share_voc seq_available</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

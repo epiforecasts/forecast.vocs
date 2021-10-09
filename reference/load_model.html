@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -60,11 +60,21 @@
 maximum is 2.</p></td>
     </tr><tr><th>compile</th>
       <td><p>Logical, defaults to <code>TRUE</code>. Should the model
-be loaded and compiled using <code>cmdstanr::cmstan_model()</code>.</p></td>
+be loaded and compiled using <code><a href="https://mc-stan.org/cmdstanr/reference/cmdstan_model.html">cmdstanr::cmdstan_model()</a></code>.</p></td>
     </tr><tr><th>...</th>
-      <td><p>Additional arguments passed to <code>cmdstanr::cmstan_model()</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+      <td><p>Additional arguments passed to <code><a href="https://mc-stan.org/cmdstanr/reference/cmdstan_model.html">cmdstanr::cmdstan_model()</a></code>.</p></td>
+    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>cmdstanr</code> model.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for modelling
+<code><a href="stan_data.html">stan_data</a>()</code>,
+<code><a href="stan_fit.html">stan_fit</a>()</code>,
+<code><a href="stan_inits.html">stan_inits</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
 <span class="r-in"><span class="co"># one strain model</span></span>
 <span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu">load_model</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"></span>

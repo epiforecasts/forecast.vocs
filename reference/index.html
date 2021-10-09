@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -75,72 +75,13 @@
 </colgroup>
 <tbody><tr>
 <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor">
-<a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-forecast" class="hasAnchor">
+<a href="#section-forecast" class="anchor"></a>Forecast</h2>
           <p class="section-desc"></p>
+<p>Functions for forecasting across models, dates, and scenarios.</p>
         </th>
       </tr></tbody>
 <tbody>
-<tr>
-<td>
-          <p><code><a href="add_forecast_dates.html">add_forecast_dates()</a></code> </p>
-        </td>
-        <td><p>Add the forecast dates to a plot</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="bp_launch_shinystan.html">bp_launch_shinystan()</a></code> </p>
-        </td>
-        <td><p>Launch shinystan</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="check_observations.html">check_observations()</a></code> </p>
-        </td>
-        <td><p>Check observations are in the correct format</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="check_quantiles.html">check_quantiles()</a></code> </p>
-        </td>
-        <td><p>Check Quantiles Required are Present</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="convert_to_stanfit.html">convert_to_stanfit()</a></code> </p>
-        </td>
-        <td><p>Convert to stanfit object</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="define_scenarios.html">define_scenarios()</a></code> </p>
-        </td>
-        <td><p>Define data availability scenarios</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="extract_draws.html">extract_draws()</a></code> </p>
-        </td>
-        <td><p>Extract posterior draws</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="extract_forecast.html">extract_forecast()</a></code> </p>
-        </td>
-        <td><p>Extract forecasts from a summarised posterior</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> </p>
-        </td>
-        <td><p>Extract forecast dates</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="filter_by_availability.html">filter_by_availability()</a></code> </p>
-        </td>
-        <td><p>Filter data based on availability and forecast date</p></td>
-      </tr>
 <tr>
 <td>
           <p><code><a href="forecast.html">forecast()</a></code> </p>
@@ -167,27 +108,105 @@
       </tr>
 <tr>
 <td>
-          <p><code><a href="generate_obs.html">generate_obs()</a></code> </p>
+          <p><code><a href="unnest_posterior.html">unnest_posterior()</a></code> </p>
         </td>
-        <td><p>Generate Simulated Observations</p></td>
+        <td><p>Unnest posterior estimates from a forecast data.frame</p></td>
+      </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-model" class="hasAnchor">
+<a href="#section-model" class="anchor"></a>Model</h2>
+          <p class="section-desc"></p>
+<p>Functions for fitting the forecasting models.</p>
+        </th>
+      </tr></tbody>
+<tbody>
+<tr>
+<td>
+          <p><code><a href="load_model.html">load_model()</a></code> </p>
+        </td>
+        <td><p>Load and compile a strain model</p></td>
       </tr>
 <tr>
 <td>
-          <p><code><a href="generate_obs_scenario.html">generate_obs_scenario()</a></code> </p>
+          <p><code><a href="stan_data.html">stan_data()</a></code> </p>
         </td>
-        <td><p>Define observed data for a scenario</p></td>
+        <td><p>Format data for use with stan</p></td>
       </tr>
 <tr>
 <td>
-          <p><code><a href="germany_covid19_delta_obs.html">germany_covid19_delta_obs</a></code> </p>
+          <p><code><a href="stan_fit.html">stan_fit()</a></code> </p>
         </td>
-        <td><p>Test positive COVID-19 cases and sequences in Germany</p></td>
+        <td><p>Fit a brancing process strain model</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="stan_inits.html">stan_inits()</a></code> </p>
+        </td>
+        <td><p>Set up initial conditions for model</p></td>
+      </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-preprocess" class="hasAnchor">
+<a href="#section-preprocess" class="anchor"></a>Preprocess</h2>
+          <p class="section-desc"></p>
+<p>Functions for preprocessing observations.</p>
+        </th>
+      </tr></tbody>
+<tbody>
+<tr>
+<td>
+          <p><code><a href="filter_by_availability.html">filter_by_availability()</a></code> </p>
+        </td>
+        <td><p>Filter data based on availability and forecast date</p></td>
       </tr>
 <tr>
 <td>
           <p><code><a href="latest_obs.html">latest_obs()</a></code> </p>
         </td>
         <td><p>Filter for latest observations of all types</p></td>
+      </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-postprocess" class="hasAnchor">
+<a href="#section-postprocess" class="anchor"></a>Postprocess</h2>
+          <p class="section-desc"></p>
+<p>Functions for postprocessing model output.</p>
+        </th>
+      </tr></tbody>
+<tbody>
+<tr>
+<td>
+          <p><code><a href="bp_launch_shinystan.html">bp_launch_shinystan()</a></code> </p>
+        </td>
+        <td><p>Launch shinystan</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="convert_to_stanfit.html">convert_to_stanfit()</a></code> </p>
+        </td>
+        <td><p>Convert to stanfit object</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="extract_draws.html">extract_draws()</a></code> </p>
+        </td>
+        <td><p>Extract posterior draws</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="extract_forecast.html">extract_forecast()</a></code> </p>
+        </td>
+        <td><p>Extract forecasts from a summarised posterior</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> </p>
+        </td>
+        <td><p>Extract forecast dates</p></td>
       </tr>
 <tr>
 <td>
@@ -203,9 +222,37 @@
       </tr>
 <tr>
 <td>
-          <p><code><a href="load_model.html">load_model()</a></code> </p>
+          <p><code><a href="quantiles_to_long.html">quantiles_to_long()</a></code> </p>
         </td>
-        <td><p>Load and compile a strain model</p></td>
+        <td><p>Convert summarised quantiles from wide to long format</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="summarise_posterior.html">summarise_posterior()</a></code> </p>
+        </td>
+        <td><p>Summarise the posterior</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="update_voc_label.html">update_voc_label()</a></code> </p>
+        </td>
+        <td><p>Label the Variant of Concern</p></td>
+      </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-plot" class="hasAnchor">
+<a href="#section-plot" class="anchor"></a>Plot</h2>
+          <p class="section-desc"></p>
+<p>Functions for plotting postprocessed forecast model output.</p>
+        </th>
+      </tr></tbody>
+<tbody>
+<tr>
+<td>
+          <p><code><a href="add_forecast_dates.html">add_forecast_dates()</a></code> </p>
+        </td>
+        <td><p>Add the forecast dates to a plot</p></td>
       </tr>
 <tr>
 <td>
@@ -256,11 +303,35 @@
         <td><p>Plot the posterior prediction for the fraction of samples with the variant
 of concern</p></td>
       </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-model-validation" class="hasAnchor">
+<a href="#section-model-validation" class="anchor"></a>Model validation</h2>
+          <p class="section-desc"></p>
+<p>Functions for validating model fits.</p>
+        </th>
+      </tr></tbody>
+<tbody><tr>
+<td>
+          <p><code><a href="plot_pairs.html">plot_pairs()</a></code> </p>
+        </td>
+        <td><p>Pairs plot of parameters of interest and fitting diagnostics</p></td>
+      </tr></tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-generate-data" class="hasAnchor">
+<a href="#section-generate-data" class="anchor"></a>Generate data</h2>
+          <p class="section-desc"></p>
+<p>Functions for generating simulated data.</p>
+        </th>
+      </tr></tbody>
+<tbody>
 <tr>
 <td>
-          <p><code><a href="quantiles_to_long.html">quantiles_to_long()</a></code> </p>
+          <p><code><a href="generate_obs.html">generate_obs()</a></code> </p>
         </td>
-        <td><p>Convert summarised quantiles from wide to long format</p></td>
+        <td><p>Generate Simulated Observations</p></td>
       </tr>
 <tr>
 <td>
@@ -268,35 +339,27 @@ of concern</p></td>
         </td>
         <td><p>Sample Sequence Observation Model</p></td>
       </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-define-and-generate-scenarios" class="hasAnchor">
+<a href="#section-define-and-generate-scenarios" class="anchor"></a>Define and generate scenarios</h2>
+          <p class="section-desc"></p>
+<p>Functions for defining and generating data scenarios.</p>
+        </th>
+      </tr></tbody>
+<tbody>
 <tr>
 <td>
-          <p><code><a href="stan_data.html">stan_data()</a></code> </p>
+          <p><code><a href="define_scenarios.html">define_scenarios()</a></code> </p>
         </td>
-        <td><p>Format data for use with stan</p></td>
+        <td><p>Define data availability scenarios</p></td>
       </tr>
 <tr>
 <td>
-          <p><code><a href="stan_fit.html">stan_fit()</a></code> </p>
+          <p><code><a href="generate_obs_scenario.html">generate_obs_scenario()</a></code> </p>
         </td>
-        <td><p>Fit a brancing process strain model</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="stan_inits.html">stan_inits()</a></code> </p>
-        </td>
-        <td><p>Set up initial conditions for model</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="summarise_posterior.html">summarise_posterior()</a></code> </p>
-        </td>
-        <td><p>Summarise the posterior</p></td>
-      </tr>
-<tr>
-<td>
-          <p><code><a href="unnest_posterior.html">unnest_posterior()</a></code> </p>
-        </td>
-        <td><p>Unnest posterior estimates from a forecast data.frame</p></td>
+        <td><p>Define observed data for a scenario</p></td>
       </tr>
 <tr>
 <td>
@@ -304,11 +367,53 @@ of concern</p></td>
         </td>
         <td><p>Update observations based on availability</p></td>
       </tr>
+</tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor">
+<a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"></p>
+<p>Package datasets used in examples and by users to explore the package functionality.</p>
+        </th>
+      </tr></tbody>
+<tbody><tr>
+<td>
+          <p><code><a href="germany_covid19_delta_obs.html">germany_covid19_delta_obs</a></code> </p>
+        </td>
+        <td><p>Test positive COVID-19 cases and sequences in Germany</p></td>
+      </tr></tbody>
+<tbody><tr>
+<th colspan="2">
+          <h2 id="section-check-inputs" class="hasAnchor">
+<a href="#section-check-inputs" class="anchor"></a>Check inputs</h2>
+          <p class="section-desc"></p>
+<p>Functions to check the structure of user inputs.</p>
+        </th>
+      </tr></tbody>
+<tbody>
 <tr>
 <td>
-          <p><code><a href="update_voc_label.html">update_voc_label()</a></code> </p>
+          <p><code><a href="check_dataframe.html">check_dataframe()</a></code> </p>
         </td>
-        <td><p>Label the Variant of Concern</p></td>
+        <td><p>Check a data.frame</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="check_observations.html">check_observations()</a></code> </p>
+        </td>
+        <td><p>Check observations are in the correct format</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="check_param.html">check_param()</a></code> </p>
+        </td>
+        <td><p>Check a parameter is the correct type and length</p></td>
+      </tr>
+<tr>
+<td>
+          <p><code><a href="check_quantiles.html">check_quantiles()</a></code> </p>
+        </td>
+        <td><p>Check Quantiles Required are Present</p></td>
       </tr>
 </tbody>
 </table>

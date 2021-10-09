@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -77,9 +77,9 @@
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
-      <td><p>A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+      <td><p>A <code>data.frame</code> with the following variables:
+<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
+and <code>seq_available</code>. <code>seq_available</code> and <code>case_available</code> must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.</p></td>
     </tr><tr><th>forecast_date</th>
@@ -87,10 +87,10 @@ on data availability.</p></td>
 maximum date in <code>obs</code>.</p></td>
     </tr><tr><th>seq_date</th>
       <td><p>Date from which to use available sequence data. Defaults to
-the forecast date.</p></td>
+the <code>date</code>.</p></td>
     </tr><tr><th>case_date</th>
       <td><p>Date from which to use available case data. Defaults to
-the forecast date.</p></td>
+the <code>date</code>.</p></td>
     </tr><tr><th>horizon</th>
       <td><p>Integer forecast horizon. Defaults to 4.</p></td>
     </tr><tr><th>r_init</th>
@@ -122,11 +122,11 @@ default for that strain is used. If multiple strain models are being forecast
 then <code>models</code> should be a list models.</p></td>
     </tr><tr><th>likelihood</th>
       <td><p>Logical, defaults to <code>TRUE</code>. Should the likelihood be
-included in the model.extract</p></td>
+included in the model</p></td>
     </tr><tr><th>output_loglik</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should the log
-likelihood be output. Disabling this will speed up fitting if evaluating the
-model fit is not required.</p></td>
+      <td><p>Logical, defaults to <code>FALSE</code>. Should the
+log-likelihood be output. Disabling this will speed up fitting
+if evaluating the model fit is not required.</p></td>
     </tr><tr><th>debug</th>
       <td><p>Logical, defaults to <code>FALSE</code>. Should within model debug
 information be returned.</p></td>
@@ -143,37 +143,49 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
       <td><p>A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
-plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code>plot_rt</code>,
-and <code>plot_voc</code>).</p></td>
+plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
+and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
     </tr><tr><th>id</th>
       <td><p>ID to assign to this forecast. Defaults to 0.</p></td>
     </tr><tr><th>...</th>
       <td><p>Additional parameters passed to <code><a href="stan_fit.html">stan_fit()</a></code>.</p></td>
     </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe containing the output of <code><a href="stan_fit.html">stan_fit()</a></code> in each row as
+    <p>A <code>data.frame</code> containing the output of <code><a href="stan_fit.html">stan_fit()</a></code> in each row as
 well as the summarised posterior, forecast and information about the
 parameters specified.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for forecastin across models, dates, and scenarios
+<code><a href="forecast_across_dates.html">forecast_across_dates</a>()</code>,
+<code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
+<code><a href="forecast_n_strain.html">forecast_n_strain</a>()</code>,
+<code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span>,</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">germany_covid19_delta_obs</span>,</span>
+<span class="r-in">  forecast_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021-06-12"</span><span class="op">)</span>,</span>
 <span class="r-in">  horizon <span class="op">=</span> <span class="fl">4</span>,</span>
 <span class="r-in">  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span class="r-in">  adapt_delta <span class="op">=</span> <span class="fl">0.99</span>,</span>
 <span class="r-in">  max_treedepth <span class="op">=</span> <span class="fl">15</span>,</span>
 <span class="r-in">  variant_relationship <span class="op">=</span> <span class="st">"scaled"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># inspect results</span></span>
-<span class="r-in"><span class="va">results</span></span>
+<span class="r-in"><span class="co"># inspect forecasts</span></span>
+<span class="r-in"><span class="va">forecasts</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># unnest posteriors</span></span>
-<span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="unnest_posterior.html">unnest_posterior</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="unnest_posterior.html">unnest_posterior</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot case posterior predictions</span></span>
-<span class="r-in"><span class="fu"><a href="plot_cases.html">plot_cases</a></span><span class="op">(</span><span class="va">results</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="plot_cases.html">plot_cases</a></span><span class="op">(</span><span class="va">forecasts</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># plot voc posterior predictions</span></span>
+<span class="r-in"><span class="fu"><a href="plot_voc.html">plot_voc</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
   </div>

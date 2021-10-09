@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -60,7 +60,18 @@
     </tr><tr><th>strains</th>
       <td><p>Integer number of strains. Defaults to 2. Current
 maximum is 2.</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A function that when called returns a list of initial conditions
+for the package stan models.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for modelling
+<code><a href="load_model.html">load_model</a>()</code>,
+<code><a href="stan_data.html">stan_data</a>()</code>,
+<code><a href="stan_fit.html">stan_fit</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="stan_data.html">stan_data</a></span><span class="op">(</span><span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">inits</span> <span class="op">&lt;-</span> <span class="fu">stan_inits</span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">inits</span></span>
@@ -86,54 +97,54 @@ maximum is 2.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(inits)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7f95dad3c558&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7f95dad1a018&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7f99cb277e00&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7f99cb27b850&gt;</span>
 <span class="r-in"><span class="fu">inits</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $init_cases</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.35392  5.33467</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.383317  5.345301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_init</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02571951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.02656592</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.004741436</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01401145</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0019566643  0.0018923163 -0.0159634270 -0.0156532273 -0.0064134668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0088099141  0.0198519344 -0.0113162052 -0.0065341697  0.0010011304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0001915756  0.0114076222 -0.0180948954 -0.0162843801  0.0089440210</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.0082537190 -0.0133138813 -0.0159058602  0.0124157028 -0.0168272547</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0018867794 -0.0117680983  0.0116240680 -0.0079596621  0.0095449439</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26]  0.0010487042  0.0012249974  0.0183314963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0046783746  0.0039393244  0.0014552224  0.0019175986  0.0031734202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0031120790  0.0074285008 -0.0009685554  0.0023545198 -0.0065586485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.0127257502 -0.0054072989 -0.0142451556  0.0177690609  0.0025172441</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0210828479  0.0010211889  0.0087045198  0.0047445003 -0.0062530161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0071718406  0.0070136904  0.0110225182  0.0094725501  0.0119659765</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -0.0098524722  0.0133003904 -0.0119921617</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09538049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09275893</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sqrt_phi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006812675 0.010134605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.009321746 0.010225839</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_mod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02320799</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02626079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00989491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006304774</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nvoc_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002080116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002235385</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0190575026  0.0131411425  0.0032123922 -0.0158136114 -0.0029063198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.0141624646  0.0139175546 -0.0044756955  0.0049011559 -0.0044736681</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0017248682 -0.0011962854 -0.0045715500  0.0000365643 -0.0047733455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.0022652082 -0.0006460168 -0.0078750233 -0.0044499495  0.0040457496</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0031153188 -0.0053622567 -0.0130936220  0.0030788192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.013523076  0.016386570 -0.004491314  0.003706039  0.006375807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.002289068 -0.003428282  0.015786538 -0.016458455  0.011532477</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.004819978  0.014280099  0.012424683  0.020270669 -0.004776675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.006962598  0.002233410  0.001464812  0.015038349 -0.010485820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.004422333 -0.009511272 -0.004664228 -0.007503009</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nvoc_eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0001670279  0.0080484551  0.0017306523 -0.0087575291 -0.0142209381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0008336841 -0.0046681971  0.0048363616  0.0037799951 -0.0061507751</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0023806249  0.0020295291  0.0012424558 -0.0025213943 -0.0170971115</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.0033703174  0.0014207795  0.0137816433 -0.0060186057 -0.0124282970</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0022702404  0.0170054448  0.0217684170  0.0076338158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0016885093 -0.0179136399  0.0043119219 -0.0107657895  0.0223625341</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.0090268214 -0.0137168876  0.0064767657  0.0037054601 -0.0113012834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0090838817 -0.0002126351  0.0055520577 -0.0024780285 -0.0014148874</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.0006379031  0.0157362250 -0.0021887065  0.0128934015 -0.0127656682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.0013635225  0.0006497662  0.0153002019 -0.0127717916</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
   </div>

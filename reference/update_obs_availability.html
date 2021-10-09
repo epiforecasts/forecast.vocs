@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Update observations based on availability</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/preprocess.R"><code>R/preprocess.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/data-scenarios.R"><code>R/data-scenarios.R</code></a></small>
     <div class="hidden name"><code>update_obs_availability.Rd</code></div>
     </div>
 
@@ -56,9 +56,9 @@
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
-      <td><p>A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+      <td><p>A <code>data.frame</code> with the following variables:
+<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
+and <code>seq_available</code>. <code>seq_available</code> and <code>case_available</code> must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.</p></td>
     </tr><tr><th>cases_lag</th>
@@ -67,7 +67,17 @@ Defaults to not alter the input data.</p></td>
     </tr><tr><th>seq_lag</th>
       <td><p>Number of weeks that sequence data takes to be reported.
 Defaults to not alter the input data.</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>data.frame</code> of observations with updated case and
+sequence availability dates.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions to define and create data scenarios.
+<code><a href="define_scenarios.html">define_scenarios</a>()</code>,
+<code><a href="generate_obs_scenario.html">generate_obs_scenario</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">update_obs_availability</span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">germany_covid19_delta_obs</span>,</span>
 <span class="r-in">  cases_lag <span class="op">=</span> <span class="fl">2</span>, seq_lag <span class="op">=</span> <span class="fl">3</span></span>

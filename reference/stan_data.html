@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
       <td><p>A data frame with the following variables:
-date, cases, seq_voc, and seq_total.</p></td>
+<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>.</p></td>
     </tr><tr><th>horizon</th>
       <td><p>Integer forecast horizon. Defaults to 4.</p></td>
     </tr><tr><th>r_init</th>
@@ -87,15 +87,25 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 used include overdispersion.</p></td>
     </tr><tr><th>likelihood</th>
       <td><p>Logical, defaults to <code>TRUE</code>. Should the likelihood be
-included in the model.extract</p></td>
+included in the model</p></td>
     </tr><tr><th>output_loglik</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should the log
-likelihood be output. Disabling this will speed up fitting if evaluating the
-model fit is not required.</p></td>
+      <td><p>Logical, defaults to <code>FALSE</code>. Should the
+log-likelihood be output. Disabling this will speed up fitting
+if evaluating the model fit is not required.</p></td>
     </tr><tr><th>debug</th>
       <td><p>Logical, defaults to <code>FALSE</code>. Should within model debug
 information be returned.</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list as required by stan.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for modelling
+<code><a href="load_model.html">load_model</a>()</code>,
+<code><a href="stan_fit.html">stan_fit</a>()</code>,
+<code><a href="stan_inits.html">stan_inits</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">stan_data</span><span class="op">(</span><span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $t</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 30</span>

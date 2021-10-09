@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -56,8 +56,15 @@
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
-      <td><p>A data.frame of observations to check for formatting issues</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+      <td><p>A <code>data.frame</code> of observations to check for formatting issues.</p></td>
+    </tr></table><h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for checking inputs.
+<code><a href="check_dataframe.html">check_dataframe</a>()</code>,
+<code><a href="check_param.html">check_param</a>()</code>,
+<code><a href="check_quantiles.html">check_quantiles</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">check_observations</span><span class="op">(</span><span class="va">obs</span><span class="op">)</span></span>
 </code></pre></div>

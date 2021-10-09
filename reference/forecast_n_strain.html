@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
       <td><p>A list of data as produced by <code><a href="stan_data.html">stan_data()</a></code>.</p></td>
     </tr><tr><th>model</th>
-      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="load_model.html">load_model()</a></code></p></td>
+      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="load_model.html">load_model()</a></code>.</p></td>
     </tr><tr><th>strains</th>
       <td><p>Integer number of strains. Defaults to 2. Current
 maximum is 2.</p></td>
@@ -78,8 +78,8 @@ rename parameters to use variant specific terminology.</p></td>
       <td><p>A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
-plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code>plot_rt</code>,
-and <code>plot_voc</code>).</p></td>
+plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
+and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
     </tr><tr><th>scale_r</th>
       <td><p>Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case
@@ -87,7 +87,15 @@ is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
     </tr><tr><th>...</th>
       <td><p>Additional parameters passed to <code><a href="stan_fit.html">stan_fit()</a></code>.</p></td>
-    </tr></table></div>
+    </tr></table><h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class="dont-index"><p>Functions used for forecastin across models, dates, and scenarios
+<code><a href="forecast_across_dates.html">forecast_across_dates</a>()</code>,
+<code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
+<code><a href="forecast.html">forecast</a>()</code>,
+<code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
     </nav></div>
