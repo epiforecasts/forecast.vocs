@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.2000</span>
       </span>
     </div>
 
@@ -47,6 +47,18 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/model-definitions.html">Model definitions</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
@@ -117,37 +129,37 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 11.6 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 12.0 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 14.5 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 17.3 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 11.9 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 12.2 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 12.5 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 12.9 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 13.8 seconds.</span>
-<span class="co">#&gt; Total execution time: 17.4 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 12.4 seconds.</span>
+<span class="co">#&gt; Total execution time: 13.0 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 26.1 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 29.8 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 31.4 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 33.9 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 25.7 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 26.6 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 32.3 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 43.0 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 30.3 seconds.</span>
-<span class="co">#&gt; Total execution time: 34.0 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 31.9 seconds.</span>
+<span class="co">#&gt; Total execution time: 43.1 seconds.</span>
 <span class="va">forecasts</span>
 <span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
 <span class="co">#&gt; 1:  0    2021-06-19       1           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt; 2:  0    2021-06-19       2           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
-<span class="co">#&gt; 1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.006016</span>
-<span class="co">#&gt; 2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003836</span>
+<span class="co">#&gt; 1:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004857</span>
+<span class="co">#&gt; 2:     0,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005603</span>
 <span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
-<span class="co">#&gt; 1:                     4                  0.00100            11</span>
-<span class="co">#&gt; 2:                     3                  0.00075            11</span>
+<span class="co">#&gt; 1:                     5                  0.00125            10</span>
+<span class="co">#&gt; 2:                    13                  0.00325            11</span>
 <span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
-<span class="co">#&gt; 1:                 657              0.16425 &lt;data.table[148x20]&gt;</span>
-<span class="co">#&gt; 2:                 117              0.02925 &lt;data.table[400x20]&gt;</span>
+<span class="co">#&gt; 1:                2648              0.66200 &lt;data.table[148x20]&gt;</span>
+<span class="co">#&gt; 2:                 737              0.18425 &lt;data.table[400x20]&gt;</span>
 <span class="co">#&gt;               forecast</span>
 <span class="co">#&gt; 1: &lt;data.table[12x13]&gt;</span>
 <span class="co">#&gt; 2: &lt;data.table[54x13]&gt;</span></code></pre></div>
@@ -180,7 +192,7 @@
 <div id="step-by-step-forecast" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-by-step-forecast" class="anchor" aria-hidden="true"></a>Step by step forecast</h3>
-<p>Rather than using the all-in-one <code><a href="reference/forecast.html">forecast()</a></code> function inidividual package functions can be used to produce a forecast as follows.</p>
+<p>Rather than using the all-in-one <code><a href="reference/forecast.html">forecast()</a></code> function individual package functions can be used to produce a forecast as follows.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/stan_data.html">stan_data</a></span><span class="op">(</span><span class="va">obs</span>, horizon <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
