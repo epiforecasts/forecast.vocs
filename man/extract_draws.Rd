@@ -31,7 +31,6 @@ extract_draws(fit)
 }
 \seealso{
 Functions used for postprocessing of model fits
-\code{\link{bp_launch_shinystan}()},
 \code{\link{convert_to_stanfit}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},

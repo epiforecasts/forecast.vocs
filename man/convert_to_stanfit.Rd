@@ -29,7 +29,6 @@ convert_to_stanfit(fit)
 }
 \seealso{
 Functions used for postprocessing of model fits
-\code{\link{bp_launch_shinystan}()},
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},

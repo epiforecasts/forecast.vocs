@@ -4,7 +4,7 @@
 #'
 #' @return NULL
 #'
-#' @family postprocess
+#' @family modelvalidation
 #' @export
 #' @inheritParams summarise_posterior
 #' @examplesIf interactive()
