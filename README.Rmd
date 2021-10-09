@@ -13,11 +13,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Forecast Case and Sequence Notifications using Variant of Concern Strain Dynamics
+# Forecast case and sequence notifications using variant of concern strain dynamics
 
 [![R-CMD-check](https://github.com/epiforecasts/forecast.vocs/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/forecast.vocs)
 
-[![Universe](https://epiforecasts.r-universe.dev/badges/forecast.vocs)] [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/epiforecasts/forecast.vocs/blob/master/LICENSE.md/) [![GitHub contributors](https://img.shields.io/github/contributors/epiforecasts/forecast.vocs)](https://github.com/epiforecasts/forecast.vocs/graphs/contributors) 
+![Universe](https://epiforecasts.r-universe.dev/badges/forecast.vocs) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/epiforecasts/forecast.vocs/blob/master/LICENSE.md/) [![GitHub contributors](https://img.shields.io/github/contributors/epiforecasts/forecast.vocs)](https://github.com/epiforecasts/forecast.vocs/graphs/contributors) 
 
 
 Contains models and tools to produce short-term forecasts for both case and sequence notifications assuming circulation of either one or two variants. Tools are also provided to allow the evaluation of the use of sequence data for short-term forecasts in both real-world settings and in user generated scenarios.
@@ -44,7 +44,7 @@ cmdstanr::install_cmdstan()
 
 ## Quick start
 
-This quick start uses data from Germany that includes COVID-19 notificatons and sequences with sequences either being positive or negative for the Delta variant. It shows how to produce forecasts for both a one and two strain model for the 6th of June 2021 when the latest available data estimated that approximately 7% of COVID-19 were positive for the Delta variant. Note that estimated growth rates and reproduction numbers shown here have been rescaled using an assumed generation time of 5.5 days.
+This quick start uses data from Germany that includes COVID-19 notificatons and sequences with sequences either being positive or negative for the Delta variant. It shows how to produce forecasts for both a one and two strain model for the 19th of June 2021 when the latest available data estimated that approximately 7% of COVID-19 were positive for the Delta variant. Note that estimated growth rates and reproduction numbers shown here have been rescaled using an assumed generation time of 5.5 days.
 
 ```{r}
 library(forecast.vocs)
@@ -77,7 +77,7 @@ Unnest posterior estimates from each model.
 posteriors <- unnest_posterior(forecasts)
 ```
 
-Plot the posterior prediction for cases.
+Plot the posterior prediction for cases from the single strain model ("Overall"), from the two strain model ("Combined"), and the unobserved estimates for each strain.
 
 ```{r}
 plot_cases(posteriors, current_obs)
@@ -140,10 +140,14 @@ If using `forecast.vocs` in your work please consider citing it using the follow
 citation("forecast.vocs")
 ```
 
+## How to make a bug report or feature request
+
+Please briefly describe your problem and what output you expect in an [issue](https://github.com/epiforecasts/forecast.vocs/issues). If you have a question, please don't open an issue. Instead, ask on our [Q and A page](https://github.com/epiforecasts/forecast.vocs/discussions/categories/q-a).
+
 ## Contributing
 
 We welcome contributions and new contributors! We particularly appreciate help on priority problems in the [issues](https://github.com/epiforecasts/forecast.vocs/issues). Please check and add to the issues, and/or add a [pull request](https://github.com/epiforecasts/forecast.vocs/pulls).
 
 ## Code of Conduct
   
-Please note that the forecast.vocs project is released with a [Contributor Code of Conduct](epiforecasts.io/forecast.vocs/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the `forecast.vocs` project is released with a [Contributor Code of Conduct](epiforecasts.io/forecast.vocs/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

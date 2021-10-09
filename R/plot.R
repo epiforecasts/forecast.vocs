@@ -255,6 +255,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @return A `ggplot2` plot.
 #'
 #' @family plot
+#' @export
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @examplesIf interactive()
