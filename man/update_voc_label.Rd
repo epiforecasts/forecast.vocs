@@ -8,7 +8,7 @@ update_voc_label(posterior, label, target_label = "VOC")
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{label}{Character string  indicating the new label to use for the
@@ -18,12 +18,12 @@ variant of concern.}
 current label for the variant of concern.}
 }
 \value{
-A list of data frames as returned by \code{summarise_posterior()} but
+A list of data frames as returned by `\code{\link[=summarise_posterior]{summarise_posterior()}} but
 with updated labels.
 }
 \description{
 Assign a custom label to the variant of concern in the
-output from \code{summarise_posterior()}.
+output from \code{\link[=summarise_posterior]{summarise_posterior()}}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

@@ -7,8 +7,8 @@
 quantiles_to_long(posterior)
 }
 \arguments{
-\item{posterior}{A dataframe as output by \code{summarise_posterior()},
-extract_forecast(), etc.}
+\item{posterior}{A dataframe as output by \code{\link[=summarise_posterior]{summarise_posterior()}},
+\code{\link[=extract_forecast]{extract_forecast()}}, etc.}
 }
 \value{
 A data frame of quantiles in long format.

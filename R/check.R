@@ -76,7 +76,7 @@ check_dataframe <- function(dataframe, req_vars, req_types, rows) {
 
 #' Check observations are in the correct format
 #'
-#' @param obs A data.frame of observations to check for formatting issues.
+#' @param obs A `data.frame` of observations to check for formatting issues.
 #'
 #' @return NULL
 #'
@@ -104,7 +104,7 @@ check_observations <- function(obs) {
 #' Check Quantiles Required are Present
 #'
 #' @param posterior A dataframe containing quantiles identified using
-#' the "q5" approach.
+#' the `q5` naming scheme.
 #'
 #' @param req_probs A numeric vector of required probabilties.
 #'

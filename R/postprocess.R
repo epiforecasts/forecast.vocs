@@ -1,17 +1,17 @@
 #' Link dates by time for posterior parameter estimates
 #'
 #' @param posterior A data frame of summarised posterior estimates
-#' as returned by `cmdstanr::summary` with  an additional type variable
+#' as returned by [cmdstanr::summary()] with  an additional type variable
 #' which contains the following character string options: "non-VOC",
 #' "VOC", "Combined", "Overall".
 #'
 #' @param data A list of data as returned in the "data" entry of the output
-#' returned by `stan_fit()`.
+#' returned by [stan_fit()].
 #'
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
 #' estimates.
 #'
-#' @return A posterior dataframe with an additional data column.
+#' @return A posterior `data.frame` with an additional data column.
 #'
 #' @family postprocess
 link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
@@ -54,7 +54,7 @@ link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
 #' @param target_types A character vector of types (as specified in the `type`
 #' variable) to modify.
 #'
-#' @return The input data.frame combined with `obs` and `observed` variables.
+#' @return The input `data.frame` combined with `obs` and `observed` variables.
 #'
 #' @family postprocess
 #' @inheritParams link_dates_with_posterior
@@ -96,13 +96,13 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 
 #' Summarise the posterior
 #'
-#' @param fit List of output as returned by `stan_fit()`.
+#' @param fit List of output as returned by [stan_fit()].
 #'
 #' @param probs A vector of numeric probabilities to produce
 #' quantile summaries for. By default these are the 5%, 20%, 80%,
 #' and 95% quantiles which are also the minimum set required for
-#' plotting functions to work (such as `plot_cases()`, `plot_rt`,
-#' and `plot_voc`).
+#' plotting functions to work (such as [plot_cases()], [plot_rt()],
+#' and [plot_voc()]).
 #'
 #' @param voc_label A character string, default to "VOC". Defines the label
 #' to assign to variant of concern specific parameters. Example usage is to
@@ -289,7 +289,7 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' and sequence data.
 #'
 #' @param posterior A dataframe of posterior output as produced by
-#'  `summarise_posterior()`. For forecast dates to be extracted data with
+#'  [summarise_posterior()]. For forecast dates to be extracted data with
 #' `value_type == "cases"` must be present.
 #'
 #' @return A data.frame containing at least two vectors: Data unavailable
@@ -346,11 +346,11 @@ extract_forecast_dates <- function(posterior) {
 #'
 #'
 #' Uses the `observed` variable returned by
-#' `summarise_posterior()` to return posterior predictions
+#' [summarise_posterior()] to return posterior predictions
 #' for forecast dates only.
 #'
-#' @return A data.frame of forecasts in the format returned
-#' by `summarise_posterior` but with fitting variables dropped.
+#' @return A `data.frame` of forecasts in the format returned
+#' by [summarise_posterior()] but with fitting variables dropped.
 #'
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
@@ -383,7 +383,7 @@ extract_forecast <- function(posterior) {
 #' Label the Variant of Concern
 #'
 #' Assign a custom label to the variant of concern in the
-#' output from `summarise_posterior()`.
+#' output from [summarise_posterior()].
 #'
 #' @param label Character string  indicating the new label to use for the
 #' variant of concern.
@@ -391,7 +391,7 @@ extract_forecast <- function(posterior) {
 #' @param target_label A character string defaulting to "VOC". Indicates the
 #' current label for the variant of concern.
 #'
-#' @return A list of data frames as returned by `summarise_posterior()` but
+#' @return A list of data frames as returned by `[summarise_posterior()] but
 #' with updated labels.
 #'
 #' @family postprocess
@@ -435,11 +435,11 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 }
 #' Extract posterior draws
 #'
-#' @param fit A list as produced by `stan_fit()`.
+#' @param fit A list as produced by [stan_fit()].
 #'
-#' @param ... Additional parameters passed to `cmdstanr::draws`
+#' @param ... Additional parameters passed to [cmdstanr::draws()]
 #'
-#' @return A `draws` object from the `posterior` package.
+#' @return A [cmdstanr::draws()] object from the `posterior` package.
 #'
 #' @family postprocess
 #' @examplesIf interactive()
@@ -457,8 +457,8 @@ extract_draws <- function(fit, ...) {
 
 #' Convert summarised quantiles from wide to long format
 #'
-#' @param posterior A dataframe as output by `summarise_posterior()`,
-#' extract_forecast(), etc.
+#' @param posterior A dataframe as output by [summarise_posterior()],
+#' [extract_forecast()], etc.
 #'
 #' @return A data frame of quantiles in long format.
 #'
@@ -486,7 +486,7 @@ quantiles_to_long <- function(posterior) {
 
 #' Convert to stanfit object
 #'
-#' @return The model fit as a stanfit object
+#' @return The model fit as a `stanfit` object
 #'
 #' @family postprocess
 #' @inheritParams summarise_posterior

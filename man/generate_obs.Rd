@@ -21,7 +21,7 @@ fitting when the posterior is required.}
 maximum is 2. A numeric vector can be passed if forecasts from multiple
 strain models are desired.}
 
-\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=load_model]{load_model()}}.}
 
 \item{type}{A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the

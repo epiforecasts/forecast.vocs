@@ -7,7 +7,7 @@
 check_observations(obs)
 }
 \arguments{
-\item{obs}{A data.frame of observations to check for formatting issues.}
+\item{obs}{A \code{data.frame} of observations to check for formatting issues.}
 }
 \description{
 Check observations are in the correct format

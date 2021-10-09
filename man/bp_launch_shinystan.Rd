@@ -7,7 +7,7 @@
 bp_launch_shinystan(fit)
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 }
 \description{
 Launch shinystan an interactive tool for stan model evaluation

@@ -17,7 +17,7 @@ plot_theme <- function(plot) {
 #' Add the forecast dates to a plot
 #'
 #' @param forecast_dates A data.frame in the format produced by
-#' `extract_forecast_dates()` (with at least a date variable and a
+#' [extract_forecast_dates()] (with at least a date variable and a
 #' Data unavailable variable)). Specifies when date availability should be
 #' add to plots. May contain facetting variables.
 #'
@@ -46,7 +46,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 
 #' Default posterior plot
 #'
-#' @param obs A data frame of observed data as produced by `latest_obs()`.
+#' @param obs A data frame of observed data as produced by [latest_obs()].
 #'
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
@@ -54,7 +54,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
 #' or just those in the date range of the estimates being plot.
 #'
-#' @param ... Additional arguments passed to `ggplot2::aes()`
+#' @param ... Additional arguments passed to [ggplot2::aes()]
 #'
 #' @return A `ggplot2` plot.
 #'
@@ -172,7 +172,7 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
 #'
-#' @param ... Additional parameters passed to `plot_default()`.
+#' @param ... Additional parameters passed to [plot_default()].
 #'
 #' @return A `ggplot2` plot.
 #'
@@ -298,7 +298,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #'
 #' @param type A character string indicating the format to use to save plots.
 #'
-#' @return A named list of all supported package plots with sensible defaults
+#' @return A named list of all supported package plots with sensible defaults.
 #'
 #' @family plot
 #' @export
@@ -352,7 +352,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param pars Character vector of parameters to try and include
 #' in the plot. Will only be included if present in the fitted model.
 #'
-#' @param ... Additional parameters passed to `mcmc_pairs()`.
+#' @param ... Additional parameters passed to [bayesplot::mcmc_pairs()].
 #'
 #' @return  A `ggplot2` based pairs plot of parameters of interest
 #'

@@ -14,15 +14,15 @@ plot_pairs(
 )
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 
 \item{pars}{Character vector of parameters to try and include
 in the plot. Will only be included if present in the fitted model.}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
-be returned as a data frame.}
+be returned as a \code{data.frame}.}
 
-\item{...}{Additional parameters passed to \code{mcmc_pairs()}.}
+\item{...}{Additional parameters passed to \code{\link[bayesplot:MCMC-scatterplots]{bayesplot::mcmc_pairs()}}.}
 }
 \value{
 A \code{ggplot2} based pairs plot of parameters of interest

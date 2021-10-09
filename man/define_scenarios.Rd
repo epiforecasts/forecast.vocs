@@ -11,7 +11,7 @@ define_scenarios(
 )
 }
 \arguments{
-\item{seq_lag}{The number of  weeks that sequences lag the date. Default is
+\item{seq_lag}{The number of weeks that sequences lag the date. Default is
 to test 0 to 3 weeks of lag.}
 
 \item{seq_samples}{Fraction of samples to include (deterministic scaling).

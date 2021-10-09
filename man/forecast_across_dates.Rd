@@ -11,19 +11,19 @@ forecast_across_dates(
 )
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 
 \item{forecast_dates}{A list of dates to forecast at.}
 
-\item{...}{Additional parameters passed to \code{forecast()}}
+\item{...}{Additional parameters passed to \code{\link[=forecast]{forecast()}}.}
 }
 \value{
-A data table each row containing the output from running
-\code{forecast()} on a single forecast date.
+A \code{data.table} each row containing the output from running
+\code{\link[=forecast]{forecast()}} on a single forecast date.
 }
 \description{
 Forecast across multiple dates

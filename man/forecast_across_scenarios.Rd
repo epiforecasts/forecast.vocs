@@ -7,22 +7,22 @@
 forecast_across_scenarios(obs, scenarios, ...)
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 
-\item{scenarios}{A dataframe of scenarios as produced by
-\code{define_scenarios()}. If an \code{obs} variable is present this is
-used as the scenario data but otherwise \code{generate_obs_scenario()}
+\item{scenarios}{A \code{data.frame} of scenarios as produced by
+\code{\link[=define_scenarios]{define_scenarios()}}. If an \code{obs} variable is present this is
+used as the scenario data but otherwise \code{\link[=generate_obs_scenario]{generate_obs_scenario()}}
 is used to generate this data from the other variables in \code{scenarios}.}
 
-\item{...}{Additional parameters passed to \code{forecast_across_dates()}.}
+\item{...}{Additional parameters passed to \code{\link[=forecast_across_dates]{forecast_across_dates()}}.}
 }
 \value{
 A data table each rows containing the output from running
-\code{forecast()} on a single scenario for a single forecast date.
+\code{\link[=forecast]{forecast()}} on a single scenario for a single forecast date.
 }
 \description{
 Forecast across multiple scenarios and dates

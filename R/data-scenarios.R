@@ -1,8 +1,8 @@
 #' Update observations based on availability
 #'
-#' @param obs A data frame with the following variables:
-#' date, cases, seq_voc, and seq_total, cases_available,
-#' and seq_available. seq_available and case_available must be
+#' @param obs A `data.frame` with the following variables:
+#' `date`, `cases`, `seq_voc`, and `seq_total`, `cases_available`,
+#' and `seq_available`. `seq_available` and `case_available` must be
 #' uniquely define data rows but other rows can be duplicated based
 #' on data availability.
 #'
@@ -12,7 +12,7 @@
 #' @param seq_lag Number of weeks that sequence data takes to be reported.
 #' Defaults to not alter the input data.
 #'
-#' @return A data frame of observations with updated case and
+#' @return A `data.frame` of observations with updated case and
 #' sequence availability dates.
 #'
 #' @family scenarios
@@ -40,7 +40,7 @@ update_obs_availability <- function(obs, cases_lag, seq_lag) {
 
 #' Define data availability scenarios
 #'
-#' @param seq_lag The number of  weeks that sequences lag the date. Default is
+#' @param seq_lag The number of weeks that sequences lag the date. Default is
 #' to test 0 to 3 weeks of lag.
 #'
 #' @param seq_samples Fraction of samples to include (deterministic scaling).
@@ -68,7 +68,7 @@ define_scenarios <- function(seq_lag = 0:3,
 
 #' Define observed data for a scenario
 #'
-#' @param obs A dataframe of observations as returned by `latest_obs`
+#' @param obs A dataframe of observations as returned by [latest_obs()]
 #' or similar.
 #'
 #' @param seq_lag Number, number of weeks to lag sequence data behind
@@ -76,7 +76,7 @@ define_scenarios <- function(seq_lag = 0:3,
 #'
 #' @param seq_samples Fraction of sequence samples to include.
 
-#' @return A data frame of scenario definitions with ids
+#' @return A `data.frame` of scenario definitions with ids
 #'
 #' @family scenarios
 #' @export

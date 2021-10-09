@@ -7,10 +7,10 @@
 convert_to_stanfit(fit)
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 }
 \value{
-The model fit as a stanfit object
+The model fit as a \code{stanfit} object
 }
 \description{
 Convert to stanfit object

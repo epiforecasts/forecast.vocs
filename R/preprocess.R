@@ -4,12 +4,12 @@
 #' maximum date in `obs`.
 #'
 #' @param seq_date Date from which to use available sequence data. Defaults to
-#' the forecast date.
+#' the `date`.
 #'
 #' @param case_date Date from which to use available case data. Defaults to
-#' the forecast date.
+#' the `date`.
 #'
-#' @return A data.frame of observations filter for the latest available
+#' @return A `data.frame` of observations filter for the latest available
 #' data for the specified dates of interest.
 #'
 #' @family preprocess
@@ -87,7 +87,7 @@ filter_by_availability <- function(obs, date = max(obs$date),
 
 #' Filter for latest observations of all types
 #'
-#' @return A data.frame of observations filtered for the
+#' @return A `data.frame` of observations filtered for the
 #' latest available data.
 #'
 #' @family preprocess

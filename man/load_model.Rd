@@ -11,9 +11,9 @@ load_model(strains = 2, compile = TRUE, ...)
 maximum is 2.}
 
 \item{compile}{Logical, defaults to \code{TRUE}. Should the model
-be loaded and compiled using \code{cmdstanr::cmstan_model()}.}
+be loaded and compiled using \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
 
-\item{...}{Additional arguments passed to \code{cmdstanr::cmstan_model()}.}
+\item{...}{Additional arguments passed to \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
 }
 \value{
 A \code{cmdstanr} model.

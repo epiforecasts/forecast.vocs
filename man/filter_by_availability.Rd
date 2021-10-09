@@ -12,9 +12,9 @@ filter_by_availability(
 )
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 
@@ -22,13 +22,13 @@ on data availability.}
 maximum date in \code{obs}.}
 
 \item{seq_date}{Date from which to use available sequence data. Defaults to
-the forecast date.}
+the \code{date}.}
 
 \item{case_date}{Date from which to use available case data. Defaults to
-the forecast date.}
+the \code{date}.}
 }
 \value{
-A data.frame of observations filter for the latest available
+A \code{data.frame} of observations filter for the latest available
 data for the specified dates of interest.
 }
 \description{

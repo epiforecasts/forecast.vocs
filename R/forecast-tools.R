@@ -2,10 +2,10 @@
 #'
 #' @param forecast_dates A list of dates to forecast at.
 #'
-#' @param ... Additional parameters passed to `forecast()`
+#' @param ... Additional parameters passed to [forecast()].
 #'
-#' @return A data table each row containing the output from running
-#' `forecast()` on a single forecast date.
+#' @return A `data.table` each row containing the output from running
+#' [forecast()] on a single forecast date.
 #'
 #' @family forecast
 #' @inheritParams forecast
@@ -51,15 +51,15 @@ forecast_across_dates <- function(obs,
 
 #' Forecast across multiple scenarios and dates
 #'
-#' @param scenarios A dataframe of scenarios as produced by
-#' `define_scenarios()`. If an `obs` variable is present this is
-#' used as the scenario data but otherwise `generate_obs_scenario()`
+#' @param scenarios A `data.frame` of scenarios as produced by
+#' [define_scenarios()]. If an `obs` variable is present this is
+#' used as the scenario data but otherwise [generate_obs_scenario()]
 #' is used to generate this data from the other variables in `scenarios`.
 #'
-#' @param ... Additional parameters passed to `forecast_across_dates()`.
+#' @param ... Additional parameters passed to [forecast_across_dates()].
 #'
 #' @return A data table each rows containing the output from running
-#' `forecast()` on a single scenario for a single forecast date.
+#' [forecast()] on a single scenario for a single forecast date.
 #'
 #' @family forecast
 #' @inheritParams forecast_across_dates
@@ -129,11 +129,11 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
 #'
 #' @param forecasts A data frame of forecasts as produced by [forecast()].
 #'
-#' @param target A character string indicating the list of outpuuts to
-#' unnest. This can currently be either "posterior", or "forecast".
+#' @param target A character string indicating the list of outputs to
+#' unnest.
 #'
-#' @return An unnested data.frame of posterior estimates and other variables
-#' produced by `forecast()`.
+#' @return An unnested `data.frame` of posterior estimates and other variables
+#' produced by [forecast()].
 #'
 #' @family forecast
 #' @export
@@ -155,7 +155,6 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
 #' forecasts <- unnest_posterior(dt, target = "forecast")
 #' forecasts
 unnest_posterior <- function(forecasts, target = "posterior") {
-  target <- match.arg(target, choices = c("posterior", "forecast"))
   forecasts <- copy(forecasts)[, row_id := 1:.N]
 
   targets <- forecasts[,

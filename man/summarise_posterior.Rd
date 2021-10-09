@@ -12,13 +12,13 @@ summarise_posterior(
 )
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
-plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
-and \code{plot_voc}).}
+plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
+and \code{\link[=plot_voc]{plot_voc()}}).}
 
 \item{voc_label}{A character string, default to "VOC". Defines the label
 to assign to variant of concern specific parameters. Example usage is to

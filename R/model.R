@@ -1,7 +1,7 @@
 #' Format data for use with stan
 #'
 #' @param obs A data frame with the following variables:
-#'  date, cases, seq_voc, and seq_total.
+#'  `date`, `cases`, `seq_voc`, and `seq_total`.
 #'
 #' @param horizon Integer forecast horizon. Defaults to 4.
 #'
@@ -21,11 +21,11 @@
 #' used include overdispersion.
 #'
 #' @param likelihood Logical, defaults to `TRUE`. Should the likelihood be
-#' included in the model.extract.
+#' included in the model
 #'
-#' @param output_loglik Logical, defaults to `FALSE`. Should the log
-#' likelihood be output. Disabling this will speed up fitting if evaluating the
-#' model fit is not required.
+#' @param output_loglik Logical, defaults to `FALSE`. Should the
+#' log-likelihood be output. Disabling this will speed up fitting
+#' if evaluating the model fit is not required.
 #'
 #' @param debug Logical, defaults to `FALSE`. Should within model debug
 #' information be returned.
@@ -98,7 +98,7 @@ stan_data <- function(obs, horizon = 4,
 
 #' Set up initial conditions for model
 #'
-#' @param data A list of data as produced by `stan_data()`.
+#' @param data A list of data as produced by [stan_data()].
 #'
 #' @return A function that when called returns a list of initial conditions
 #' for the package stan models.
@@ -152,9 +152,9 @@ stan_inits <- function(data, strains = 2) {
 #' maximum is 2.
 #'
 #' @param compile Logical, defaults to `TRUE`. Should the model
-#' be loaded and compiled using `cmdstanr::cmstan_model()`.
+#' be loaded and compiled using [cmdstanr::cmdstan_model()].
 #'
-#' @param ... Additional arguments passed to `cmdstanr::cmstan_model()`.
+#' @param ... Additional arguments passed to [cmdstanr::cmdstan_model()].
 #'
 #' @return A `cmdstanr` model.
 #'
@@ -185,16 +185,16 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 }
 
 #' Fit a brancing process strain model
-#' @param data A list of data as produced by `stan_data()`
+#' @param data A list of data as produced by [stan_data()].
 #'
-#' @param model A `cmdstanr` model object as loaded by `load_model()`
+#' @param model A `cmdstanr` model object as loaded by [load_model()].
 #'
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
-#' be returned as a data frame.
+#' be returned as a `data.frame`.
 #'
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #'
-#' @return A data.frame containing the `cmdstanr` fit, the input data, the
+#' @return A `data.frame` containing the `cmdstanr` fit, the input data, the
 #' fitting arguements, and optionally summary diagnostics.
 #'
 #' @family model

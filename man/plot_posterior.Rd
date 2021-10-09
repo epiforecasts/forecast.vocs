@@ -16,13 +16,13 @@ plot_posterior(
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
-\item{obs}{A data frame of observed data as produced by \code{latest_obs()}.}
+\item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
 
 \item{forecast_dates}{A data.frame in the format produced by
-\code{extract_forecast_dates()} (with at least a date variable and a
+\code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain facetting variables.}
 
@@ -38,7 +38,7 @@ or just those in the date range of the estimates being plot.}
 of concern. Defaults to  "variant of concern".}
 }
 \value{
-A named list of all supported package plots with sensible defaults
+A named list of all supported package plots with sensible defaults.
 }
 \description{
 Plot posterior predictions

@@ -7,7 +7,7 @@
 generate_obs_scenario(obs, seq_lag, seq_samples)
 }
 \arguments{
-\item{obs}{A dataframe of observations as returned by \code{latest_obs}
+\item{obs}{A dataframe of observations as returned by \code{\link[=latest_obs]{latest_obs()}}
 or similar.}
 
 \item{seq_lag}{Number, number of weeks to lag sequence data behind
@@ -16,7 +16,7 @@ date of observation.}
 \item{seq_samples}{Fraction of sequence samples to include.}
 }
 \value{
-A data frame of scenario definitions with ids
+A \code{data.frame} of scenario definitions with ids
 }
 \description{
 Define observed data for a scenario

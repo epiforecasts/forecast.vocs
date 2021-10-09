@@ -7,12 +7,12 @@
 extract_draws(fit, ...)
 }
 \arguments{
-\item{fit}{A list as produced by \code{stan_fit()}.}
+\item{fit}{A list as produced by \code{\link[=stan_fit]{stan_fit()}}.}
 
-\item{...}{Additional parameters passed to \code{cmdstanr::draws}}
+\item{...}{Additional parameters passed to \code{\link[cmdstanr:fit-method-draws]{cmdstanr::draws()}}}
 }
 \value{
-A \code{draws} object from the \code{posterior} package.
+A \code{\link[cmdstanr:fit-method-draws]{cmdstanr::draws()}} object from the \code{posterior} package.
 }
 \description{
 Extract posterior draws

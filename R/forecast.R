@@ -1,6 +1,6 @@
 #' Forecast using branching processes at a target date
 #'
-#' @param models A model as supplied by `load_model()`. If not supplied the
+#' @param models A model as supplied by [load_model()]. If not supplied the
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
 #'
@@ -17,9 +17,9 @@
 #'
 #' @param id ID to assign to this forecast. Defaults to 0.
 #'
-#' @param ... Additional parameters passed to `stan_fit()`.
+#' @param ... Additional parameters passed to [stan_fit()].
 #'
-#' @return A dataframe containing the output of `stan_fit()` in each row as
+#' @return A `data.frame` containing the output of [stan_fit()] in each row as
 #' well as the summarised posterior, forecast and information about the
 #' parameters specified.
 #'

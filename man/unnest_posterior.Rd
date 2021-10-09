@@ -9,12 +9,12 @@ unnest_posterior(forecasts, target = "posterior")
 \arguments{
 \item{forecasts}{A data frame of forecasts as produced by \code{\link[=forecast]{forecast()}}.}
 
-\item{target}{A character string indicating the list of outpuuts to
-unnest. This can currently be either "posterior", or "forecast".}
+\item{target}{A character string indicating the list of outputs to
+unnest.}
 }
 \value{
-An unnested data.frame of posterior estimates and other variables
-produced by \code{forecast()}.
+An unnested \code{data.frame} of posterior estimates and other variables
+produced by \code{\link[=forecast]{forecast()}}.
 }
 \description{
 Unnest posterior estimates from a forecast data.frame

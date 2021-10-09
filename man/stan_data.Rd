@@ -18,7 +18,7 @@ stan_data(
 }
 \arguments{
 \item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total.}
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
@@ -38,11 +38,11 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 used include overdispersion.}
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
-included in the model.extract.}
+included in the model}
 
-\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
-likelihood be output. Disabling this will speed up fitting if evaluating the
-model fit is not required.}
+\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the
+log-likelihood be output. Disabling this will speed up fitting
+if evaluating the model fit is not required.}
 
 \item{debug}{Logical, defaults to \code{FALSE}. Should within model debug
 information be returned.}
