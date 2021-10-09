@@ -1,9 +1,9 @@
 ---
-title: Model definition
+title: Model definitions
 author: Sam Abbott
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{Model definition}
+  %\VignetteIndexEntry{Model definitions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
