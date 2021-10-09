@@ -12,42 +12,59 @@ stan_fit(
 )
 }
 \arguments{
-\item{data}{A list of data as produced by \code{stan_data()}}
+\item{data}{A list of data as produced by \code{\link[=stan_data]{stan_data()}}.}
 
-\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=load_model]{load_model()}}.}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
-be returned as a data frame.}
+be returned as a \code{data.frame}.}
 
 \item{...}{Additional parameters passed to the \code{sample} method of \code{cmdstanr}.}
+}
+\value{
+A \code{data.frame} containing the \code{cmdstanr} fit, the input data, the
+fitting arguements, and optionally summary diagnostics.
 }
 \description{
 Fit a brancing process strain model
 }
 \examples{
-\dontrun{
-# parallisation
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
+
 # format example data
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 
 # single strain model
 inits <- stan_inits(dt, strains = 1)
 mod <- load_model(strains = 1)
-fit <- stan_fit(dt,
-  model = mod, init = inits, adapt_delta = 0.99,
-  max_treedepth = 15
+fit <- stan_fit(
+  dt,
+  model = mod, init = inits,
+  adapt_delta = 0.99, max_treedepth = 15
 )
 fit
 
 # two strain model
 inits <- stan_inits(dt, strains = 2)
+
 mod <- load_model(strains = 2)
+
 two_strain_fit <- stan_fit(dt,
   model = mod, init = inits,
   adapt_delta = 0.99, max_treedepth = 15
 )
 two_strain_fit
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for modelling
+\code{\link{load_model}()},
+\code{\link{stan_data}()},
+\code{\link{stan_inits}()}
 }
+\concept{model}

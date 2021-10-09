@@ -16,13 +16,13 @@ plot_posterior(
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
-\item{obs}{A data frame of observed data as produced by \code{latest_obs()}.}
+\item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
 
 \item{forecast_dates}{A data.frame in the format produced by
-\code{extract_forecast_dates()} (with at least a date variable and a
+\code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain facetting variables.}
 
@@ -37,16 +37,34 @@ or just those in the date range of the estimates being plot.}
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}
 }
+\value{
+A named list of all supported package plots with sensible defaults.
+}
 \description{
 Plot posterior predictions
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 posterior <- summarise_posterior(fit)
 plot_posterior(posterior)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
 }
+\concept{plot}

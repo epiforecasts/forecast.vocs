@@ -1,3 +1,9 @@
+# forecast.vocs 0.0.5
+
+* Overhaul all package documentation and examples.
+* Enforce proper printing of all `data.table` output.
+* Add structure to documentation website.
+
 # forecast.vocs 0.0.4
 
 * Improve the robustness of plotting observations and forecast dates so that they can be facetted using the same variables as used for plotting estimates/forecasts.

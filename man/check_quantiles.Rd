@@ -8,10 +8,17 @@ check_quantiles(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8))
 }
 \arguments{
 \item{posterior}{A dataframe containing quantiles identified using
-the "q5" approach.}
+the \code{q5} naming scheme.}
 
 \item{req_probs}{A numeric vector of required probabilties.}
 }
 \description{
 Check Quantiles Required are Present
 }
+\seealso{
+Functions used for checking inputs.
+\code{\link{check_dataframe}()},
+\code{\link{check_observations}()},
+\code{\link{check_param}()}
+}
+\concept{check}

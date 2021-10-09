@@ -12,9 +12,9 @@ filter_by_availability(
 )
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 
@@ -22,19 +22,27 @@ on data availability.}
 maximum date in \code{obs}.}
 
 \item{seq_date}{Date from which to use available sequence data. Defaults to
-the forecast date.}
+the \code{date}.}
 
 \item{case_date}{Date from which to use available case data. Defaults to
-the forecast date.}
+the \code{date}.}
+}
+\value{
+A \code{data.frame} of observations filter for the latest available
+data for the specified dates of interest.
 }
 \description{
 Filter data based on availability and forecast date
 }
 \examples{
-latest_dt <- latest_obs(germany_covid19_delta_obs)
+options(mc.cores = 4)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- rbind(
-  update_obs_availability(latest_dt, seq_lag = 3),
-  update_obs_availability(latest_dt, seq_lag = 1)
+  update_obs_availability(obs, seq_lag = 3),
+  update_obs_availability(obs, seq_lag = 1)
 )
 # filter out duplicates and up to the present date
 filter_by_availability(dt)
@@ -48,3 +56,8 @@ filter_by_availability(dt,
   case_date = "2021-07-01"
 )
 }
+\seealso{
+Preprocessing functions
+\code{\link{latest_obs}()}
+}
+\concept{preprocess}

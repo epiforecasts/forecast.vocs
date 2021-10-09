@@ -8,11 +8,11 @@ plot_rt(posterior, forecast_dates = NULL, col = NULL)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{forecast_dates}{A data.frame in the format produced by
-\code{extract_forecast_dates()} (with at least a date variable and a
+\code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain facetting variables.}
 
@@ -20,6 +20,34 @@ add to plots. May contain facetting variables.}
 stratify the ribbon plot. Defaults to "type" which indicates the
 data stream.}
 }
+\value{
+A \code{ggplot2} plot.
+}
 \description{
 Plot the posterior prediction for the reproduction number
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
+dt <- stan_data(obs)
+inits <- stan_inits(dt)
+fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+posterior <- summarise_posterior(fit)
+plot_rt(posterior)
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_pairs}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
+}
+\concept{plot}

@@ -7,10 +7,14 @@
 stan_inits(data, strains = 2)
 }
 \arguments{
-\item{data}{A list of data as produced by \code{stan_data()}.}
+\item{data}{A list of data as produced by \code{\link[=stan_data]{stan_data()}}.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
+}
+\value{
+A function that when called returns a list of initial conditions
+for the package stan models.
 }
 \description{
 Set up initial conditions for model
@@ -21,3 +25,10 @@ inits <- stan_inits(dt)
 inits
 inits()
 }
+\seealso{
+Functions used for modelling
+\code{\link{load_model}()},
+\code{\link{stan_data}()},
+\code{\link{stan_fit}()}
+}
+\concept{model}

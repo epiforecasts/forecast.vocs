@@ -8,19 +8,32 @@ link_dates_with_posterior(posterior, data, mod_end = 0)
 }
 \arguments{
 \item{posterior}{A data frame of summarised posterior estimates
-as returned by \code{cmdstanr::summary} with  an additional type variable
+as returned by \code{\link[cmdstanr:fit-method-summary]{cmdstanr::summary()}} with  an additional type variable
 which contains the following character string options: "non-VOC",
 "VOC", "Combined", "Overall".}
 
 \item{data}{A list of data as returned in the "data" entry of the output
-returned by \code{stan_fit()}.}
+returned by \code{\link[=stan_fit]{stan_fit()}}.}
 
 \item{mod_end}{Integer, defaults to 0. Amount to shift the end date of
 estimates.}
 }
 \value{
-A dataframe with an additional data column
+A posterior \code{data.frame} with an additional data column.
 }
 \description{
 Link dates by time for posterior parameter estimates
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summarise_posterior}()},
+\code{\link{update_voc_label}()}
+}
+\concept{postprocess}

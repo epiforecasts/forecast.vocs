@@ -1,17 +1,20 @@
-
 #' Sample Sequence Observation Model
 #'
 #' @param frac_voc A numeric vector of expected proportions positive for the
 #' variant of concern.
+#'
 #' @param seq_total An integer vector of total sequences available.
+#'
 #' @param phi The overdispersion of the sampling process. If not supplied
 #' then no overdispersion is used (i.e a binomial observation model vs a
 #' beta binomial observation model).
 #'
+#' @return A vector of observed sequences positive for the variant of
+#' concern.
+#'
+#' @family generatedata
 #' @importFrom purrr map2_dbl
 #' @export
-#' @return A vector of observed sequences positive for the variant of
-#' concern
 #' @examples
 #' # dummy sequence data
 #' frac_voc <- seq(0, 1, by = 0.1)
@@ -58,17 +61,18 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param ... Additional arguments to pass `stan_data()`.
 #'
-#' @inheritParams forecast
-#' @inheritParams stan_fit
-#' @export
 #' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),
 #' obs (simulated observed data), stan_data, (the simulated data formatted
 #' using `stan_data()` using the same arguments as specified  for simulation.)
+#'
+#' @family generatedata
+#' @inheritParams forecast
+#' @inheritParams stan_fit
+#' @export
 #' @importFrom posterior as_draws_df
 #' @importFrom purrr map
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
 #' obs <- latest_obs(germany_covid19_delta_obs)
 #'
@@ -87,7 +91,6 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' plot_voc(posterior)
 #'
 #' plot_rt(posterior)
-#' }
 generate_obs <- function(obs, strains = 2,
                          model = forecast.vocs::load_model(strains = strains),
                          type = "prior", datasets = 10, ...) {

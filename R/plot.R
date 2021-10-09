@@ -2,6 +2,8 @@
 #'
 #' @param plot `ggplot2` object
 #'
+#' @return A `ggplot2` plot with the package theme applied.
+#' @family plot
 #' @export
 plot_theme <- function(plot) {
   plot <- plot +
@@ -15,9 +17,13 @@ plot_theme <- function(plot) {
 #' Add the forecast dates to a plot
 #'
 #' @param forecast_dates A data.frame in the format produced by
-#' `extract_forecast_dates()` (with at least a date variable and a
+#' [extract_forecast_dates()] (with at least a date variable and a
 #' Data unavailable variable)). Specifies when date availability should be
 #' add to plots. May contain facetting variables.
+#'
+#' @return A `ggplot2` plot with dates of data unavailability added.
+#'
+#' @family plot
 #' @inheritParams plot_theme
 #' @export
 add_forecast_dates <- function(plot, forecast_dates = NULL) {
@@ -40,7 +46,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 
 #' Default posterior plot
 #'
-#' @param obs A data frame of observed data as produced by `latest_obs()`.
+#' @param obs A data frame of observed data as produced by [latest_obs()].
 #'
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
@@ -48,8 +54,11 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
 #' or just those in the date range of the estimates being plot.
 #'
-#' @param ... Additional arguments passed to `ggplot2::aes()`
+#' @param ... Additional arguments passed to [ggplot2::aes()]
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
 #' @inheritParams add_forecast_dates
 #' @inheritParams extract_forecast_dates
 #' @importFrom purrr map_lgl
@@ -106,9 +115,27 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' stratify the ribbon plot. Defaults to "type" which indicates the
 #' data stream.
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#'
+#' # default with log transform
+#' plot_cases(posterior)
+#'
+#' # without log transform
+#' plot_cases(posterior)
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
                        all_obs = FALSE, col = NULL, log = TRUE) {
   if (!is.null(obs)) {
@@ -145,11 +172,24 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
 #'
-#' @param ... Additional parameters passed to `plot_default()`.
+#' @param ... Additional parameters passed to [plot_default()].
 #'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_voc(posterior)
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
   if (!is.null(obs)) {
@@ -171,9 +211,23 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 }
 
 #' Plot the posterior prediction for the reproduction number
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_rt(posterior)
 plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
     col <- "Type"
@@ -197,9 +251,23 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 }
 
 #' Plot the posterior prediction for the growth rate
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
+#' @export
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
-#' @export
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- stan_data(obs)
+#' inits <- stan_inits(dt)
+#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' posterior <- summarise_posterior(fit)
+#' plot_growth(posterior)
 plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
     col <- "Type"
@@ -231,19 +299,23 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #'
 #' @param type A character string indicating the format to use to save plots.
 #'
+#' @return A named list of all supported package plots with sensible defaults.
+#'
+#' @family plot
 #' @export
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc
 #' @importFrom purrr walk2
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_delta_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' posterior <- summarise_posterior(fit)
 #' plot_posterior(posterior)
-#' }
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path = NULL, type = "png",
                            all_obs = FALSE, voc_label = "variant of concern") {
@@ -281,20 +353,24 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param pars Character vector of parameters to try and include
 #' in the plot. Will only be included if present in the fitted model.
 #'
-#' @param ... Additional parameters passed to `mcmc_pairs()`.
+#' @param ... Additional parameters passed to [bayesplot::mcmc_pairs()].
 #'
+#' @return  A `ggplot2` based pairs plot of parameters of interest
+#'
+#' @family plot
+#' @family modelvalidation
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
-#' @return  A ggplot2 based pairs plot of parameters of interest
-#' @examples
-#' \dontrun{
-#' obs <- latest_obs(germany_covid19_voc_obs)
+#' @examplesIf interactive()
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
 #' dt <- stan_data(obs)
 #' inits <- stan_inits(dt)
 #' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' plot_pairs(fit)
-#' }
 plot_pairs <- function(fit,
                        pars = c(
                          "r_init", "r_noise", "beta", "voc_noise[1]",

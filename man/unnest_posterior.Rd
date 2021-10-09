@@ -7,30 +7,41 @@
 unnest_posterior(forecasts, target = "posterior")
 }
 \arguments{
-\item{forecasts}{A data frame of forecasts as produced by \code{forecast()}.}
+\item{forecasts}{A data frame of forecasts as produced by \code{\link[=forecast]{forecast()}}.}
 
-\item{target}{A character string indicating the list of outpuuts to
-unnest. This can currently be either "posterior", or "forecast".}
+\item{target}{A character string indicating the list of outputs to
+unnest.}
 }
 \value{
-An unnested data.frame of posterior estimates and other variables
-produced by \code{forecast()}.
+An unnested \code{data.frame} of posterior estimates and other variables
+produced by \code{\link[=forecast]{forecast()}}.
 }
 \description{
 Unnest posterior estimates from a forecast data.frame
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(data.table)
 options(mc.cores = 4)
-dt <- forecast(latest_obs(germany_covid19_delta_obs), max_treedepth = 15)
+dt <- forecast(
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
+  max_treedepth = 15, adapt_delta = 0.99
+)
 
 # unnest posterior predictions
-posterior <- unnest_posterior(dt, target = "posterior")
+posterior <- unnest_posterior(dt)
 posterior
 
 # unnest forecasts
 forecasts <- unnest_posterior(dt, target = "forecast")
 forecasts
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for forecastin across models, dates, and scenarios
+\code{\link{forecast_across_dates}()},
+\code{\link{forecast_across_scenarios}()},
+\code{\link{forecast}()}
 }
+\concept{forecast}

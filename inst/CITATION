@@ -1,0 +1,17 @@
+citHeader("To cite forecast.vocs in publications use:")
+
+citEntry(entry = "Article",
+  title        = "forecast.vocs: Forecast case and sequence notifications using variant of concern strain dynamics", # nolint
+  author       = personList(as.person("Sam Abbott")),
+  journal      = "Zenodo",
+  year         = "2021",
+  volume       = "",
+  number       = "",
+  pages        = "",
+  doi          = "",
+
+  textVersion  =
+  paste("Sam Abbott (2021).",
+        "forecast.vocs: Forecast case and sequence notifications using variant of concern strain dynamics, ", # nolint
+        "DOI: ")
+)

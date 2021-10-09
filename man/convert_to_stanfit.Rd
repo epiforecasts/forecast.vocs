@@ -7,20 +7,36 @@
 convert_to_stanfit(fit)
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 }
 \value{
-The model fit as a stanfit object
+The model fit as a \code{stanfit} object
 }
 \description{
 Convert to stanfit object
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 convert_to_stanfit(fit)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summarise_posterior}()},
+\code{\link{update_voc_label}()}
 }
+\concept{postprocess}

@@ -28,9 +28,9 @@ forecast(
 )
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
 
@@ -38,10 +38,10 @@ on data availability.}
 maximum date in \code{obs}.}
 
 \item{seq_date}{Date from which to use available sequence data. Defaults to
-the forecast date.}
+the \code{date}.}
 
 \item{case_date}{Date from which to use available case data. Defaults to
-the forecast date.}
+the \code{date}.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
@@ -68,16 +68,16 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 \item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
 used include overdispersion.}
 
-\item{models}{A model as supplied by \code{load_model()}. If not supplied the
+\item{models}{A model as supplied by \code{\link[=load_model]{load_model()}}. If not supplied the
 default for that strain is used. If multiple strain models are being forecast
 then \code{models} should be a list models.}
 
 \item{likelihood}{Logical, defaults to \code{TRUE}. Should the likelihood be
-included in the model.extract}
+included in the model}
 
-\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the log
-likelihood be output. Disabling this will speed up fitting if evaluating the
-model fit is not required.}
+\item{output_loglik}{Logical, defaults to \code{FALSE}. Should the
+log-likelihood be output. Disabling this will speed up fitting
+if evaluating the model fit is not required.}
 
 \item{debug}{Logical, defaults to \code{FALSE}. Should within model debug
 information be returned.}
@@ -94,15 +94,15 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.}
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
-plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
-and \code{plot_voc}).}
+plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
+and \code{\link[=plot_voc]{plot_voc()}}).}
 
 \item{id}{ID to assign to this forecast. Defaults to 0.}
 
-\item{...}{Additional parameters passed to \code{stan_fit()}.}
+\item{...}{Additional parameters passed to \code{\link[=stan_fit]{stan_fit()}}.}
 }
 \value{
-A dataframe containing the output of \code{stan_fit()} in each row as
+A \code{data.frame} containing the output of \code{\link[=stan_fit]{stan_fit()}} in each row as
 well as the summarised posterior, forecast and information about the
 parameters specified.
 }
@@ -110,23 +110,35 @@ parameters specified.
 Forecast using branching processes at a target date
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
-results <- forecast(
-  latest_obs(germany_covid19_delta_obs),
+
+forecasts <- forecast(
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
   horizon = 4,
   strains = c(1, 2),
   adapt_delta = 0.99,
   max_treedepth = 15,
   variant_relationship = "scaled"
 )
-# inspect results
-results
+# inspect forecasts
+forecasts
 
 # unnest posteriors
-results <- unnest_posterior(results)
+forecasts <- unnest_posterior(forecasts)
 
 # plot case posterior predictions
-plot_cases(results, log = TRUE)
+plot_cases(forecasts, log = TRUE)
+
+# plot voc posterior predictions
+plot_voc(forecasts)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for forecastin across models, dates, and scenarios
+\code{\link{forecast_across_dates}()},
+\code{\link{forecast_across_scenarios}()},
+\code{\link{unnest_posterior}()}
 }
+\concept{forecast}

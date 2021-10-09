@@ -1,6 +1,6 @@
 #' Forecast using branching processes at a target date
 #'
-#' @param models A model as supplied by `load_model()`. If not supplied the
+#' @param models A model as supplied by [load_model()]. If not supplied the
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
 #'
@@ -17,39 +17,42 @@
 #'
 #' @param id ID to assign to this forecast. Defaults to 0.
 #'
-#' @param ... Additional parameters passed to `stan_fit()`.
+#' @param ... Additional parameters passed to [stan_fit()].
 #'
-#' @return A dataframe containing the output of `stan_fit()` in each row as
+#' @return A `data.frame` containing the output of [stan_fit()] in each row as
 #' well as the summarised posterior, forecast and information about the
 #' parameters specified.
 #'
+#' @family forecast
 #' @inheritParams filter_by_availability
 #' @inheritParams stan_data
 #' @inheritParams stan_fit
 #' @inheritParams summarise_posterior
 #' @export
 #' @importFrom purrr map transpose reduce map_chr safely
-#'
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' options(mc.cores = 4)
-#' results <- forecast(
-#'   latest_obs(germany_covid19_delta_obs),
+#'
+#' forecasts <- forecast(
+#'   germany_covid19_delta_obs,
+#'   forecast_date = as.Date("2021-06-12"),
 #'   horizon = 4,
 #'   strains = c(1, 2),
 #'   adapt_delta = 0.99,
 #'   max_treedepth = 15,
 #'   variant_relationship = "scaled"
 #' )
-#' # inspect results
-#' results
+#' # inspect forecasts
+#' forecasts
 #'
 #' # unnest posteriors
-#' results <- unnest_posterior(results)
+#' forecasts <- unnest_posterior(forecasts)
 #'
 #' # plot case posterior predictions
-#' plot_cases(results, log = TRUE)
-#' }
+#' plot_cases(forecasts, log = TRUE)
+#'
+#' # plot voc posterior predictions
+#' plot_voc(forecasts)
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
@@ -131,6 +134,7 @@ forecast <- function(obs,
 }
 
 #' Forecast for a single model and summarise
+#'
 #' @inheritParams stan_inits
 #' @inheritParams forecast
 #' @inheritParams stan_fit

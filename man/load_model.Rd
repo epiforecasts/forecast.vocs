@@ -11,19 +11,29 @@ load_model(strains = 2, compile = TRUE, ...)
 maximum is 2.}
 
 \item{compile}{Logical, defaults to \code{TRUE}. Should the model
-be loaded and compiled using \code{cmdstanr::cmstan_model()}.}
+be loaded and compiled using \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
 
-\item{...}{Additional arguments passed to \code{cmdstanr::cmstan_model()}.}
+\item{...}{Additional arguments passed to \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
+}
+\value{
+A \code{cmdstanr} model.
 }
 \description{
 Load and compile a strain model
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # one strain model
 mod <- load_model(strains = 1)
 
 # two strain model
 two_strain_mod <- load_model(strains = 2)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for modelling
+\code{\link{stan_data}()},
+\code{\link{stan_fit}()},
+\code{\link{stan_inits}()}
 }
+\concept{model}

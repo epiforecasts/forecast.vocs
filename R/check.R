@@ -1,12 +1,19 @@
-#' @title Check a parameter is the correct type and length
+#' Check a parameter is the correct type and length
+#'
 #' @param param A parameter to check the format of.
+#'
 #' @param name A character string naming the variable
 #' to check.
+#'
 #' @param type A character string identifying the allowed parameter
 #' type (must be a type with a is.type function except for a Date).
+#'
 #' @param length Numeric, allowed length of the variable. Defaults to
-#' any allowed length
+#' any allowed length.
+#'
 #' @return NULL
+#'
+#' @family check
 #' @export
 #' @keywords internal
 check_param <- function(param, name = "param",
@@ -28,13 +35,20 @@ check_param <- function(param, name = "param",
   return(invisible(NULL))
 }
 
-#' @title Check a data.frame
+#' Check a data.frame
+#'
 #' @param dataframe A data.frame to check.
+#'
 #' @param req_vars A character vector of variables that are required.
+#'
 #' @param req_types A character vector of types for each required variable.
+#'
 #' @param rows Integer specifying the number of rows the data.frame should have.
-#' @export
+#'
 #' @return NULL
+#'
+#' @family check
+#' @export
 #' @importFrom purrr walk2
 #' @keywords internal
 check_dataframe <- function(dataframe, req_vars, req_types, rows) {
@@ -60,10 +74,14 @@ check_dataframe <- function(dataframe, req_vars, req_types, rows) {
   return(invisible(NULL))
 }
 
-#' @title Check observations are in the correct format
-#' @param obs A data.frame of observations to check for formatting issues
-#' @export
+#' Check observations are in the correct format
+#'
+#' @param obs A `data.frame` of observations to check for formatting issues.
+#'
 #' @return NULL
+#'
+#' @family check
+#' @export
 #' @examples
 #' obs <- latest_obs(germany_covid19_delta_obs)
 #' check_observations(obs)
@@ -84,9 +102,15 @@ check_observations <- function(obs) {
 }
 
 #' Check Quantiles Required are Present
+#'
 #' @param posterior A dataframe containing quantiles identified using
-#' the "q5" approach.
+#' the `q5` naming scheme.
+#'
 #' @param req_probs A numeric vector of required probabilties.
+#'
+#' @return NULL
+#'
+#' @family check
 #' @export
 check_quantiles <- function(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8)) {
   cols <- colnames(posterior)

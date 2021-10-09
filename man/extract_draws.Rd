@@ -7,22 +7,38 @@
 extract_draws(fit, ...)
 }
 \arguments{
-\item{fit}{A list as produced by \code{stan_fit()}.}
+\item{fit}{A list as produced by \code{\link[=stan_fit]{stan_fit()}}.}
 
-\item{...}{Additional parameters passed to \code{cmdstanr::draws}}
+\item{...}{Additional parameters passed to \code{\link[cmdstanr:fit-method-draws]{cmdstanr::draws()}}}
 }
 \value{
-A \code{draws} object from the \code{posterior} package.
+A \code{\link[cmdstanr:fit-method-draws]{cmdstanr::draws()}} object from the \code{posterior} package.
 }
 \description{
 Extract posterior draws
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_delta_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 extract_draws(fit)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summarise_posterior}()},
+\code{\link{update_voc_label}()}
 }
+\concept{postprocess}

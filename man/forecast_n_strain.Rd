@@ -15,9 +15,9 @@ forecast_n_strain(
 )
 }
 \arguments{
-\item{data}{A list of data as produced by \code{stan_data()}.}
+\item{data}{A list of data as produced by \code{\link[=stan_data]{stan_data()}}.}
 
-\item{model}{A \code{cmdstanr} model object as loaded by \code{load_model()}}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=load_model]{load_model()}}.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
@@ -29,15 +29,15 @@ rename parameters to use variant specific terminology.}
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
-plotting functions to work (such as \code{plot_cases()}, \code{plot_rt},
-and \code{plot_voc}).}
+plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
+and \code{\link[=plot_voc]{plot_voc()}}).}
 
 \item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
-\item{...}{Additional parameters passed to \code{stan_fit()}.}
+\item{...}{Additional parameters passed to \code{\link[=stan_fit]{stan_fit()}}.}
 }
 \description{
 Forecast for a single model and summarise

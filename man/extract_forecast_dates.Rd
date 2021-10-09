@@ -8,7 +8,7 @@ extract_forecast_dates(posterior)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{summarise_posterior()}. For forecast dates to be extracted data with
+\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 }
 \value{
@@ -21,14 +21,30 @@ Extract forecast dates based on the availability of both case
 and sequence data.
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(mc.cores = 4)
-obs <- latest_obs(germany_covid19_delta_obs)
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs, overdispersion = FALSE)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
 p <- summarise_posterior(fit)
 
 extract_forecast_dates(p)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Functions used for postprocessing of model fits
+\code{\link{bp_launch_shinystan}()},
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summarise_posterior}()},
+\code{\link{update_voc_label}()}
 }
+\concept{postprocess}

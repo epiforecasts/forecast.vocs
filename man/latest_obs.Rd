@@ -7,11 +7,15 @@
 latest_obs(obs)
 }
 \arguments{
-\item{obs}{A data frame with the following variables:
-date, cases, seq_voc, and seq_total, cases_available,
-and seq_available. seq_available and case_available must be
+\item{obs}{A \code{data.frame} with the following variables:
+\code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
+and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
 on data availability.}
+}
+\value{
+A \code{data.frame} of observations filtered for the
+latest available data.
 }
 \description{
 Filter for latest observations of all types
@@ -23,3 +27,8 @@ dt <- rbind(
 )
 latest_obs(dt)
 }
+\seealso{
+Preprocessing functions
+\code{\link{filter_by_availability}()}
+}
+\concept{preprocess}

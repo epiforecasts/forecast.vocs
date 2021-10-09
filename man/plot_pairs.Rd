@@ -14,28 +14,44 @@ plot_pairs(
 )
 }
 \arguments{
-\item{fit}{List of output as returned by \code{stan_fit()}.}
+\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
 
 \item{pars}{Character vector of parameters to try and include
 in the plot. Will only be included if present in the fitted model.}
 
 \item{diagnostics}{Logical, defaults to \code{TRUE}. Should fitting diagnostics
-be returned as a data frame.}
+be returned as a \code{data.frame}.}
 
-\item{...}{Additional parameters passed to \code{mcmc_pairs()}.}
+\item{...}{Additional parameters passed to \code{\link[bayesplot:MCMC-scatterplots]{bayesplot::mcmc_pairs()}}.}
 }
 \value{
-A ggplot2 based pairs plot of parameters of interest
+A \code{ggplot2} based pairs plot of parameters of interest
 }
 \description{
 Pairs plot of parameters of interest and fitting diagnostics
 }
 \examples{
-\dontrun{
-obs <- latest_obs(germany_covid19_voc_obs)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+obs <- filter_by_availability(
+  germany_covid19_delta_obs,
+  date = as.Date("2021-06-12"),
+)
 dt <- stan_data(obs)
 inits <- stan_inits(dt)
 fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 plot_pairs(fit)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Plotting functionts
+\code{\link{add_forecast_dates}()},
+\code{\link{plot_cases}()},
+\code{\link{plot_default}()},
+\code{\link{plot_growth}()},
+\code{\link{plot_posterior}()},
+\code{\link{plot_rt}()},
+\code{\link{plot_theme}()},
+\code{\link{plot_voc}()}
 }
+\concept{modelvalidation}
+\concept{plot}

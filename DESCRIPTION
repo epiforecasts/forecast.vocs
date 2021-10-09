@@ -1,12 +1,15 @@
 Package: forecast.vocs
-Title: Forecast Case Notifications using Variant of Concern Strain
-    Dynamics
-Version: 0.0.4.1000
+Title: Forecast Case and Sequence Notifications using Variant of Concern
+    Strain Dynamics
+Version: 0.0.5.1000
 Authors@R:
     person("Sam Abbott", , , "sam.abbott@lshtm.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8057-8037"))
-Description: Forecast case notifications using variant of concern strain
-    dynamics.
+Description: Contains models and tools to produce short-term forecasts for
+    both case and sequence notifications assuming circulation of either
+    one or two variants. Tools are also provided to allow the evaluation
+    of the use of sequence data for short-term forecasts in both
+    real-world settings and in user generated scenarios.
 License: MIT + file LICENSE
 URL: https://epiforecasts.io/forecast.vocs/,
     https://github.com/epiforecasts/forecast.vocs/
