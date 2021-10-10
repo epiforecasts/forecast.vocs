@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - master
+  schedule:
+    - cron: '5 4 * * 1'
   pull_request:
     branches:
       - main
@@ -33,7 +35,8 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CMDSTAN_VERSION: "2.28.0"
-
+      NOT_CRAN: true
+      
     steps:
       - name: cmdstan env vars
         run: |
