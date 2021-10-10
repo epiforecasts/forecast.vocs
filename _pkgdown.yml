@@ -1,7 +1,8 @@
 url: epiforecasts.io/forecast.vocs/
 template:
+  package: preferably
   params:
-    bootswatch: lumen
+    toggle: manual
   twitter:
     creator: "@seabbs"
     card: summary_large_image

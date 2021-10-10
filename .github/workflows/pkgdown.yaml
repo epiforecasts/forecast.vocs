@@ -42,10 +42,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes"))
+          install.packages(c("remotes", "curl"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github("r-lib/pkgdown")
-          install.packages("curl")
+          remotes::install_github("amirmasoudabdol/preferably", type = "source")
         shell: Rscript {0}
         
       - name: Cache cmdstan
