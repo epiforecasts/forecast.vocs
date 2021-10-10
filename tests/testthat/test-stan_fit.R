@@ -67,19 +67,7 @@ test_stan_fit(
 )
 
 test_stan_fit(
-  "The two strain model with scaling and no overdispersion can be fit as
-   expected",
-  ndisp_scaled_dt, two_model, inits2
-)
-
-test_stan_fit(
   "The two strain model with independence and overdispersion can be fit as
    expected",
   independent_dt, two_model, inits2
-)
-
-test_stan_fit(
-  "The two strain model with independence and no overdispersion can be fit as
-   expected",
-  ndisp_independent_dt, two_model, inits2
 )
