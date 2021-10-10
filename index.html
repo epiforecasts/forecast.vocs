@@ -157,7 +157,7 @@
 <div id="forecast-all-in-one" class="section level3">
 <h3 class="hasAnchor">
 <a href="#forecast-all-in-one" class="anchor" aria-hidden="true"></a>Forecast all-in-one</h3>
-<p>Run a forecast for both one and two strain models (or optionally just one of these) using the <code><a href="reference/forecast.html">forecast()</a></code> function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code>forecast_accross_scenarios()</code>.</p>
+<p>Run a forecast for both one and two strain models (or optionally just one of these) using the <code><a href="reference/forecast.html">forecast()</a></code> function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code><a href="reference/forecast_across_scenarios.html">forecast_across_scenarios()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">obs</span>,
   strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span>,
@@ -167,37 +167,37 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 9.8 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 11.5 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 12.5 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 18.3 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 11.3 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 12.0 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 13.6 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 32.6 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 13.0 seconds.</span>
-<span class="co">#&gt; Total execution time: 18.5 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 17.4 seconds.</span>
+<span class="co">#&gt; Total execution time: 32.7 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 24.5 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 32.0 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 35.8 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 40.4 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 34.3 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 38.3 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 39.0 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 41.6 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 33.2 seconds.</span>
-<span class="co">#&gt; Total execution time: 40.5 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 38.3 seconds.</span>
+<span class="co">#&gt; Total execution time: 41.7 seconds.</span>
 <span class="va">forecasts</span>
 <span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
 <span class="co">#&gt; 1:  0    2021-06-19       1           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt; 2:  0    2021-06-19       2           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
-<span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.006037</span>
-<span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003753</span>
+<span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.002723</span>
+<span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.005589</span>
 <span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
-<span class="co">#&gt; 1:                    10                  0.00250            11</span>
-<span class="co">#&gt; 2:                    19                  0.00475            11</span>
+<span class="co">#&gt; 1:                    10                  0.00250            12</span>
+<span class="co">#&gt; 2:                    13                  0.00325            10</span>
 <span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
-<span class="co">#&gt; 1:                 795              0.19875 &lt;data.table[148x20]&gt;</span>
-<span class="co">#&gt; 2:                 806              0.20150 &lt;data.table[400x20]&gt;</span>
+<span class="co">#&gt; 1:                 504               0.1260 &lt;data.table[148x20]&gt;</span>
+<span class="co">#&gt; 2:                2998               0.7495 &lt;data.table[400x20]&gt;</span>
 <span class="co">#&gt;               forecast</span>
 <span class="co">#&gt; 1: &lt;data.table[12x13]&gt;</span>
 <span class="co">#&gt; 2: &lt;data.table[54x13]&gt;</span></code></pre></div>
