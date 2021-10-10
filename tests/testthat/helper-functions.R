@@ -17,7 +17,7 @@ test_stan_fit <- function(message, dt, model, inits) {
   test_that(message, {
     skip_on_cran()
     fit <- silent_stan_fit(
-      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.9,
+      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.95,
       max_treedepth = 15, refresh = 0, show_messages = FALSE,
       iter_warmup = 1000, iter_sampling = 1000
     )
@@ -33,7 +33,7 @@ test_stan_fit <- function(message, dt, model, inits) {
       )
     )
     expect_equal(class(fit$fit[[1]])[1], "CmdStanMCMC")
-    expect_lt(fit$per_divergent_transitons, 0.15)
+    expect_lt(fit$per_divergent_transitons, 0.1)
     expect_lt(fit$max_treedepth, 15)
     expect_lt(fit$max_rhat, 1.1)
     expect_type(fit$fit_args[[1]], "list")
