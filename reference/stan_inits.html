@@ -11,7 +11,7 @@
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>Set up initial conditions for model — stan_inits • forecast.vocs</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Set up initial conditions for model — stan_inits"><meta property="og:description" content="Set up initial conditions for model"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+</script><title>Set up initial conditions for model — stan_inits • forecast.vocs</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Set up initial conditions for model — stan_inits"><meta property="og:description" content="Set up initial conditions for model"><meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png"><meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -129,54 +129,54 @@ for the package stan models.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(inits)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7febd4563778&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7febd456e6d8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7f91d5163890&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7f91d51672e0&gt;</span>
 <span class="r-in"><span class="fu">inits</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $init_cases</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.387819  5.337211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.358031  5.339853</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_init</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02536422</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.0006577967</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00154628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.005864052</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -8.082594e-03 -1.569398e-03 -1.257408e-02  2.637165e-03 -2.338535e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -1.187310e-02 -2.730105e-03 -5.444346e-05 -8.184315e-03 -1.392326e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  3.423215e-03 -8.320511e-03  1.709102e-02  1.340718e-02  6.498885e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -9.056427e-03 -7.456593e-03 -1.807572e-02 -8.854483e-03 -4.760935e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -2.265508e-02 -1.327841e-03 -1.654879e-02 -6.773924e-03 -7.833644e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -1.265008e-03  5.537595e-03 -1.133599e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0099730388 -0.0072056774 -0.0132681330  0.0044310327 -0.0051292711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.0088268309  0.0024023885 -0.0005511317  0.0021675876 -0.0145085718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0060035322 -0.0222080570 -0.0075431591  0.0074231328  0.0134717204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0229842797 -0.0009194608  0.0067442174 -0.0041490725  0.0025596047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0081220927  0.0021110811  0.0068437263  0.0018105228 -0.0076923624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26]  0.0060950602 -0.0019940844  0.0175204758</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.007518951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.04776244</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sqrt_phi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01453154 0.02183057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01043685 0.02144817</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_mod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01197002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.001340993</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006188542</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002979529</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nvoc_noise</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00750976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.008947192</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0124894035  0.0182684712 -0.0029674633 -0.0061280033 -0.0004553894</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.0082048823  0.0101063541  0.0010836355  0.0006837853  0.0082188460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.0026480950 -0.0116336031 -0.0142309035 -0.0103155059  0.0173245792</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0200328989  0.0062915983  0.0007357601  0.0038060406 -0.0081154993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.0015939578 -0.0040097851  0.0220205303  0.0172325247</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.001366222 -0.008412821  0.006966341 -0.007188741 -0.013362141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.012601161 -0.003563373 -0.001833262  0.009142916  0.004165297</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.020822151  0.015414612  0.012019943 -0.001849987 -0.007953014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.005146475 -0.008521192 -0.014941282 -0.006859731  0.003725224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.007831105 -0.011181010  0.001649085 -0.004382928</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nvoc_eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0064311130  0.0008212458  0.0048739166 -0.0180888308  0.0075558720</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.0103569099  0.0100146912 -0.0043398879 -0.0141378313 -0.0003852885</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.0090951543 -0.0117452197 -0.0099045647 -0.0049713108 -0.0092499395</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16]  0.0091205502  0.0047349517  0.0079158371 -0.0076559097 -0.0002485780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.0163189109  0.0173686795  0.0033301362  0.0113932648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0098152856 -0.0003255086  0.0268915424  0.0019347464 -0.0161658019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0143959202  0.0050096545  0.0030444787 -0.0032306190 -0.0022992587</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0005299566  0.0071809097  0.0138771574  0.0065320910  0.0116277330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0137899534 -0.0169366081  0.0063515484 -0.0208022143  0.0098033627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.0090989719  0.0057913156 -0.0198566739 -0.0003131065</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
   </div>

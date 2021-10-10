@@ -36,6 +36,8 @@
     one or two variants. Tools are also provided to allow the evaluation
     of the use of sequence data for short-term forecasts in both
     real-world settings and in user generated scenarios.">
+<meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png">
+<meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -165,37 +167,37 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 11.4 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 11.7 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 11.7 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 12.9 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 9.8 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 11.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 12.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 18.3 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 11.9 seconds.</span>
-<span class="co">#&gt; Total execution time: 13.1 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 13.0 seconds.</span>
+<span class="co">#&gt; Total execution time: 18.5 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 3 finished in 27.9 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 29.6 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 24.5 seconds.</span>
 <span class="co">#&gt; Chain 4 finished in 32.0 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 39.5 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 35.8 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 40.4 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 32.2 seconds.</span>
-<span class="co">#&gt; Total execution time: 39.5 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 33.2 seconds.</span>
+<span class="co">#&gt; Total execution time: 40.5 seconds.</span>
 <span class="va">forecasts</span>
 <span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
 <span class="co">#&gt; 1:  0    2021-06-19       1           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt; 2:  0    2021-06-19       2           TRUE               pooled 0,0.25</span>
 <span class="co">#&gt;    voc_scale error               fit       data  fit_args samples max_rhat</span>
-<span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004669</span>
-<span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.004443</span>
+<span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.006037</span>
+<span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[30]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000 1.003753</span>
 <span class="co">#&gt;    divergent_transitions per_divergent_transitons max_treedepth</span>
-<span class="co">#&gt; 1:                    11                  0.00275            10</span>
-<span class="co">#&gt; 2:                     6                  0.00150            11</span>
+<span class="co">#&gt; 1:                    10                  0.00250            11</span>
+<span class="co">#&gt; 2:                    19                  0.00475            11</span>
 <span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth            posterior</span>
-<span class="co">#&gt; 1:                2209              0.55225 &lt;data.table[148x20]&gt;</span>
-<span class="co">#&gt; 2:                 298              0.07450 &lt;data.table[400x20]&gt;</span>
+<span class="co">#&gt; 1:                 795              0.19875 &lt;data.table[148x20]&gt;</span>
+<span class="co">#&gt; 2:                 806              0.20150 &lt;data.table[400x20]&gt;</span>
 <span class="co">#&gt;               forecast</span>
 <span class="co">#&gt; 1: &lt;data.table[12x13]&gt;</span>
 <span class="co">#&gt; 2: &lt;data.table[54x13]&gt;</span></code></pre></div>
