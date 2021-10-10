@@ -136,7 +136,7 @@ plot_voc(forecasts)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Functions used for forecastin across models, dates, and scenarios
+Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
