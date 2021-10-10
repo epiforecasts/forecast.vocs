@@ -4,7 +4,7 @@ list( # nolint
     model = "Functions used for modelling",
     postprocess = "Functions used for postprocessing of model fits", # nolint
     plot = "Plotting functions",
-    forecast = "Functions used for forecastin across models, dates, and scenarios", # nolint
+    forecast = "Functions used for forecasting across models, dates, and scenarios", # nolint
     generatedata = "Functions to generate simulated data.",
     scenarios = "Functions to define and create data scenarios.",
     modelvalidation = "Functions to explore and validate models.", # nolint

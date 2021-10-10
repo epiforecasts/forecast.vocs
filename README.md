@@ -85,7 +85,7 @@ one of these) using the `forecast()` function. This provides a wrapper
 around other package tooling to initialise, fit, and summarise
 forecasts. Multiple forecasts can be performed efficiently across dates
 and scenarios using `forecast_across_dates()` and
-`forecast_accross_scenarios()`.
+`forecast_across_scenarios()`.
 
 ``` r
 forecasts <- forecast(obs,
@@ -96,37 +96,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 9.8 seconds.
-#> Chain 1 finished in 11.5 seconds.
-#> Chain 3 finished in 12.5 seconds.
-#> Chain 2 finished in 18.3 seconds.
+#> Chain 3 finished in 11.3 seconds.
+#> Chain 2 finished in 12.0 seconds.
+#> Chain 4 finished in 13.6 seconds.
+#> Chain 1 finished in 32.6 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 13.0 seconds.
-#> Total execution time: 18.5 seconds.
+#> Mean chain execution time: 17.4 seconds.
+#> Total execution time: 32.7 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 24.5 seconds.
-#> Chain 4 finished in 32.0 seconds.
-#> Chain 1 finished in 35.8 seconds.
-#> Chain 2 finished in 40.4 seconds.
+#> Chain 4 finished in 34.3 seconds.
+#> Chain 2 finished in 38.3 seconds.
+#> Chain 3 finished in 39.0 seconds.
+#> Chain 1 finished in 41.6 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 33.2 seconds.
-#> Total execution time: 40.5 seconds.
+#> Mean chain execution time: 38.3 seconds.
+#> Total execution time: 41.7 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.006037
-#> 2:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.003753
+#> 1:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.002723
+#> 2:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.005589
 #>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                    10                  0.00250            11
-#> 2:                    19                  0.00475            11
+#> 1:                    10                  0.00250            12
+#> 2:                    13                  0.00325            10
 #>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                 795              0.19875 <data.table[148x20]>
-#> 2:                 806              0.20150 <data.table[400x20]>
+#> 1:                 504               0.1260 <data.table[148x20]>
+#> 2:                2998               0.7495 <data.table[400x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>

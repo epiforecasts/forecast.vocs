@@ -1,4 +1,4 @@
-library(data.table, quietly = TRUE)
+suppressMessages(library(data.table, quietly = TRUE))
 
 # construct test data
 dt <- rbind(
