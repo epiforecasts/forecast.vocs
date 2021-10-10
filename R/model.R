@@ -256,7 +256,8 @@ stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
         fit$summary(
           variables = NULL, posterior::rhat,
           .args = list(na.rm = TRUE)
-        )$`posterior::rhat`
+        )$`posterior::rhat`,
+        na.rm = TRUE
       ),
       divergent_transitions = sum(diag$divergent__),
       per_divergent_transitons = sum(diag$divergent__) / nrow(diag),

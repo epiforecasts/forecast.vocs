@@ -11,6 +11,7 @@ test_that("Returns paths to models", {
 test_that(
   "Compilation of the single strain models is successful and syntax is valid",
   { # nolint
+    skip_on_cran()
     single <- suppressMessages(load_model(strains = 1, compile = TRUE))
     single <- suppressMessages(cmdstanr::cmdstan_model(single))
     expect_error(suppressMessages(single$check_syntax()), NA)
@@ -20,6 +21,7 @@ test_that(
 test_that(
   "Compilation of two strain model is successful and syntax is valid",
   { # nolint
+    skip_on_cran()
     two <- suppressMessages(load_model(strains = 2, compile = TRUE))
     two <- suppressMessages(cmdstanr::cmdstan_model(two))
     expect_error(suppressMessages(two$check_syntax()), NA)
