@@ -68,7 +68,7 @@ current_obs <- latest_obs(germany_covid19_delta_obs)
 
 ### Forecast all-in-one
 
-Run a forecast for both one and two strain models (or optionally just one of these) using the `forecast()` function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using `forecast_across_dates()` and `forecast_accross_scenarios()`.
+Run a forecast for both one and two strain models (or optionally just one of these) using the `forecast()` function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using `forecast_across_dates()` and `forecast_across_scenarios()`.
 
 ```{r, message = FALSE}
 forecasts <- forecast(obs,
