@@ -6,6 +6,11 @@ template:
   twitter:
     creator: "@seabbs"
     card: summary_large_image
+  opengraph:
+    image:
+      src: man/figures/README-unnamed-chunk-8-1.png
+      alt: An R package for forecasting case and sequence notifications using variant of concern strain dynamics
+
 
 development:
   mode: release
