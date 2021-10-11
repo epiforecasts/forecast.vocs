@@ -84,7 +84,7 @@ information be returned.}
 
 \item{keep_fit}{Logical, defaults to \code{TRUE}. Should the stan model fit be
 kept and returned. Dropping this can substantially reduce memory usage in
-situtations where multiple models are being fit.}
+situations where multiple models are being fit.}
 
 \item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case

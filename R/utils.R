@@ -44,12 +44,12 @@ load_example <- function(strains = 1, type = "posterior") {
 
   if (type %in% c("posterior", "forecast")) {
     file <- system.file(
-      "extdata", paste(type, strains, "strains_example.rds", sep = "_"),
+      "extdata", paste(type, strains, "strains_example.csv", sep = "_"),
       package = "forecast.vocs"
     )
   } else if (type %in% "observations") {
     file <- system.file(
-      "extdata", "observations_example.rds",
+      "extdata", "observations_example.csv",
       package = "forecast.vocs"
     )
   } else if (type %in% "script") {
@@ -60,11 +60,11 @@ load_example <- function(strains = 1, type = "posterior") {
   }
 
   if (type %in% "script") {
-    rds <- file
+    out <- file
   } else {
-    rds <- readRDS(file)
+    out <- fread(file)
   }
-  return(rds)
+  return(out)
 }
 
 utils::globalVariables(

@@ -1,5 +1,6 @@
 
 test_that("Can plot using freshly generated forecasts", {
+  skip_on_cran()
   expect_ggplot(plot_cases(posterior1))
   expect_ggplot(plot_cases(posterior1, log = TRUE))
   expect_ggplot(
