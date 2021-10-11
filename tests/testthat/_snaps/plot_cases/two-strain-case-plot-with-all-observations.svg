@@ -200,6 +200,6 @@
 <line x1='430.22' y1='565.04' x2='430.22' y2='547.76' style='stroke-width: 2.35; stroke: #000000; stroke-opacity: 0.90; stroke-dasharray: 3.13,9.39; stroke-linecap: butt;' />
 <text x='391.15' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='24.95px' lengthAdjust='spacingAndGlyphs'>Cases</text>
 <text x='444.34' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='44.05px' lengthAdjust='spacingAndGlyphs'>Sequences</text>
-<text x='54.82' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='284.69px' lengthAdjust='spacingAndGlyphs'>Two strain case plot with all current observations</text>
+<text x='54.82' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='239.94px' lengthAdjust='spacingAndGlyphs'>Two strain case plot with all observations</text>
 </g>
 </svg>

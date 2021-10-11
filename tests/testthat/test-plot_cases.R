@@ -48,7 +48,7 @@ test_that("Can plot using example data", {
     plot_cases(posterior2, current_obs)
   )
   vdiffr::expect_doppelganger(
-    "Two strain case plot with all current observations",
+    "Two strain case plot with all observations",
     plot_cases(posterior2, current_obs, all_obs = FALSE)
   )
   vdiffr::expect_doppelganger(
