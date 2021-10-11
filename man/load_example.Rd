@@ -29,7 +29,7 @@ without needing to install \code{cmdstanr}.
 }
 \examples{
 # Load the summarised posterior from an example fit of the one strain model
-load_example(strains = 1, type  = "posterior")
+load_example(strains = 1, type = "posterior")
 
 # Load the summarised forecast from this posterior
 load_example(strains = 1, type = "forecast")

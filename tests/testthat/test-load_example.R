@@ -14,5 +14,7 @@ test_that("Observations can be returned as expected", {
 
 test_that("Scripts can be returned as expected", {
   expect_type(load_example(strains = 1, type = "s"), "character")
-  expect_data_table(load_example(strains = 2, type = "s"), "character")
+  expect_type(load_example(strains = 2, type = "s"), "character")
+  expect_error(readLines(load_example(strains = 1, type = "s")), NA)
+  expect_error(readLines(load_example(strains = 2, type = "s")), NA)
 })
