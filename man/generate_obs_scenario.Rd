@@ -25,7 +25,7 @@ Define observed data for a scenario
 generate_obs_scenario(latest_obs(germany_covid19_delta_obs), 4, 0.1)
 }
 \seealso{
-Functions to define and create data scenarios.
+Functions to define and create data scenarios
 \code{\link{define_scenarios}()},
 \code{\link{update_obs_availability}()}
 }

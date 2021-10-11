@@ -17,7 +17,7 @@ obs <- latest_obs(germany_covid19_delta_obs)
 check_observations(obs)
 }
 \seealso{
-Functions used for checking inputs∂.
+Functions used for checking inputs
 \code{\link{check_dataframe}()},
 \code{\link{check_param}()},
 \code{\link{check_quantiles}()}

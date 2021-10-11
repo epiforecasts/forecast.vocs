@@ -19,7 +19,7 @@ check_dataframe(dataframe, req_vars, req_types, rows)
 Check a data.frame
 }
 \seealso{
-Functions used for checking inputs∂.
+Functions used for checking inputs
 \code{\link{check_observations}()},
 \code{\link{check_param}()},
 \code{\link{check_quantiles}()}

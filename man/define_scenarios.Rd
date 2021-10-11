@@ -32,7 +32,7 @@ Define data availability scenarios
 define_scenarios()
 }
 \seealso{
-Functions to define and create data scenarios.
+Functions to define and create data scenarios
 \code{\link{generate_obs_scenario}()},
 \code{\link{update_obs_availability}()}
 }

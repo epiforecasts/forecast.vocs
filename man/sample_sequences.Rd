@@ -35,7 +35,7 @@ sample_sequences(frac_voc, seq_total)
 sample_sequences(frac_voc, seq_total, 0.5)
 }
 \seealso{
-Functions to generate simulated data.
+Functions to generate simulated data
 \code{\link{generate_obs}()}
 }
 \concept{generatedata}
