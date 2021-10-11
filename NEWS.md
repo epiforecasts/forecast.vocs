@@ -1,8 +1,9 @@
 # forecast.vocs 0.0.6
-#
+
 * Add a vignette defining the package models.
 * Updated documentation to use `{preferably}`.
 * Add basic tests for all modelling functions.
+* Add tests for all postprocessing functions
 
 # forecast.vocs 0.0.5
 

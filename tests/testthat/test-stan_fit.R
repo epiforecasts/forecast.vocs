@@ -1,6 +1,5 @@
-options(mc.cores = 2)
-
 if (not_on_cran()) {
+  options(mc.cores = 2)
   obs <- filter_by_availability(
     germany_covid19_delta_obs,
     date = "2021-06-26"
