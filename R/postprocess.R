@@ -300,16 +300,8 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' @family postprocess
 #' @export
 #' @importFrom purrr map_lgl
-#' @examplesIf interactive()
-#' options(mc.cores = 4)
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs, overdispersion = FALSE)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, max_treedepth = 15, adapt_delta = 0.9)
-#' p <- summarise_posterior(fit)
+#' @examples
+#' p <- load_example(strains = 2, type = "posterior")
 #'
 #' extract_forecast_dates(p)
 extract_forecast_dates <- function(posterior) {
@@ -331,7 +323,7 @@ extract_forecast_dates <- function(posterior) {
       "exponentiated", "mean", "median", "sd", "mad", "rhat",
       "ess_bulk", "ess_tail", grep("^q[0-9]", names(dates), value = TRUE)
     )
-    dates[, (cols) := NULL]
+    suppressWarnings(dates[, (cols) := NULL])
     dates[, type := fcase(
       type %in% c("Overall", "Combined"), "Cases",
       !type %in% c("Overall", "Combined"), "Sequences"
@@ -355,15 +347,9 @@ extract_forecast_dates <- function(posterior) {
 #'
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' p <- summarise_posterior(fit)
+#' @examples
+#' p <- load_example(strains = 2, type = "posterior")
+#'
 #' extract_forecast(p)
 extract_forecast <- function(posterior) {
   forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
@@ -398,15 +384,8 @@ extract_forecast <- function(posterior) {
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
 #' @export
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' p <- summarise_posterior(fit)
+#' @examples
+#' p <- load_example(strains = 2, type = "posterior")
 #' p <- update_voc_label(p, "Delta")
 #' p[value_type == "model"]
 update_voc_label <- function(posterior, label, target_label = "VOC") {
@@ -465,14 +444,8 @@ extract_draws <- function(fit, ...) {
 #'
 #' @family postprocess
 #' @export
-#' @examplesIf interactive()
-#' options(mc.cores = 4)
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- forecast(obs, max_treedepth = 15, adapt_delta = 0.99)
-#' posterior <- unnest_posterior(dt)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #' long_posterior <- quantiles_to_long(posterior)
 #' long_posterior
 quantiles_to_long <- function(posterior) {

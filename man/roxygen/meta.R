@@ -9,6 +9,6 @@ list( # nolint
     scenarios = "Functions to define and create data scenarios.",
     modelvalidation = "Functions to explore and validate models.", # nolint
     data = "Package data sets",
-    check = "Functions used for checking inputs."
+    check = "Functions used for checking inputs∂."
   )
 )

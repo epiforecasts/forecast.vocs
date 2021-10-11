@@ -121,15 +121,8 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales comma log_trans
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #'
 #' # default with log transform
 #' plot_cases(posterior)
@@ -180,15 +173,8 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @export
 #' @importFrom scales percent
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #' plot_voc(posterior)
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
@@ -218,15 +204,8 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @export
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #' plot_rt(posterior)
 plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
@@ -258,15 +237,8 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @export
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #' plot_growth(posterior)
 plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
@@ -306,15 +278,8 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @inheritParams plot_cases
 #' @inheritParams plot_voc
 #' @importFrom purrr walk2
-#' @examplesIf interactive()
-#' obs <- filter_by_availability(
-#'   germany_covid19_delta_obs,
-#'   date = as.Date("2021-06-12"),
-#' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' posterior <- summarise_posterior(fit)
+#' @examples
+#' posterior <- load_example(strains = 2, type = "posterior")
 #' plot_posterior(posterior)
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path = NULL, type = "png",

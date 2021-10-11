@@ -34,7 +34,8 @@ Suggests:
     shinystan,
     spelling,
     testthat (>= 3.0.0),
-    usethis
+    usethis,
+    vdiffr
 VignetteBuilder:
     knitr
 Remotes:

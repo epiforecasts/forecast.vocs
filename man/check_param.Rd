@@ -22,7 +22,7 @@ any allowed length.}
 Check a parameter is the correct type and length
 }
 \seealso{
-Functions used for checking inputs.
+Functions used for checking inputs∂.
 \code{\link{check_dataframe}()},
 \code{\link{check_observations}()},
 \code{\link{check_quantiles}()}

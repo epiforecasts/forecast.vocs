@@ -4,7 +4,10 @@ if (not_on_cran()) {
     germany_covid19_delta_obs,
     date = "2021-06-26"
   )
-
+  current_obs <- filter_by_availability(
+    germany_covid19_delta_obs,
+    date = "2021-08-26"
+  )
   dt <- stan_data(
     obs,
     overdispersion = TRUE,
@@ -29,4 +32,6 @@ if (not_on_cran()) {
 
   posterior1 <- summarise_posterior(fit1)
   posterior2 <- summarise_posterior(fit2)
+  forecast1 <- extract_forecast(posterior1)
+  forecast2 <- extract_forecast(posterior2)
 }

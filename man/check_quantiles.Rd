@@ -16,7 +16,7 @@ the \code{q5} naming scheme.}
 Check Quantiles Required are Present
 }
 \seealso{
-Functions used for checking inputs.
+Functions used for checking inputs∂.
 \code{\link{check_dataframe}()},
 \code{\link{check_observations}()},
 \code{\link{check_param}()}
