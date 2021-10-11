@@ -1,5 +1,6 @@
 
 test_that("Can convert a posterior to long format successfully", {
+  skip_on_cran()
   long <- quantiles_to_long(posterior1)
   expect_true(all(c("quantile", "prediction") %in% names(long)))
   expect_type(long$quantile, "double")

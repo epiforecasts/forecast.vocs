@@ -12,3 +12,8 @@ test_that("Can replace VoC placeholders with a named label", {
     unique(up_posterior$type), c(NA, "Combined", "Delta", "non-Delta")
   )
 })
+
+test_that("No changes are made when there is no label supplied", {
+  skip_on_cran()
+  expect_equal(update_voc_label(posterior2), posterior2)
+})
