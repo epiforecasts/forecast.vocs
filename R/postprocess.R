@@ -141,7 +141,8 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     rows = 1
   )
   check_param(voc_label, "voc_label", type = "character", length = 1)
-
+  # order probs
+  probs <- probs[order(probs)]
   # NULL out variables
   variable <- type <- NULL
   # extract useful model info
