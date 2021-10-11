@@ -25,5 +25,6 @@ fit <- stan_fit(
   adapt_delta = 0.99, max_treedepth = 15, chains = 2
 )
 
-posterior <- summarise_posterior(fit)
+# summarise posterior assuming a mean generation time of  5.5 days.
+posterior <- summarise_posterior(fit, scale_r = 5.5 / 7)
 forecast <- extract_forecast(posterior)

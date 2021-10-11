@@ -200,7 +200,7 @@ test_summarise_posterior <- function(message, fit, test_posterior,
     cases <- merge(cases, obs, all = TRUE, by = "date")
     expect_equal(cases$obs, cases$cases)
     # Check linked sequence observations agree with input data
-    if (strains == 1) {
+    if (strains == 2) {
       seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
       seq <- merge(seq, obs, all = TRUE, by = "date")
       expect_equal(seq$obs, seq$share_voc)
