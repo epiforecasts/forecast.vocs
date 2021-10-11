@@ -130,10 +130,10 @@ test_filter_by_availability <- function(dt, message, tar_date = max(dt$date),
 test_summarise_posterior <- function(message, fit, test_posterior,
                                      strains, equal = TRUE,
                                      probs = c(0.05, 0.2, 0.8, 0.95),
-                                     ...) {
+                                     voc_label = "VOC") {
   test_that(message, {
     skip_on_cran()
-    posterior <- summarise_posterior(fit, probs)
+    posterior <- summarise_posterior(fit, probs, voc_label)
     attributes(test_posterior)$index <- NULL
     attributes(posterior)$index <- NULL
     # check in comparision to default posterior
@@ -181,7 +181,7 @@ test_summarise_posterior <- function(message, fit, test_posterior,
       types <- c(NA, "Overall")
       value_types <- c("model", "cases", "growth", "rt", "raw")
     } else if (strains == 2) {
-      types <- c(NA, "Combined", "VOC", "non-VOC")
+      types <- c(NA, "Combined", voc_label, paste0("non-", voc_label))
       value_types <- c("model", "cases", "voc", "growth", "rt", "raw")
     }
     expect_type(posterior$type, "character")
