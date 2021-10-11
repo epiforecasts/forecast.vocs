@@ -23,7 +23,7 @@ A \code{data.table} of summarised output
 }
 \description{
 Loads examples of posterior and forecast summaries produced
-using \code{\link{scripts/generate-examples.R}}. Used to streamline examples,
+using example scripts. Used to streamline examples,
 in package tests and to enable users to explore package functionality
 without needing to install \code{cmdstanr}.
 }

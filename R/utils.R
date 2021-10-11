@@ -9,7 +9,7 @@ NULL
 #' Load a package example
 #'
 #' Loads examples of posterior and forecast summaries produced
-#' using [`scripts/generate-examples.R`]. Used to streamline examples,
+#' using example scripts. Used to streamline examples,
 #' in package tests and to enable users to explore package functionality
 #' without needing to install `cmdstanr`.
 #'

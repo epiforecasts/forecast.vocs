@@ -346,6 +346,7 @@ extract_forecast_dates <- function(posterior) {
 #' by [summarise_posterior()] but with fitting variables dropped.
 #'
 #' @family postprocess
+#' @export
 #' @inheritParams extract_forecast_dates
 #' @examples
 #' p <- load_example(strains = 2, type = "posterior")
