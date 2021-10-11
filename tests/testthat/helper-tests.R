@@ -200,9 +200,11 @@ test_summarise_posterior <- function(message, fit, test_posterior,
     cases <- merge(cases, obs, all = TRUE, by = "date")
     expect_equal(cases$obs, cases$cases)
     # Check linked sequence observations agree with input data
-    seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
-    seq <- merge(seq, obs, all = TRUE, by = "date")
-    expect_equal(seq$obs, seq$share_voc)
+    if (strains == 1) {
+      seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
+      seq <- merge(seq, obs, all = TRUE, by = "date")
+      expect_equal(seq$obs, seq$share_voc)
+    }
     # Check contents of fit diagnostics and minimum values for example fit
     expect_gt(min(posterior$ess_bulk), 250)
     expect_gt(min(posterior$ess_tail), 250)
