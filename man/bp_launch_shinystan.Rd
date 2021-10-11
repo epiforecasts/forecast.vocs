@@ -26,7 +26,7 @@ bp_launch_shinystan(fit)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Functions to explore and validate models.
+Functions to explore and validate models
 \code{\link{plot_pairs}()}
 }
 \concept{modelvalidation}

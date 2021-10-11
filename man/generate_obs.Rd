@@ -64,7 +64,7 @@ plot_rt(posterior)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Functions to generate simulated data.
+Functions to generate simulated data
 \code{\link{sample_sequences}()}
 }
 \concept{generatedata}

@@ -13,7 +13,7 @@
 #'
 #' @param keep_fit Logical, defaults to `TRUE`. Should the stan model fit be
 #' kept and returned. Dropping this can substantially reduce memory usage in
-#' situtations where multiple models are being fit.
+#' situations where multiple models are being fit.
 #'
 #' @param id ID to assign to this forecast. Defaults to 0.
 #'

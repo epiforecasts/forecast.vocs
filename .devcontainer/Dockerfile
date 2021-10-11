@@ -40,7 +40,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update \
      && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends libglpk-dev libv8-dev \
-            pandoc-citeproc
+            pandoc-citeproc libpng-dev
 
 # install vscode dev deps
 RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'

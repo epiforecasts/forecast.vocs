@@ -48,6 +48,7 @@ test_stan_fit <- function(message, dt, model, inits) {
       max_treedepth = 15, refresh = 0, show_messages = FALSE,
       iter_warmup = 1000, iter_sampling = 1000
     )
+    # check output is a data.table of the right size and with the correct names
     expect_type(fit, "list")
     expect_data_table(fit)
     expect_equal(nrow(fit), 1)
@@ -59,6 +60,7 @@ test_stan_fit <- function(message, dt, model, inits) {
         "no_at_max_treedepth", "per_at_max_treedepth"
       )
     )
+    # Check fit was successful and has loosely converged
     expect_equal(class(fit$fit[[1]])[1], "CmdStanMCMC")
     expect_lt(fit$per_divergent_transitons, 0.1)
     expect_lt(fit$max_treedepth, 15)
@@ -72,6 +74,7 @@ test_extract_forecast <- function(message, strains, posterior) {
   test_that(message, {
     skip_on_cran()
     forecasts <- extract_forecast(posterior)
+    # Check output is a data.table with the correct dimensions
     expect_type(forecasts, "list")
     expect_data_table(forecasts)
     expect_named(
@@ -128,7 +131,7 @@ test_filter_by_availability <- function(dt, message, tar_date = max(dt$date),
 
 
 test_summarise_posterior <- function(message, fit, test_posterior,
-                                     strains, equal = TRUE,
+                                     strains, obs, equal = TRUE,
                                      probs = c(0.05, 0.2, 0.8, 0.95),
                                      voc_label = "VOC") {
   test_that(message, {
@@ -192,6 +195,16 @@ test_summarise_posterior <- function(message, fit, test_posterior,
     cases <- posterior[value_type %in% "cases"]
     cases <- cases[type %in% c("Overall", "Combined")]
     expect_dates_unique(cases)
+    # Check linked case observations agree with input data
+    cases <- cases[, .(date, obs)][!is.na(obs)]
+    cases <- merge(cases, obs, all = TRUE, by = "date")
+    expect_equal(cases$obs, cases$cases)
+    # Check linked sequence observations agree with input data
+    if (strains == 2) {
+      seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
+      seq <- merge(seq, obs, all = TRUE, by = "date")
+      expect_equal(seq$obs, seq$share_voc)
+    }
     # Check contents of fit diagnostics and minimum values for example fit
     expect_gt(min(posterior$ess_bulk), 250)
     expect_gt(min(posterior$ess_tail), 250)
