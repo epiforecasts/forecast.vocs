@@ -1,9 +1,10 @@
 
 test_extract_forecast <- function(message, strains, posterior) {
   test_that(message, {
+    skip_on_cran()
     forecasts <- extract_forecast(posterior)
     expect_type(forecasts, "list")
-    expect_true(data.table::is.data.table(forecasts))
+    expect_data_table(forecasts)
     expect_named(
       forecasts,
       c(

@@ -22,7 +22,7 @@ test_stan_fit <- function(message, dt, model, inits) {
       iter_warmup = 1000, iter_sampling = 1000
     )
     expect_type(fit, "list")
-    expect_true(data.table::is.data.table(fit))
+    expect_data_table(fit)
     expect_equal(nrow(fit), 1)
     expect_named(
       fit,
