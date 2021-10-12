@@ -57,7 +57,7 @@ The stan code for this model available [here](https://github.com/epiforecasts/fo
 
 ```{r}
 library(forecast.vocs)
-readLines(load_model(strains = 1, compile = FALSE))
+readLines(fv_model(strains = 1, compile = FALSE))
 ```
 
 ## Two strain
@@ -75,7 +75,7 @@ Mean reported cases are again defined using a AR(1) process on the log scale for
   \lambda_t &= \lambda^{\delta}_t + \lambda^{o}_t
 \end{align}
 
-Where $C^{\delta}_0$ is derived by calculating the mean proportion of cases that had the VoC for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the VoC. The growth rate for VoC and non-VoC cases ($r^{o, \delta}_t$) is then modelled as a combination of an overall growth rate ($r_t$ as defined for the single strain model), a strain specific modifer ($s^{o, \delta}_0$), and an AR(1) error term post introduction ($\epsilon^{o, \delta}_t$).
+Where $C^{\delta}_0$ is derived by calculating the mean proportion of cases that had the VoC for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the VoC. The growth rate for VoC and non-VoC cases ($r^{o, \delta}_t$) is then modelled as a combination of an overall growth rate ($r_t$ as defined for the single strain model), a strain specific modifier ($s^{o, \delta}_0$), and an AR(1) error term post introduction ($\epsilon^{o, \delta}_t$).
 
 \begin{align}
   r^{o, \delta}_t &= r_t + s^{o, \delta} + \epsilon^{o, \delta}_t \\
@@ -101,7 +101,7 @@ Finally, the mean proportion of samples that have the VoC ($p_t$) is then estima
   p_t = \frac{\lambda^{\delta}_t}{\lambda_t}
 \end{equation}
 
-We assume a beta binomial observation model for the number of sequences ($N_t$) that are postive ($P_t$) for the VoC with overdispersion $\phi_s$.
+We assume a beta binomial observation model for the number of sequences ($N_t$) that are positive ($P_t$) for the VoC with overdispersion $\phi_s$.
 
 \begin{align}
   P_{t} &\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
@@ -114,5 +114,5 @@ The stan code for this model available [here](https://github.com/epiforecasts/fo
 
 ```{r}
 library(forecast.vocs)
-readLines(load_model(strains = 2, compile = FALSE))
+readLines(fv_model(strains = 2, compile = FALSE))
 ```

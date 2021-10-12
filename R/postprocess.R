@@ -6,7 +6,7 @@
 #' "VOC", "Combined", "Overall".
 #'
 #' @param data A list of data as returned in the "data" entry of the output
-#' returned by [stan_fit()].
+#' returned by [fv_sample()].
 #'
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
 #' estimates.
@@ -96,7 +96,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 
 #' Summarise the posterior
 #'
-#' @param fit List of output as returned by [stan_fit()].
+#' @param fit List of output as returned by [fv_sample()].
 #'
 #' @param probs A vector of numeric probabilities to produce
 #' quantile summaries for. By default these are the 5%, 20%, 80%,
@@ -128,11 +128,11 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
-#' summarise_posterior(fit)
-summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
+#' dt <- fv_data(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' fv_posterior(fit)
+fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
                                 voc_label = "VOC", scale_r = 1) {
   check_dataframe(
     fit,
@@ -290,7 +290,7 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' and sequence data.
 #'
 #' @param posterior A dataframe of posterior output as produced by
-#'  [summarise_posterior()]. For forecast dates to be extracted data with
+#'  [fv_posterior()]. For forecast dates to be extracted data with
 #' `value_type == "cases"` must be present.
 #'
 #' @return A data.frame containing at least two vectors: Data unavailable
@@ -301,7 +301,7 @@ summarise_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' @export
 #' @importFrom purrr map_lgl
 #' @examples
-#' p <- load_example(strains = 2, type = "posterior")
+#' p <- fv_example(strains = 2, type = "posterior")
 #'
 #' extract_forecast_dates(p)
 extract_forecast_dates <- function(posterior) {
@@ -339,17 +339,17 @@ extract_forecast_dates <- function(posterior) {
 #'
 #'
 #' Uses the `observed` variable returned by
-#' [summarise_posterior()] to return posterior predictions
+#' [fv_posterior()] to return posterior predictions
 #' for forecast dates only.
 #'
 #' @return A `data.frame` of forecasts in the format returned
-#' by [summarise_posterior()] but with fitting variables dropped.
+#' by [fv_posterior()] but with fitting variables dropped.
 #'
 #' @family postprocess
 #' @export
 #' @inheritParams extract_forecast_dates
 #' @examples
-#' p <- load_example(strains = 2, type = "posterior")
+#' p <- fv_example(strains = 2, type = "posterior")
 #'
 #' extract_forecast(p)
 extract_forecast <- function(posterior) {
@@ -371,7 +371,7 @@ extract_forecast <- function(posterior) {
 #' Label the Variant of Concern
 #'
 #' Assign a custom label to the variant of concern in the
-#' output from [summarise_posterior()].
+#' output from [fv_posterior()].
 #'
 #' @param label Character string  indicating the new label to use for the
 #' variant of concern.
@@ -379,14 +379,14 @@ extract_forecast <- function(posterior) {
 #' @param target_label A character string defaulting to "VOC". Indicates the
 #' current label for the variant of concern.
 #'
-#' @return A list of data frames as returned by `[summarise_posterior()] but
+#' @return A list of data frames as returned by `[fv_posterior()] but
 #' with updated labels.
 #'
 #' @family postprocess
 #' @inheritParams extract_forecast_dates
 #' @export
 #' @examples
-#' p <- load_example(strains = 2, type = "posterior")
+#' p <- fv_example(strains = 2, type = "posterior")
 #' p <- update_voc_label(p, "Delta")
 #' p[value_type == "model"]
 update_voc_label <- function(posterior, label, target_label = "VOC") {
@@ -414,9 +414,10 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
   }
   return(posterior[])
 }
+
 #' Extract posterior draws
 #'
-#' @param fit A list as produced by [stan_fit()].
+#' @param fit A list as produced by [fv_sample()].
 #'
 #' @param ... Additional parameters passed to [cmdstanr::draws()]
 #'
@@ -428,9 +429,9 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' dt <- fv_data(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' extract_draws(fit)
 extract_draws <- function(fit, ...) {
   fit$fit[[1]]$draws(...)
@@ -438,7 +439,7 @@ extract_draws <- function(fit, ...) {
 
 #' Convert summarised quantiles from wide to long format
 #'
-#' @param posterior A dataframe as output by [summarise_posterior()],
+#' @param posterior A dataframe as output by [fv_posterior()],
 #' [extract_forecast()], etc.
 #'
 #' @return A data frame of quantiles in long format.
@@ -446,7 +447,7 @@ extract_draws <- function(fit, ...) {
 #' @family postprocess
 #' @export
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #' long_posterior <- quantiles_to_long(posterior)
 #' long_posterior
 quantiles_to_long <- function(posterior) {
@@ -464,16 +465,16 @@ quantiles_to_long <- function(posterior) {
 #' @return The model fit as a `stanfit` object
 #'
 #' @family postprocess
-#' @inheritParams summarise_posterior
+#' @inheritParams fv_posterior
 #' @importFrom rstan read_stan_csv
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' dt <- fv_data(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' convert_to_stanfit(fit)
 convert_to_stanfit <- function(fit) {
   stanfit <- read_stan_csv(fit$fit[[1]]$output_files())

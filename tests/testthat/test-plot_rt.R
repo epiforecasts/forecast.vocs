@@ -14,8 +14,8 @@ test_that("Can plot using freshly generated forecasts", {
 })
 
 test_that("Can plot using example data", {
-  posterior1 <- load_example(strains = 1, type = "posterior")
-  posterior2 <- load_example(strains = 2, type = "posterior")
+  posterior1 <- fv_example(strains = 1, type = "posterior")
+  posterior2 <- fv_example(strains = 2, type = "posterior")
   vdiffr::expect_doppelganger(
     "Default rt with single strain", plot_rt(posterior1)
   )

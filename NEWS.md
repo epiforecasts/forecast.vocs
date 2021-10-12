@@ -5,7 +5,10 @@
 * Add basic tests for all modelling functions.
 * Add tests for all postprocessing functions.
 * Add tests for all plotting functions.
-* Add a new utility, `load_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
+* Add tests for all forecasting functions.
+* Add a new utility, `fv_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
+* Model specific functions (i.e `load_model`, `summarise_posterior`, and functions prefixed with `stan_` have been renamed with the `fv_` prefix).
+* Added the ability to pass model specific functions to the `forecast` function and wrappers enabling users to supply custom models but make use of the remaining package functionality.
 
 # forecast.vocs 0.0.5
 
@@ -15,20 +18,20 @@
 
 # forecast.vocs 0.0.4
 
-* Improve the robustness of plotting observations and forecast dates so that they can be facetted using the same variables as used for plotting estimates/forecasts.
+* Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.
 * Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.
 * Surfaced more options when plotting to allow for increased generalisability.
 
 # forecast.vocs 0.0.3
 
-* `summarise_posterior` now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma
+* `fv_posterior` now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma
 * `forecast` has been updated to use the framework from `forecast_dt` and `forecast_dt` has been removed.
 * `combine_posteriors_dt` has been removed in favour of `unnest_posterior`. This allows for the output of `forecast` (and wrappers that produce a data.table) to be easily untested and then used without additional changes in downstream plotting and processing functions.
 * add `update_voc_label` as part of the workflow in `forecast` and exposed a user facing argument to control the label.
 * Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.
 * Added check functions to make sure input observation and arguments have the correct format.
 * Added unit tests for  all preprocessing functions.
-* Custom VOC labelling is now a feature of `summarise_posterior()` (and hence `forecast()`) as well as a standalone option via `update_voc_label()`.
+* Custom VOC labelling is now a feature of `fv_posterior()` (and hence `forecast()`) as well as a standalone option via `update_voc_label()`.
 
 ## Infrastructure
 

@@ -2,18 +2,18 @@ library(forecast.vocs)
 options(mc.cores = 4)
 
 strains <- 2
-dt <- stan_data(latest_obs(germany_covid19_delta_obs),
+dt <- fv_data(latest_obs(germany_covid19_delta_obs),
   horizon = 4, overdispersion = TRUE,
   variant_relationship = "independent"
 )
-mod <- load_model(strains = strains)
-inits <- stan_inits(dt, strains = strains)
-fit <- stan_fit(dt,
+mod <- fv_model(strains = strains)
+inits <- fv_inits(dt, strains = strains)
+fit <- fv_sample(dt,
   model = mod, init = inits, adapt_delta = 0.99,
   max_treedepth = 15, save_warmup = TRUE
 )
 
-p <- summarise_posterior(fit)
+p <- fv_posterior(fit)
 
 plot_rt(p)
 

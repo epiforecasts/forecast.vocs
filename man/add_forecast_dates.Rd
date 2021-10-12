@@ -12,7 +12,7 @@ add_forecast_dates(plot, forecast_dates = NULL)
 \item{forecast_dates}{A data.frame in the format produced by
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.}
+add to plots. May contain faceting variables.}
 }
 \value{
 A \code{ggplot2} plot with dates of data unavailability added.

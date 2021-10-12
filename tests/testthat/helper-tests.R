@@ -1,6 +1,6 @@
 test_strain_inits <- function(message, strains) {
   test_that(message, {
-    inits <- stan_inits(dt, strains = strains)
+    inits <- fv_inits(dt, strains = strains)
     expect_true(is.function(inits))
     inits1 <- inits()
     inits2 <- inits()
@@ -40,11 +40,11 @@ test_strain_inits <- function(message, strains) {
   })
 }
 
-test_stan_fit <- function(message, dt, model, inits) {
+test_fv_sample <- function(message, dt, model, inits) {
   test_that(message, {
     skip_on_cran()
-    fit <- silent_stan_fit(
-      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.95,
+    fit <- silent_fv_sample(
+      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.98,
       max_treedepth = 15, refresh = 0, show_messages = FALSE,
       iter_warmup = 1000, iter_sampling = 1000
     )
@@ -56,13 +56,13 @@ test_stan_fit <- function(message, dt, model, inits) {
       fit,
       expected = c(
         "fit", "data", "fit_args", "samples", "max_rhat",
-        "divergent_transitions", "per_divergent_transitons", "max_treedepth",
+        "divergent_transitions", "per_divergent_transitions", "max_treedepth",
         "no_at_max_treedepth", "per_at_max_treedepth"
       )
     )
     # Check fit was successful and has loosely converged
     expect_equal(class(fit$fit[[1]])[1], "CmdStanMCMC")
-    expect_lt(fit$per_divergent_transitons, 0.1)
+    expect_lt(fit$per_divergent_transitions, 0.1)
     expect_lt(fit$max_treedepth, 15)
     expect_lt(fit$max_rhat, 1.1)
     expect_type(fit$fit_args[[1]], "list")
@@ -130,13 +130,13 @@ test_filter_by_availability <- function(dt, message, tar_date = max(dt$date),
 }
 
 
-test_summarise_posterior <- function(message, fit, test_posterior,
-                                     strains, obs, equal = TRUE,
-                                     probs = c(0.05, 0.2, 0.8, 0.95),
-                                     voc_label = "VOC") {
+test_fv_posterior <- function(message, fit, test_posterior,
+                              strains, obs, equal = TRUE,
+                              probs = c(0.05, 0.2, 0.8, 0.95),
+                              voc_label = "VOC") {
   test_that(message, {
     skip_on_cran()
-    posterior <- summarise_posterior(fit, probs, voc_label)
+    posterior <- fv_posterior(fit, probs, voc_label)
     attributes(test_posterior)$index <- NULL
     attributes(posterior)$index <- NULL
     # check in comparision to default posterior
@@ -209,5 +209,74 @@ test_summarise_posterior <- function(message, fit, test_posterior,
     expect_gt(min(posterior$ess_bulk), 250)
     expect_gt(min(posterior$ess_tail), 250)
     expect_lte(max(posterior$rhat, na.rm = TRUE), 1.1)
+  })
+}
+
+test_forecast <- function(message, obs, forecast_fn,
+                          test_fit, test_posterior, test_forecast,
+                          depth = 3, equal = TRUE, ...) {
+  test_that(message, {
+    skip_on_cran()
+    # Mock out fitting function as not testing fitting here
+    # (see test-fv_sample.R)
+    test_fv_fit <- function(...) {
+      test_fit
+    }
+    forecasts <- suppressMessages(
+      forecast_fn(obs, fit = test_fv_fit, strains = c(1, 2), ...)
+    )
+    # check ouput  format as expected
+    expect_data_table(forecasts)
+    expect_gt(nrow(forecasts), 0)
+    expect_equal(unique(forecasts$strains), c(1, 2))
+    cols <- c(
+      "id", "forecast_date", "strains", "overdispersion",
+      "variant_relationship", "r_init", "voc_scale", "error",
+      "fit", "data", "fit_args", "samples", "max_rhat",
+      "divergent_transitions", "per_divergent_transitions",
+      "max_treedepth", "no_at_max_treedepth", "per_at_max_treedepth",
+      "posterior", "forecast"
+    )
+    expect_named(forecasts, cols)
+    # Check input control
+    expect_error(forecast_fn(obs, strains = c(2, 2, 1), ...))
+    forecasts_no_fit <- suppressMessages(
+      forecast_fn(obs, fit = test_fv_fit, keep_fit = FALSE, ...)
+    )
+    expect_true(is.null(forecasts_no_fit$fit))
+    expect_named(
+      forecasts_no_fit, cols[!cols %in% c("fit", "fit_args", "data")]
+    )
+    # Check forecast dates are unique
+    expect_dates_unique(
+      forecasts[, date := forecast_date][strains == 1 & id == 0]
+    )
+    # Check posteriors and forecasts are the same as when run outside of the
+    # wrapper
+    if (equal) {
+      expect_equal(forecasts$posterior[[1]], test_posterior)
+      expect_equal(forecasts_no_fit$posterior[[1]], test_posterior)
+      expect_equal(forecasts$forecast[[1]], test_forecast)
+    } else {
+      expect_false(isTRUE(all.equal(forecasts$posterior[[1]], test_posterior)))
+      expect_false(isTRUE(
+        all.equal(forecasts_no_fit$posterior[[1]], test_posterior)
+      ))
+      expect_false(isTRUE(all.equal(forecasts$forecast[[1]], test_forecast)))
+    }
+  })
+  test_that(paste0(message, " with fitting forced to error"), {
+    skip_on_cran()
+    # Check can handle fitting errors as expected
+    error_forecast <- suppressMessages(
+      forecast_fn(obs,
+        fit = function(...) {
+          stop("twgwe")
+        },
+        ...
+      )
+    )
+    expect_true(is.null(error_forecast$fit))
+    expect_true(!is.null(error_forecast$error))
   })
 }

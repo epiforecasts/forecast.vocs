@@ -19,7 +19,7 @@ plot_theme <- function(plot) {
 #' @param forecast_dates A data.frame in the format produced by
 #' [extract_forecast_dates()] (with at least a date variable and a
 #' Data unavailable variable)). Specifies when date availability should be
-#' add to plots. May contain facetting variables.
+#' add to plots. May contain faceting variables.
 #'
 #' @return A `ggplot2` plot with dates of data unavailability added.
 #'
@@ -122,7 +122,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @export
 #' @importFrom scales comma log_trans
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #'
 #' # default with log transform
 #' plot_cases(posterior)
@@ -144,11 +144,11 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
   if (log) {
     plot <- plot +
       scale_y_continuous(labels = scales::comma, trans = scales::log_trans()) +
-      labs(y = "Weekly test postive cases (log scale)", x = "Date")
+      labs(y = "Weekly test positive cases (log scale)", x = "Date")
   } else {
     plot <- plot +
       scale_y_continuous(labels = scales::comma) +
-      labs(y = "Weekly test postive cases", x = "Date")
+      labs(y = "Weekly test positive cases", x = "Date")
   }
 
   plot <- plot +
@@ -174,7 +174,7 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @export
 #' @importFrom scales percent
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_voc(posterior)
 plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
@@ -205,7 +205,7 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @inheritParams plot_cases
 #' @export
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_rt(posterior)
 plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
@@ -238,7 +238,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @inheritParams plot_default
 #' @inheritParams plot_cases
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_growth(posterior)
 plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   if (is.null(col)) {
@@ -279,7 +279,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @inheritParams plot_voc
 #' @importFrom purrr walk2
 #' @examples
-#' posterior <- load_example(strains = 2, type = "posterior")
+#' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_posterior(posterior)
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
                            save_path = NULL, type = "png",
@@ -324,17 +324,17 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #'
 #' @family plot
 #' @family modelvalidation
-#' @inheritParams stan_fit
-#' @inheritParams summarise_posterior
+#' @inheritParams fv_sample
+#' @inheritParams fv_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
+#' dt <- fv_data(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' plot_pairs(fit)
 plot_pairs <- function(fit,
                        pars = c(

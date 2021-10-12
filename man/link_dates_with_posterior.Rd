@@ -13,7 +13,7 @@ which contains the following character string options: "non-VOC",
 "VOC", "Combined", "Overall".}
 
 \item{data}{A list of data as returned in the "data" entry of the output
-returned by \code{\link[=stan_fit]{stan_fit()}}.}
+returned by \code{\link[=fv_sample]{fv_sample()}}.}
 
 \item{mod_end}{Integer, defaults to 0. Amount to shift the end date of
 estimates.}
@@ -30,9 +30,9 @@ Functions used for postprocessing of model fits
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

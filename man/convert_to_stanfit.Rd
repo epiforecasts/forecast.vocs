@@ -7,7 +7,7 @@
 convert_to_stanfit(fit)
 }
 \arguments{
-\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
+\item{fit}{List of output as returned by \code{\link[=fv_sample]{fv_sample()}}.}
 }
 \value{
 The model fit as a \code{stanfit} object
@@ -21,9 +21,9 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-12"),
 )
-dt <- stan_data(obs)
-inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+dt <- fv_data(obs)
+inits <- fv_inits(dt)
+fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 convert_to_stanfit(fit)
 \dontshow{\}) # examplesIf}
 }
@@ -32,10 +32,10 @@ Functions used for postprocessing of model fits
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

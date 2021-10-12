@@ -7,6 +7,9 @@
 forecast_n_strain(
   data,
   model = NULL,
+  inits = forecast.vocs::fv_inits,
+  fit = forecast.vocs::fv_sample,
+  posterior = forecast.vocs::fv_posterior,
   strains = 2,
   voc_label = "VOC",
   probs = c(0.05, 0.2, 0.8, 0.95),
@@ -15,9 +18,29 @@ forecast_n_strain(
 )
 }
 \arguments{
-\item{data}{A list of data as produced by \code{\link[=stan_data]{stan_data()}}.}
+\item{data}{A list of data as produced by \code{\link[=fv_data]{fv_data()}}.}
 
-\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=load_model]{load_model()}}.}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
+
+\item{inits}{A function that returns a function to samples initial
+conditions with the same arguments as \code{\link[=fv_inits]{fv_inits()}}. If not supplied the
+package default \code{\link[=fv_inits]{fv_inits()}} is used.}
+
+\item{fit}{A function that fits the supplied model with the same arguments
+and return values as \code{\link[=fv_sample]{fv_sample()}}. If not supplied the
+package default [fv_sample())] is used which performs MCMC sampling using
+[cmdstanr].
+
+[fv_sample())]: R:fv_sample())
+[cmdstanr]: R:cmdstanr}
+
+\item{posterior}{A function that summarises the output from the supplied
+fitting function with the same arguments and return values (depending on
+the requirement for downstream package functionality to function) as
+\code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
+[fv_posterior())] is used.
+
+[fv_posterior())]: R:fv_posterior())}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
@@ -37,7 +60,7 @@ the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
-\item{...}{Additional parameters passed to \code{\link[=stan_fit]{stan_fit()}}.}
+\item{...}{Additional parameters passed to \code{\link[=fv_sample]{fv_sample()}}.}
 }
 \description{
 Forecast for a single model and summarise

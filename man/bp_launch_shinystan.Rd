@@ -7,7 +7,7 @@
 bp_launch_shinystan(fit)
 }
 \arguments{
-\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
+\item{fit}{List of output as returned by \code{\link[=fv_sample]{fv_sample()}}.}
 }
 \description{
 Launch shinystan an interactive tool for stan model evaluation
@@ -19,9 +19,9 @@ obs <- filter_by_availability(
   date = as.Date("2021-06-12")
 )
 
-dt <- stan_data(obs)
-inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+dt <- fv_data(obs)
+inits <- fv_inits(dt)
+fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 bp_launch_shinystan(fit)
 \dontshow{\}) # examplesIf}
 }

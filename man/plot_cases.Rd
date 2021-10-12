@@ -15,7 +15,7 @@ plot_cases(
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
@@ -23,7 +23,7 @@ plot_cases(
 \item{forecast_dates}{A data.frame in the format produced by
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.}
+add to plots. May contain faceting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
@@ -42,7 +42,7 @@ A \code{ggplot2} plot.
 Plot the posterior prediction for cases
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 
 # default with log transform
 plot_cases(posterior)

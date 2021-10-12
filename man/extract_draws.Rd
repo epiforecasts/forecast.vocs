@@ -7,7 +7,7 @@
 extract_draws(fit, ...)
 }
 \arguments{
-\item{fit}{A list as produced by \code{\link[=stan_fit]{stan_fit()}}.}
+\item{fit}{A list as produced by \code{\link[=fv_sample]{fv_sample()}}.}
 
 \item{...}{Additional parameters passed to \code{\link[cmdstanr:fit-method-draws]{cmdstanr::draws()}}}
 }
@@ -23,9 +23,9 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-12"),
 )
-dt <- stan_data(obs)
-inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+dt <- fv_data(obs)
+inits <- fv_inits(dt)
+fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 extract_draws(fit)
 \dontshow{\}) # examplesIf}
 }
@@ -34,10 +34,10 @@ Functions used for postprocessing of model fits
 \code{\link{convert_to_stanfit}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

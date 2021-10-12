@@ -10,7 +10,7 @@ check_quantiles(posterior, req_probs = c(0.5, 0.95, 0.2, 0.8))
 \item{posterior}{A dataframe containing quantiles identified using
 the \code{q5} naming scheme.}
 
-\item{req_probs}{A numeric vector of required probabilties.}
+\item{req_probs}{A numeric vector of required probabilities.}
 }
 \description{
 Check Quantiles Required are Present

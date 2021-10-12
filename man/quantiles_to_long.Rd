@@ -7,7 +7,7 @@
 quantiles_to_long(posterior)
 }
 \arguments{
-\item{posterior}{A dataframe as output by \code{\link[=summarise_posterior]{summarise_posterior()}},
+\item{posterior}{A dataframe as output by \code{\link[=fv_posterior]{fv_posterior()}},
 \code{\link[=extract_forecast]{extract_forecast()}}, etc.}
 }
 \value{
@@ -17,7 +17,7 @@ A data frame of quantiles in long format.
 Convert summarised quantiles from wide to long format
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 long_posterior <- quantiles_to_long(posterior)
 long_posterior
 }
@@ -27,9 +27,9 @@ Functions used for postprocessing of model fits
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

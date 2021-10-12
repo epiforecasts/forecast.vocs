@@ -6,9 +6,9 @@ not_on_cran <- function() {
   on_ci() || identical(Sys.getenv("NOT_CRAN"), "true")
 }
 
-silent_stan_fit <- function(...) {
+silent_fv_sample <- function(...) {
   utils::capture.output(
-    fit <- suppressMessages(stan_fit(...))
+    fit <- suppressMessages(fv_sample(...))
   )
   return(fit)
 }
