@@ -215,15 +215,12 @@ test_summarise_posterior <- function(message, fit, test_posterior,
 
 test_forecast <- function(message, obs, forecast_fn,
                           test_fit, test_posterior, test_forecast,
-                          equal = TRUE, ...) {
+                          depth = 3, equal = TRUE, ...) {
   test_that(message, {
     skip_on_cran()
     # Mock out fitting function as not testing fitting here
     # (see test-stan_fit.R)
-    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = 3)
-    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = 4)
-    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = 5)
-    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = 6)
+    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = depth)
     forecasts <- suppressMessages(forecast_fn(obs, strains = c(1, 2), ...))
     # check ouput  format as expected
     expect_data_table(forecasts)
@@ -262,16 +259,18 @@ test_forecast <- function(message, obs, forecast_fn,
       expect_false(isTRUE(
         all.equal(forecasts_no_fit$posterior[[1]], test_posterior)
       ))
-      expect_fa
+      expect_false(isTRUE(all.equal(forecasts$forecast[[1]], test_forecast)))
     }
+  })
+  test_that(paste0(message, " with fitting foreced to error"), {
     # Check can handle fitting errors as expected
     mockery::stub(forecast_n_strain, "stan_fit",
       function(...) {
         stop("error")
       },
-      depth = 3
+      depth = depth
     )
-    error_forecast <- forecast_fn(obs)
+    error_forecast <- suppressMessages(forecast_fn(obs, ...))
     expect_true(is.null(error_forecast$fit))
     expect_true(!is.null(error_forecast$error))
   })

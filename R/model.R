@@ -179,7 +179,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 
   model <- system.file(model, package = "forecast.vocs")
   if (compile) {
-    cmdstanr::cmdstan_model(model, ...)
+    suppressMessages(cmdstanr::cmdstan_model(model, ...))
   }
   return(model)
 }
@@ -239,7 +239,7 @@ stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
   cdata <- data
   cdata$start_date <- NULL
   cdata$seq_start_date <- NULL
-  model <- cmdstanr::cmdstan_model(model)
+  model <- suppressMessages(cmdstanr::cmdstan_model(model))
   fit <- model$sample(data = cdata, ...)
 
   out <- data.table(
