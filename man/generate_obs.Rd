@@ -52,7 +52,8 @@ sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 sim_dt <- sim_obs$fv_data[[1]]
 inits <- fv_inits(sim_dt)
 fit <- fv_sample(
- sim_dt, init = inits, adapt_delta = 0.95, max_treedepth = 15
+  sim_dt,
+  init = inits, adapt_delta = 0.95, max_treedepth = 15
 )
 
 # summarise and plot simualated fit
