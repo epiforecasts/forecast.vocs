@@ -325,7 +325,7 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @family plot
 #' @family modelvalidation
 #' @inheritParams fv_sample
-#' @inheritParams summarise_posterior
+#' @inheritParams fv_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(

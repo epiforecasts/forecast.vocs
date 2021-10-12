@@ -11,7 +11,7 @@ forecast(
   case_date = forecast_date,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
-  summarise = forecast.vocs::summarise_posterior,
+  posterior = forecast.vocs::fv_posterior,
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
@@ -58,13 +58,13 @@ package default [fv_sample())] is used which performs MCMC sampling using
 [fv_sample())]: R:fv_sample())
 [cmdstanr]: R:cmdstanr}
 
-\item{summarise}{A function that summarises the output from the supplied
+\item{posterior}{A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
-\code{\link[=summarise_posterior]{summarise_posterior()}}. If not supplied the package default
-[summarise_posterior())] is used.
+\code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
+[fv_posterior())] is used.
 
-[summarise_posterior())]: R:summarise_posterior())}
+[fv_posterior())]: R:fv_posterior())}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 

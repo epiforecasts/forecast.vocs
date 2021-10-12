@@ -57,7 +57,7 @@ fit <- fv_sample(
 )
 
 # summarise and plot simualated fit
-posterior <- summarise_posterior(fit)
+posterior <- fv_posterior(fit)
 
 plot_cases(posterior, log = TRUE)
 

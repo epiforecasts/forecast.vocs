@@ -8,7 +8,7 @@ extract_forecast_dates(posterior)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 }
 \value{
@@ -30,10 +30,10 @@ Functions used for postprocessing of model fits
 \code{\link{convert_to_stanfit}()},
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

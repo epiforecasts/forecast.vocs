@@ -8,7 +8,7 @@ update_voc_label(posterior, label, target_label = "VOC")
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=summarise_posterior]{summarise_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{label}{Character string  indicating the new label to use for the
@@ -18,12 +18,12 @@ variant of concern.}
 current label for the variant of concern.}
 }
 \value{
-A list of data frames as returned by `\code{\link[=summarise_posterior]{summarise_posterior()}} but
+A list of data frames as returned by `\code{\link[=fv_posterior]{fv_posterior()}} but
 with updated labels.
 }
 \description{
 Assign a custom label to the variant of concern in the
-output from \code{\link[=summarise_posterior]{summarise_posterior()}}.
+output from \code{\link[=fv_posterior]{fv_posterior()}}.
 }
 \examples{
 p <- fv_example(strains = 2, type = "posterior")
@@ -36,9 +36,9 @@ Functions used for postprocessing of model fits
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
-\code{\link{quantiles_to_long}()},
-\code{\link{summarise_posterior}()}
+\code{\link{quantiles_to_long}()}
 }
 \concept{postprocess}

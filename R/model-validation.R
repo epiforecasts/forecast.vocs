@@ -6,7 +6,7 @@
 #'
 #' @family modelvalidation
 #' @export
-#' @inheritParams summarise_posterior
+#' @inheritParams fv_posterior
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,

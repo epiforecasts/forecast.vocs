@@ -7,7 +7,7 @@
 quantiles_to_long(posterior)
 }
 \arguments{
-\item{posterior}{A dataframe as output by \code{\link[=summarise_posterior]{summarise_posterior()}},
+\item{posterior}{A dataframe as output by \code{\link[=fv_posterior]{fv_posterior()}},
 \code{\link[=extract_forecast]{extract_forecast()}}, etc.}
 }
 \value{
@@ -27,9 +27,9 @@ Functions used for postprocessing of model fits
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
 \code{\link{extract_forecast}()},
+\code{\link{fv_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
-\code{\link{summarise_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}
