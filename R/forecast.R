@@ -14,7 +14,7 @@
 #' [cmdstanr].
 #'
 #' @param summarise A function that summarises the output from the supplied
-#' fitting funciton with the same arguments and return values (depending on
+#' fitting function with the same arguments and return values (depending on
 #' the requirement for downstream package functionality to function) as
 #' [summarise_posterior()]. If not supplied the package default
 #' [summarise_posterior())] is used.
