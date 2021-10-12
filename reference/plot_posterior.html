@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
-<code><a href="summarise_posterior.html">summarise_posterior()</a></code>. For forecast dates to be extracted data with
+<code><a href="fv_posterior.html">fv_posterior()</a></code>. For forecast dates to be extracted data with
 <code>value_type == "cases"</code> must be present.</p></td>
     </tr><tr><th>obs</th>
       <td><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></td>
@@ -105,7 +105,7 @@
       <td><p>A data.frame in the format produced by
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.</p></td>
+add to plots. May contain faceting variables.</p></td>
     </tr><tr><th>save_path</th>
       <td><p>A character string indicating where to save plots
 if required.</p></td>
@@ -133,23 +133,10 @@ of concern. Defaults to  "variant of concern".</p></td>
 <code><a href="plot_voc.html">plot_voc</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_example.html">load_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 2, type = "posterior")</span> could not find function "fv_example"</span>
 <span class="r-in"><span class="fu">plot_posterior</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $cases</span>
-<span class="r-plt"><img src="plot_posterior-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $log_cases</span>
-<span class="r-plt"><img src="plot_posterior-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $voc</span>
-<span class="r-plt"><img src="plot_posterior-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $growth</span>
-<span class="r-plt"><img src="plot_posterior-4.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $rt</span>
-<span class="r-plt"><img src="plot_posterior-5.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in plot_default(posterior, "cases", obs, forecast_dates, all_obs = all_obs,     x = date, col = .data[[col]], fill = .data[[col]])</span> object 'posterior' not found</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

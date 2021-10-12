@@ -52,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 <p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/bp.stan" class="external-link">here</a> or can be loaded into <code>R</code> using the following code,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/load_model.html">load_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="two-strain" class="section level2">
 <h2 class="hasAnchor">
@@ -164,7 +164,7 @@
   \log \lambda^{o}_t &amp;= \log \lambda^{o}_{t-1} + r^{o}_t \\
   \lambda_t &amp;= \lambda^{\delta}_t + \lambda^{o}_t
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(C^{\delta}_0\)</span> is derived by calculating the mean proportion of cases that had the VoC for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the VoC. The growth rate for VoC and non-VoC cases (<span class="math inline">\(r^{o, \delta}_t\)</span>) is then modelled as a combination of an overall growth rate (<span class="math inline">\(r_t\)</span> as defined for the single strain model), a strain specific modifer (<span class="math inline">\(s^{o, \delta}_0\)</span>), and an AR(1) error term post introduction (<span class="math inline">\(\epsilon^{o, \delta}_t\)</span>).</p>
+<p>Where <span class="math inline">\(C^{\delta}_0\)</span> is derived by calculating the mean proportion of cases that had the VoC for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the VoC. The growth rate for VoC and non-VoC cases (<span class="math inline">\(r^{o, \delta}_t\)</span>) is then modelled as a combination of an overall growth rate (<span class="math inline">\(r_t\)</span> as defined for the single strain model), a strain specific modifier (<span class="math inline">\(s^{o, \delta}_0\)</span>), and an AR(1) error term post introduction (<span class="math inline">\(\epsilon^{o, \delta}_t\)</span>).</p>
 <p><span class="math display">\[\begin{align}
   r^{o, \delta}_t &amp;= r_t + s^{o, \delta} + \epsilon^{o, \delta}_t \\
   \epsilon^{o, \delta}_0 &amp;= 0 \\
@@ -182,7 +182,7 @@
 <p><span class="math display">\[\begin{equation} 
   p_t = \frac{\lambda^{\delta}_t}{\lambda_t}
 \end{equation}\]</span></p>
-<p>We assume a beta binomial observation model for the number of sequences (<span class="math inline">\(N_t\)</span>) that are postive (<span class="math inline">\(P_t\)</span>) for the VoC with overdispersion <span class="math inline">\(\phi_s\)</span>.</p>
+<p>We assume a beta binomial observation model for the number of sequences (<span class="math inline">\(N_t\)</span>) that are positive (<span class="math inline">\(P_t\)</span>) for the VoC with overdispersion <span class="math inline">\(\phi_s\)</span>.</p>
 <p><span class="math display">\[\begin{align}
   P_{t} &amp;\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
   \frac{1}{\sqrt{\phi_s}} &amp;\sim \mathcal{N}(0, 1) 
@@ -191,7 +191,7 @@
 <p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/twostrainbp.stan" class="external-link">here</a> or can be loaded into <code>R</code> using the following code,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/load_model.html">load_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 

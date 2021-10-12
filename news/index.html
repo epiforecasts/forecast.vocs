@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -87,7 +87,10 @@
 <li>Add basic tests for all modelling functions.</li>
 <li>Add tests for all postprocessing functions.</li>
 <li>Add tests for all plotting functions.</li>
-<li>Add a new utility, <code><a href="../reference/load_example.html">load_example()</a></code> which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.</li>
+<li>Add tests for all forecasting functions.</li>
+<li>Add a new utility, <code><a href="../reference/fv_example.html">fv_example()</a></code> which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.</li>
+<li>Model specific functions (i.e <code>load_model</code>, <code>summarise_posterior</code>, and functions prefixed with <code>stan_</code> have been renamed with the <code>fv_</code> prefix).</li>
+<li>Added the ability to pass model specific functions to the <code>forecast</code> function and wrappers enabling users to supply custom models but make use of the remaining package functionality.</li>
 </ul></div>
     <div id="forecastvocs-005" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.5">
@@ -99,7 +102,7 @@
     <div id="forecastvocs-004" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.4">
 <a href="#forecastvocs-004" class="anchor" aria-hidden="true"></a>forecast.vocs 0.0.4</h1>
-<ul><li>Improve the robustness of plotting observations and forecast dates so that they can be facetted using the same variables as used for plotting estimates/forecasts.</li>
+<ul><li>Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.</li>
 <li>Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.</li>
 <li>Surfaced more options when plotting to allow for increased generalisability.</li>
 </ul></div>
@@ -107,7 +110,7 @@
 <h1 class="page-header" data-toc-text="0.0.3">
 <a href="#forecastvocs-003" class="anchor" aria-hidden="true"></a>forecast.vocs 0.0.3</h1>
 <ul><li>
-<code>summarise_posterior</code> now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma</li>
+<code>fv_posterior</code> now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma</li>
 <li>
 <code>forecast</code> has been updated to use the framework from <code>forecast_dt</code> and <code>forecast_dt</code> has been removed.</li>
 <li>
@@ -116,7 +119,7 @@
 <li>Fixes a bug when specifying the number of initial weeks without sequence data. This was resulting in all weeks without sequence data being assumed to at the start and likely causing some model fitting issues.</li>
 <li>Added check functions to make sure input observation and arguments have the correct format.</li>
 <li>Added unit tests for all preprocessing functions.</li>
-<li>Custom VOC labelling is now a feature of <code><a href="../reference/summarise_posterior.html">summarise_posterior()</a></code> (and hence <code><a href="../reference/forecast.html">forecast()</a></code>) as well as a standalone option via <code><a href="../reference/update_voc_label.html">update_voc_label()</a></code>.</li>
+<li>Custom VOC labelling is now a feature of <code><a href="../reference/fv_posterior.html">fv_posterior()</a></code> (and hence <code><a href="../reference/forecast.html">forecast()</a></code>) as well as a standalone option via <code><a href="../reference/update_voc_label.html">update_voc_label()</a></code>.</li>
 </ul><div id="infrastructure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#infrastructure" class="anchor" aria-hidden="true"></a>Infrastructure</h2>

@@ -79,6 +79,24 @@
     <loc>epiforecasts.io/forecast.vocs/reference/forecast_n_strain.html</loc>
   </url>
   <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_data.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_example.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_inits.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_model.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_posterior.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_sample.html</loc>
+  </url>
+  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/generate_obs.html</loc>
   </url>
   <url>
@@ -98,12 +116,6 @@
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/link_obs_with_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/load_example.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/load_model.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/plot_cases.html</loc>
@@ -134,18 +146,6 @@
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/sample_sequences.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/stan_data.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/stan_fit.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/stan_inits.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/summarise_posterior.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/unnest_posterior.html</loc>

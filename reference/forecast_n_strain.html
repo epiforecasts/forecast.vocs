@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -87,6 +87,9 @@
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">forecast_n_strain</span><span class="op">(</span>
   <span class="va">data</span>,
   model <span class="op">=</span> <span class="cn">NULL</span>,
+  inits <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_inits.html">fv_inits</a></span>,
+  fit <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_sample.html">fv_sample</a></span>,
+  posterior <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_posterior.html">fv_posterior</a></span>,
   strains <span class="op">=</span> <span class="fl">2</span>,
   voc_label <span class="op">=</span> <span class="st">"VOC"</span>,
   probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>,
@@ -96,9 +99,27 @@
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
-      <td><p>A list of data as produced by <code><a href="stan_data.html">stan_data()</a></code>.</p></td>
+      <td><p>A list of data as produced by <code><a href="fv_data.html">fv_data()</a></code>.</p></td>
     </tr><tr><th>model</th>
-      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="load_model.html">load_model()</a></code>.</p></td>
+      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="fv_model.html">fv_model()</a></code>.</p></td>
+    </tr><tr><th>inits</th>
+      <td><p>A function that returns a function to samples initial
+conditions with the same arguments as <code><a href="fv_inits.html">fv_inits()</a></code>. If not supplied the
+package default <code><a href="fv_inits.html">fv_inits()</a></code> is used.</p></td>
+    </tr><tr><th>fit</th>
+      <td><p>A function that fits the supplied model with the same arguments
+and return values as <code><a href="fv_sample.html">fv_sample()</a></code>. If not supplied the
+package default [fv_sample())] is used which performs MCMC sampling using
+[cmdstanr].</p>
+<p>[fv_sample())]: R:fv_sample())
+[cmdstanr]: R:cmdstanr</p></td>
+    </tr><tr><th>posterior</th>
+      <td><p>A function that summarises the output from the supplied
+fitting function with the same arguments and return values (depending on
+the requirement for downstream package functionality to function) as
+<code><a href="fv_posterior.html">fv_posterior()</a></code>. If not supplied the package default
+[fv_posterior())] is used.</p>
+<p>[fv_posterior())]: R:fv_posterior())</p></td>
     </tr><tr><th>strains</th>
       <td><p>Integer number of strains. Defaults to 2. Current
 maximum is 2.</p></td>
@@ -118,7 +139,7 @@ the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
     </tr><tr><th>...</th>
-      <td><p>Additional parameters passed to <code><a href="stan_fit.html">stan_fit()</a></code>.</p></td>
+      <td><p>Additional parameters passed to <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
     </tr></table><h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class="dont-index"><p>Functions used for forecasting across models, dates, and scenarios

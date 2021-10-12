@@ -12,7 +12,7 @@
     );
   }
 </script><title>Label the Variant of Concern — update_voc_label • forecast.vocs</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Label the Variant of Concern — update_voc_label"><meta property="og:description" content="Assign a custom label to the variant of concern in the
-output from summarise_posterior()."><meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png"><meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+output from fv_posterior()."><meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png"><meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -30,7 +30,7 @@ output from summarise_posterior()."><meta property="og:image" content="epiforeca
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ output from summarise_posterior()."><meta property="og:image" content="epiforeca
 
     <div class="ref-description">
     <p>Assign a custom label to the variant of concern in the
-output from <code><a href="summarise_posterior.html">summarise_posterior()</a></code>.</p>
+output from <code><a href="fv_posterior.html">fv_posterior()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">update_voc_label</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">label</span>, target_label <span class="op">=</span> <span class="st">"VOC"</span><span class="op">)</span></code></pre></div>
@@ -91,7 +91,7 @@ output from <code><a href="summarise_posterior.html">summarise_posterior()</a></
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
-<code><a href="summarise_posterior.html">summarise_posterior()</a></code>. For forecast dates to be extracted data with
+<code><a href="fv_posterior.html">fv_posterior()</a></code>. For forecast dates to be extracted data with
 <code>value_type == "cases"</code> must be present.</p></td>
     </tr><tr><th>label</th>
       <td><p>Character string  indicating the new label to use for the
@@ -101,7 +101,7 @@ variant of concern.</p></td>
 current label for the variant of concern.</p></td>
     </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of data frames as returned by `<code><a href="summarise_posterior.html">summarise_posterior()</a></code> but
+    <p>A list of data frames as returned by `<code><a href="fv_posterior.html">fv_posterior()</a></code> but
 with updated labels.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -110,55 +110,18 @@ with updated labels.</p>
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
 <code><a href="extract_forecast_dates.html">extract_forecast_dates</a>()</code>,
 <code><a href="extract_forecast.html">extract_forecast</a>()</code>,
+<code><a href="fv_posterior.html">fv_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
-<code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
-<code><a href="summarise_posterior.html">summarise_posterior</a>()</code></p></div>
+<code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_example.html">load_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 2, type = "posterior")</span> could not find function "fv_example"</span>
 <span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">update_voc_label</span><span class="op">(</span><span class="va">p</span>, <span class="st">"Delta"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lapply(x, f)</span> object 'p' not found</span>
 <span class="r-in"><span class="va">p</span><span class="op">[</span><span class="va">value_type</span> <span class="op">==</span> <span class="st">"model"</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    value_type      variable                  clean_name date type obs observed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      model   avg_voc_mod        Average Delta effect &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      model          beta                        Beta &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      model init_cases[1]               Initial cases &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      model init_cases[2]         Initial Delta cases &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      model        phi[1] Notification overdispersion &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      model        phi[2]   Sequencing overdispersion &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:      model        r_init              Initial growth &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:      model       r_noise                 Growth (sd) &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:      model       voc_mod        Initial Delta effect &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    forecast_start exponentiated         mean       median           sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:             NA          TRUE 1.804766e+00 1.804291e+00   0.02921097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:             NA         FALSE 3.209816e-01 3.984735e-01   0.46752521</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:             NA          TRUE 8.959069e+04 8.965731e+04   0.06936367</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             NA          TRUE 2.200103e+02 2.201898e+02   0.09745460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:             NA         FALSE 1.056693e+02 8.444825e+01 106.02242241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:             NA         FALSE 1.891149e+02 1.615045e+02 124.32716962</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:             NA         FALSE 1.325174e-01 1.341870e-01   0.07180019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:             NA         FALSE 1.092370e-01 9.991730e-02   0.05998836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:             NA          TRUE 1.804766e+00 1.804291e+00   0.02921097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            mad            q5           q20          q80          q95      rhat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  0.02825984  1.719788e+00  1.762777e+00 1.847177e+00 1.895543e+00 0.9999955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  0.51877731 -5.182967e-01 -1.379756e-01 7.690168e-01 9.354680e-01 1.0000555</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  0.06382593  7.974545e+04  8.474313e+04 9.463664e+04 1.002407e+05 1.0035276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  0.09427853  1.877616e+02  2.027711e+02 2.384415e+02 2.594063e+02 1.0000300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: 53.64839991  2.663438e+01  4.717452e+01 1.411910e+02 2.330759e+02 1.0006074</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 93.93219864  5.013444e+01  9.281310e+01 2.663616e+02 4.393338e+02 1.0042635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:  0.06461401  1.351774e-02  7.735250e-02 1.884312e-01 2.496943e-01 1.0001805</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:  0.06087993  3.048898e-02  5.322236e-02 1.579574e-01 2.195497e-01 0.9999600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:  0.02825984  1.719788e+00  1.762777e+00 1.847177e+00 1.895543e+00 0.9999955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ess_bulk  ess_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2121.0506 1419.0800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  521.4538 1072.1236</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: 2338.2868 1108.6765</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: 2524.9633 1311.7136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  651.3741  910.9929</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 2584.5556 1247.1047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: 1327.3538  997.1388</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:  574.6457 1183.9425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9: 2121.0506 1419.0800</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos)</span> object 'p' not found</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

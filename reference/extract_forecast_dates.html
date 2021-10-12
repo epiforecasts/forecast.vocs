@@ -30,7 +30,7 @@ and sequence data."><meta property="og:image" content="epiforecasts.io/forecast.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.2000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ and sequence data.</p>
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
-<code><a href="summarise_posterior.html">summarise_posterior()</a></code>. For forecast dates to be extracted data with
+<code><a href="fv_posterior.html">fv_posterior()</a></code>. For forecast dates to be extracted data with
 <code>value_type == "cases"</code> must be present.</p></td>
     </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -104,19 +104,18 @@ data was last available for.</p>
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
 <code><a href="extract_forecast.html">extract_forecast</a>()</code>,
+<code><a href="fv_posterior.html">fv_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
-<code><a href="summarise_posterior.html">summarise_posterior</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_example.html">load_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 2, type = "posterior")</span> could not find function "fv_example"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">extract_forecast_dates</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Data unavailable       date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:            Cases 2021-06-26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:        Sequences 2021-06-12</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in extract_forecast_dates(p)</span> object 'p' not found</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
