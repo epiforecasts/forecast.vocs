@@ -107,56 +107,11 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 2, type = "posterior")</span> could not find function "fv_example"</span>
 <span class="r-in"><span class="va">long_posterior</span> <span class="op">&lt;-</span> <span class="fu">quantiles_to_long</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is.data.table(data)</span> object 'posterior' not found</span>
 <span class="r-in"><span class="va">long_posterior</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       value_type      variable                  clean_name date type obs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:      model   avg_voc_mod          Average VOC effect &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:      model          beta                        Beta &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3:      model init_cases[1]               Initial cases &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4:      model init_cases[2]           Initial VOC cases &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5:      model        phi[1] Notification overdispersion &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1632:        raw   log_lik[11]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1633:        raw   log_lik[12]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1634:        raw   log_lik[13]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1635:        raw   log_lik[14]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1636:        raw   log_lik[15]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       observed forecast_start exponentiated          mean        median</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:       NA             NA          TRUE     1.8047656     1.8042906</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:       NA             NA         FALSE     0.3209816     0.3984735</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3:       NA             NA          TRUE 89590.6866570 89657.3086526</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4:       NA             NA          TRUE   220.0103003   220.1898216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5:       NA             NA         FALSE   105.6693443    84.4482500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1632:       NA             NA            NA   -14.7407605   -14.6763000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1633:       NA             NA            NA   -14.0257973   -13.9873500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1634:       NA             NA            NA   -13.6588493   -13.5713000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1635:       NA             NA            NA    -8.1097575    -8.0214250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1636:       NA             NA            NA    -7.6682411    -7.5287600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 sd         mad      rhat  ess_bulk  ess_tail quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0.02921097  0.02825984 0.9999955 2121.0506 1419.0800     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:   0.46752521  0.51877731 1.0000555  521.4538 1072.1236     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3:   0.06936367  0.06382593 1.0035276 2338.2868 1108.6765     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4:   0.09745460  0.09427853 1.0000300 2524.9633 1311.7136     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5: 106.02242241 53.64839991 1.0006074  651.3741  910.9929     0.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1632:   0.75624710  0.60386298 1.0006646  966.4355 1125.6893     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1633:   0.71063508  0.65241813 1.0019821  785.1871 1233.3560     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1634:   0.91347411  0.76820919 1.0005103 1014.7847  959.4689     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1635:   0.57291665  0.46177060 1.0003996  948.3248  925.0299     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1636:   0.67248551  0.50173408 0.9996291  716.2991  995.8507     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          prediction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:     1.7197880</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:    -0.5182967</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3: 79745.4527330</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4:   187.7615863</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5:    26.6343800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1632:   -13.7026400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1633:   -13.0189400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1634:   -12.4374600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1635:    -7.3812445</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1636:    -6.8860100</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos)</span> object 'long_posterior' not found</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
