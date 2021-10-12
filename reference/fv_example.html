@@ -115,16 +115,130 @@ and the script used to generate these examples respectively.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the summarised posterior from an example fit of the one strain model</span></span>
 <span class="r-in"><span class="fu">fv_example</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 1, type = "posterior")</span> could not find function "fv_example"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      value_type     variable                  clean_name       date    type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      model         beta                        Beta       &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      model       phi[1] Notification overdispersion       &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      model       r_init              Initial growth       &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      model      r_noise                 Growth (sd)       &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      cases sim_cases[1]                             2021-03-20 Overall</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167:        raw  log_lik[11]                                   &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168:        raw  log_lik[12]                                   &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169:        raw  log_lik[13]                                   &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170:        raw  log_lik[14]                                   &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171:        raw  log_lik[15]                                   &lt;NA&gt;        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        obs observed forecast_start exponentiated          mean        median</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:    NA       NA             NA         FALSE     0.2574233     0.3105140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:    NA       NA             NA         FALSE    99.1451529    82.2093000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:    NA       NA             NA         FALSE     0.1370505     0.1368755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:    NA       NA             NA         FALSE     0.1050505     0.0970416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 87328     TRUE          FALSE            NA 89782.1115000 89147.5000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167:    NA       NA             NA            NA    -9.5899811    -9.5021600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168:    NA       NA             NA            NA    -8.9613935    -8.9228050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169:    NA       NA             NA            NA    -8.9584797    -8.8246700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170:    NA       NA             NA            NA    -8.2001128    -8.1171600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171:    NA       NA             NA            NA    -7.6749318    -7.5341450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                sd          mad            q5           q20           q80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 4.719408e-01 5.403657e-01 -5.840633e-01 -2.091524e-01     0.7152896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 7.483915e+01 4.935168e+01  2.388086e+01  4.603050e+01   136.5358000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 6.699996e-02 6.350391e-02  2.941364e-02  8.433358e-02     0.1901708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 5.378900e-02 5.438785e-02  3.325333e-02  5.659784e-02     0.1488320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 1.300853e+04 1.126109e+04  6.939080e+04  7.961380e+04 99637.2000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167: 5.674628e-01 4.529343e-01 -1.062033e+01 -9.949868e+00    -9.1648780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168: 4.244796e-01 3.719769e-01 -9.711861e+00 -9.265656e+00    -8.6232480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169: 6.718077e-01 4.929497e-01 -1.027716e+01 -9.347032e+00    -8.4678520</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170: 5.903806e-01 5.077905e-01 -9.267114e+00 -8.612276e+00    -7.7320280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171: 6.526476e-01 4.749657e-01 -8.802622e+00 -8.059854e+00    -7.2016300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                q95      rhat  ess_bulk ess_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  9.112934e-01 0.9996392  646.2839 1228.475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  2.184620e+02 1.0018302  917.1166 1259.234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  2.440001e-01 1.0013268 1130.7751  822.226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  2.037336e-01 0.9994841  684.5599 1235.298</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  1.110406e+05 0.9999510 1985.4131 1482.156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 167: -8.876743e+00 1.0007962 1165.0880 1415.102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 168: -8.345569e+00 1.0004377  881.2068 1231.126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 169: -8.175266e+00 1.0016929 1381.4011 1397.516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 170: -7.442126e+00 1.0005277 1229.6354 1508.467</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 171: -6.914828e+00 1.0003702  946.1096 1316.722</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Load the summarised forecast from this posterior</span></span>
 <span class="r-in"><span class="fu">fv_example</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"forecast"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 1, type = "forecast")</span> could not find function "fv_example"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     value_type    type       date horizon forecast_start         mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      cases Overall 2021-07-03       1          FALSE 3032.7945000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      cases Overall 2021-07-10       2          FALSE 1914.0135000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      cases Overall 2021-07-17       3          FALSE 1314.9725000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      cases Overall 2021-07-24       4          FALSE 1068.9410000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     growth Overall 2021-06-26       1          FALSE   -0.4129411</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     growth Overall 2021-07-03       2          FALSE   -0.4116980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     growth Overall 2021-07-10       3          FALSE   -0.4154146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     growth Overall 2021-07-17       4          FALSE   -0.4108498</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:         rt Overall 2021-06-26       1          FALSE    0.6617013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:         rt Overall 2021-07-03       2          FALSE    0.6625243</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:         rt Overall 2021-07-10       3          FALSE    0.6600665</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:         rt Overall 2021-07-17       4          FALSE    0.6630865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           median           sd         mad           q5          q20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 2893.0000000  833.5819664 719.8023000 1941.0000000 2364.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1705.0000000  968.2497400 646.4136000  877.9500000 1233.6000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1009.0000000 1307.1368483 584.1444000  371.0000000  603.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  585.0000000 2656.9133186 451.4517000  135.0000000  289.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   -0.4152692    0.1653300   0.1448485   -0.6222887   -0.5147062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   -0.4171008    0.2150529   0.1815155   -0.6712363   -0.5419340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   -0.4180908    0.2697488   0.2333449   -0.7454903   -0.5725855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   -0.4131462    0.3189151   0.2710363   -0.8073175   -0.5971678</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    0.6601625    0.1653300   0.1448485    0.5367147    0.5976762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    0.6589545    0.2150529   0.1815155    0.5110763    0.5816223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    0.6583025    0.2697488   0.2333449    0.4745016    0.5640652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    0.6615655    0.3189151   0.2710363    0.4460530    0.5503682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              q80           q95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 3640.2000000  4.501000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2373.0000000  3.683050e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1648.2000000  3.239950e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1170.2000000  3.135900e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   -0.3183348 -1.997911e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   -0.2908642 -1.246967e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   -0.2665140 -6.355721e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   -0.2383310  1.550653e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    0.7273592  8.189018e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    0.7476172  8.827646e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    0.7660453  9.384204e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    0.7879418  1.001552e+00</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Load the script used to generate these examples</span></span>
 <span class="r-in"><span class="co"># Optionally source this script to regenerate the example</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="fu">fv_example</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"script"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fv_example(strains = 1, type = "script")</span> could not find function "fv_example"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "options(mc.cores = 2)"                                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "obs &lt;- filter_by_availability("                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "  germany_covid19_delta_obs,"                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "  date = \"2021-06-26\""                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] ")"                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "current_obs &lt;- filter_by_availability("                             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "  germany_covid19_delta_obs,"                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "  date = \"2021-08-26\""                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] ")"                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "dt &lt;- fv_data("                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "  obs,"                                                             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14] "  overdispersion = TRUE,"                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "  variant_relationship = \"scaled\","                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "  voc_scale = c(0.4, 0.2)"                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] ")"                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "inits &lt;- fv_inits(dt, strains = 1)"                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "model &lt;- suppressMessages(fv_model(strains = 1))"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "fit &lt;- fv_sample("                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [24] "  data = dt, model = model, init = inits,"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "  adapt_delta = 0.99, max_treedepth = 15, chains = 2"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] ")"                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] ""                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "# summarise posterior assuming a mean generation time of  5.5 days."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "posterior &lt;- fv_posterior(fit, scale_r = 5.5 / 7)"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [30] "forecast &lt;- extract_forecast(posterior)"                            </span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

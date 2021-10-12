@@ -3,7 +3,7 @@ pkgdown: 1.9000.9000.9000
 pkgdown_sha: bcb2d006b061c8535ac57980065acbef65cbc150
 articles:
   model-definitions: model-definitions.html
-last_built: 2021-10-12T20:40Z
+last_built: 2021-10-12T21:07Z
 urls:
   reference: epiforecasts.io/forecast.vocs/reference
   article: epiforecasts.io/forecast.vocs/articles
