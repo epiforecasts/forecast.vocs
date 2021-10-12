@@ -5,6 +5,7 @@
 * Add basic tests for all modelling functions.
 * Add tests for all postprocessing functions.
 * Add tests for all plotting functions.
+* Add tests for all forecasting functions.
 * Add a new utility, `load_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
 
 # forecast.vocs 0.0.5
