@@ -62,7 +62,7 @@ test_stan_fit <- function(message, dt, model, inits) {
     )
     # Check fit was successful and has loosely converged
     expect_equal(class(fit$fit[[1]])[1], "CmdStanMCMC")
-    expect_lt(fit$per_divergent_transitons, 0.1)
+    expect_lt(fit$per_divergent_transitions, 0.1)
     expect_lt(fit$max_treedepth, 15)
     expect_lt(fit$max_rhat, 1.1)
     expect_type(fit$fit_args[[1]], "list")
