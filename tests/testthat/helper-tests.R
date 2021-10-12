@@ -263,6 +263,7 @@ test_forecast <- function(message, obs, forecast_fn,
     }
   })
   test_that(paste0(message, " with fitting foreced to error"), {
+    skip_on_cran()
     # Check can handle fitting errors as expected
     mockery::stub(forecast_n_strain, "stan_fit",
       function(...) {
