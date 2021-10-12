@@ -7,6 +7,8 @@
 * Add tests for all plotting functions.
 * Add tests for all forecasting functions.
 * Add a new utility, `fv_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
+* Model specific functions (i.e `load_model`, `summarise_posterior`, and functions prefixed with `stan_` have been renamed with the `fv_` prefix).
+* Added the ability to pass model specific functions to the `forecast` function and wrappers enabling users to supply custom models but make use of the remaining package functionality.
 
 # forecast.vocs 0.0.5
 
