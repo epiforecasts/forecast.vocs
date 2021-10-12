@@ -10,14 +10,14 @@
 #'
 #' @param fit A function that fits the supplied model with the same arguments
 #' and return values as [fv_sample()]. If not supplied the
-#' package default [fv_sample())] is used which performs MCMC sampling using
+#' package default [fv_sample()] is used which performs MCMC sampling using
 #' [cmdstanr].
 #'
 #' @param posterior A function that summarises the output from the supplied
 #' fitting function with the same arguments and return values (depending on
 #' the requirement for downstream package functionality to function) as
 #' [fv_posterior()]. If not supplied the package default
-#' [fv_posterior())] is used.
+#' [fv_posterior()] is used.
 #'
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.

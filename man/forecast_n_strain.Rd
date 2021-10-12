@@ -28,19 +28,14 @@ package default \code{\link[=fv_inits]{fv_inits()}} is used.}
 
 \item{fit}{A function that fits the supplied model with the same arguments
 and return values as \code{\link[=fv_sample]{fv_sample()}}. If not supplied the
-package default [fv_sample())] is used which performs MCMC sampling using
-[cmdstanr].
-
-[fv_sample())]: R:fv_sample())
-[cmdstanr]: R:cmdstanr}
+package default \code{\link[=fv_sample]{fv_sample()}} is used which performs MCMC sampling using
+\link{cmdstanr}.}
 
 \item{posterior}{A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
 \code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
-[fv_posterior())] is used.
-
-[fv_posterior())]: R:fv_posterior())}
+\code{\link[=fv_posterior]{fv_posterior()}} is used.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
