@@ -44,7 +44,8 @@ test_fv_sample(
 
 test_fv_sample(
   "The single strain model without overdispersion can be fit as expected",
-  nooverdisp_dt, one_model, inits1
+  nooverdisp_dt, one_model, inits1,
+  convergence = FALSE
 )
 
 test_fv_sample(
