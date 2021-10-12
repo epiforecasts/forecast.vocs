@@ -108,6 +108,7 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
 
   forecast_scenario <- function(scenario, ...) {
     forecast_across_dates(
+      id = scenario$id[[1]],
       obs = scenario$obs[[1]],
       voc_scale = scenario$voc_scale[[1]],
       id = scenario$id[[1]],

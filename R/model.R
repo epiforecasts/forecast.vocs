@@ -260,7 +260,7 @@ stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
         na.rm = TRUE
       ),
       divergent_transitions = sum(diag$divergent__),
-      per_divergent_transitons = sum(diag$divergent__) / nrow(diag),
+      per_divergent_transitions = sum(diag$divergent__) / nrow(diag),
       max_treedepth = max(diag$treedepth__)
     )
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]

@@ -71,6 +71,10 @@ forecast <- function(obs,
        forecasts specified." = length(models) == length(strains)
     )
   }
+  stopifnot(
+    "Strains is not a unique vector" =
+      length(strains) == length(unique(strains))
+  )
 
   # resolve  data availability
   target_obs <- filter_by_availability(

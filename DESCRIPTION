@@ -28,6 +28,7 @@ Imports:
     scales
 Suggests:
     future,
+    mockery,
     knitr,
     readxl,
     rmarkdown,
