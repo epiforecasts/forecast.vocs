@@ -6,7 +6,7 @@
 * Add tests for all postprocessing functions.
 * Add tests for all plotting functions.
 * Add tests for all forecasting functions.
-* Add a new utility, `load_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
+* Add a new utility, `fv_example()` which can be used to load built in example output and scripts. This is used for postprocessing and plotting examples as well as for testing plotting on static input.
 
 # forecast.vocs 0.0.5
 
@@ -16,7 +16,7 @@
 
 # forecast.vocs 0.0.4
 
-* Improve the robustness of plotting observations and forecast dates so that they can be facetted using the same variables as used for plotting estimates/forecasts.
+* Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.
 * Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.
 * Surfaced more options when plotting to allow for increased generalisability.
 

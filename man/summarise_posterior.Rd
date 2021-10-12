@@ -12,7 +12,7 @@ summarise_posterior(
 )
 }
 \arguments{
-\item{fit}{List of output as returned by \code{\link[=stan_fit]{stan_fit()}}.}
+\item{fit}{List of output as returned by \code{\link[=fv_sample]{fv_sample()}}.}
 
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
@@ -44,9 +44,9 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-12"),
 )
-dt <- stan_data(obs)
-inits <- stan_inits(dt)
-fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+dt <- fv_data(obs)
+inits <- fv_inits(dt)
+fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 summarise_posterior(fit)
 \dontshow{\}) # examplesIf}
 }

@@ -25,18 +25,18 @@ NULL
 #'
 #' @family data
 #' @export
-#' @inheritParams stan_inits
+#' @inheritParams fv_inits
 #' @examples
 #' # Load the summarised posterior from an example fit of the one strain model
-#' load_example(strains = 1, type = "posterior")
+#' fv_example(strains = 1, type = "posterior")
 #'
 #' # Load the summarised forecast from this posterior
-#' load_example(strains = 1, type = "forecast")
+#' fv_example(strains = 1, type = "forecast")
 #'
 #' # Load the script used to generate these examples
 #' # Optionally source this script to regenerate the example
-#' readLines(load_example(strains = 1, type = "script"))
-load_example <- function(strains = 1, type = "posterior") {
+#' readLines(fv_example(strains = 1, type = "script"))
+fv_example <- function(strains = 1, type = "posterior") {
   type <- match.arg(
     type,
     choices = c("posterior", "forecast", "observations", "script")

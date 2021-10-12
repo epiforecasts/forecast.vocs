@@ -17,7 +17,7 @@ A data frame of quantiles in long format.
 Convert summarised quantiles from wide to long format
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 long_posterior <- quantiles_to_long(posterior)
 long_posterior
 }

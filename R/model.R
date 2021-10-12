@@ -6,7 +6,7 @@
 #' @param horizon Integer forecast horizon. Defaults to 4.
 #'
 #' @param r_init Numeric vector of length 2. Prior mean and
-#' standard deviation for the initial growht rate.
+#' standard deviation for the initial growth rate.
 #'
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
@@ -35,15 +35,15 @@
 #' @family model
 #' @export
 #' @examples
-#' stan_data(latest_obs(germany_covid19_delta_obs))
-stan_data <- function(obs, horizon = 4,
-                      r_init = c(0, 0.25),
-                      voc_scale = c(0, 0.2),
-                      variant_relationship = "pooled",
-                      overdispersion = TRUE,
-                      likelihood = TRUE,
-                      output_loglik = TRUE,
-                      debug = FALSE) {
+#' fv_data(latest_obs(germany_covid19_delta_obs))
+fv_data <- function(obs, horizon = 4,
+                    r_init = c(0, 0.25),
+                    voc_scale = c(0, 0.2),
+                    variant_relationship = "pooled",
+                    overdispersion = TRUE,
+                    likelihood = TRUE,
+                    output_loglik = TRUE,
+                    debug = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
@@ -98,21 +98,21 @@ stan_data <- function(obs, horizon = 4,
 
 #' Set up initial conditions for model
 #'
-#' @param data A list of data as produced by [stan_data()].
+#' @param data A list of data as produced by [fv_data()].
 #'
 #' @return A function that when called returns a list of initial conditions
 #' for the package stan models.
 #'
 #' @family model
 #' @export
-#' @inheritParams load_model
+#' @inheritParams fv_model
 #' @importFrom purrr map_dbl
 #' @examples
-#' dt <- stan_data(latest_obs(germany_covid19_delta_obs))
-#' inits <- stan_inits(dt)
+#' dt <- fv_data(latest_obs(germany_covid19_delta_obs))
+#' inits <- fv_inits(dt)
 #' inits
 #' inits()
-stan_inits <- function(data, strains = 2) {
+fv_inits <- function(data, strains = 2) {
   init_fn <- function() {
     inits <- list(
       init_cases = purrr::map_dbl(
@@ -162,11 +162,11 @@ stan_inits <- function(data, strains = 2) {
 #' @export
 #' @examplesIf interactive()
 #' # one strain model
-#' mod <- load_model(strains = 1)
+#' mod <- fv_model(strains = 1)
 #'
 #' # two strain model
-#' two_strain_mod <- load_model(strains = 2)
-load_model <- function(strains = 2, compile = TRUE, ...) {
+#' two_strain_mod <- fv_model(strains = 2)
+fv_model <- function(strains = 2, compile = TRUE, ...) {
   check_param(strains, "strains", "numeric")
   check_param(compile, "compile", "logical")
   if (strains == 1) {
@@ -186,9 +186,9 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 
 #' Fit a brancing process strain model
 #'
-#' @param data A list of data as produced by [stan_data()].
+#' @param data A list of data as produced by [fv_data()].
 #'
-#' @param model A `cmdstanr` model object as loaded by [load_model()].
+#' @param model A `cmdstanr` model object as loaded by [fv_model()].
 #'
 #' @param diagnostics Logical, defaults to `TRUE`. Should fitting diagnostics
 #' be returned as a `data.frame`.
@@ -196,7 +196,7 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' @param ... Additional parameters passed to the `sample` method of `cmdstanr`.
 #'
 #' @return A `data.frame` containing the `cmdstanr` fit, the input data, the
-#' fitting arguements, and optionally summary diagnostics.
+#' fitting arguments, and optionally summary diagnostics.
 #'
 #' @family model
 #' @export
@@ -210,12 +210,12 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- stan_data(obs)
+#' dt <- fv_data(obs)
 #'
 #' # single strain model
-#' inits <- stan_inits(dt, strains = 1)
-#' mod <- load_model(strains = 1)
-#' fit <- stan_fit(
+#' inits <- fv_inits(dt, strains = 1)
+#' mod <- fv_model(strains = 1)
+#' fit <- fv_sample(
 #'   dt,
 #'   model = mod, init = inits,
 #'   adapt_delta = 0.99, max_treedepth = 15
@@ -223,17 +223,17 @@ load_model <- function(strains = 2, compile = TRUE, ...) {
 #' fit
 #'
 #' # two strain model
-#' inits <- stan_inits(dt, strains = 2)
+#' inits <- fv_inits(dt, strains = 2)
 #'
-#' mod <- load_model(strains = 2)
+#' mod <- fv_model(strains = 2)
 #'
-#' two_strain_fit <- stan_fit(dt,
+#' two_strain_fit <- fv_sample(dt,
 #'   model = mod, init = inits,
 #'   adapt_delta = 0.99, max_treedepth = 15
 #' )
 #' two_strain_fit
-stan_fit <- function(data, model = forecast.vocs::load_model(strains = 2),
-                     diagnostics = TRUE, ...) {
+fv_sample <- function(data, model = forecast.vocs::fv_model(strains = 2),
+                      diagnostics = TRUE, ...) {
   check_param(data, "data", "list")
   check_param(diagnostics, "diagnostics", "logical")
   cdata <- data

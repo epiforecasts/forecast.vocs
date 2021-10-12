@@ -1,6 +1,6 @@
 test_strain_inits <- function(message, strains) {
   test_that(message, {
-    inits <- stan_inits(dt, strains = strains)
+    inits <- fv_inits(dt, strains = strains)
     expect_true(is.function(inits))
     inits1 <- inits()
     inits2 <- inits()
@@ -40,11 +40,11 @@ test_strain_inits <- function(message, strains) {
   })
 }
 
-test_stan_fit <- function(message, dt, model, inits) {
+test_fv_sample <- function(message, dt, model, inits) {
   test_that(message, {
     skip_on_cran()
-    fit <- silent_stan_fit(
-      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.95,
+    fit <- silent_fv_sample(
+      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.98,
       max_treedepth = 15, refresh = 0, show_messages = FALSE,
       iter_warmup = 1000, iter_sampling = 1000
     )
@@ -212,16 +212,19 @@ test_summarise_posterior <- function(message, fit, test_posterior,
   })
 }
 
-
 test_forecast <- function(message, obs, forecast_fn,
                           test_fit, test_posterior, test_forecast,
                           depth = 3, equal = TRUE, ...) {
   test_that(message, {
     skip_on_cran()
     # Mock out fitting function as not testing fitting here
-    # (see test-stan_fit.R)
-    mockery::stub(forecast_n_strain, "stan_fit", test_fit, depth = depth)
-    forecasts <- suppressMessages(forecast_fn(obs, strains = c(1, 2), ...))
+    # (see test-fv_sample.R)
+    test_fv_fit <- function(...) {
+      test_fit
+    }
+    forecasts <- suppressMessages(
+      forecast_fn(obs, fit = test_fv_fit, strains = c(1, 2), ...)
+    )
     # check ouput  format as expected
     expect_data_table(forecasts)
     expect_gt(nrow(forecasts), 0)
@@ -238,7 +241,7 @@ test_forecast <- function(message, obs, forecast_fn,
     # Check input control
     expect_error(forecast_fn(obs, strains = c(2, 2, 1), ...))
     forecasts_no_fit <- suppressMessages(
-      forecast_fn(obs, keep_fit = FALSE, ...)
+      forecast_fn(obs, fit = test_fv_fit, keep_fit = FALSE, ...)
     )
     expect_true(is.null(forecasts_no_fit$fit))
     expect_named(
@@ -262,16 +265,17 @@ test_forecast <- function(message, obs, forecast_fn,
       expect_false(isTRUE(all.equal(forecasts$forecast[[1]], test_forecast)))
     }
   })
-  test_that(paste0(message, " with fitting foreced to error"), {
+  test_that(paste0(message, " with fitting forced to error"), {
     skip_on_cran()
     # Check can handle fitting errors as expected
-    mockery::stub(forecast_n_strain, "stan_fit",
-      function(...) {
-        stop("error")
-      },
-      depth = depth
+    error_forecast <- suppressMessages(
+      forecast_fn(obs,
+        fit = function(...) {
+          stop("twgwe")
+        },
+        ...
+      )
     )
-    error_forecast <- suppressMessages(forecast_fn(obs, ...))
     expect_true(is.null(error_forecast$fit))
     expect_true(!is.null(error_forecast$error))
   })

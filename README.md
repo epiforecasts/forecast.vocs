@@ -56,7 +56,7 @@ cmdstanr::install_cmdstan()
 ## Quick start
 
 This quick start uses data from Germany that includes COVID-19
-notificatons and sequences with sequences either being positive or
+notifications and sequences with sequences either being positive or
 negative for the Delta variant. It shows how to produce forecasts for
 both a one and two strain model for the 19th of June 2021 when the
 latest available data estimated that approximately 7% of COVID-19 were
@@ -191,13 +191,13 @@ Rather than using the all-in-one `forecast()` function individual
 package functions can be used to produce a forecast as follows.
 
 ``` r
-dt <- stan_data(obs, horizon = 4)
+dt <- fv_data(obs, horizon = 4)
 
-model <- load_model(strains = 2)
+model <- fv_model(strains = 2)
 
-inits <- stan_inits(dt, strains = 2)
+inits <- fv_inits(dt, strains = 2)
 
-fit <- stan_fit(
+fit <- fv_sample(
   data = dt, model = model, init = inits,
   voc_scale = c(0.4, 0.2),
   adapt_delta = 0.99, max_treedepth = 15,

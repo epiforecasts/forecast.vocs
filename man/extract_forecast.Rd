@@ -21,7 +21,7 @@ Uses the \code{observed} variable returned by
 for forecast dates only.
 }
 \examples{
-p <- load_example(strains = 2, type = "posterior")
+p <- fv_example(strains = 2, type = "posterior")
 
 extract_forecast(p)
 }

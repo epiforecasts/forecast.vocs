@@ -21,7 +21,7 @@ Extract forecast dates based on the availability of both case
 and sequence data.
 }
 \examples{
-p <- load_example(strains = 2, type = "posterior")
+p <- fv_example(strains = 2, type = "posterior")
 
 extract_forecast_dates(p)
 }

@@ -7,7 +7,7 @@
 generate_obs(
   obs,
   strains = 2,
-  model = forecast.vocs::load_model(strains = strains),
+  model = forecast.vocs::fv_model(strains = strains),
   type = "prior",
   datasets = 10,
   ...
@@ -21,7 +21,7 @@ fitting when the posterior is required.}
 maximum is 2. A numeric vector can be passed if forecasts from multiple
 strain models are desired.}
 
-\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=load_model]{load_model()}}.}
+\item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
 
 \item{type}{A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the
@@ -29,13 +29,13 @@ Supported options are data based on the "prior" or data based on  the
 
 \item{datasets}{Numeric, defaults to 10. Number of datasets to generate.}
 
-\item{...}{Additional arguments to pass \code{stan_data()}.}
+\item{...}{Additional arguments to pass \code{fv_data()}.}
 }
 \value{
 A dataframe with a sampled dataset on each row with the following
 variables: parameters (prior/posterior parameters used to generate the data),
-obs (simulated observed data), stan_data, (the simulated data formatted
-using \code{stan_data()} using the same arguments as specified  for simulation.)
+obs (simulated observed data), fv_data, (the simulated data formatted
+using \code{fv_data()} using the same arguments as specified  for simulation.)
 }
 \description{
 Generate simulated observations from the prior or posterior
@@ -49,9 +49,11 @@ obs <- latest_obs(germany_covid19_delta_obs)
 sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 
 # fit a simulated dataset
-sim_dt <- sim_obs$stan_data[[1]]
-inits <- stan_inits(sim_dt)
-fit <- stan_fit(sim_dt, init = inits, adapt_delta = 0.95, max_treedepth = 15)
+sim_dt <- sim_obs$fv_data[[1]]
+inits <- fv_inits(sim_dt)
+fit <- fv_sample(
+ sim_dt, init = inits, adapt_delta = 0.95, max_treedepth = 15
+)
 
 # summarise and plot simualated fit
 posterior <- summarise_posterior(fit)

@@ -59,16 +59,16 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param datasets Numeric, defaults to 10. Number of datasets to generate.
 #'
-#' @param ... Additional arguments to pass `stan_data()`.
+#' @param ... Additional arguments to pass `fv_data()`.
 #'
 #' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),
-#' obs (simulated observed data), stan_data, (the simulated data formatted
-#' using `stan_data()` using the same arguments as specified  for simulation.)
+#' obs (simulated observed data), fv_data, (the simulated data formatted
+#' using `fv_data()` using the same arguments as specified  for simulation.)
 #'
 #' @family generatedata
 #' @inheritParams forecast
-#' @inheritParams stan_fit
+#' @inheritParams fv_sample
 #' @export
 #' @importFrom posterior as_draws_df
 #' @importFrom purrr map
@@ -79,9 +79,12 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 #'
 #' # fit a simulated dataset
-#' sim_dt <- sim_obs$stan_data[[1]]
-#' inits <- stan_inits(sim_dt)
-#' fit <- stan_fit(sim_dt, init = inits, adapt_delta = 0.95, max_treedepth = 15)
+#' sim_dt <- sim_obs$fv_data[[1]]
+#' inits <- fv_inits(sim_dt)
+#' fit <- fv_sample(
+#'   sim_dt,
+#'   init = inits, adapt_delta = 0.95, max_treedepth = 15
+#' )
 #'
 #' # summarise and plot simualated fit
 #' posterior <- summarise_posterior(fit)
@@ -92,17 +95,17 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' plot_rt(posterior)
 generate_obs <- function(obs, strains = 2,
-                         model = forecast.vocs::load_model(strains = strains),
+                         model = forecast.vocs::fv_model(strains = strains),
                          type = "prior", datasets = 10, ...) {
   type <- match.arg(type, choices = c("prior", "posterior"))
-  dt <- stan_data(obs,
+  dt <- fv_data(obs,
     likelihood = type %in% "posterior",
     output_loglik = FALSE, horizon = 0, ...
   )
 
-  inits <- stan_inits(dt, strains = strains)
+  inits <- fv_inits(dt, strains = strains)
 
-  fit <- stan_fit(
+  fit <- fv_sample(
     data = dt, model = model, init = inits,
     adapt_delta = 0.99, max_treedepth = 15,
     refresh = 0, show_messages = FALSE,
@@ -150,6 +153,6 @@ generate_obs <- function(obs, strains = 2,
     })
   )
 
-  gen_data[, stan_data := purrr::map(obs, stan_data, horizon = 0, ...)]
+  gen_data[, fv_data := purrr::map(obs, fv_data, horizon = 0, ...)]
   return(gen_data)
 }

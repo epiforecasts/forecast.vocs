@@ -1,8 +1,23 @@
 #' Forecast using branching processes at a target date
 #'
-#' @param models A model as supplied by [load_model()]. If not supplied the
+#' @param models A model as supplied by [fv_model()]. If not supplied the
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
+#'
+#' @param inits A function that returns a function to samples initial
+#' conditions with the same arguments as [fv_inits()]. If not supplied the
+#' package default [fv_inits()] is used.
+#'
+#' @param fit A function that fits the supplied model with the same arguments
+#' and return values as [fv_sample()]. If not supplied the
+#' package default [fv_sample())] is used which performs MCMC sampling using
+#' [cmdstanr].
+#'
+#' @param summarise A function that summarises the output from the supplied
+#' fitting funciton with the same arguments and return values (depending on
+#' the requirement for downstream package functionality to function) as
+#' [summarise_posterior()]. If not supplied the package default
+#' [summarise_posterior())] is used.
 #'
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
@@ -17,16 +32,16 @@
 #'
 #' @param id ID to assign to this forecast. Defaults to 0.
 #'
-#' @param ... Additional parameters passed to [stan_fit()].
+#' @param ... Additional parameters passed to [fv_sample()].
 #'
-#' @return A `data.frame` containing the output of [stan_fit()] in each row as
+#' @return A `data.frame` containing the output of [fv_sample()] in each row as
 #' well as the summarised posterior, forecast and information about the
 #' parameters specified.
 #'
 #' @family forecast
 #' @inheritParams filter_by_availability
-#' @inheritParams stan_data
-#' @inheritParams stan_fit
+#' @inheritParams fv_data
+#' @inheritParams fv_sample
 #' @inheritParams summarise_posterior
 #' @export
 #' @importFrom purrr map transpose reduce map_chr safely
@@ -56,6 +71,9 @@
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
+                     inits = forecast.vocs::fv_inits,
+                     fit = forecast.vocs::fv_sample,
+                     summarise = forecast.vocs::summarise_posterior,
                      horizon = 4, r_init = c(0, 0.25), voc_scale = c(0, 0.2),
                      voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
@@ -85,7 +103,7 @@ forecast <- function(obs,
   )
 
   # format data and fit models
-  data <- stan_data(target_obs,
+  data <- fv_data(target_obs,
     horizon = horizon,
     r_init = r_init,
     voc_scale = voc_scale,
@@ -115,6 +133,9 @@ forecast <- function(obs,
       fit <-
         safe_n_forecast(
           model = models[[strain]],
+          inits = inits,
+          fit = fit,
+          summarise = summarise,
           strains = strains[strain],
           data = data,
           probs = probs,
@@ -132,7 +153,7 @@ forecast <- function(obs,
   forecasts <- cbind(forecasts, rbindlist(forecasts$results, fill = TRUE))
   forecasts[, results := NULL]
   if (!keep_fit) {
-    forecasts[, c("fit", "data", "fit_args") := NULL]
+    suppressWarnings(forecasts[, c("fit", "data", "fit_args") := NULL])
   }
   return(forecasts[])
 }
@@ -140,25 +161,28 @@ forecast <- function(obs,
 #' Forecast for a single model and summarise
 #'
 #' @family forecast
-#' @inheritParams stan_inits
+#' @inheritParams fv_inits
 #' @inheritParams forecast
-#' @inheritParams stan_fit
+#' @inheritParams fv_sample
 #' @inheritParams summarise_posterior
-forecast_n_strain <- function(data, model = NULL, strains = 2,
-                              voc_label = "VOC",
+forecast_n_strain <- function(data, model = NULL,
+                              inits = forecast.vocs::fv_inits,
+                              fit = forecast.vocs::fv_sample,
+                              summarise = forecast.vocs::summarise_posterior,
+                              strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),
                               scale_r = 1, ...) {
-  inits <- stan_inits(data, strains = strains)
+  inits <- inits(data, strains = strains)
 
   if (is.null(model)) {
-    model <- load_model(strains = strains)
+    model <- fv_model(strains = strains)
   }
 
   # fit and summarise
-  fit <- stan_fit(
+  fit <- fit(
     model = model, data = data, init = inits, ...
   )
-  fit$posterior <- list(summarise_posterior(
+  fit$posterior <- list(summarise(
     fit,
     probs = probs, voc_label = voc_label, scale_r = scale_r
   ))

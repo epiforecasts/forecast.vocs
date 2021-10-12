@@ -22,7 +22,7 @@ the RKI via the Germany/Poland forecasting hub.
 }
 \seealso{
 Package data sets
-\code{\link{load_example}()}
+\code{\link{fv_example}()}
 }
 \concept{data}
 \keyword{datasets}

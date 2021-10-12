@@ -26,7 +26,7 @@ Assign a custom label to the variant of concern in the
 output from \code{\link[=summarise_posterior]{summarise_posterior()}}.
 }
 \examples{
-p <- load_example(strains = 2, type = "posterior")
+p <- fv_example(strains = 2, type = "posterior")
 p <- update_voc_label(p, "Delta")
 p[value_type == "model"]
 }

@@ -24,7 +24,7 @@ plot_posterior(
 \item{forecast_dates}{A data.frame in the format produced by
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.}
+add to plots. May contain faceting variables.}
 
 \item{save_path}{A character string indicating where to save plots
 if required.}
@@ -44,7 +44,7 @@ A named list of all supported package plots with sensible defaults.
 Plot posterior predictions
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 plot_posterior(posterior)
 }
 \seealso{

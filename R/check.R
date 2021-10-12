@@ -102,7 +102,7 @@ check_observations <- function(obs) {
 #' @param posterior A dataframe containing quantiles identified using
 #' the `q5` naming scheme.
 #'
-#' @param req_probs A numeric vector of required probabilties.
+#' @param req_probs A numeric vector of required probabilities.
 #'
 #' @return NULL
 #'

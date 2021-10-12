@@ -9,18 +9,18 @@ current_obs <- filter_by_availability(
   date = "2021-08-26"
 )
 
-dt <- stan_data(
+dt <- fv_data(
   obs,
   overdispersion = TRUE,
   variant_relationship = "scaled",
   voc_scale = c(0.4, 0.2)
 )
 
-inits <- stan_inits(dt, strains = 2)
+inits <- fv_inits(dt, strains = 2)
 
-model <- suppressMessages(load_model(strains = 2))
+model <- suppressMessages(fv_model(strains = 2))
 
-fit <- stan_fit(
+fit <- fv_sample(
   data = dt, model = model, init = inits,
   adapt_delta = 0.99, max_treedepth = 15, chains = 2
 )

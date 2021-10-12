@@ -9,6 +9,9 @@ forecast(
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
+  inits = forecast.vocs::fv_inits,
+  fit = forecast.vocs::fv_sample,
+  summarise = forecast.vocs::summarise_posterior,
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
@@ -43,10 +46,30 @@ the \code{date}.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the \code{date}.}
 
+\item{inits}{A function that returns a function to samples initial
+conditions with the same arguments as \code{\link[=fv_inits]{fv_inits()}}. If not supplied the
+package default \code{\link[=fv_inits]{fv_inits()}} is used.}
+
+\item{fit}{A function that fits the supplied model with the same arguments
+and return values as \code{\link[=fv_sample]{fv_sample()}}. If not supplied the
+package default [fv_sample())] is used which performs MCMC sampling using
+[cmdstanr].
+
+[fv_sample())]: R:fv_sample())
+[cmdstanr]: R:cmdstanr}
+
+\item{summarise}{A function that summarises the output from the supplied
+fitting funciton with the same arguments and return values (depending on
+the requirement for downstream package functionality to function) as
+\code{\link[=summarise_posterior]{summarise_posterior()}}. If not supplied the package default
+[summarise_posterior())] is used.
+
+[summarise_posterior())]: R:summarise_posterior())}
+
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
 \item{r_init}{Numeric vector of length 2. Prior mean and
-standard deviation for the initial growht rate.}
+standard deviation for the initial growth rate.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
@@ -68,7 +91,7 @@ determined from the data), "scaled" (a fixed scaling between strains), and
 \item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
 used include overdispersion.}
 
-\item{models}{A model as supplied by \code{\link[=load_model]{load_model()}}. If not supplied the
+\item{models}{A model as supplied by \code{\link[=fv_model]{fv_model()}}. If not supplied the
 default for that strain is used. If multiple strain models are being forecast
 then \code{models} should be a list models.}
 
@@ -99,10 +122,10 @@ and \code{\link[=plot_voc]{plot_voc()}}).}
 
 \item{id}{ID to assign to this forecast. Defaults to 0.}
 
-\item{...}{Additional parameters passed to \code{\link[=stan_fit]{stan_fit()}}.}
+\item{...}{Additional parameters passed to \code{\link[=fv_sample]{fv_sample()}}.}
 }
 \value{
-A \code{data.frame} containing the output of \code{\link[=stan_fit]{stan_fit()}} in each row as
+A \code{data.frame} containing the output of \code{\link[=fv_sample]{fv_sample()}} in each row as
 well as the summarised posterior, forecast and information about the
 parameters specified.
 }

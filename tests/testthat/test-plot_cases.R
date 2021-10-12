@@ -19,11 +19,11 @@ test_that("Can plot using freshly generated forecasts", {
 })
 
 test_that("Can plot using example data", {
-  posterior1 <- load_example(strains = 1, type = "posterior")
-  posterior2 <- load_example(strains = 2, type = "posterior")
-  forecast1 <- load_example(strains = 1, type = "forecast")
-  forecast2 <- load_example(strains = 2, type = "forecast")
-  current_obs <- load_example(type = "obs")
+  posterior1 <- fv_example(strains = 1, type = "posterior")
+  posterior2 <- fv_example(strains = 2, type = "posterior")
+  forecast1 <- fv_example(strains = 1, type = "forecast")
+  forecast2 <- fv_example(strains = 2, type = "forecast")
+  current_obs <- fv_example(type = "obs")
   vdiffr::expect_doppelganger(
     "Default case with single strain", plot_cases(posterior1)
   )

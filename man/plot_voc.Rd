@@ -24,7 +24,7 @@ plot_voc(
 \item{forecast_dates}{A data.frame in the format produced by
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.}
+add to plots. May contain faceting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
@@ -42,7 +42,7 @@ Plot the posterior prediction for the fraction of samples with the variant
 of concern
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 plot_voc(posterior)
 }
 \seealso{

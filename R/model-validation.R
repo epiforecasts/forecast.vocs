@@ -13,9 +13,9 @@
 #'   date = as.Date("2021-06-12")
 #' )
 #'
-#' dt <- stan_data(obs)
-#' inits <- stan_inits(dt)
-#' fit <- stan_fit(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' dt <- fv_data(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' bp_launch_shinystan(fit)
 bp_launch_shinystan <- function(fit) {
   requireNamespace("shinystan", quietly = TRUE)

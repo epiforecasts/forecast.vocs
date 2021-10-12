@@ -14,7 +14,7 @@ plot_rt(posterior, forecast_dates = NULL, col = NULL)
 \item{forecast_dates}{A data.frame in the format produced by
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain facetting variables.}
+add to plots. May contain faceting variables.}
 
 \item{col}{A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the
@@ -27,7 +27,7 @@ A \code{ggplot2} plot.
 Plot the posterior prediction for the reproduction number
 }
 \examples{
-posterior <- load_example(strains = 2, type = "posterior")
+posterior <- fv_example(strains = 2, type = "posterior")
 plot_rt(posterior)
 }
 \seealso{

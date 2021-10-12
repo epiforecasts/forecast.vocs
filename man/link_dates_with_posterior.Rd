@@ -13,7 +13,7 @@ which contains the following character string options: "non-VOC",
 "VOC", "Combined", "Overall".}
 
 \item{data}{A list of data as returned in the "data" entry of the output
-returned by \code{\link[=stan_fit]{stan_fit()}}.}
+returned by \code{\link[=fv_sample]{fv_sample()}}.}
 
 \item{mod_end}{Integer, defaults to 0. Amount to shift the end date of
 estimates.}
