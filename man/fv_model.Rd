@@ -32,7 +32,7 @@ two_strain_mod <- fv_model(strains = 2)
 }
 \seealso{
 Functions used for modelling
-\code{\link{fv_data}()},
+\code{\link{fv_as_data_list}()},
 \code{\link{fv_inits}()},
 \code{\link{fv_sample}()}
 }

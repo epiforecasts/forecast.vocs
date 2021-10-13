@@ -2,7 +2,7 @@ library(forecast.vocs)
 options(mc.cores = 4)
 
 strains <- 2
-dt <- fv_data(latest_obs(germany_covid19_delta_obs),
+dt <- fv_as_data_list(latest_obs(germany_covid19_delta_obs),
   horizon = 4, overdispersion = TRUE,
   variant_relationship = "independent"
 )

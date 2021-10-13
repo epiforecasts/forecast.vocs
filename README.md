@@ -191,7 +191,7 @@ Rather than using the all-in-one `forecast()` function individual
 package functions can be used to produce a forecast as follows.
 
 ``` r
-dt <- fv_data(obs, horizon = 4)
+dt <- fv_as_data_list(obs, horizon = 4)
 
 model <- fv_model(strains = 2)
 

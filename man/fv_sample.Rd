@@ -12,7 +12,7 @@ fv_sample(
 )
 }
 \arguments{
-\item{data}{A list of data as produced by \code{\link[=fv_data]{fv_data()}}.}
+\item{data}{A list of data as produced by \code{\link[=fv_as_data_list]{fv_as_data_list()}}.}
 
 \item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
 
@@ -37,7 +37,7 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-12"),
 )
-dt <- fv_data(obs)
+dt <- fv_as_data_list(obs)
 
 # single strain model
 inits <- fv_inits(dt, strains = 1)
@@ -63,7 +63,7 @@ two_strain_fit
 }
 \seealso{
 Functions used for modelling
-\code{\link{fv_data}()},
+\code{\link{fv_as_data_list}()},
 \code{\link{fv_inits}()},
 \code{\link{fv_model}()}
 }

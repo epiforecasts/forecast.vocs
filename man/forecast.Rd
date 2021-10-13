@@ -9,7 +9,7 @@ forecast(
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
-  data = forecast.vocs::fv_data,
+  data_list = forecast.vocs::fv_as_data_list,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
   posterior = forecast.vocs::fv_tidy_posterior,
@@ -48,9 +48,10 @@ the \code{date}.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the \code{date}.}
 
-\item{data}{A function that returns a list of data as ingested by the
-\code{inits} and \code{fit} function. Must use arguments as defined in \code{\link[=fv_data]{fv_data()}}.
-If not supplied the package default \code{\link[=fv_data]{fv_data()}} is used.}
+\item{data_list}{A function that returns a list of data as ingested by the
+\code{inits} and \code{fit} function. Must use arguments as defined in
+\code{\link[=fv_as_data_list]{fv_as_data_list()}}. If not supplied the package default \code{\link[=fv_as_data_list]{fv_as_data_list()}}
+is used.}
 
 \item{inits}{A function that returns a function to samples initial
 conditions with the same arguments as \code{\link[=fv_inits]{fv_inits()}}. If not supplied the

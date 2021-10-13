@@ -35,8 +35,8 @@
 #' @family model
 #' @export
 #' @examples
-#' fv_data(latest_obs(germany_covid19_delta_obs))
-fv_data <- function(obs, horizon = 4,
+#' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
+fv_as_data_list <- function(obs, horizon = 4,
                     r_init = c(0, 0.25),
                     voc_scale = c(0, 0.2),
                     variant_relationship = "pooled",
@@ -98,7 +98,7 @@ fv_data <- function(obs, horizon = 4,
 
 #' Set up initial conditions for model
 #'
-#' @param data A list of data as produced by [fv_data()].
+#' @param data A list of data as produced by [fv_as_data_list()].
 #'
 #' @return A function that when called returns a list of initial conditions
 #' for the package stan models.
@@ -108,7 +108,7 @@ fv_data <- function(obs, horizon = 4,
 #' @inheritParams fv_model
 #' @importFrom purrr map_dbl
 #' @examples
-#' dt <- fv_data(latest_obs(germany_covid19_delta_obs))
+#' dt <- fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 #' inits <- fv_inits(dt)
 #' inits
 #' inits()
@@ -186,7 +186,7 @@ fv_model <- function(strains = 2, compile = TRUE, ...) {
 
 #' Fit a brancing process strain model
 #'
-#' @param data A list of data as produced by [fv_data()].
+#' @param data A list of data as produced by [fv_as_data_list()].
 #'
 #' @param model A `cmdstanr` model object as loaded by [fv_model()].
 #'
@@ -210,7 +210,7 @@ fv_model <- function(strains = 2, compile = TRUE, ...) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #'
 #' # single strain model
 #' inits <- fv_inits(dt, strains = 1)

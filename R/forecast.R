@@ -4,9 +4,10 @@
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
 #'
-#' @param data A function that returns a list of data as ingested by the
-#' `inits` and `fit` function. Must use arguments as defined in [fv_data()].
-#' If not supplied the package default [fv_data()] is used.
+#' @param data_list A function that returns a list of data as ingested by the
+#' `inits` and `fit` function. Must use arguments as defined in
+#' [fv_as_data_list()]. If not supplied the package default [fv_as_data_list()]
+#' is used.
 #'
 #' @param inits A function that returns a function to samples initial
 #' conditions with the same arguments as [fv_inits()]. If not supplied the
@@ -48,7 +49,7 @@
 #'
 #' @family forecast
 #' @inheritParams filter_by_availability
-#' @inheritParams fv_data
+#' @inheritParams fv_as_data_list
 #' @inheritParams fv_sample
 #' @inheritParams fv_tidy_posterior
 #' @export
@@ -79,7 +80,7 @@
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
-                     data = forecast.vocs::fv_data,
+                     data_list = forecast.vocs::fv_as_data_list,
                      inits = forecast.vocs::fv_inits,
                      fit = forecast.vocs::fv_sample,
                      posterior = forecast.vocs::fv_tidy_posterior,
@@ -113,7 +114,7 @@ forecast <- function(obs,
   )
 
   # format data and fit models
-  data <- data(target_obs,
+  data <- data_list(target_obs,
     horizon = horizon,
     r_init = r_init,
     voc_scale = voc_scale,
@@ -148,7 +149,7 @@ forecast <- function(obs,
           posterior = posterior,
           extract_forecast = extract_forecast,
           strains = strains[strain],
-          data = data,
+          data_list = data_list,
           probs = probs,
           scale_r = scale_r,
           ...
@@ -176,7 +177,7 @@ forecast <- function(obs,
 #' @inheritParams forecast
 #' @inheritParams fv_sample
 #' @inheritParams fv_tidy_posterior
-forecast_n_strain <- function(data, model = NULL,
+forecast_n_strain <- function(data_list, model = NULL,
                               inits = forecast.vocs::fv_inits,
                               fit = forecast.vocs::fv_sample,
                               posterior = forecast.vocs::fv_tidy_posterior,
@@ -192,7 +193,7 @@ forecast_n_strain <- function(data, model = NULL,
 
   # fit and summarise
   fit <- fit(
-    model = model, data = data, init = inits, ...
+    model = model, data = data_list, init = inits, ...
   )
   fit$posterior <- list(posterior(
     fit,

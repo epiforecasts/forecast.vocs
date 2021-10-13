@@ -59,12 +59,13 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #'
 #' @param datasets Numeric, defaults to 10. Number of datasets to generate.
 #'
-#' @param ... Additional arguments to pass `fv_data()`.
+#' @param ... Additional arguments to pass `fv_as_data_list()`.
 #'
 #' @return A dataframe with a sampled dataset on each row with the following
 #' variables: parameters (prior/posterior parameters used to generate the data),
-#' obs (simulated observed data), fv_data, (the simulated data formatted
-#' using `fv_data()` using the same arguments as specified  for simulation.)
+#' obs (simulated observed data), data, (the simulated data formatted
+#' using the supplied `data_list` function (by default [fv_as_data_list()])
+#' with the same arguments as specified  for simulation).
 #'
 #' @family generatedata
 #' @inheritParams forecast
@@ -79,7 +80,7 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 #'
 #' # fit a simulated dataset
-#' sim_dt <- sim_obs$fv_data[[1]]
+#' sim_dt <- sim_obs$fv_as_data_list[[1]]
 #' inits <- fv_inits(sim_dt)
 #' fit <- fv_sample(
 #'   sim_dt,
@@ -96,9 +97,10 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' plot_rt(posterior)
 generate_obs <- function(obs, strains = 2,
                          model = forecast.vocs::fv_model(strains = strains),
+                         data_list = forecast.vocs::fv_as_data_list,
                          type = "prior", datasets = 10, ...) {
   type <- match.arg(type, choices = c("prior", "posterior"))
-  dt <- fv_data(obs,
+  dt <- fv_as_data_list(obs,
     likelihood = type %in% "posterior",
     output_loglik = FALSE, horizon = 0, ...
   )
@@ -153,6 +155,6 @@ generate_obs <- function(obs, strains = 2,
     })
   )
 
-  gen_data[, fv_data := purrr::map(obs, fv_data, horizon = 0, ...)]
+  gen_data[, data := purrr::map(obs, data_list, horizon = 0, ...)]
   return(gen_data)
 }

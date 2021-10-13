@@ -123,7 +123,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_posterior(fit)
@@ -197,7 +197,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95)) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_tidy_posterior(fit)
@@ -477,7 +477,7 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' extract_draws(fit)
@@ -520,7 +520,7 @@ quantiles_to_long <- function(posterior) {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' convert_to_stanfit(fit)

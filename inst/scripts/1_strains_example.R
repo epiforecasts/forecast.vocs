@@ -9,7 +9,7 @@ current_obs <- filter_by_availability(
   date = "2021-08-26"
 )
 
-dt <- fv_data(
+dt <- fv_as_data_list(
   obs,
   overdispersion = TRUE,
   variant_relationship = "scaled",
