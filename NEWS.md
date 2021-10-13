@@ -1,3 +1,8 @@
+# forecast.vocs 0.0.7
+
+* Further generalised the `forecast` family to accept custom data and forecast extraction functions.
+* Split generic posterior summary function from specific posterior summary function. 
+
 # forecast.vocs 0.0.6
 
 * Add a vignette defining the package models.
