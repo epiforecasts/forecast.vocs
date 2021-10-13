@@ -8,16 +8,16 @@ fv_extract_forecast(posterior)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 }
 \value{
 A \code{data.frame} of forecasts in the format returned
-by \code{\link[=fv_posterior]{fv_posterior()}} but with fitting variables dropped.
+by \code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}} but with fitting variables dropped.
 }
 \description{
 Uses the \code{observed} variable returned by
-\code{\link[=fv_posterior]{fv_posterior()}} to return posterior predictions
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}} to return posterior predictions
 for forecast dates only.
 }
 \examples{
@@ -30,7 +30,7 @@ Functions used for postprocessing of model fits
 \code{\link{convert_to_stanfit}()},
 \code{\link{extract_draws}()},
 \code{\link{extract_forecast_dates}()},
-\code{\link{fv_posterior}()},
+\code{\link{fv_tidy_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},

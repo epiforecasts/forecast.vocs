@@ -12,7 +12,7 @@ forecast(
   data = forecast.vocs::fv_data,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
-  posterior = forecast.vocs::fv_posterior,
+  posterior = forecast.vocs::fv_tidy_posterior,
   extract_forecast = forecast.vocs::fv_extract_forecast,
   horizon = 4,
   r_init = c(0, 0.25),
@@ -64,8 +64,8 @@ package default \code{\link[=fv_sample]{fv_sample()}} is used which performs MCM
 \item{posterior}{A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
-\code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
-\code{\link[=fv_posterior]{fv_posterior()}} is used.}
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}. If not supplied the package default
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}} is used.}
 
 \item{extract_forecast}{A function that extracts the forecast from
 the summarised \code{posterior}. If not supplied the package default

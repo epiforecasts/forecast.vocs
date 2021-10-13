@@ -204,7 +204,7 @@ fit <- fv_sample(
   refresh = 0, show_messages = FALSE
 )
 
-posterior <- fv_posterior(fit, voc_label = "Delta", scale_r = 5.5 / 7)
+posterior <- fv_tidy_posterior(fit, voc_label = "Delta", scale_r = 5.5 / 7)
 ```
 
 As for forecasts produced with the `forecast()` function summary plots

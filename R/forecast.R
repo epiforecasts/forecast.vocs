@@ -20,8 +20,8 @@
 #' @param posterior A function that summarises the output from the supplied
 #' fitting function with the same arguments and return values (depending on
 #' the requirement for downstream package functionality to function) as
-#' [fv_posterior()]. If not supplied the package default
-#' [fv_posterior()] is used.
+#' [fv_tidy_posterior()]. If not supplied the package default
+#' [fv_tidy_posterior()] is used.
 #'
 #' @param extract_forecast A function that extracts the forecast from
 #' the summarised `posterior`. If not supplied the package default
@@ -50,7 +50,7 @@
 #' @inheritParams filter_by_availability
 #' @inheritParams fv_data
 #' @inheritParams fv_sample
-#' @inheritParams fv_posterior
+#' @inheritParams fv_tidy_posterior
 #' @export
 #' @importFrom purrr map transpose reduce map_chr safely
 #' @examplesIf interactive()
@@ -82,7 +82,7 @@ forecast <- function(obs,
                      data = forecast.vocs::fv_data,
                      inits = forecast.vocs::fv_inits,
                      fit = forecast.vocs::fv_sample,
-                     posterior = forecast.vocs::fv_posterior,
+                     posterior = forecast.vocs::fv_tidy_posterior,
                      extract_forecast = forecast.vocs::fv_extract_forecast,
                      horizon = 4, r_init = c(0, 0.25), voc_scale = c(0, 0.2),
                      voc_label = "VOC", strains = 2,
@@ -175,11 +175,11 @@ forecast <- function(obs,
 #' @inheritParams fv_inits
 #' @inheritParams forecast
 #' @inheritParams fv_sample
-#' @inheritParams fv_posterior
+#' @inheritParams fv_tidy_posterior
 forecast_n_strain <- function(data, model = NULL,
                               inits = forecast.vocs::fv_inits,
                               fit = forecast.vocs::fv_sample,
-                              posterior = forecast.vocs::fv_posterior,
+                              posterior = forecast.vocs::fv_tidy_posterior,
                               extract_forecast = forecast.vocs::fv_extract_forecast, # nolint
                               strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),

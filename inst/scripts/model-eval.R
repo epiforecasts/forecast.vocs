@@ -13,7 +13,7 @@ fit <- fv_sample(dt,
   max_treedepth = 15, save_warmup = TRUE
 )
 
-p <- fv_posterior(fit)
+p <- fv_tidy_posterior(fit)
 
 plot_rt(p)
 

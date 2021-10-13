@@ -15,7 +15,7 @@ plot_cases(
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}

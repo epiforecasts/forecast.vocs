@@ -132,13 +132,13 @@ test_filter_by_availability <- function(dt, message, tar_date = max(dt$date),
 }
 
 
-test_fv_posterior <- function(message, fit, test_posterior,
-                              strains, obs, equal = TRUE,
-                              probs = c(0.05, 0.2, 0.8, 0.95),
-                              voc_label = "VOC") {
+test_fv_tidy_posterior <- function(message, fit, test_posterior,
+                                   strains, obs, equal = TRUE,
+                                   probs = c(0.05, 0.2, 0.8, 0.95),
+                                   voc_label = "VOC") {
   test_that(message, {
     skip_on_cran()
-    posterior <- fv_posterior(fit, probs, voc_label)
+    posterior <- fv_tidy_posterior(fit, probs, voc_label)
     attributes(test_posterior)$index <- NULL
     attributes(posterior)$index <- NULL
     # check in comparision to default posterior

@@ -26,5 +26,5 @@ fit <- fv_sample(
 )
 
 # summarise posterior assuming a mean generation time of  5.5 days.
-posterior <- fv_posterior(fit, scale_r = 5.5 / 7)
+posterior <- fv_tidy_posterior(fit, scale_r = 5.5 / 7)
 forecast <- fv_extract_forecast(posterior)

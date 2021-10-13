@@ -30,8 +30,8 @@ if (not_on_cran()) {
     adapt_delta = 0.98, max_treedepth = 15, chains = 2
   )
 
-  posterior1 <- fv_posterior(fit1)
-  posterior2 <- fv_posterior(fit2)
+  posterior1 <- fv_tidy_posterior(fit1)
+  posterior2 <- fv_tidy_posterior(fit2)
   forecast1 <- fv_extract_forecast(posterior1)
   forecast2 <- fv_extract_forecast(posterior2)
 }
