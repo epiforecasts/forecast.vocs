@@ -63,7 +63,7 @@ latest available data estimated that approximately 7% of COVID-19 were
 positive for the Delta variant. Note that estimated growth rates and
 reproduction numbers shown here have been rescaled using an assumed
 generation time of 5.5 days and a weakly informative prior centred
-around Delta being 40% more transmissible than non-Delta cases has been
+around Delta being 50% more transmissible than non-Delta cases has been
 used.
 
 ``` r
