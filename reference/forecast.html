@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
       </span>
     </div>
 
@@ -89,9 +89,11 @@
   forecast_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">obs</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>,
   seq_date <span class="op">=</span> <span class="va">forecast_date</span>,
   case_date <span class="op">=</span> <span class="va">forecast_date</span>,
+  data_list <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_as_data_list.html">fv_as_data_list</a></span>,
   inits <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_inits.html">fv_inits</a></span>,
   fit <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_sample.html">fv_sample</a></span>,
-  posterior <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_posterior.html">fv_posterior</a></span>,
+  posterior <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_tidy_posterior.html">fv_tidy_posterior</a></span>,
+  extract_forecast <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_extract_forecast.html">fv_extract_forecast</a></span>,
   horizon <span class="op">=</span> <span class="fl">4</span>,
   r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span>,
   voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
@@ -126,6 +128,11 @@ the <code>date</code>.</p></td>
     </tr><tr><th>case_date</th>
       <td><p>Date from which to use available case data. Defaults to
 the <code>date</code>.</p></td>
+    </tr><tr><th>data_list</th>
+      <td><p>A function that returns a list of data as ingested by the
+<code>inits</code> and <code>fit</code> function. Must use arguments as defined in
+<code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>. If not supplied the package default <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>
+is used.</p></td>
     </tr><tr><th>inits</th>
       <td><p>A function that returns a function to samples initial
 conditions with the same arguments as <code><a href="fv_inits.html">fv_inits()</a></code>. If not supplied the
@@ -139,8 +146,12 @@ cmdstanr.</p></td>
       <td><p>A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
-<code><a href="fv_posterior.html">fv_posterior()</a></code>. If not supplied the package default
-<code><a href="fv_posterior.html">fv_posterior()</a></code> is used.</p></td>
+<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. If not supplied the package default
+<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> is used.</p></td>
+    </tr><tr><th>extract_forecast</th>
+      <td><p>A function that extracts the forecast from
+the summarised <code>posterior</code>. If not supplied the package default
+<code><a href="fv_extract_forecast.html">fv_extract_forecast()</a></code> is used.</p></td>
     </tr><tr><th>horizon</th>
       <td><p>Integer forecast horizon. Defaults to 4.</p></td>
     </tr><tr><th>r_init</th>

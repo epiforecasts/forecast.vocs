@@ -32,7 +32,7 @@ without needing to install cmdstanr."><meta property="og:image" content="epifore
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ maximum is 2.</p></td>
       <td><p>A character string indicating the example to load.
 Supported options are "posterior", "forecast", "observations",
 and "script" which are the
-output of <code><a href="fv_posterior.html">fv_posterior()</a></code>,  <code><a href="extract_forecast.html">extract_forecast()</a></code>,
+output of <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>,  <code><a href="fv_extract_forecast.html">fv_extract_forecast()</a></code>,
 <code>filter_by_availability</code> (with the date argument set to "2021-08-26"
 applied to the <a href="germany_covid19_delta_obs.html">germany_covid19_delta_obs</a> package dataset),
 and the script used to generate these examples respectively.</p></td>
@@ -220,7 +220,7 @@ and the script used to generate these examples respectively.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "  date = \"2021-08-26\""                                            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] ")"                                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] ""                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "dt &lt;- fv_data("                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "dt &lt;- fv_as_data_list("                                             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "  obs,"                                                             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [14] "  overdispersion = TRUE,"                                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15] "  variant_relationship = \"scaled\","                               </span>
@@ -237,8 +237,8 @@ and the script used to generate these examples respectively.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [26] ")"                                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [27] ""                                                                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [28] "# summarise posterior assuming a mean generation time of  5.5 days."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "posterior &lt;- fv_posterior(fit, scale_r = 5.5 / 7)"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [30] "forecast &lt;- extract_forecast(posterior)"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "posterior &lt;- fv_tidy_posterior(fit, scale_r = 5.5 / 7)"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [30] "forecast &lt;- fv_extract_forecast(posterior)"                         </span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

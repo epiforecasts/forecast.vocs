@@ -1,9 +1,9 @@
 pandoc: 2.7.3
 pkgdown: 1.9000.9000.9000
-pkgdown_sha: bcb2d006b061c8535ac57980065acbef65cbc150
+pkgdown_sha: bb461bae2a1ac47e20f1a64afe0334524907d446
 articles:
   model-definitions: model-definitions.html
-last_built: 2021-10-12T21:07Z
+last_built: 2021-10-13T11:21Z
 urls:
   reference: epiforecasts.io/forecast.vocs/reference
   article: epiforecasts.io/forecast.vocs/articles

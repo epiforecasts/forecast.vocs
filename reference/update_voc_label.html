@@ -12,7 +12,7 @@
     );
   }
 </script><title>Label the Variant of Concern — update_voc_label • forecast.vocs</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><meta property="og:title" content="Label the Variant of Concern — update_voc_label"><meta property="og:description" content="Assign a custom label to the variant of concern in the
-output from fv_posterior()."><meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png"><meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+output from fv_tidy_posterior()."><meta property="og:image" content="epiforecasts.io/forecast.vocs/reference/figures/README-unnamed-chunk-8-1.png"><meta property="og:image:alt" content="An R package for forecasting case and sequence notifications using variant of concern strain dynamics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -30,7 +30,7 @@ output from fv_posterior()."><meta property="og:image" content="epiforecasts.io/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ output from fv_posterior()."><meta property="og:image" content="epiforecasts.io/
 
     <div class="ref-description">
     <p>Assign a custom label to the variant of concern in the
-output from <code><a href="fv_posterior.html">fv_posterior()</a></code>.</p>
+output from <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">update_voc_label</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">label</span>, target_label <span class="op">=</span> <span class="st">"VOC"</span><span class="op">)</span></code></pre></div>
@@ -91,7 +91,7 @@ output from <code><a href="fv_posterior.html">fv_posterior()</a></code>.</p>
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
-<code><a href="fv_posterior.html">fv_posterior()</a></code>. For forecast dates to be extracted data with
+<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. For forecast dates to be extracted data with
 <code>value_type == "cases"</code> must be present.</p></td>
     </tr><tr><th>label</th>
       <td><p>Character string  indicating the new label to use for the
@@ -101,7 +101,7 @@ variant of concern.</p></td>
 current label for the variant of concern.</p></td>
     </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of data frames as returned by `<code><a href="fv_posterior.html">fv_posterior()</a></code> but
+    <p>A list of data frames as returned by `<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> but
 with updated labels.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -109,8 +109,9 @@ with updated labels.</p>
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
 <code><a href="extract_forecast_dates.html">extract_forecast_dates</a>()</code>,
-<code><a href="extract_forecast.html">extract_forecast</a>()</code>,
+<code><a href="fv_extract_forecast.html">fv_extract_forecast</a>()</code>,
 <code><a href="fv_posterior.html">fv_posterior</a>()</code>,
+<code><a href="fv_tidy_posterior.html">fv_tidy_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code></p></div>

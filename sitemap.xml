@@ -55,9 +55,6 @@
     <loc>epiforecasts.io/forecast.vocs/reference/extract_draws.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast.html</loc>
-  </url>
-  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast_dates.html</loc>
   </url>
   <url>
@@ -79,10 +76,13 @@
     <loc>epiforecasts.io/forecast.vocs/reference/forecast_n_strain.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_data.html</loc>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_as_data_list.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/fv_example.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_extract_forecast.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/fv_inits.html</loc>
@@ -95,6 +95,9 @@
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/fv_sample.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/fv_tidy_posterior.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/generate_obs.html</loc>

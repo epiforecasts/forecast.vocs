@@ -30,7 +30,7 @@ distributions of a forecast.vocs model."><meta property="og:image" content="epif
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.3000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
       </span>
     </div>
 
@@ -90,6 +90,7 @@ distributions of a <code>forecast.vocs</code> model.</p>
   <span class="va">obs</span>,
   strains <span class="op">=</span> <span class="fl">2</span>,
   model <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="fu"><a href="fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="va">strains</span><span class="op">)</span>,
+  data_list <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_as_data_list.html">fv_as_data_list</a></span>,
   type <span class="op">=</span> <span class="st">"prior"</span>,
   datasets <span class="op">=</span> <span class="fl">10</span>,
   <span class="va">...</span>
@@ -105,6 +106,11 @@ maximum is 2. A numeric vector can be passed if forecasts from multiple
 strain models are desired.</p></td>
     </tr><tr><th>model</th>
       <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="fv_model.html">fv_model()</a></code>.</p></td>
+    </tr><tr><th>data_list</th>
+      <td><p>A function that returns a list of data as ingested by the
+<code>inits</code> and <code>fit</code> function. Must use arguments as defined in
+<code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>. If not supplied the package default <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>
+is used.</p></td>
     </tr><tr><th>type</th>
       <td><p>A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the
@@ -112,13 +118,14 @@ Supported options are data based on the "prior" or data based on  the
     </tr><tr><th>datasets</th>
       <td><p>Numeric, defaults to 10. Number of datasets to generate.</p></td>
     </tr><tr><th>...</th>
-      <td><p>Additional arguments to pass <code><a href="fv_data.html">fv_data()</a></code>.</p></td>
+      <td><p>Additional arguments to pass <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>.</p></td>
     </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A dataframe with a sampled dataset on each row with the following
 variables: parameters (prior/posterior parameters used to generate the data),
-obs (simulated observed data), fv_data, (the simulated data formatted
-using <code><a href="fv_data.html">fv_data()</a></code> using the same arguments as specified  for simulation.)</p>
+obs (simulated observed data), data, (the simulated data formatted
+using the supplied <code>data_list</code> function (by default <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>)
+with the same arguments as specified  for simulation).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class="dont-index"><p>Functions to generate simulated data
@@ -132,7 +139,7 @@ using <code><a href="fv_data.html">fv_data()</a></code> using the same arguments
 <span class="r-in"><span class="va">sim_obs</span> <span class="op">&lt;-</span> <span class="fu">generate_obs</span><span class="op">(</span><span class="va">obs</span>, voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.1</span><span class="op">)</span>, r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit a simulated dataset</span></span>
-<span class="r-in"><span class="va">sim_dt</span> <span class="op">&lt;-</span> <span class="va">sim_obs</span><span class="op">$</span><span class="va">fv_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">sim_dt</span> <span class="op">&lt;-</span> <span class="va">sim_obs</span><span class="op">$</span><span class="va">fv_as_data_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span class="r-in"><span class="va">inits</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_inits.html">fv_inits</a></span><span class="op">(</span><span class="va">sim_dt</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_sample.html">fv_sample</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">sim_dt</span>,</span>
@@ -140,7 +147,7 @@ using <code><a href="fv_data.html">fv_data()</a></code> using the same arguments
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># summarise and plot simualated fit</span></span>
-<span class="r-in"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_posterior.html">fv_posterior</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_tidy_posterior.html">fv_tidy_posterior</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="plot_cases.html">plot_cases</a></span><span class="op">(</span><span class="va">posterior</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
