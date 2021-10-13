@@ -325,14 +325,14 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @family plot
 #' @family modelvalidation
 #' @inheritParams fv_sample
-#' @inheritParams fv_posterior
+#' @inheritParams fv_tidy_posterior
 #' @importFrom bayesplot nuts_params mcmc_pairs
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_voc = 0.99, max_treedepth = 15)
 #' plot_pairs(fit)

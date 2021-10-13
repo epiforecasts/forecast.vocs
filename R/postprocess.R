@@ -96,6 +96,12 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 
 #' Summarise the posterior
 #'
+#' @description A generic wrapper around [posterior::summarise_draws()] with
+#' opinionated defaults. See [fv_tidy_posterior()] for a more
+#' opinionated wrapper with further cleaning and tidying
+#' including linking to observed data, tidying parameter names,
+#' and transforming parameters for interpretability.
+#'
 #' @param fit List of output as returned by [fv_sample()].
 #'
 #' @param probs A vector of numeric probabilities to produce
@@ -104,52 +110,36 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' plotting functions to work (such as [plot_cases()], [plot_rt()],
 #' and [plot_voc()]).
 #'
-#' @param voc_label A character string, default to "VOC". Defines the label
-#' to assign to variant of concern specific parameters. Example usage is to
-#' rename parameters to use variant specific terminology.
-#'
-#' @param scale_r Numeric, defaults to 1. Rescale the timespan over which
-#' the growth rate and reproduction number is calculated. An example use case
-#' is rescaling the growth rate from weekly to be scaled by the mean of
-#' the generation time (for COVID-19 for example this would be 5.5 / 7.
-#'
-#' @return A dataframe summarising the model posterior. Output is stratified
-#' by `value_type` with posterior summaries by case, voc, rt, growth, model,
-#' and the raw posterior summary.
+#' @return A dataframe summarising the model posterior.
 #'
 #' @family postprocess
 #' @export
-#' @importFrom purrr reduce map walk
+#' @importFrom purrr reduce
 #' @importFrom posterior quantile2 default_convergence_measures
-#' @importFrom data.table .SD .N := setcolorder
+#' @importFrom data.table .SD .N :=
 #' @examplesIf interactive()
 #' options(mc.cores = 4)
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_posterior(fit)
-fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
-                                voc_label = "VOC", scale_r = 1) {
+fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95)) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
     req_types = c("list", "list"),
     rows = 1
   )
-  check_param(voc_label, "voc_label", type = "character", length = 1)
   # order probs
   probs <- probs[order(probs)]
   # NULL out variables
   variable <- type <- NULL
   # extract useful model info
-  data <- fit$data[[1]]
   fit <- fit$fit[[1]]
-  case_horizon <- data$t - data$t_nots
-  seq_horizon <- data$t - data$t_seq - data$t_nseq
 
   # extract summary parameters of interest and join
   sfit <- list(
@@ -172,6 +162,64 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     cbind(x, y)
   }
   sfit <- purrr::reduce(sfit, cbind_custom)
+
+  return(sfit[])
+}
+
+#' Summarise the posterior tidily
+#'
+#' @description A very opinionated wrapper around
+#' [posterior::summarise_draws()] with cleaning and tidying including linking
+#' to observed data, tidying parameter names, and transforming parameters for
+#' interpretability. See [fv_posterior()] for a more generic solution.
+#'
+#' @param voc_label A character string, default to "VOC". Defines the label
+#' to assign to variant of concern specific parameters. Example usage is to
+#' rename parameters to use variant specific terminology.
+#'
+#' @param scale_r Numeric, defaults to 1. Rescale the timespan over which
+#' the growth rate and reproduction number is calculated. An example use case
+#' is rescaling the growth rate from weekly to be scaled by the mean of
+#' the generation time (for COVID-19 for example this would be 5.5 / 7.
+#'
+#' @return A dataframe summarising the model posterior. Output is stratified
+#' by `value_type` with posterior summaries by case, voc, rt, growth, model,
+#' and the raw posterior summary.
+#'
+#' @family postprocess
+#' @export
+#' @inheritParams fv_posterior
+#' @importFrom purrr map walk
+#' @importFrom data.table .SD .N := setcolorder
+#' @examplesIf interactive()
+#' options(mc.cores = 4)
+#' obs <- filter_by_availability(
+#'   germany_covid19_delta_obs,
+#'   date = as.Date("2021-06-12"),
+#' )
+#' dt <- fv_as_data_list(obs)
+#' inits <- fv_inits(dt)
+#' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
+#' fv_tidy_posterior(fit)
+fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
+                                voc_label = "VOC", scale_r = 1) {
+  check_dataframe(
+    fit,
+    req_vars = c("fit", "data"),
+    req_types = c("list", "list"),
+    rows = 1
+  )
+  check_param(voc_label, "voc_label", type = "character", length = 1)
+  # NULL out variables
+  variable <- type <- NULL
+  # extract useful model info
+  data <- fit$data[[1]]
+  case_horizon <- data$t - data$t_nots
+  seq_horizon <- data$t - data$t_seq - data$t_nseq
+
+  # extract summary parameters of interest and join
+  sfit <- fv_posterior(fit, probs = probs)
+
   # detect if voc is in the data
   voc_present <- any(grepl("voc", sfit$variable))
 
@@ -290,7 +338,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 #' and sequence data.
 #'
 #' @param posterior A dataframe of posterior output as produced by
-#'  [fv_posterior()]. For forecast dates to be extracted data with
+#'  [fv_tidy_posterior()]. For forecast dates to be extracted data with
 #' `value_type == "cases"` must be present.
 #'
 #' @return A data.frame containing at least two vectors: Data unavailable
@@ -339,11 +387,11 @@ extract_forecast_dates <- function(posterior) {
 #'
 #'
 #' Uses the `observed` variable returned by
-#' [fv_posterior()] to return posterior predictions
+#' [fv_tidy_posterior()] to return posterior predictions
 #' for forecast dates only.
 #'
 #' @return A `data.frame` of forecasts in the format returned
-#' by [fv_posterior()] but with fitting variables dropped.
+#' by [fv_tidy_posterior()] but with fitting variables dropped.
 #'
 #' @family postprocess
 #' @export
@@ -351,8 +399,8 @@ extract_forecast_dates <- function(posterior) {
 #' @examples
 #' p <- fv_example(strains = 2, type = "posterior")
 #'
-#' extract_forecast(p)
-extract_forecast <- function(posterior) {
+#' fv_extract_forecast(p)
+fv_extract_forecast <- function(posterior) {
   forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
 
   cols <- c(
@@ -371,7 +419,7 @@ extract_forecast <- function(posterior) {
 #' Label the Variant of Concern
 #'
 #' Assign a custom label to the variant of concern in the
-#' output from [fv_posterior()].
+#' output from [fv_tidy_posterior()].
 #'
 #' @param label Character string  indicating the new label to use for the
 #' variant of concern.
@@ -379,7 +427,7 @@ extract_forecast <- function(posterior) {
 #' @param target_label A character string defaulting to "VOC". Indicates the
 #' current label for the variant of concern.
 #'
-#' @return A list of data frames as returned by `[fv_posterior()] but
+#' @return A list of data frames as returned by `[fv_tidy_posterior()] but
 #' with updated labels.
 #'
 #' @family postprocess
@@ -429,7 +477,7 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' extract_draws(fit)
@@ -439,8 +487,8 @@ extract_draws <- function(fit, ...) {
 
 #' Convert summarised quantiles from wide to long format
 #'
-#' @param posterior A dataframe as output by [fv_posterior()],
-#' [extract_forecast()], etc.
+#' @param posterior A dataframe as output by [fv_tidy_posterior()],
+#' [fv_extract_forecast()], etc.
 #'
 #' @return A data frame of quantiles in long format.
 #'
@@ -465,14 +513,14 @@ quantiles_to_long <- function(posterior) {
 #' @return The model fit as a `stanfit` object
 #'
 #' @family postprocess
-#' @inheritParams fv_posterior
+#' @inheritParams fv_tidy_posterior
 #' @importFrom rstan read_stan_csv
 #' @examplesIf interactive()
 #' obs <- filter_by_availability(
 #'   germany_covid19_delta_obs,
 #'   date = as.Date("2021-06-12"),
 #' )
-#' dt <- fv_data(obs)
+#' dt <- fv_as_data_list(obs)
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' convert_to_stanfit(fit)

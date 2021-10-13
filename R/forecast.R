@@ -4,6 +4,11 @@
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
 #'
+#' @param data_list A function that returns a list of data as ingested by the
+#' `inits` and `fit` function. Must use arguments as defined in
+#' [fv_as_data_list()]. If not supplied the package default [fv_as_data_list()]
+#' is used.
+#'
 #' @param inits A function that returns a function to samples initial
 #' conditions with the same arguments as [fv_inits()]. If not supplied the
 #' package default [fv_inits()] is used.
@@ -16,8 +21,12 @@
 #' @param posterior A function that summarises the output from the supplied
 #' fitting function with the same arguments and return values (depending on
 #' the requirement for downstream package functionality to function) as
-#' [fv_posterior()]. If not supplied the package default
-#' [fv_posterior()] is used.
+#' [fv_tidy_posterior()]. If not supplied the package default
+#' [fv_tidy_posterior()] is used.
+#'
+#' @param extract_forecast A function that extracts the forecast from
+#' the summarised `posterior`. If not supplied the package default
+#' [fv_extract_forecast()] is used.
 #'
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
@@ -40,9 +49,9 @@
 #'
 #' @family forecast
 #' @inheritParams filter_by_availability
-#' @inheritParams fv_data
+#' @inheritParams fv_as_data_list
 #' @inheritParams fv_sample
-#' @inheritParams fv_posterior
+#' @inheritParams fv_tidy_posterior
 #' @export
 #' @importFrom purrr map transpose reduce map_chr safely
 #' @examplesIf interactive()
@@ -71,9 +80,11 @@
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
+                     data_list = forecast.vocs::fv_as_data_list,
                      inits = forecast.vocs::fv_inits,
                      fit = forecast.vocs::fv_sample,
-                     posterior = forecast.vocs::fv_posterior,
+                     posterior = forecast.vocs::fv_tidy_posterior,
+                     extract_forecast = forecast.vocs::fv_extract_forecast,
                      horizon = 4, r_init = c(0, 0.25), voc_scale = c(0, 0.2),
                      voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
@@ -103,7 +114,7 @@ forecast <- function(obs,
   )
 
   # format data and fit models
-  data <- fv_data(target_obs,
+  data <- data_list(target_obs,
     horizon = horizon,
     r_init = r_init,
     voc_scale = voc_scale,
@@ -136,8 +147,9 @@ forecast <- function(obs,
           inits = inits,
           fit = fit,
           posterior = posterior,
+          extract_forecast = extract_forecast,
           strains = strains[strain],
-          data = data,
+          data_list = data_list,
           probs = probs,
           scale_r = scale_r,
           ...
@@ -164,11 +176,12 @@ forecast <- function(obs,
 #' @inheritParams fv_inits
 #' @inheritParams forecast
 #' @inheritParams fv_sample
-#' @inheritParams fv_posterior
-forecast_n_strain <- function(data, model = NULL,
+#' @inheritParams fv_tidy_posterior
+forecast_n_strain <- function(data_list, model = NULL,
                               inits = forecast.vocs::fv_inits,
                               fit = forecast.vocs::fv_sample,
-                              posterior = forecast.vocs::fv_posterior,
+                              posterior = forecast.vocs::fv_tidy_posterior,
+                              extract_forecast = forecast.vocs::fv_extract_forecast, # nolint
                               strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),
                               scale_r = 1, ...) {
@@ -180,7 +193,7 @@ forecast_n_strain <- function(data, model = NULL,
 
   # fit and summarise
   fit <- fit(
-    model = model, data = data, init = inits, ...
+    model = model, data = data_list, init = inits, ...
   )
   fit$posterior <- list(posterior(
     fit,

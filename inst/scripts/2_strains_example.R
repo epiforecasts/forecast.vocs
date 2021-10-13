@@ -9,7 +9,7 @@ current_obs <- filter_by_availability(
   date = "2021-08-26"
 )
 
-dt <- fv_data(
+dt <- fv_as_data_list(
   obs,
   overdispersion = TRUE,
   variant_relationship = "scaled",
@@ -26,5 +26,5 @@ fit <- fv_sample(
 )
 
 # summarise posterior assuming a mean generation time of  5.5 days.
-posterior <- fv_posterior(fit, scale_r = 5.5 / 7)
-forecast <- extract_forecast(posterior)
+posterior <- fv_tidy_posterior(fit, scale_r = 5.5 / 7)
+forecast <- fv_extract_forecast(posterior)

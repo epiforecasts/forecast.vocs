@@ -7,7 +7,7 @@
 fv_inits(data, strains = 2)
 }
 \arguments{
-\item{data}{A list of data as produced by \code{\link[=fv_data]{fv_data()}}.}
+\item{data}{A list of data as produced by \code{\link[=fv_as_data_list]{fv_as_data_list()}}.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
@@ -20,14 +20,14 @@ for the package stan models.
 Set up initial conditions for model
 }
 \examples{
-dt <- fv_data(latest_obs(germany_covid19_delta_obs))
+dt <- fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 inits <- fv_inits(dt)
 inits
 inits()
 }
 \seealso{
 Functions used for modelling
-\code{\link{fv_data}()},
+\code{\link{fv_as_data_list}()},
 \code{\link{fv_model}()},
 \code{\link{fv_sample}()}
 }

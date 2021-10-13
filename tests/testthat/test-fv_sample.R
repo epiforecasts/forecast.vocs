@@ -5,28 +5,28 @@ if (not_on_cran()) {
     date = "2021-06-26"
   )
 
-  overdisp_dt <- fv_data(
+  overdisp_dt <- fv_as_data_list(
     obs,
     overdispersion = TRUE, variant_relationship = "pooled",
     voc_scale = c(0.4, 0.2)
   )
-  nooverdisp_dt <- fv_data(obs, overdispersion = FALSE)
-  scaled_dt <- fv_data(
+  nooverdisp_dt <- fv_as_data_list(obs, overdispersion = FALSE)
+  scaled_dt <- fv_as_data_list(
     obs,
     overdispersion = TRUE, variant_relationship = "scaled",
     voc_scale = c(0.4, 0.2)
   )
-  independent_dt <- fv_data(
+  independent_dt <- fv_as_data_list(
     obs,
     overdispersion = TRUE, variant_relationship = "independent",
     voc_scale = c(0.4, 0.2)
   )
-  ndisp_scaled_dt <- fv_data(
+  ndisp_scaled_dt <- fv_as_data_list(
     obs,
     overdispersion = FALSE, variant_relationship = "scaled",
     voc_scale = c(0.4, 0.2)
   )
-  ndisp_independent_dt <- fv_data(
+  ndisp_independent_dt <- fv_as_data_list(
     obs,
     overdispersion = FALSE, variant_relationship = "independent",
     voc_scale = c(0.4, 0.2)

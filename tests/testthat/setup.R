@@ -8,7 +8,7 @@ if (not_on_cran()) {
     germany_covid19_delta_obs,
     date = "2021-08-26"
   )
-  dt <- fv_data(
+  dt <- fv_as_data_list(
     obs,
     overdispersion = TRUE,
     variant_relationship = "scaled",
@@ -30,8 +30,8 @@ if (not_on_cran()) {
     adapt_delta = 0.98, max_treedepth = 15, chains = 2
   )
 
-  posterior1 <- fv_posterior(fit1)
-  posterior2 <- fv_posterior(fit2)
-  forecast1 <- extract_forecast(posterior1)
-  forecast2 <- extract_forecast(posterior2)
+  posterior1 <- fv_tidy_posterior(fit1)
+  posterior2 <- fv_tidy_posterior(fit2)
+  forecast1 <- fv_extract_forecast(posterior1)
+  forecast2 <- fv_extract_forecast(posterior2)
 }

@@ -7,11 +7,11 @@ burn_in <- 4
 h <- 4
 
 test_that("Passes internal data checks with example data", {
-  expect_error(fv_data(obs), NA)
+  expect_error(fv_as_data_list(obs), NA)
 })
 
 # make default data
-nlist <- fv_data(obs, horizon = h)
+nlist <- fv_as_data_list(obs, horizon = h)
 
 # test data properties
 test_that("Output has the correct list properties", {
@@ -52,7 +52,7 @@ test_that("Start date is present and a date", {
 })
 
 test_that("Variant strain relationship can be set as expected", {
-  expect_equal(fv_data(obs, variant_relationship = "scaled")$relat, 0)
-  expect_equal(fv_data(obs, variant_relationship = "pooled")$relat, 1)
-  expect_equal(fv_data(obs, variant_relationship = "independent")$relat, 2)
+  expect_equal(fv_as_data_list(obs, variant_relationship = "scaled")$relat, 0)
+  expect_equal(fv_as_data_list(obs, variant_relationship = "pooled")$relat, 1)
+  expect_equal(fv_as_data_list(obs, variant_relationship = "independent")$relat, 2)
 })

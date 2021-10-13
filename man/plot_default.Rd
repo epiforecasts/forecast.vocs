@@ -15,7 +15,7 @@ plot_default(
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
-\code{\link[=fv_posterior]{fv_posterior()}}. For forecast dates to be extracted data with
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}. For forecast dates to be extracted data with
 \code{value_type == "cases"} must be present.}
 
 \item{target}{A character string indicating which variable to extract

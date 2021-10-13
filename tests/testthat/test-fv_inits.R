@@ -4,11 +4,11 @@ obs <- filter_by_availability(
   date = "2021-06-19"
 )
 
-dt <- fv_data(obs)
+dt <- fv_as_data_list(obs)
 
 test_strain_inits(
   "Single strain inits can be sample initial conditions as expected using
-  default settings from fv_data",
+  default settings from fv_as_data_list",
   strains = 1
 )
 

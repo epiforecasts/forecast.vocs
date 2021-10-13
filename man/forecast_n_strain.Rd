@@ -5,11 +5,12 @@
 \title{Forecast for a single model and summarise}
 \usage{
 forecast_n_strain(
-  data,
+  data_list,
   model = NULL,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
-  posterior = forecast.vocs::fv_posterior,
+  posterior = forecast.vocs::fv_tidy_posterior,
+  extract_forecast = forecast.vocs::fv_extract_forecast,
   strains = 2,
   voc_label = "VOC",
   probs = c(0.05, 0.2, 0.8, 0.95),
@@ -18,7 +19,10 @@ forecast_n_strain(
 )
 }
 \arguments{
-\item{data}{A list of data as produced by \code{\link[=fv_data]{fv_data()}}.}
+\item{data_list}{A function that returns a list of data as ingested by the
+\code{inits} and \code{fit} function. Must use arguments as defined in
+\code{\link[=fv_as_data_list]{fv_as_data_list()}}. If not supplied the package default \code{\link[=fv_as_data_list]{fv_as_data_list()}}
+is used.}
 
 \item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
 
@@ -34,8 +38,12 @@ package default \code{\link[=fv_sample]{fv_sample()}} is used which performs MCM
 \item{posterior}{A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
-\code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
-\code{\link[=fv_posterior]{fv_posterior()}} is used.}
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}. If not supplied the package default
+\code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}} is used.}
+
+\item{extract_forecast}{A function that extracts the forecast from
+the summarised \code{posterior}. If not supplied the package default
+\code{\link[=fv_extract_forecast]{fv_extract_forecast()}} is used.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}

@@ -23,7 +23,7 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-12"),
 )
-dt <- fv_data(obs)
+dt <- fv_as_data_list(obs)
 inits <- fv_inits(dt)
 fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 extract_draws(fit)
@@ -33,8 +33,9 @@ extract_draws(fit)
 Functions used for postprocessing of model fits
 \code{\link{convert_to_stanfit}()},
 \code{\link{extract_forecast_dates}()},
-\code{\link{extract_forecast}()},
+\code{\link{fv_extract_forecast}()},
 \code{\link{fv_posterior}()},
+\code{\link{fv_tidy_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
 \code{\link{quantiles_to_long}()},

@@ -8,6 +8,7 @@ generate_obs(
   obs,
   strains = 2,
   model = forecast.vocs::fv_model(strains = strains),
+  data_list = forecast.vocs::fv_as_data_list,
   type = "prior",
   datasets = 10,
   ...
@@ -23,19 +24,25 @@ strain models are desired.}
 
 \item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
 
+\item{data_list}{A function that returns a list of data as ingested by the
+\code{inits} and \code{fit} function. Must use arguments as defined in
+\code{\link[=fv_as_data_list]{fv_as_data_list()}}. If not supplied the package default \code{\link[=fv_as_data_list]{fv_as_data_list()}}
+is used.}
+
 \item{type}{A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the
 "posterior" with the default being the prior.}
 
 \item{datasets}{Numeric, defaults to 10. Number of datasets to generate.}
 
-\item{...}{Additional arguments to pass \code{fv_data()}.}
+\item{...}{Additional arguments to pass \code{fv_as_data_list()}.}
 }
 \value{
 A dataframe with a sampled dataset on each row with the following
 variables: parameters (prior/posterior parameters used to generate the data),
-obs (simulated observed data), fv_data, (the simulated data formatted
-using \code{fv_data()} using the same arguments as specified  for simulation.)
+obs (simulated observed data), data, (the simulated data formatted
+using the supplied \code{data_list} function (by default \code{\link[=fv_as_data_list]{fv_as_data_list()}})
+with the same arguments as specified  for simulation).
 }
 \description{
 Generate simulated observations from the prior or posterior
@@ -49,7 +56,7 @@ obs <- latest_obs(germany_covid19_delta_obs)
 sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 
 # fit a simulated dataset
-sim_dt <- sim_obs$fv_data[[1]]
+sim_dt <- sim_obs$fv_as_data_list[[1]]
 inits <- fv_inits(sim_dt)
 fit <- fv_sample(
   sim_dt,
@@ -57,7 +64,7 @@ fit <- fv_sample(
 )
 
 # summarise and plot simualated fit
-posterior <- fv_posterior(fit)
+posterior <- fv_tidy_posterior(fit)
 
 plot_cases(posterior, log = TRUE)
 
