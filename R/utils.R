@@ -16,7 +16,7 @@ NULL
 #' @param type A character string indicating the example to load.
 #'  Supported options are "posterior", "forecast", "observations",
 #'  and "script" which are the
-#' output of [fv_posterior()],  [extract_forecast()],
+#' output of [fv_posterior()],  [fv_extract_forecast()],
 #' `filter_by_availability` (with the date argument set to "2021-08-26"
 #' applied to the [germany_covid19_delta_obs] package dataset),
 #' and the script used to generate these examples respectively.

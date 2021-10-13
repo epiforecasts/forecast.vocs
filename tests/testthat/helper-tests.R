@@ -72,10 +72,10 @@ test_fv_sample <- function(message, dt, model, inits, convergence = TRUE) {
   })
 }
 
-test_extract_forecast <- function(message, strains, posterior) {
+test_fv_extract_forecast <- function(message, strains, posterior) {
   test_that(message, {
     skip_on_cran()
-    forecasts <- extract_forecast(posterior)
+    forecasts <- fv_extract_forecast(posterior)
     # Check output is a data.table with the correct dimensions
     expect_type(forecasts, "list")
     expect_data_table(forecasts)

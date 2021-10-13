@@ -351,8 +351,8 @@ extract_forecast_dates <- function(posterior) {
 #' @examples
 #' p <- fv_example(strains = 2, type = "posterior")
 #'
-#' extract_forecast(p)
-extract_forecast <- function(posterior) {
+#' fv_extract_forecast(p)
+fv_extract_forecast <- function(posterior) {
   forecast <- posterior[!(value_type %in% "model")][observed == FALSE]
 
   cols <- c(
@@ -440,7 +440,7 @@ extract_draws <- function(fit, ...) {
 #' Convert summarised quantiles from wide to long format
 #'
 #' @param posterior A dataframe as output by [fv_posterior()],
-#' [extract_forecast()], etc.
+#' [fv_extract_forecast()], etc.
 #'
 #' @return A data frame of quantiles in long format.
 #'

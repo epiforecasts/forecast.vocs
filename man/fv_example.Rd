@@ -13,7 +13,7 @@ maximum is 2.}
 \item{type}{A character string indicating the example to load.
 Supported options are "posterior", "forecast", "observations",
 and "script" which are the
-output of \code{\link[=fv_posterior]{fv_posterior()}},  \code{\link[=extract_forecast]{extract_forecast()}},
+output of \code{\link[=fv_posterior]{fv_posterior()}},  \code{\link[=fv_extract_forecast]{fv_extract_forecast()}},
 \code{filter_by_availability} (with the date argument set to "2021-08-26"
 applied to the \link{germany_covid19_delta_obs} package dataset),
 and the script used to generate these examples respectively.}

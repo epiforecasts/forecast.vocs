@@ -9,9 +9,11 @@ forecast(
   forecast_date = max(obs$date),
   seq_date = forecast_date,
   case_date = forecast_date,
+  data = forecast.vocs::fv_data,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
   posterior = forecast.vocs::fv_posterior,
+  extract_forecast = forecast.vocs::fv_extract_forecasat,
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
@@ -46,6 +48,10 @@ the \code{date}.}
 \item{case_date}{Date from which to use available case data. Defaults to
 the \code{date}.}
 
+\item{data}{A function that returns a list of data as ingested by the
+\code{inits} and \code{fit} function. Must use arguments as defined in \code{\link[=fv_data]{fv_data()}}.
+If not supplied the package default \code{\link[=fv_data]{fv_data()}} is used.}
+
 \item{inits}{A function that returns a function to samples initial
 conditions with the same arguments as \code{\link[=fv_inits]{fv_inits()}}. If not supplied the
 package default \code{\link[=fv_inits]{fv_inits()}} is used.}
@@ -60,6 +66,10 @@ fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
 \code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
 \code{\link[=fv_posterior]{fv_posterior()}} is used.}
+
+\item{extract_forecast}{A function that extracts the forecast from
+the summarised \code{posterior}. If not supplied the package default
+\code{\link[=fv_extract_forecast]{fv_extract_forecast()}} is used.}
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 

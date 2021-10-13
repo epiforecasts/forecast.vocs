@@ -10,6 +10,7 @@ forecast_n_strain(
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
   posterior = forecast.vocs::fv_posterior,
+  extract_forecast = forecast.vocs::fv_extract_forecast,
   strains = 2,
   voc_label = "VOC",
   probs = c(0.05, 0.2, 0.8, 0.95),
@@ -36,6 +37,10 @@ fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
 \code{\link[=fv_posterior]{fv_posterior()}}. If not supplied the package default
 \code{\link[=fv_posterior]{fv_posterior()}} is used.}
+
+\item{extract_forecast}{A function that extracts the forecast from
+the summarised \code{posterior}. If not supplied the package default
+\code{\link[=fv_extract_forecast]{fv_extract_forecast()}} is used.}
 
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}

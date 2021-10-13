@@ -32,6 +32,6 @@ if (not_on_cran()) {
 
   posterior1 <- fv_posterior(fit1)
   posterior2 <- fv_posterior(fit2)
-  forecast1 <- extract_forecast(posterior1)
-  forecast2 <- extract_forecast(posterior2)
+  forecast1 <- fv_extract_forecast(posterior1)
+  forecast2 <- fv_extract_forecast(posterior2)
 }

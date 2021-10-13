@@ -4,6 +4,10 @@
 #' default for that strain is used. If multiple strain models are being forecast
 #' then `models` should be a list models.
 #'
+#' @param data A function that returns a list of data as ingested by the
+#' `inits` and `fit` function. Must use arguments as defined in [fv_data()].
+#' If not supplied the package default [fv_data()] is used.
+#'
 #' @param inits A function that returns a function to samples initial
 #' conditions with the same arguments as [fv_inits()]. If not supplied the
 #' package default [fv_inits()] is used.
@@ -18,6 +22,10 @@
 #' the requirement for downstream package functionality to function) as
 #' [fv_posterior()]. If not supplied the package default
 #' [fv_posterior()] is used.
+#'
+#' @param extract_forecast A function that extracts the forecast from
+#' the summarised `posterior`. If not supplied the package default
+#' [fv_extract_forecast()] is used.
 #'
 #' @param forecast_date Date at which to forecast. Defaults to the
 #' maximum date in `obs`.
@@ -71,9 +79,11 @@
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
+                     data = forecast.vocs::fv_data,
                      inits = forecast.vocs::fv_inits,
                      fit = forecast.vocs::fv_sample,
                      posterior = forecast.vocs::fv_posterior,
+                     extract_forecast = forecast.vocs::fv_extract_forecasat,
                      horizon = 4, r_init = c(0, 0.25), voc_scale = c(0, 0.2),
                      voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
@@ -103,7 +113,7 @@ forecast <- function(obs,
   )
 
   # format data and fit models
-  data <- fv_data(target_obs,
+  data <- data(target_obs,
     horizon = horizon,
     r_init = r_init,
     voc_scale = voc_scale,
@@ -136,6 +146,7 @@ forecast <- function(obs,
           inits = inits,
           fit = fit,
           posterior = posterior,
+          extract_forecast = extract_forecast,
           strains = strains[strain],
           data = data,
           probs = probs,
@@ -169,6 +180,7 @@ forecast_n_strain <- function(data, model = NULL,
                               inits = forecast.vocs::fv_inits,
                               fit = forecast.vocs::fv_sample,
                               posterior = forecast.vocs::fv_posterior,
+                              extract_forecast = forecast.vocs::fv_extract_forecast, # nolint
                               strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),
                               scale_r = 1, ...) {
