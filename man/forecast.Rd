@@ -13,7 +13,7 @@ forecast(
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
   posterior = forecast.vocs::fv_posterior,
-  extract_forecast = forecast.vocs::fv_extract_forecasat,
+  extract_forecast = forecast.vocs::fv_extract_forecast,
   horizon = 4,
   r_init = c(0, 0.25),
   voc_scale = c(0, 0.2),
