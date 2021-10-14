@@ -134,6 +134,7 @@ generate_obs <- function(obs, strains = 2,
   seq_phi <- draws[["phi[2]"]]
 
   gen_data <- data.table(
+    dataset = seq_len(datasets),
     parameters = purrr::map(seq_len(datasets), ~ melt_draws[.draw == .]),
     obs = purrr::map(seq_len(datasets), function(i) {
       copy(obs)[
