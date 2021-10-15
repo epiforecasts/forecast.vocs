@@ -5,7 +5,7 @@
 \title{Forecast for a single model and summarise}
 \usage{
 forecast_n_strain(
-  data_list,
+  data,
   model = NULL,
   inits = forecast.vocs::fv_inits,
   fit = forecast.vocs::fv_sample,
@@ -19,10 +19,7 @@ forecast_n_strain(
 )
 }
 \arguments{
-\item{data_list}{A function that returns a list of data as ingested by the
-\code{inits} and \code{fit} function. Must use arguments as defined in
-\code{\link[=fv_as_data_list]{fv_as_data_list()}}. If not supplied the package default \code{\link[=fv_as_data_list]{fv_as_data_list()}}
-is used.}
+\item{data}{A list of data as produced by \code{\link[=fv_as_data_list]{fv_as_data_list()}}.}
 
 \item{model}{A \code{cmdstanr} model object as loaded by \code{\link[=fv_model]{fv_model()}}.}
 

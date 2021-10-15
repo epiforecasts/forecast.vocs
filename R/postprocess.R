@@ -110,6 +110,8 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' plotting functions to work (such as [plot_cases()], [plot_rt()],
 #' and [plot_voc()]).
 #'
+#' @param ... Additional arguments that may be passed but will not be used.
+#'
 #' @return A dataframe summarising the model posterior.
 #'
 #' @family postprocess
@@ -127,7 +129,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_posterior(fit)
-fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95)) {
+fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
@@ -202,7 +204,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95)) {
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_tidy_posterior(fit)
 fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
-                                voc_label = "VOC", scale_r = 1) {
+                              voc_label = "VOC", scale_r = 1) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
