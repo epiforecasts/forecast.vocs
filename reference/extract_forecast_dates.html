@@ -30,7 +30,7 @@ and sequence data."><meta property="og:image" content="epiforecasts.io/forecast.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -88,18 +88,22 @@ and sequence data.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">extract_forecast_dates</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. For forecast dates to be extracted data with
 <code>value_type == "cases"</code> must be present.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data.frame containing at least two vectors: Data unavailable
 indicating the type of data that is missing, and date giving the date
 data was last available for.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Functions used for postprocessing of model fits
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
@@ -110,8 +114,10 @@ data was last available for.</p>
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">extract_forecast_dates</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
@@ -119,6 +125,7 @@ data was last available for.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:            Cases 2021-06-26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:        Sequences 2021-06-12</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

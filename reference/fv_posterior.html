@@ -33,7 +33,7 @@ and transforming parameters for interpretability."><meta property="og:image" con
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -92,9 +92,10 @@ including linking to observed data, tidying parameter names,
 and transforming parameters for interpretability.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_posterior</span><span class="op">(</span><span class="va">fit</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_posterior</span><span class="op">(</span><span class="va">fit</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>fit</th>
       <td><p>List of output as returned by <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
     </tr><tr><th>probs</th>
@@ -103,11 +104,16 @@ quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
 plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
 and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr><tr><th>...</th>
+      <td><p>Additional arguments that may be passed but will not be used.</p></td>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A dataframe summarising the model posterior.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Functions used for postprocessing of model fits
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
@@ -118,8 +124,10 @@ and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="filter_by_availability.html">filter_by_availability</a></span><span class="op">(</span></span>
@@ -132,6 +140,7 @@ and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
 <span class="r-in"><span class="fu">fv_posterior</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

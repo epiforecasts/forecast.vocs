@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">forecast_n_strain</span><span class="op">(</span>
-  <span class="va">data_list</span>,
+  <span class="va">data</span>,
   model <span class="op">=</span> <span class="cn">NULL</span>,
   inits <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_inits.html">fv_inits</a></span>,
   fit <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_sample.html">fv_sample</a></span>,
@@ -98,12 +98,10 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data_list</th>
-      <td><p>A function that returns a list of data as ingested by the
-<code>inits</code> and <code>fit</code> function. Must use arguments as defined in
-<code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>. If not supplied the package default <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>
-is used.</p></td>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
+      <td><p>A list of data as produced by <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>.</p></td>
     </tr><tr><th>model</th>
       <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="fv_model.html">fv_model()</a></code>.</p></td>
     </tr><tr><th>inits</th>
@@ -145,13 +143,16 @@ is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
     </tr><tr><th>...</th>
       <td><p>Additional parameters passed to <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    </tr></table></div>
 
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Functions used for forecasting across models, dates, and scenarios
 <code><a href="forecast_across_dates.html">forecast_across_dates</a>()</code>,
 <code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
 <code><a href="forecast.html">forecast</a>()</code>,
 <code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -52,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -120,8 +120,8 @@
     
 <p>The package currently supports two models both with various options. A baseline single strain model and a two strain model with flexible variable dynamics. These are defined in detail below.</p>
 <div id="single-strain" class="section level2">
-<h2 class="hasAnchor">
-<a href="#single-strain" class="anchor" aria-hidden="true"></a>Single strain</h2>
+<h2>Single strain<a class="anchor" aria-label="anchor" href="#single-strain"></a>
+</h2>
 <p>We model the mean (<span class="math inline">\(\lambda_t\)</span>) of reported cases (<span class="math inline">\(C_t\)</span>) as an order 1 autoregressive (AR(1)) process on the log scale by time unit (<span class="math inline">\(t\)</span>). The model is initialised by assuming that the initial reported cases are representative with a small amount of error (2.5%).</p>
 <p><span class="math display">\[\begin{align}
   \log \lambda_0 &amp;\sim \text{LogNormal}\left(\log C_0 , 0.025 \times \log C_0 \right) \\
@@ -152,8 +152,8 @@
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="two-strain" class="section level2">
-<h2 class="hasAnchor">
-<a href="#two-strain" class="anchor" aria-hidden="true"></a>Two strain</h2>
+<h2>Two strain<a class="anchor" aria-label="anchor" href="#two-strain"></a>
+</h2>
 <p>We model strain dynamics using the single strain model as a starting point but with the addition of strain specific AR(1) variation and a beta binomial (or optionally binomial) observation process for sequence data. The full two strain model is described below. Parameters related to the variant of concern (VoC) are given the <span class="math inline">\(\delta\)</span> superscript and parameters related to non-VoC cases are given the <span class="math inline">\(o\)</span> superscript.</p>
 <p>Mean reported cases are again defined using a AR(1) process on the log scale for each strain and the combined for overall mean reported cases.</p>
 <p><span class="math display">\[\begin{align}

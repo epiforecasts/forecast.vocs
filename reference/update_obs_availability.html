@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -86,7 +86,8 @@
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">update_obs_availability</span><span class="op">(</span><span class="va">obs</span>, <span class="va">cases_lag</span>, <span class="va">seq_lag</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
       <td><p>A <code>data.frame</code> with the following variables:
 <code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
@@ -99,17 +100,22 @@ Defaults to not alter the input data.</p></td>
     </tr><tr><th>seq_lag</th>
       <td><p>Number of weeks that sequence data takes to be reported.
 Defaults to not alter the input data.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> of observations with updated case and
 sequence availability dates.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Functions to define and create data scenarios
 <code><a href="define_scenarios.html">define_scenarios</a>()</code>,
 <code><a href="generate_obs_scenario.html">generate_obs_scenario</a>()</code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">update_obs_availability</span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">germany_covid19_delta_obs</span>,</span>
 <span class="r-in">  cases_lag <span class="op">=</span> <span class="fl">2</span>, seq_lag <span class="op">=</span> <span class="fl">3</span></span>
@@ -139,6 +145,7 @@ sequence availability dates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 113:           NA          &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 114:           NA          &lt;NA&gt;</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

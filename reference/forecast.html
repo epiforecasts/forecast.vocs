@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.1000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.2000</span>
       </span>
     </div>
 
@@ -112,7 +112,8 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
       <td><p>A <code>data.frame</code> with the following variables:
 <code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
@@ -210,20 +211,25 @@ and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
       <td><p>ID to assign to this forecast. Defaults to 0.</p></td>
     </tr><tr><th>...</th>
       <td><p>Additional parameters passed to <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> containing the output of <code><a href="fv_sample.html">fv_sample()</a></code> in each row as
 well as the summarised posterior, forecast and information about the
 parameters specified.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Functions used for forecasting across models, dates, and scenarios
 <code><a href="forecast_across_dates.html">forecast_across_dates</a>()</code>,
 <code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
 <code><a href="forecast_n_strain.html">forecast_n_strain</a>()</code>,
 <code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -249,6 +255,7 @@ parameters specified.</p>
 <span class="r-in"><span class="fu"><a href="plot_voc.html">plot_voc</a></span><span class="op">(</span><span class="va">forecasts</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
