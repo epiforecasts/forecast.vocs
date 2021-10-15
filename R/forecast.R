@@ -149,7 +149,7 @@ forecast <- function(obs,
           posterior = posterior,
           extract_forecast = extract_forecast,
           strains = strains[strain],
-          data_list = data_list,
+          data = data,
           probs = probs,
           scale_r = scale_r,
           ...
@@ -177,7 +177,7 @@ forecast <- function(obs,
 #' @inheritParams forecast
 #' @inheritParams fv_sample
 #' @inheritParams fv_tidy_posterior
-forecast_n_strain <- function(data_list, model = NULL,
+forecast_n_strain <- function(data, model = NULL,
                               inits = forecast.vocs::fv_inits,
                               fit = forecast.vocs::fv_sample,
                               posterior = forecast.vocs::fv_tidy_posterior,
@@ -193,8 +193,9 @@ forecast_n_strain <- function(data_list, model = NULL,
 
   # fit and summarise
   fit <- fit(
-    model = model, data = data_list, init = inits, ...
+    model = model, data = data, init = inits, ...
   )
+
   fit$posterior <- list(posterior(
     fit,
     probs = probs, voc_label = voc_label, scale_r = scale_r

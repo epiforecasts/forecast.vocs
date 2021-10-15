@@ -4,7 +4,7 @@
 \alias{fv_posterior}
 \title{Summarise the posterior}
 \usage{
-fv_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95))
+fv_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...)
 }
 \arguments{
 \item{fit}{List of output as returned by \code{\link[=fv_sample]{fv_sample()}}.}
@@ -14,6 +14,8 @@ quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
 and \code{\link[=plot_voc]{plot_voc()}}).}
+
+\item{...}{Additional arguments that may be passed but will not be used.}
 }
 \value{
 A dataframe summarising the model posterior.
