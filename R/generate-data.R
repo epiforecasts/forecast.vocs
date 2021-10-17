@@ -80,7 +80,7 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 #'
 #' # fit a simulated dataset
-#' sim_dt <- sim_obs$fv_as_data_list[[1]]
+#' sim_dt <- sim_obs$data[[1]]
 #' inits <- fv_inits(sim_dt)
 #' fit <- fv_sample(
 #'   sim_dt,
@@ -137,25 +137,27 @@ generate_obs <- function(obs, strains = 2,
     dataset = seq_len(datasets),
     parameters = purrr::map(seq_len(datasets), ~ melt_draws[.draw == .]),
     obs = purrr::map(seq_len(datasets), function(i) {
-      copy(obs)[
-        ,
-        `:=`(
-          cases = as.vector(t(gen_cases[i, ])),
-          mean_share_voc = c(
-            rep(NA, dt$t_nseq),
-            as.vector(t(gen_frac_voc[i, ]))
+      new_obs <- copy(obs)[, cases := as.vector(t(gen_cases[i, ]))]
+      if (strains > 1) {
+        new_obs[
+          ,
+          mean_share_voc := c(
+            rep(NA, dt$t_nseq), as.vector(t(gen_frac_voc[i, ]))
           )
-        )
-      ][
-        ,
-        seq_voc := sample_sequences(mean_share_voc, seq_total, seq_phi[i])
-      ][
-        ,
-        share_voc := seq_voc / seq_total
-      ]
+        ]
+        new_obs[
+          ,
+          seq_voc := sample_sequences(mean_share_voc, seq_total, seq_phi[i])
+        ]
+        new_obs[
+          ,
+          share_voc := seq_voc / seq_total
+        ]
+      }
+      return(new_obs)
     })
   )
 
   gen_data[, data := purrr::map(obs, data_list, horizon = 0, ...)]
-  return(gen_data)
+  return(gen_data[])
 }

@@ -56,7 +56,7 @@ obs <- latest_obs(germany_covid19_delta_obs)
 sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 
 # fit a simulated dataset
-sim_dt <- sim_obs$fv_as_data_list[[1]]
+sim_dt <- sim_obs$data[[1]]
 inits <- fv_inits(sim_dt)
 fit <- fv_sample(
   sim_dt,
