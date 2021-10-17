@@ -37,13 +37,13 @@
 #' @examples
 #' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 fv_as_data_list <- function(obs, horizon = 4,
-                    r_init = c(0, 0.25),
-                    voc_scale = c(0, 0.2),
-                    variant_relationship = "pooled",
-                    overdispersion = TRUE,
-                    likelihood = TRUE,
-                    output_loglik = TRUE,
-                    debug = FALSE) {
+                            r_init = c(0, 0.25),
+                            voc_scale = c(0, 0.2),
+                            variant_relationship = "pooled",
+                            overdispersion = TRUE,
+                            likelihood = TRUE,
+                            output_loglik = TRUE,
+                            debug = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
     choices = c("pooled", "scaled", "independent")
@@ -266,6 +266,9 @@ fv_sample <- function(data, model = forecast.vocs::fv_model(strains = 2),
     diagnostics[, no_at_max_treedepth := sum(diag$treedepth__ == max_treedepth)]
     diagnostics[, per_at_max_treedepth := no_at_max_treedepth / nrow(diag)]
     out <- cbind(out, diagnostics)
+
+    timing <- round(fit$time()$total, 1)
+    out[, time := timing]
   }
   return(out[])
 }
