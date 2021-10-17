@@ -3,7 +3,8 @@
 * Further generalised the `forecast` family to accept custom data and forecast extraction functions.
 * Split generic posterior summary function from specific posterior summary function.
 * Catch data passing bugs in `forecast`  with new tests
-* Add argument passing in  `fv_posterior` to allow it be used with `forecast`. 
+* Add argument passing in  `fv_posterior` to allow it be used with `forecast`.
+* Added runtime to diagnostic fit output.
 
 # forecast.vocs 0.0.6
 
