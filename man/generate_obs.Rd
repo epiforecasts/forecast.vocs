@@ -46,7 +46,9 @@ with the same arguments as specified  for simulation).
 }
 \description{
 Generate simulated observations from the prior or posterior
-distributions of a \code{forecast.vocs} model.
+distributions of a \code{forecast.vocs} model. When a single strain model is used
+only case data is simulated but when a multiple strain model is used sequence
+data is also simulated.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -56,7 +58,7 @@ obs <- latest_obs(germany_covid19_delta_obs)
 sim_obs <- generate_obs(obs, voc_scale = c(0.8, 0.1), r_init = c(-0.1, 0.05))
 
 # fit a simulated dataset
-sim_dt <- sim_obs$fv_as_data_list[[1]]
+sim_dt <- sim_obs$data[[1]]
 inits <- fv_inits(sim_dt)
 fit <- fv_sample(
   sim_dt,
