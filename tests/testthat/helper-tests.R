@@ -57,7 +57,7 @@ test_fv_sample <- function(message, dt, model, inits, convergence = TRUE) {
       expected = c(
         "fit", "data", "fit_args", "samples", "max_rhat",
         "divergent_transitions", "per_divergent_transitions", "max_treedepth",
-        "no_at_max_treedepth", "per_at_max_treedepth"
+        "no_at_max_treedepth", "per_at_max_treedepth", "time"
       )
     )
     # Check fit was successful and has loosely converged
@@ -237,7 +237,7 @@ test_forecast <- function(message, obs, forecast_fn,
       "fit", "data", "fit_args", "samples", "max_rhat",
       "divergent_transitions", "per_divergent_transitions",
       "max_treedepth", "no_at_max_treedepth", "per_at_max_treedepth",
-      "posterior", "forecast"
+      "time", "posterior", "forecast"
     )
     expect_named(forecasts, cols)
     # Check input control

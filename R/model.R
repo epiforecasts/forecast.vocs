@@ -252,13 +252,13 @@ fv_sample <- function(data, model = forecast.vocs::fv_model(strains = 2),
     diag <- fit$sampler_diagnostics(format = "df")
     diagnostics <- data.table(
       samples = nrow(diag),
-      max_rhat = max(
+      max_rhat = round(max(
         fit$summary(
           variables = NULL, posterior::rhat,
           .args = list(na.rm = TRUE)
         )$`posterior::rhat`,
         na.rm = TRUE
-      ),
+      ), 2),
       divergent_transitions = sum(diag$divergent__),
       per_divergent_transitions = sum(diag$divergent__) / nrow(diag),
       max_treedepth = max(diag$treedepth__)
