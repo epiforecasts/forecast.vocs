@@ -47,7 +47,9 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 #' Generate Simulated Observations
 #'
 #' Generate simulated observations from the prior or posterior
-#' distributions of a `forecast.vocs` model.
+#' distributions of a `forecast.vocs` model. When a single strain model is used
+#' only case data is simulated but when a multiple strain model is used sequence
+#' data is also simulated.
 #'
 #' @param obs Observed data to use to parameterise the model and used for
 #' fitting when the posterior is required.
