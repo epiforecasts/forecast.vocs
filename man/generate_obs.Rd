@@ -46,7 +46,9 @@ with the same arguments as specified  for simulation).
 }
 \description{
 Generate simulated observations from the prior or posterior
-distributions of a \code{forecast.vocs} model.
+distributions of a \code{forecast.vocs} model. When a single strain model is used
+only case data is simulated but when a multiple strain model is used sequence
+data is also simulated.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
