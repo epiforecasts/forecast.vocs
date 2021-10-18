@@ -1,7 +1,8 @@
 
 test_that("Can unnest a posterior successfully", {
-  skip_on_cran()
-  pdt <- data.table::data.table(posterior = list(posterior1, posterior2))
+  p1 <- fv_example(type = "posterior")
+  p2 <- fv_example(type = "posterior", strains = 1)
+  pdt <- data.table::data.table(posterior = list(p1, p2))
   upost <- unnest_posterior(pdt)
-  expect_equal(upost, rbind(posterior1, posterior2))
+  expect_equal(upost, rbind(p1, p2))
 })
