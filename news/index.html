@@ -79,9 +79,9 @@
       <small>Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/NEWS.md"><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="forecastvocs-007" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.7">forecast.vocs 0.0.7<a class="anchor" aria-label="anchor" href="#forecastvocs-007"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-007" class="page-header" data-toc-text="0.0.7">forecast.vocs 0.0.7<a class="anchor" aria-label="anchor" href="#forecastvocs-007"></a>
+</h2>
 <ul><li>Further generalised the <code>forecast</code> family to accept custom data and forecast extraction functions.</li>
 <li>Split generic posterior summary function from specific posterior summary function.</li>
 <li>Catch data passing bugs in <code>forecast</code> with new tests</li>
@@ -89,9 +89,9 @@
 <li>Added runtime to diagnostic fit output.</li>
 <li>Fixes <code><a href="../reference/generate_obs.html">generate_obs()</a></code> to work with all strain models and adds unit tests for all function functionality.</li>
 </ul></div>
-    <div id="forecastvocs-006" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.6">forecast.vocs 0.0.6<a class="anchor" aria-label="anchor" href="#forecastvocs-006"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-006" class="page-header" data-toc-text="0.0.6">forecast.vocs 0.0.6<a class="anchor" aria-label="anchor" href="#forecastvocs-006"></a>
+</h2>
 <ul><li>Add a vignette defining the package models.</li>
 <li>Updated documentation to use <a href="https://preferably.amirmasoudabdol.name" class="external-link">preferably</a>.</li>
 <li>Add basic tests for all modelling functions.</li>
@@ -102,23 +102,23 @@
 <li>Model specific functions (i.e <code>load_model</code>, <code>summarise_posterior</code>, and functions prefixed with <code>stan_</code> have been renamed with the <code>fv_</code> prefix).</li>
 <li>Added the ability to pass model specific functions to the <code>forecast</code> function and wrappers enabling users to supply custom models but make use of the remaining package functionality.</li>
 </ul></div>
-    <div id="forecastvocs-005" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.5">forecast.vocs 0.0.5<a class="anchor" aria-label="anchor" href="#forecastvocs-005"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-005" class="page-header" data-toc-text="0.0.5">forecast.vocs 0.0.5<a class="anchor" aria-label="anchor" href="#forecastvocs-005"></a>
+</h2>
 <ul><li>Overhaul all package documentation and examples.</li>
 <li>Enforce proper printing of all <code>data.table</code> output.</li>
 <li>Add structure to documentation website.</li>
 </ul></div>
-    <div id="forecastvocs-004" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.4">forecast.vocs 0.0.4<a class="anchor" aria-label="anchor" href="#forecastvocs-004"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-004" class="page-header" data-toc-text="0.0.4">forecast.vocs 0.0.4<a class="anchor" aria-label="anchor" href="#forecastvocs-004"></a>
+</h2>
 <ul><li>Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.</li>
 <li>Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.</li>
 <li>Surfaced more options when plotting to allow for increased generalisability.</li>
 </ul></div>
-    <div id="forecastvocs-003" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3">forecast.vocs 0.0.3<a class="anchor" aria-label="anchor" href="#forecastvocs-003"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-003" class="page-header" data-toc-text="0.0.3">forecast.vocs 0.0.3<a class="anchor" aria-label="anchor" href="#forecastvocs-003"></a>
+</h2>
 <ul><li>
 <code>fv_tidy_posterior</code> now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma</li>
 <li>
@@ -130,24 +130,24 @@
 <li>Added check functions to make sure input observation and arguments have the correct format.</li>
 <li>Added unit tests for all preprocessing functions.</li>
 <li>Custom VOC labelling is now a feature of <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code> (and hence <code><a href="../reference/forecast.html">forecast()</a></code>) as well as a standalone option via <code><a href="../reference/update_voc_label.html">update_voc_label()</a></code>.</li>
-</ul><div id="infrastructure" class="section level2">
-<h2>Infrastructure<a class="anchor" aria-label="anchor" href="#infrastructure"></a>
-</h2>
+</ul><div class="section level3">
+<h3 id="infrastructure-0-0-3">Infrastructure<a class="anchor" aria-label="anchor" href="#infrastructure-0-0-3"></a>
+</h3>
 <ul><li>Switched to installing <code>cmdstanr</code> from GitHub.</li>
 </ul></div>
 </div>
-    <div id="forecastvocs-002" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.2">forecast.vocs 0.0.2<a class="anchor" aria-label="anchor" href="#forecastvocs-002"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-002" class="page-header" data-toc-text="0.0.2">forecast.vocs 0.0.2<a class="anchor" aria-label="anchor" href="#forecastvocs-002"></a>
+</h2>
 <ul><li>Package generalised to all variants of concern beyond Delta.</li>
 <li>Tooling added to forecast across dates and scenarios.</li>
 <li>Tooling added for prior and posterior predictive checks.</li>
 <li>Tooling added for simulating data from the model (useful for simulation-based calibration amongst other things).</li>
 <li>Example data updated to use snapshots of COVID-19 notifications and Delta sequences sourced for the RKI (Germany).</li>
 </ul></div>
-    <div id="forecastvocs-001" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.1">forecast.vocs 0.0.1<a class="anchor" aria-label="anchor" href="#forecastvocs-001"></a>
-</h1>
+    <div class="section level2">
+<h2 id="forecastvocs-001" class="page-header" data-toc-text="0.0.1">forecast.vocs 0.0.1<a class="anchor" aria-label="anchor" href="#forecastvocs-001"></a>
+</h2>
 <ul><li>Extracted package code from analysis code and started work on generalising use case.</li>
 <li>Added initial version of forecasting model for 1 and 2 strains with optional independence, partial pooling, and scaled relationships.</li>
 </ul></div>

@@ -112,18 +112,18 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="forecast-case-and-sequence-notifications-using-variant-of-concern-strain-dynamics" class="section level1">
-<div class="page-header"><h1>Forecast case and sequence notifications using variant of concern strain dynamics<a class="anchor" aria-label="anchor" href="#forecast-case-and-sequence-notifications-using-variant-of-concern-strain-dynamics"></a>
+<div class="section level1">
+<div class="page-header"><h1 id="forecast-case-and-sequence-notifications-using-variant-of-concern-strain-dynamics">Forecast case and sequence notifications using variant of concern strain dynamics<a class="anchor" aria-label="anchor" href="#forecast-case-and-sequence-notifications-using-variant-of-concern-strain-dynamics"></a>
 </h1></div>
 
 <p><a href="https://epiforecasts.r-universe.dev/" class="external-link"><img src="https://epiforecasts.r-universe.dev/badges/forecast.vocs" alt="Universe"></a> <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/LICENSE.md/" class="external-link"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT license"></a> <a href="https://github.com/epiforecasts/forecast.vocs/graphs/contributors" class="external-link"><img src="https://img.shields.io/github/contributors/epiforecasts/forecast.vocs" alt="GitHub contributors"></a></p>
 <p><a href="https://zenodo.org/badge/latestdoi/383161374" class="external-link"><img src="https://zenodo.org/badge/383161374.svg" alt="DOI"></a></p>
 <p>Contains models and tools to produce short-term forecasts for both case and sequence notifications assuming circulation of either one or two variants. Tools are also provided to allow the evaluation of the use of sequence data for short-term forecasts in both real-world settings and in user generated scenarios.</p>
-<div id="installation" class="section level2">
-<h2>Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div id="installing-the-package" class="section level3">
-<h3>Installing the package<a class="anchor" aria-label="anchor" href="#installing-the-package"></a>
+<div class="section level3">
+<h3 id="installing-the-package">Installing the package<a class="anchor" aria-label="anchor" href="#installing-the-package"></a>
 </h3>
 <p>Install the stable development version of the package with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -132,16 +132,16 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"epiforecasts/forecast.vocs"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="installing-cmdstan" class="section level3">
-<h3>Installing CmdStan<a class="anchor" aria-label="anchor" href="#installing-cmdstan"></a>
+<div class="section level3">
+<h3 id="installing-cmdstan">Installing CmdStan<a class="anchor" aria-label="anchor" href="#installing-cmdstan"></a>
 </h3>
 <p>If you don’t already have CmdStan installed then, in addition to installing <code>forecast.vocs</code>, it is also necessary to install CmdStan using CmdStanR’s <code>install_cmdstan()</code> function to enable model fitting in <code>forecast.vocs</code>. A suitable C++ toolchain is also required. Instructions are provided in the <a href="https://mc-stan.org/cmdstanr/articles/cmdstanr.html" class="external-link"><em>Getting started with CmdStanR</em></a> vignette. See the <a href="https://mc-stan.org/cmdstanr/" class="external-link">CmdStanR documentation</a> for further details and support.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">cmdstanr</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/install_cmdstan.html" class="external-link">install_cmdstan</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="quick-start" class="section level2">
-<h2>Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+<div class="section level2">
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <p>This quick start uses data from Germany that includes COVID-19 notifications and sequences with sequences either being positive or negative for the Delta variant. It shows how to produce forecasts for both a one and two strain model for the 19th of June 2021 when the latest available data estimated that approximately 7% of COVID-19 were positive for the Delta variant. Note that estimated growth rates and reproduction numbers shown here have been rescaled using an assumed generation time of 5.5 days and a weakly informative prior centred around Delta being 50% more transmissible than non-Delta cases has been used.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -154,8 +154,8 @@
 <span class="op">)</span>
 
 <span class="va">current_obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span></code></pre></div>
-<div id="forecast-all-in-one" class="section level3">
-<h3>Forecast all-in-one<a class="anchor" aria-label="anchor" href="#forecast-all-in-one"></a>
+<div class="section level3">
+<h3 id="forecast-all-in-one">Forecast all-in-one<a class="anchor" aria-label="anchor" href="#forecast-all-in-one"></a>
 </h3>
 <p>Run a forecast for both one and two strain models (or optionally just one of these) using the <code><a href="reference/forecast.html">forecast()</a></code> function. This provides a wrapper around other package tooling to initialise, fit, and summarise forecasts. Multiple forecasts can be performed efficiently across dates and scenarios using <code><a href="reference/forecast_across_dates.html">forecast_across_dates()</a></code> and <code><a href="reference/forecast_across_scenarios.html">forecast_across_scenarios()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -227,8 +227,8 @@
   voc_label <span class="op">=</span> <span class="st">"Delta variant"</span>
 <span class="op">)</span></code></pre></div>
 </div>
-<div id="step-by-step-forecast" class="section level3">
-<h3>Step by step forecast<a class="anchor" aria-label="anchor" href="#step-by-step-forecast"></a>
+<div class="section level3">
+<h3 id="step-by-step-forecast">Step by step forecast<a class="anchor" aria-label="anchor" href="#step-by-step-forecast"></a>
 </h3>
 <p>Rather than using the all-in-one <code><a href="reference/forecast.html">forecast()</a></code> function individual package functions can be used to produce a forecast as follows.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -249,8 +249,8 @@
 <p>As for forecasts produced with the <code><a href="reference/forecast.html">forecast()</a></code> function summary plots and estimates can then be produced using package functions.</p>
 </div>
 </div>
-<div id="citation" class="section level2">
-<h2>Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>If using <code>forecast.vocs</code> in your work please consider citing it using the following,</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#&gt; </span></span>
@@ -270,18 +270,18 @@
 <span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt;     doi = {10.5281/zenodo.5559016},</span></span>
 <span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
-<div id="how-to-make-a-bug-report-or-feature-request" class="section level2">
-<h2>How to make a bug report or feature request<a class="anchor" aria-label="anchor" href="#how-to-make-a-bug-report-or-feature-request"></a>
+<div class="section level2">
+<h2 id="how-to-make-a-bug-report-or-feature-request">How to make a bug report or feature request<a class="anchor" aria-label="anchor" href="#how-to-make-a-bug-report-or-feature-request"></a>
 </h2>
 <p>Please briefly describe your problem and what output you expect in an <a href="https://github.com/epiforecasts/forecast.vocs/issues" class="external-link">issue</a>. If you have a question, please don’t open an issue. Instead, ask on our <a href="https://github.com/epiforecasts/forecast.vocs/discussions/categories/q-a" class="external-link">Q and A page</a>.</p>
 </div>
-<div id="contributing" class="section level2">
-<h2>Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
 </h2>
 <p>We welcome contributions and new contributors! We particularly appreciate help on priority problems in the <a href="https://github.com/epiforecasts/forecast.vocs/issues" class="external-link">issues</a>. Please check and add to the issues, and/or add a <a href="https://github.com/epiforecasts/forecast.vocs/pulls" class="external-link">pull request</a>.</p>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2>Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
 <p>Please note that the <code>forecast.vocs</code> project is released with a <a href="epiforecasts.io/forecast.vocs/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>

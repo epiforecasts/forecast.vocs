@@ -89,7 +89,7 @@ and sequence data.</p>
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">extract_forecast_dates</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
       <td><p>A dataframe of posterior output as produced by
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. For forecast dates to be extracted data with
@@ -97,13 +97,13 @@ and sequence data.</p>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>A data.frame containing at least two vectors: Data unavailable
 indicating the type of data that is missing, and date giving the date
 data was last available for.</p>
     </div>
     <div id="see-also">
-    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <h2>See also</h2>
     <div class="dont-index"><p>Functions used for postprocessing of model fits
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,
@@ -117,7 +117,7 @@ data was last available for.</p>
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">extract_forecast_dates</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>

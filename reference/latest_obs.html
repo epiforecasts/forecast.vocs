@@ -87,7 +87,7 @@
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">latest_obs</span><span class="op">(</span><span class="va">obs</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
       <td><p>A <code>data.frame</code> with the following variables:
 <code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
@@ -97,18 +97,18 @@ on data availability.</p></td>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>A <code>data.frame</code> of observations filtered for the
 latest available data.</p>
     </div>
     <div id="see-also">
-    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <h2>See also</h2>
     <div class="dont-index"><p>Preprocessing functions
 <code><a href="filter_by_availability.html">filter_by_availability</a>()</code></p></div>
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span>, seq_lag <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span class="r-in">  <span class="fu"><a href="update_obs_availability.html">update_obs_availability</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span>, seq_lag <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>

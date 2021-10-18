@@ -87,7 +87,7 @@
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">sample_sequences</span><span class="op">(</span><span class="va">frac_voc</span>, <span class="va">seq_total</span>, <span class="va">phi</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>frac_voc</th>
       <td><p>A numeric vector of expected proportions positive for the
 variant of concern.</p></td>
@@ -100,29 +100,29 @@ beta binomial observation model).</p></td>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>A vector of observed sequences positive for the variant of
 concern.</p>
     </div>
     <div id="see-also">
-    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <h2>See also</h2>
     <div class="dont-index"><p>Functions to generate simulated data
 <code><a href="generate_obs.html">generate_obs</a>()</code></p></div>
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># dummy sequence data</span></span>
 <span class="r-in"><span class="va">frac_voc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">seq_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">frac_voc</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># binomial observation model</span></span>
 <span class="r-in"><span class="fu">sample_sequences</span><span class="op">(</span><span class="va">frac_voc</span>, <span class="va">seq_total</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0    9   39   84  175  241  396  490  649  814 1010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0    8   38  103  174  246  367  504  657  831 1010</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># beta binomial observation model</span></span>
 <span class="r-in"><span class="fu">sample_sequences</span><span class="op">(</span><span class="va">frac_voc</span>, <span class="va">seq_total</span>, <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0    0    0   37  264  218  513   22  804  910 1010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0    0    0  310    0  507    1  709  524  905 1010</span>
 </code></pre></div>
     </div>
   </div>
