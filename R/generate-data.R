@@ -100,16 +100,18 @@ sample_sequences <- function(frac_voc, seq_total, phi) {
 generate_obs <- function(obs, strains = 2,
                          model = forecast.vocs::fv_model(strains = strains),
                          data_list = forecast.vocs::fv_as_data_list,
+                         inits = forecast.vocs::fv_inits,
+                         fit = forecast.vocs::fv_sample,
                          type = "prior", datasets = 10, ...) {
   type <- match.arg(type, choices = c("prior", "posterior"))
-  dt <- fv_as_data_list(obs,
+  dt <- data_list(obs,
     likelihood = type %in% "posterior",
     output_loglik = FALSE, horizon = 0, ...
   )
 
-  inits <- fv_inits(dt, strains = strains)
+  inits <- inits(dt, strains = strains)
 
-  fit <- fv_sample(
+  fit <- fit(
     data = dt, model = model, init = inits,
     adapt_delta = 0.99, max_treedepth = 15,
     refresh = 0, show_messages = FALSE,
