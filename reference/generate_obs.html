@@ -32,7 +32,7 @@ data is also simulated."><meta property="og:image" content="epiforecasts.io/fore
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast.vocs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.5000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7.6000</span>
       </span>
     </div>
 
@@ -95,6 +95,8 @@ data is also simulated.</p>
   strains <span class="op">=</span> <span class="fl">2</span>,
   model <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="fu"><a href="fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="va">strains</span><span class="op">)</span>,
   data_list <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_as_data_list.html">fv_as_data_list</a></span>,
+  inits <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_inits.html">fv_inits</a></span>,
+  fit <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_sample.html">fv_sample</a></span>,
   type <span class="op">=</span> <span class="st">"prior"</span>,
   datasets <span class="op">=</span> <span class="fl">10</span>,
   <span class="va">...</span>
@@ -116,6 +118,15 @@ strain models are desired.</p></td>
 <code>inits</code> and <code>fit</code> function. Must use arguments as defined in
 <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>. If not supplied the package default <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>
 is used.</p></td>
+    </tr><tr><th>inits</th>
+      <td><p>A function that returns a function to samples initial
+conditions with the same arguments as <code><a href="fv_inits.html">fv_inits()</a></code>. If not supplied the
+package default <code><a href="fv_inits.html">fv_inits()</a></code> is used.</p></td>
+    </tr><tr><th>fit</th>
+      <td><p>A function that fits the supplied model with the same arguments
+and return values as <code><a href="fv_sample.html">fv_sample()</a></code>. If not supplied the
+package default <code><a href="fv_sample.html">fv_sample()</a></code> is used which performs MCMC sampling using
+cmdstanr.</p></td>
     </tr><tr><th>type</th>
       <td><p>A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the
