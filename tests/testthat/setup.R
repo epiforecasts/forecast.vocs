@@ -37,7 +37,7 @@ if (not_on_cran()) {
 
   forecast_wrapper <- forecast(
     obs,
-    fit = silent_fv_sample,
+    fit = fv_sample,
     strains = c(1, 2), likelihood = FALSE,
     adapt_delta = 0.98, max_treedepth = 15, chains = 2
   )

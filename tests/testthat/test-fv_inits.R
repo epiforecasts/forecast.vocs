@@ -9,11 +9,11 @@ dt <- fv_as_data_list(obs)
 test_strain_inits(
   "Single strain inits can be sample initial conditions as expected using
   default settings from fv_as_data_list",
-  strains = 1
+  strains = 1, dt = dt
 )
 
 test_strain_inits(
   "Two strain inits can be sample initial conditions as expected using
   default settings from stan data",
-  strains = 2
+  strains = 2, dt = dt
 )

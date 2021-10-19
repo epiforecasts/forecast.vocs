@@ -9,6 +9,8 @@ generate_obs(
   strains = 2,
   model = forecast.vocs::fv_model(strains = strains),
   data_list = forecast.vocs::fv_as_data_list,
+  inits = forecast.vocs::fv_inits,
+  fit = forecast.vocs::fv_sample,
   type = "prior",
   datasets = 10,
   ...
@@ -28,6 +30,15 @@ strain models are desired.}
 \code{inits} and \code{fit} function. Must use arguments as defined in
 \code{\link[=fv_as_data_list]{fv_as_data_list()}}. If not supplied the package default \code{\link[=fv_as_data_list]{fv_as_data_list()}}
 is used.}
+
+\item{inits}{A function that returns a function to samples initial
+conditions with the same arguments as \code{\link[=fv_inits]{fv_inits()}}. If not supplied the
+package default \code{\link[=fv_inits]{fv_inits()}} is used.}
+
+\item{fit}{A function that fits the supplied model with the same arguments
+and return values as \code{\link[=fv_sample]{fv_sample()}}. If not supplied the
+package default \code{\link[=fv_sample]{fv_sample()}} is used which performs MCMC sampling using
+\link{cmdstanr}.}
 
 \item{type}{A character string indicating the type of data to generate.
 Supported options are data based on the "prior" or data based on  the

@@ -1,10 +1,8 @@
 
 test_that("Two strain model can be used to generate observations", {
   skip_on_cran()
-  f <- utils::capture.output(
-    sim_obs <- suppressMessages(
-      generate_obs(obs, strains = 2)
-    )
+  sim_obs <- suppressMessages(
+    generate_obs(obs, strains = 2, fit = silent_fv_sample)
   )
   expect_named(
     sim_obs,
@@ -20,10 +18,8 @@ test_that("Two strain model can be used to generate observations", {
 
 test_that("Single strain model can be used to generate observations", {
   skip_on_cran()
-  f <- utils::capture.output(
-    sim_obs <- suppressMessages(
-      generate_obs(obs, strains = 1)
-    )
+  sim_obs <- suppressMessages(
+    generate_obs(obs, strains = 1, fit = silent_fv_sample)
   )
   expect_named(
     sim_obs,
