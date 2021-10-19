@@ -21,11 +21,11 @@ if (not_on_cran()) {
   model1 <- suppressMessages(fv_model(strains = 1))
   model2 <- suppressMessages(fv_model(strains = 2))
 
-  fit1 <- fv_sample(
+  fit1 <- silent_fv_sample(
     data = dt, model = model1, init = inits1,
     adapt_delta = 0.98, max_treedepth = 15, chains = 2
   )
-  fit2 <- fv_sample(
+  fit2 <- silent_fv_sample(
     data = dt, model = model2, init = inits2,
     adapt_delta = 0.98, max_treedepth = 15, chains = 2
   )
