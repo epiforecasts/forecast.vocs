@@ -54,5 +54,7 @@ test_that("Start date is present and a date", {
 test_that("Variant strain relationship can be set as expected", {
   expect_equal(fv_as_data_list(obs, variant_relationship = "scaled")$relat, 0)
   expect_equal(fv_as_data_list(obs, variant_relationship = "pooled")$relat, 1)
-  expect_equal(fv_as_data_list(obs, variant_relationship = "independent")$relat, 2)
+  expect_equal(
+    fv_as_data_list(obs, variant_relationship = "independent")$relat, 2
+  )
 })

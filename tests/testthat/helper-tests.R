@@ -1,4 +1,4 @@
-test_strain_inits <- function(message, strains) {
+test_strain_inits <- function(message, strains, dt) {
   test_that(message, {
     inits <- fv_inits(dt, strains = strains)
     expect_true(is.function(inits))

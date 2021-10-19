@@ -1,6 +1,7 @@
 
 test_that("Model sampling with default settings over two strains happens
            without error", {
+  skip_on_cran()
   expect_true(all(purrr::map_lgl(forecast_wrapper$error, is.null)))
   expect_true(!is.null(forecast_wrapper$fit))
   expect_equal(forecast_wrapper$strains, c(1, 2))

@@ -6,6 +6,7 @@
 * Add argument passing in  `fv_posterior` to allow it be used with `forecast`.
 * Added runtime to diagnostic fit output.
 * Fixes `generate_obs()` to work with all strain models and adds unit tests for all function functionality.
+* Fixed package building on `r-universe`.
 
 # forecast.vocs 0.0.6
 
