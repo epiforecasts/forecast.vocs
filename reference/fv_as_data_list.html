@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Format data for use with stan</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/model.R"><code>R/model.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/model.R" class="external-link"><code>R/model.R</code></a></small>
     <div class="hidden name"><code>fv_as_data_list.Rd</code></div>
     </div>
 
@@ -84,11 +84,11 @@
     <p>Format data for use with stan</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_as_data_list</span><span class="op">(</span>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">fv_as_data_list</span><span class="op">(</span>
   <span class="va">obs</span>,
   horizon <span class="op">=</span> <span class="fl">4</span>,
-  r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span>,
-  voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
+  r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span>,
+  voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
   variant_relationship <span class="op">=</span> <span class="st">"pooled"</span>,
   overdispersion <span class="op">=</span> <span class="cn">TRUE</span>,
   likelihood <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -96,40 +96,40 @@
   debug <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>obs</th>
-      <td><p>A data frame with the following variables:
-<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>.</p></td>
-    </tr><tr><th>horizon</th>
-      <td><p>Integer forecast horizon. Defaults to 4.</p></td>
-    </tr><tr><th>r_init</th>
-      <td><p>Numeric vector of length 2. Prior mean and
-standard deviation for the initial growth rate.</p></td>
-    </tr><tr><th>voc_scale</th>
-      <td><p>Numeric vector of length 2. Prior mean and
+    <dl><dt>obs</dt>
+<dd><p>A data frame with the following variables:
+<code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>.</p></dd>
+<dt>horizon</dt>
+<dd><p>Integer forecast horizon. Defaults to 4.</p></dd>
+<dt>r_init</dt>
+<dd><p>Numeric vector of length 2. Prior mean and
+standard deviation for the initial growth rate.</p></dd>
+<dt>voc_scale</dt>
+<dd><p>Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
-due to the variant of concern.</p></td>
-    </tr><tr><th>variant_relationship</th>
-      <td><p>Character string, defaulting to "pooled".
+due to the variant of concern.</p></dd>
+<dt>variant_relationship</dt>
+<dd><p>Character string, defaulting to "pooled".
 Controls the relationship of strains with options being "pooled" (dependence
 determined from the data), "scaled" (a fixed scaling between strains), and
-"independent" (fully independent strains after initial scaling).</p></td>
-    </tr><tr><th>overdispersion</th>
-      <td><p>Logical, defaults to <code>TRUE</code>. Should the observations
-used include overdispersion.</p></td>
-    </tr><tr><th>likelihood</th>
-      <td><p>Logical, defaults to <code>TRUE</code>. Should the likelihood be
-included in the model</p></td>
-    </tr><tr><th>output_loglik</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should the
+"independent" (fully independent strains after initial scaling).</p></dd>
+<dt>overdispersion</dt>
+<dd><p>Logical, defaults to <code>TRUE</code>. Should the observations
+used include overdispersion.</p></dd>
+<dt>likelihood</dt>
+<dd><p>Logical, defaults to <code>TRUE</code>. Should the likelihood be
+included in the model</p></dd>
+<dt>output_loglik</dt>
+<dd><p>Logical, defaults to <code>FALSE</code>. Should the
 log-likelihood be output. Disabling this will speed up fitting
-if evaluating the model fit is not required.</p></td>
-    </tr><tr><th>debug</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should within model debug
-information be returned.</p></td>
-    </tr></table></div>
-
+if evaluating the model fit is not required.</p></dd>
+<dt>debug</dt>
+<dd><p>Logical, defaults to <code>FALSE</code>. Should within model debug
+information be returned.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A list as required by stan.</p>
@@ -140,6 +140,7 @@ information be returned.</p></td>
 <code><a href="fv_inits.html">fv_inits</a>()</code>,
 <code><a href="fv_model.html">fv_model</a>()</code>,
 <code><a href="fv_sample.html">fv_sample</a>()</code></p></div>
+    </div>
     </div>
 
     <div id="examples">
@@ -217,11 +218,11 @@ information be returned.</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>

@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Default posterior plot</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/plot.R"><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot_default.Rd</code></div>
     </div>
 
@@ -84,7 +84,7 @@
     <p>Default posterior plot</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_default</span><span class="op">(</span>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">plot_default</span><span class="op">(</span>
   <span class="va">posterior</span>,
   <span class="va">target</span>,
   obs <span class="op">=</span> <span class="cn">NULL</span>,
@@ -93,29 +93,29 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
-      <td><p>A dataframe of posterior output as produced by
+    <dl><dt>posterior</dt>
+<dd><p>A dataframe of posterior output as produced by
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. For forecast dates to be extracted data with
-<code>value_type == "cases"</code> must be present.</p></td>
-    </tr><tr><th>target</th>
-      <td><p>A character string indicating which variable to extract
-from the posterior list.</p></td>
-    </tr><tr><th>obs</th>
-      <td><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></td>
-    </tr><tr><th>forecast_dates</th>
-      <td><p>A data.frame in the format produced by
+<code>value_type == "cases"</code> must be present.</p></dd>
+<dt>target</dt>
+<dd><p>A character string indicating which variable to extract
+from the posterior list.</p></dd>
+<dt>obs</dt>
+<dd><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></dd>
+<dt>forecast_dates</dt>
+<dd><p>A data.frame in the format produced by
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain faceting variables.</p></td>
-    </tr><tr><th>all_obs</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
-or just those in the date range of the estimates being plot.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Additional arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">ggplot2::aes()</a></code></p></td>
-    </tr></table></div>
-
+add to plots. May contain faceting variables.</p></dd>
+<dt>all_obs</dt>
+<dd><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
+or just those in the date range of the estimates being plot.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">ggplot2::aes()</a></code></p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A <code>ggplot2</code> plot.</p>
@@ -132,6 +132,7 @@ or just those in the date range of the estimates being plot.</p></td>
 <code><a href="plot_theme.html">plot_theme</a>()</code>,
 <code><a href="plot_voc.html">plot_voc</a>()</code></p></div>
     </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -141,11 +142,11 @@ or just those in the date range of the estimates being plot.</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>

@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot the posterior prediction for cases</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/plot.R"><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot_cases.Rd</code></div>
     </div>
 
@@ -84,7 +84,7 @@
     <p>Plot the posterior prediction for cases</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_cases</span><span class="op">(</span>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">plot_cases</span><span class="op">(</span>
   <span class="va">posterior</span>,
   obs <span class="op">=</span> <span class="cn">NULL</span>,
   forecast_dates <span class="op">=</span> <span class="cn">NULL</span>,
@@ -93,31 +93,31 @@
   log <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
-      <td><p>A dataframe of posterior output as produced by
+    <dl><dt>posterior</dt>
+<dd><p>A dataframe of posterior output as produced by
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. For forecast dates to be extracted data with
-<code>value_type == "cases"</code> must be present.</p></td>
-    </tr><tr><th>obs</th>
-      <td><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></td>
-    </tr><tr><th>forecast_dates</th>
-      <td><p>A data.frame in the format produced by
+<code>value_type == "cases"</code> must be present.</p></dd>
+<dt>obs</dt>
+<dd><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></dd>
+<dt>forecast_dates</dt>
+<dd><p>A data.frame in the format produced by
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
-add to plots. May contain faceting variables.</p></td>
-    </tr><tr><th>all_obs</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
-or just those in the date range of the estimates being plot.</p></td>
-    </tr><tr><th>col</th>
-      <td><p>A character string denoting the variable to use to
+add to plots. May contain faceting variables.</p></dd>
+<dt>all_obs</dt>
+<dd><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
+or just those in the date range of the estimates being plot.</p></dd>
+<dt>col</dt>
+<dd><p>A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the
-data stream.</p></td>
-    </tr><tr><th>log</th>
-      <td><p>Logical, defaults to <code>TRUE</code>. Should cases be plot on
-a log scale?</p></td>
-    </tr></table></div>
-
+data stream.</p></dd>
+<dt>log</dt>
+<dd><p>Logical, defaults to <code>TRUE</code>. Should cases be plot on
+a log scale?</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A <code>ggplot2</code> plot.</p>
@@ -134,6 +134,7 @@ a log scale?</p></td>
 <code><a href="plot_theme.html">plot_theme</a>()</code>,
 <code><a href="plot_voc.html">plot_voc</a>()</code></p></div>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
@@ -141,11 +142,11 @@ a log scale?</p></td>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># default with log transform</span></span>
 <span class="r-in"><span class="fu">plot_cases</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot_cases-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_cases-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># without log transform</span></span>
 <span class="r-in"><span class="fu">plot_cases</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plot_cases-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_cases-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
@@ -156,11 +157,11 @@ a log scale?</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>

@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Define data availability scenarios</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/data-scenarios.R"><code>R/data-scenarios.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/data-scenarios.R" class="external-link"><code>R/data-scenarios.R</code></a></small>
     <div class="hidden name"><code>define_scenarios.Rd</code></div>
     </div>
 
@@ -84,27 +84,27 @@
     <p>Define data availability scenarios</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">define_scenarios</span><span class="op">(</span>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">define_scenarios</span><span class="op">(</span>
   seq_lag <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">3</span>,
-  seq_samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, by <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>, length.out <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
-  voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
+  seq_samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, by <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>, length.out <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+  voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>seq_lag</th>
-      <td><p>The number of weeks that sequences lag the date. Default is
-to test 0 to 3 weeks of lag.</p></td>
-    </tr><tr><th>seq_samples</th>
-      <td><p>Fraction of samples to include (deterministic scaling).
-The default is to test all samples down to 25% of samples by 25% increments.</p></td>
-    </tr><tr><th>voc_scale</th>
-      <td><p>A list of mean and standard  deviations to use to inform
+    <dl><dt>seq_lag</dt>
+<dd><p>The number of weeks that sequences lag the date. Default is
+to test 0 to 3 weeks of lag.</p></dd>
+<dt>seq_samples</dt>
+<dd><p>Fraction of samples to include (deterministic scaling).
+The default is to test all samples down to 25% of samples by 25% increments.</p></dd>
+<dt>voc_scale</dt>
+<dd><p>A list of mean and standard  deviations to use to inform
 the prior for additional transmissibility of the VOC variant. The default
 a uninformed no prior knowledge prior (0, 0.5).
-adjusted growth (0.74, 0.1).</p></td>
-    </tr></table></div>
-
+adjusted growth (0.74, 0.1).</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of scenario definitions with ids</p>
@@ -114,6 +114,7 @@ adjusted growth (0.74, 0.1).</p></td>
     <div class="dont-index"><p>Functions to define and create data scenarios
 <code><a href="generate_obs_scenario.html">generate_obs_scenario</a>()</code>,
 <code><a href="update_obs_availability.html">update_obs_availability</a>()</code></p></div>
+    </div>
     </div>
 
     <div id="examples">
@@ -146,11 +147,11 @@ adjusted growth (0.74, 0.1).</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>

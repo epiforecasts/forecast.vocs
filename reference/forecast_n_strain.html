@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecast for a single model and summarise</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/forecast.R"><code>R/forecast.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/forecast.R" class="external-link"><code>R/forecast.R</code></a></small>
     <div class="hidden name"><code>forecast_n_strain.Rd</code></div>
     </div>
 
@@ -84,7 +84,7 @@
     <p>Forecast for a single model and summarise</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">forecast_n_strain</span><span class="op">(</span>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">forecast_n_strain</span><span class="op">(</span>
   <span class="va">data</span>,
   model <span class="op">=</span> <span class="cn">NULL</span>,
   inits <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_inits.html">fv_inits</a></span>,
@@ -93,58 +93,58 @@
   extract_forecast <span class="op">=</span> <span class="fu">forecast.vocs</span><span class="fu">::</span><span class="va"><a href="fv_extract_forecast.html">fv_extract_forecast</a></span>,
   strains <span class="op">=</span> <span class="fl">2</span>,
   voc_label <span class="op">=</span> <span class="st">"VOC"</span>,
-  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>,
+  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>,
   scale_r <span class="op">=</span> <span class="fl">1</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
-      <td><p>A list of data as produced by <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>.</p></td>
-    </tr><tr><th>model</th>
-      <td><p>A <code>cmdstanr</code> model object as loaded by <code><a href="fv_model.html">fv_model()</a></code>.</p></td>
-    </tr><tr><th>inits</th>
-      <td><p>A function that returns a function to samples initial
+    <dl><dt>data</dt>
+<dd><p>A list of data as produced by <code><a href="fv_as_data_list.html">fv_as_data_list()</a></code>.</p></dd>
+<dt>model</dt>
+<dd><p>A <code>cmdstanr</code> model object as loaded by <code><a href="fv_model.html">fv_model()</a></code>.</p></dd>
+<dt>inits</dt>
+<dd><p>A function that returns a function to samples initial
 conditions with the same arguments as <code><a href="fv_inits.html">fv_inits()</a></code>. If not supplied the
-package default <code><a href="fv_inits.html">fv_inits()</a></code> is used.</p></td>
-    </tr><tr><th>fit</th>
-      <td><p>A function that fits the supplied model with the same arguments
+package default <code><a href="fv_inits.html">fv_inits()</a></code> is used.</p></dd>
+<dt>fit</dt>
+<dd><p>A function that fits the supplied model with the same arguments
 and return values as <code><a href="fv_sample.html">fv_sample()</a></code>. If not supplied the
 package default <code><a href="fv_sample.html">fv_sample()</a></code> is used which performs MCMC sampling using
-cmdstanr.</p></td>
-    </tr><tr><th>posterior</th>
-      <td><p>A function that summarises the output from the supplied
+cmdstanr.</p></dd>
+<dt>posterior</dt>
+<dd><p>A function that summarises the output from the supplied
 fitting function with the same arguments and return values (depending on
 the requirement for downstream package functionality to function) as
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code>. If not supplied the package default
-<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> is used.</p></td>
-    </tr><tr><th>extract_forecast</th>
-      <td><p>A function that extracts the forecast from
+<code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> is used.</p></dd>
+<dt>extract_forecast</dt>
+<dd><p>A function that extracts the forecast from
 the summarised <code>posterior</code>. If not supplied the package default
-<code><a href="fv_extract_forecast.html">fv_extract_forecast()</a></code> is used.</p></td>
-    </tr><tr><th>strains</th>
-      <td><p>Integer number of strains. Defaults to 2. Current
-maximum is 2.</p></td>
-    </tr><tr><th>voc_label</th>
-      <td><p>A character string, default to "VOC". Defines the label
+<code><a href="fv_extract_forecast.html">fv_extract_forecast()</a></code> is used.</p></dd>
+<dt>strains</dt>
+<dd><p>Integer number of strains. Defaults to 2. Current
+maximum is 2.</p></dd>
+<dt>voc_label</dt>
+<dd><p>A character string, default to "VOC". Defines the label
 to assign to variant of concern specific parameters. Example usage is to
-rename parameters to use variant specific terminology.</p></td>
-    </tr><tr><th>probs</th>
-      <td><p>A vector of numeric probabilities to produce
+rename parameters to use variant specific terminology.</p></dd>
+<dt>probs</dt>
+<dd><p>A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
 plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
-and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></td>
-    </tr><tr><th>scale_r</th>
-      <td><p>Numeric, defaults to 1. Rescale the timespan over which
+and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></dd>
+<dt>scale_r</dt>
+<dd><p>Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
-the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Additional parameters passed to <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
-    </tr></table></div>
-
+the generation time (for COVID-19 for example this would be 5.5 / 7.</p></dd>
+<dt>...</dt>
+<dd><p>Additional parameters passed to <code><a href="fv_sample.html">fv_sample()</a></code>.</p></dd>
+</dl></div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Functions used for forecasting across models, dates, and scenarios
@@ -152,6 +152,7 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
 <code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
 <code><a href="forecast.html">forecast</a>()</code>,
 <code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
+    </div>
     </div>
 
   </div>
@@ -162,11 +163,11 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>

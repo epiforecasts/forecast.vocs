@@ -57,7 +57,7 @@
         </li>
         
         <li>
-  <a href="https://github.com/epiforecasts/forecast.vocs/">
+  <a href="https://github.com/epiforecasts/forecast.vocs/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,7 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Link dates by time for posterior parameter estimates</h1>
-    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/master/R/postprocess.R"><code>R/postprocess.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/epiforecasts/forecast.vocs/blob/HEAD/R/postprocess.R" class="external-link"><code>R/postprocess.R</code></a></small>
     <div class="hidden name"><code>link_dates_with_posterior.Rd</code></div>
     </div>
 
@@ -84,23 +84,23 @@
     <p>Link dates by time for posterior parameter estimates</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">link_dates_with_posterior</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">data</span>, mod_end <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">link_dates_with_posterior</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">data</span>, mod_end <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>posterior</th>
-      <td><p>A data frame of summarised posterior estimates
-as returned by <code><a href="https://mc-stan.org/cmdstanr/reference/fit-method-summary.html">cmdstanr::summary()</a></code> with  an additional type variable
+    <dl><dt>posterior</dt>
+<dd><p>A data frame of summarised posterior estimates
+as returned by <code><a href="https://mc-stan.org/cmdstanr/reference/fit-method-summary.html" class="external-link">cmdstanr::summary()</a></code> with  an additional type variable
 which contains the following character string options: "non-VOC",
-"VOC", "Combined", "Overall".</p></td>
-    </tr><tr><th>data</th>
-      <td><p>A list of data as returned in the "data" entry of the output
-returned by <code><a href="fv_sample.html">fv_sample()</a></code>.</p></td>
-    </tr><tr><th>mod_end</th>
-      <td><p>Integer, defaults to 0. Amount to shift the end date of
-estimates.</p></td>
-    </tr></table></div>
-
+"VOC", "Combined", "Overall".</p></dd>
+<dt>data</dt>
+<dd><p>A list of data as returned in the "data" entry of the output
+returned by <code><a href="fv_sample.html">fv_sample()</a></code>.</p></dd>
+<dt>mod_end</dt>
+<dd><p>Integer, defaults to 0. Amount to shift the end date of
+estimates.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A posterior <code>data.frame</code> with an additional data column.</p>
@@ -118,6 +118,7 @@ estimates.</p></td>
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
     </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -127,11 +128,11 @@ estimates.</p></td>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.samabbott.co.uk/">Sam Abbott</a>.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.9000.9000.9000, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> , using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
