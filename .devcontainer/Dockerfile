@@ -47,9 +47,11 @@ RUN Rscript -e 'devtools::install_github("mdlincoln/docthis")'
 RUN Rscript -e 'devtools::install_github("lorenzwalthert/precommit")'
 RUN Rscript -e 'devtools::install_github("milesmcbain/fnmate")'
 
+# install cmdstanr
+RUN Rscript -e 'devtools::install_github("stan-dev/cmdstanr")'
+# install cmdstan
+RUN Rscript -e "cmdstanr::install_cmdstan()"
+
 # install dependencies
 COPY DESCRIPTION /tmp/package/DESCRIPTION
 RUN Rscript -e "devtools::install_deps('/tmp/package', dependencies = TRUE)"
-
-# install cmdstan
-RUN Rscript -e "cmdstanr::install_cmdstan()"
