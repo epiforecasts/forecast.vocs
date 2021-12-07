@@ -1,5 +1,6 @@
 url: epiforecasts.io/forecast.vocs/
 template:
+  bootstrap: 5
   package: preferably
   params:
     toggle: manual
