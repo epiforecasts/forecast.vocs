@@ -185,8 +185,8 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
 #' the generation time (for COVID-19 for example this would be 5.5 / 7.
 #'
 #' @return A dataframe summarising the model posterior. Output is stratified
-#' by `value_type` with posterior summaries by case, voc, rt, growth, model,
-#' and the raw posterior summary.
+#' by `value_type` with posterior summaries by case, voc, voc advantage vs
+#' non-voc over time, rt, growth, model, and the raw posterior summary.
 #'
 #' @family postprocess
 #' @export
@@ -282,8 +282,18 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   growth <- copy(rt)
 
   # transform growth to Rt
-  cols <- c("mean", "median", paste0("q", probs * 100))
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "type"]
+
+  # summarised difference between variants over time
+  voc_mod_over_time <- sfit[grepl("voc_mod_over_time", variable)]
+  voc_mod_over_time <- voc_mod_over_time[, type := "VOC"]
+  if (nrow(voc_mod_over_time) > 0) {
+    voc_mod_over_time <- link_dates_with_posterior(voc_mod_over_time, data)
+    voc_mod_over_time[,
+      (cols) := purrr::map(.SD, ~ exp(. * scale_r)),
+      .SDcols = cols, by = "type"
+    ]
+  }
 
   # summarise model parameters
   param_lookup <- data.table(
@@ -312,6 +322,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     model = model,
     cases = cases,
     voc = voc,
+    voc_mod_over_time = voc_mod_over_time,
     growth = growth,
     rt = rt,
     raw = sfit

@@ -54,6 +54,7 @@ Plotting functions
 \code{\link{plot_pairs}()},
 \code{\link{plot_posterior}()},
 \code{\link{plot_rt}()},
-\code{\link{plot_theme}()}
+\code{\link{plot_theme}()},
+\code{\link{plot_voc_advantage}()}
 }
 \concept{plot}

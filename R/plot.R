@@ -196,6 +196,37 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
   return(plot)
 }
 
+#' Plot the posterior prediction for the transmission advantage for the variant
+#' of concern
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
+#' @inheritParams plot_voc
+#' @export
+#' @importFrom scales percent
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#' plot_voc_advantage(posterior)
+plot_voc_advantage <- function(posterior, forecast_dates = NULL,
+                               voc_label = "variant of concern", ...) {
+  plot <- plot_default(
+    posterior, "voc_mod_over_time",
+    obs = NULL, forecast_dates, x = date, ...
+  )
+
+  plot <- plot +
+    scale_y_continuous(labels = scales::percent) +
+    labs(
+      y = paste0("Transmission advantage for the ", voc_label),
+      x = "Date"
+    )
+
+  plot <- plot_theme(plot)
+  return(plot)
+}
+
+
 #' Plot the posterior prediction for the reproduction number
 #'
 #' @return A `ggplot2` plot.
@@ -297,6 +328,9 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
     plots$voc <- plot_voc(
       posterior, obs, forecast_dates,
       voc_label = voc_label, all_obs = all_obs
+    )
+    plots$voc_advantage <- plot_voc_advantage(
+      posterior, forecast_dates, voc_label
     )
   }
   plots$growth <- plot_growth(posterior, forecast_dates)

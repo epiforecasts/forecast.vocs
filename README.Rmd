@@ -110,6 +110,12 @@ Plot the posterior estimate for the effective reproduction number of Delta and n
 plot_rt(posteriors)
 ```
 
+Plot the estimated transmission advantage for Delta vs non-Delta over time.
+
+```{r}
+plot_voc_advantage(posteriors)
+```
+
 Alternatively a list of plots with sensible defaults can be produced using the following. 
 
 ```{r, eval = FALSE}

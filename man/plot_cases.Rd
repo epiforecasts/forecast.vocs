@@ -59,6 +59,7 @@ Plotting functions
 \code{\link{plot_posterior}()},
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
+\code{\link{plot_voc_advantage}()},
 \code{\link{plot_voc}()}
 }
 \concept{plot}

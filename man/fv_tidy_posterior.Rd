@@ -31,8 +31,8 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.}
 }
 \value{
 A dataframe summarising the model posterior. Output is stratified
-by \code{value_type} with posterior summaries by case, voc, rt, growth, model,
-and the raw posterior summary.
+by \code{value_type} with posterior summaries by case, voc, voc advantage vs
+non-voc over time, rt, growth, model, and the raw posterior summary.
 }
 \description{
 A very opinionated wrapper around
