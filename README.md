@@ -3,7 +3,7 @@
 
 # Forecast case and sequence notifications using variant of concern strain dynamics
 
-[![R-CMD-check](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml)
+[![R-CMD-as-cran-check](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/forecast.vocs)
 
@@ -96,37 +96,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 11.3 seconds.
-#> Chain 2 finished in 12.0 seconds.
-#> Chain 4 finished in 13.6 seconds.
-#> Chain 1 finished in 32.6 seconds.
+#> Chain 2 finished in 34.4 seconds.
+#> Chain 1 finished in 35.4 seconds.
+#> Chain 4 finished in 39.0 seconds.
+#> Chain 3 finished in 41.7 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 17.4 seconds.
-#> Total execution time: 32.7 seconds.
+#> Mean chain execution time: 37.6 seconds.
+#> Total execution time: 41.9 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 34.3 seconds.
-#> Chain 2 finished in 38.3 seconds.
-#> Chain 3 finished in 39.0 seconds.
-#> Chain 1 finished in 41.6 seconds.
+#> Chain 2 finished in 98.6 seconds.
+#> Chain 3 finished in 113.6 seconds.
+#> Chain 4 finished in 113.9 seconds.
+#> Chain 1 finished in 136.2 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 38.3 seconds.
-#> Total execution time: 41.7 seconds.
+#> Mean chain execution time: 115.6 seconds.
+#> Total execution time: 136.1 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
 #> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.002723
-#> 2:   0.4,0.2       <CmdStanMCMC[30]> <list[20]> <list[5]>    4000 1.005589
-#>    divergent_transitions per_divergent_transitons max_treedepth
-#> 1:                    10                  0.00250            12
-#> 2:                    13                  0.00325            10
-#>    no_at_max_treedepth per_at_max_treedepth            posterior
-#> 1:                 504               0.1260 <data.table[148x20]>
-#> 2:                2998               0.7495 <data.table[400x20]>
+#> 1:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000     1.01
+#> 2:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000     1.01
+#>    divergent_transitions per_divergent_transitions max_treedepth
+#> 1:                     3                   0.00075            11
+#> 2:                     3                   0.00075            11
+#>    no_at_max_treedepth per_at_max_treedepth  time            posterior
+#> 1:                 401              0.10025  41.9 <data.table[148x20]>
+#> 2:                 560              0.14000 136.1 <data.table[426x20]>
 #>               forecast
 #> 1: <data.table[12x13]>
 #> 2: <data.table[54x13]>
@@ -174,6 +174,15 @@ plot_rt(posteriors)
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+
+Plot the estimated transmission advantage for Delta vs non-Delta over
+time.
+
+``` r
+plot_voc_advantage(posteriors)
+```
+
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 Alternatively a list of plots with sensible defaults can be produced
 using the following.
