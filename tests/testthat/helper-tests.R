@@ -91,7 +91,7 @@ test_fv_extract_forecast <- function(message, strains, posterior) {
       value_types <- c("cases", "growth", "rt")
     } else if (strains == 2) {
       types <- c("Combined", "VOC", "non-VOC")
-      value_types <- c("cases", "voc", "growth", "rt")
+      value_types <- c("cases", "voc", "voc_mod_over_time", "growth", "rt")
     }
     expect_equal(unique(forecasts$type), types)
     expect_gt(min(forecasts$horizon), 0)
