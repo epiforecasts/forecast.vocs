@@ -175,13 +175,13 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @importFrom scales percent
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
-#' plot_voc(posterior)
-plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
+#' plot_voc_frac(posterior)
+plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := share_voc]
   }
-  plot <- plot_default(posterior, "voc", obs, forecast_dates,
+  plot <- plot_default(posterior, "voc_frac", obs, forecast_dates,
     all_obs = all_obs, x = date, ...
   )
 
@@ -202,7 +202,7 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @return A `ggplot2` plot.
 #'
 #' @family plot
-#' @inheritParams plot_voc
+#' @inheritParams plot_voc_frac
 #' @export
 #' @importFrom scales percent
 #' @examples
@@ -211,7 +211,7 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
 plot_voc_advantage <- function(posterior, forecast_dates = NULL,
                                voc_label = "variant of concern", ...) {
   plot <- plot_default(
-    posterior, "voc_mod_over_time",
+    posterior, "voc_advantage",
     obs = NULL, forecast_dates, x = date, ...
   )
 
@@ -307,7 +307,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @family plot
 #' @export
 #' @inheritParams plot_cases
-#' @inheritParams plot_voc
+#' @inheritParams plot_voc_frac
 #' @importFrom purrr walk2
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")

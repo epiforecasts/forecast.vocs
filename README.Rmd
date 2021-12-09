@@ -95,7 +95,7 @@ plot_cases(posteriors, current_obs)
 Plot the posterior prediction for the fraction of cases that have the Delta variant from the two strain model.
 
 ```{r}
-plot_voc(posteriors, current_obs, voc_label = "Delta variant")
+plot_voc_frac(posteriors, current_obs, voc_label = "Delta variant")
 ```
 
 Plot the posterior estimate for the growth rate over the mean of the generation time for COVID-19 cases (here assumed to be 5.5 days).
