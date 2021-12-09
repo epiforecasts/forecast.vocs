@@ -55,7 +55,7 @@ transformed parameters {
   vector<lower = 0, upper = 1>[t_seqf] frac_voc;
   vector[overdisp ? 2 : 0] phi;
 
-  // random walk growth rate
+  // differenced AR(1) growth rate
   diff = rep_vector(0, t - 2);
   for (i in 1:(t-2)) {
     if (i <= t_dep) {
