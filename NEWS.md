@@ -1,3 +1,13 @@
+# forecast.vocs 0.0.8
+
+## Features
+
+* Adds a new summary variable for the transmission advantage of the VOC to the output from
+ `fv_tidy_posterior()`.
+* Adds a new plotting function `plot_voc_advantage()` to extract and plot this.
+* Adds `plot_voc_advantage()` to `plot_posterior` as an additional output.
+* Updates all example data to include this new output.
+
 # forecast.vocs 0.0.7
 
 * Further generalised the `forecast` family to accept custom data and forecast extraction functions.
