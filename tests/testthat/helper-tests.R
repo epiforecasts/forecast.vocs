@@ -91,7 +91,7 @@ test_fv_extract_forecast <- function(message, strains, posterior) {
       value_types <- c("cases", "growth", "rt")
     } else if (strains == 2) {
       types <- c("Combined", "VOC", "non-VOC")
-      value_types <- c("cases", "voc", "voc_mod_over_time", "growth", "rt")
+      value_types <- c("cases", "voc_frac", "voc_advantge", "growth", "rt")
     }
     expect_equal(unique(forecasts$type), types)
     expect_gt(min(forecasts$horizon), 0)
@@ -187,7 +187,8 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
       value_types <- c("model", "cases", "growth", "rt", "raw")
     } else if (strains == 2) {
       types <- c(NA, "Combined", voc_label, paste0("non-", voc_label))
-      value_types <- c("model", "cases", "voc", "growth", "rt", "raw")
+      value_types <- c("model", "cases", "voc_frac", "voc_advantge",
+                       "growth", "rt", "raw")
     }
     expect_type(posterior$type, "character")
     expect_equal(unique(posterior$type), types)
@@ -203,7 +204,7 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
     expect_equal(cases$obs, cases$cases)
     # Check linked sequence observations agree with input data
     if (strains == 2) {
-      seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
+      seq <- posterior[value_type %in% "voc_frac"][, .(date, obs)][!is.na(obs)]
       seq <- merge(seq, obs, all = TRUE, by = "date")
       expect_equal(seq$obs, seq$share_voc)
     }

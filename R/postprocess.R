@@ -246,7 +246,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   # summarise VOC if present
   voc_frac <- sfit[grepl("frac_voc", variable)]
    voc_frac[, type := "VOC"]
-  if (nrow( voc_frac) > 0) {
+  if (nrow(voc_frac) > 0) {
      voc_frac <- link_dates_with_posterior(voc, data)
      voc_frac <- link_obs_with_posterior(
       posterior = voc, obs = data$Y / data$N,
@@ -285,11 +285,11 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "type"]
 
   # summarised difference between variants over time
-  voc_mod_over_time <- sfit[grepl("voc_mod_over_time", variable)]
-  voc_mod_over_time <- voc_mod_over_time[, type := "VOC"]
+  voc_advantage <- sfit[grepl("voc_advantage", variable)]
+  voc_advantage <- voc_advantage[, type := "VOC"]
   if (nrow(voc_mod_over_time) > 0) {
-    voc_mod_over_time <- link_dates_with_posterior(voc_mod_over_time, data)
-    voc_mod_over_time[,
+    voc_advantage <- link_dates_with_posterior(voc_advantage, data)
+    voc_advantage[,
       (cols) := purrr::map(.SD, ~ exp(. * scale_r)),
       .SDcols = cols, by = "type"
     ]
@@ -298,7 +298,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   # summarise model parameters
   param_lookup <- data.table(
     variable = c(
-      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_mod",
+      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_advantage",
       "voc_noise[1]", "nvoc_noise[1]", "init_cases[1]", "init_cases[2]",
       "phi[1]", "phi[2]", "phi"
     ),

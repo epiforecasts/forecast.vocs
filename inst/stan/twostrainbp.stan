@@ -167,7 +167,7 @@ model {
 }
 
 generated quantities {
-  vector[t_seqf - 1] voc_mod_over_time;
+  vector[t_seqf - 1] voc_advantage;
   real avg_voc_mod;
   vector[t - 1] com_r;
   int sim_voc_cases[t_seqf];
@@ -176,8 +176,8 @@ generated quantities {
   vector[output_loglik ? t_nots : 0] log_lik;
 
   // summary measures
-  voc_mod_over_time = voc_r - r[(t_nseq+1):(t-1)];
-  avg_voc_mod = mean(voc_mod_over_time);
+  voc_advantage = voc_r - r[(t_nseq+1):(t-1)];
+  avg_voc_advantage = mean(voc_advantage);
   com_r = r;
   com_r[(t_nseq+1):(t-1)] = (1 - frac_voc[2:t_seqf]) .* r[(t_nseq+1):(t-1)] +
      frac_voc[2:t_seqf] .* voc_r;
