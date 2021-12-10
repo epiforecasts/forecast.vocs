@@ -161,7 +161,7 @@ forecasts <- unnest_posterior(forecasts)
 plot_cases(forecasts, log = TRUE)
 
 # plot voc posterior predictions
-plot_voc(forecasts)
+plot_voc_advantage(forecasts)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
@@ -169,6 +169,8 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}

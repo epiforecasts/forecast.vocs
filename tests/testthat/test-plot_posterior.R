@@ -12,6 +12,6 @@ test_that("Can plot results from the two strain model", {
   p <- plot_posterior(posterior2)
   expect_ggplot(p[[1]])
   expect_named(
-    p, c("cases", "log_cases", "voc", "voc_advantage", "growth", "rt")
+    p, c("cases", "log_cases", "voc_frac", "voc_advantage", "growth", "rt")
   )
 })

@@ -76,7 +76,7 @@
 #' plot_cases(forecasts, log = TRUE)
 #'
 #' # plot voc posterior predictions
-#' plot_voc(forecasts)
+#' plot_voc_advantage(forecasts)
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
@@ -167,6 +167,7 @@ forecast <- function(obs,
   if (!keep_fit) {
     suppressWarnings(forecasts[, c("fit", "data", "fit_args") := NULL])
   }
+  class(forecasts) <- c("fv_forecast", class(forecasts))
   return(forecasts[])
 }
 

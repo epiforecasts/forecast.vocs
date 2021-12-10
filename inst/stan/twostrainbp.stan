@@ -168,7 +168,7 @@ model {
 
 generated quantities {
   vector[t_seqf - 1] voc_advantage;
-  real avg_voc_mod;
+  real avg_voc_advantage;
   vector[t - 1] com_r;
   int sim_voc_cases[t_seqf];
   int sim_nvoc_cases[t];

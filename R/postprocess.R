@@ -287,7 +287,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   # summarised difference between variants over time
   voc_advantage <- sfit[grepl("voc_advantage", variable)]
   voc_advantage <- voc_advantage[, type := "VOC"]
-  if (nrow(voc_mod_over_time) > 0) {
+  if (nrow(voc_advantage) > 0) {
     voc_advantage <- link_dates_with_posterior(voc_advantage, data)
     voc_advantage[,
       (cols) := purrr::map(.SD, ~ exp(. * scale_r)),
@@ -342,6 +342,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   if (!(voc_label %in% "VOC")) {
     out <- update_voc_label(out, voc_label)
   }
+  class(out) <- c("fv_tidy_posterior", class(out))
   return(out[])
 }
 

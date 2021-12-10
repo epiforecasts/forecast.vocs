@@ -22,6 +22,7 @@ Add the forecast dates to a plot
 }
 \seealso{
 Plotting functions
+\code{\link{plot.fv_forecast}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},

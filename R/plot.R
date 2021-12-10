@@ -324,8 +324,8 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
     posterior, obs, forecast_dates,
     log = TRUE, all_obs = all_obs
   )
-  if (nrow(posterior[value_type %in% "voc"]) > 0) {
-    plots$voc <- plot_voc(
+  if (nrow(posterior[value_type %in% "voc_frac"]) > 0) {
+    plots$voc_frac <- plot_voc_frac(
       posterior, obs, forecast_dates,
       voc_label = voc_label, all_obs = all_obs
     )
