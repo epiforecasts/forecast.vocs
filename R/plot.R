@@ -297,11 +297,6 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 
 #' Plot posterior predictions
 #'
-#' @param save_path A character string indicating where to save plots
-#' if required.
-#'
-#' @param type A character string indicating the format to use to save plots.
-#'
 #' @return A named list of all supported package plots with sensible defaults.
 #'
 #' @family plot
@@ -313,7 +308,6 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_posterior(posterior)
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           save_path = NULL, type = "png",
                            all_obs = FALSE, voc_label = "variant of concern") {
   plots <- list()
   plots$cases <- plot_cases(

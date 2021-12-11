@@ -133,7 +133,7 @@ statistics to.}
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
-and \code{\link[=plot_voc]{plot_voc()}}).}
+and \code{\link[=plot_voc_frac]{plot_voc_frac()}}).}
 
 \item{id}{ID to assign to this forecast. Defaults to 0.}
 

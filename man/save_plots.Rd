@@ -8,6 +8,13 @@ save_plots(plots, save_path = NULL, type = "png", ...)
 }
 \arguments{
 \item{plots}{A named list of \code{ggplot2} plots.}
+
+\item{save_path}{A character string indicating where to save plots
+if required.}
+
+\item{type}{A character string indicating the format to use to save plots.}
+
+\item{...}{Additional arguments passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}}
 }
 \description{
 Save plots by name

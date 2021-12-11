@@ -13,7 +13,7 @@ fv_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3, ...)
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
-and \code{\link[=plot_voc]{plot_voc()}}).}
+and \code{\link[=plot_voc_frac]{plot_voc_frac()}}).}
 
 \item{digits}{Numeric, defaults to 3. Number of digits to round summary
 statistics to.}

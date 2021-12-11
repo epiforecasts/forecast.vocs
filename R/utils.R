@@ -72,7 +72,14 @@ fv_example <- function(strains = 1, type = "posterior") {
 
 #' Save plots by name
 #'
+#' @param save_path A character string indicating where to save plots
+#' if required.
+#'
+#' @param type A character string indicating the format to use to save plots.
+#'
 #' @param plots A named list of `ggplot2` plots.
+#' 
+#' @param ... Additional arguments passed to [ggplot2::ggsave()]
 #' @return NULL
 #' @family plot
 #' @export
@@ -85,8 +92,11 @@ save_plots <- function(plots, save_path = NULL, type = "png", ...) {
   if (!is.null(save_path)) {
     walk2(
       plots, names(plots),
-      ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x, ...
-      )
+      ~ ggsave(
+        filename = file.path(save_path, paste0(.y, ".", type)),
+        plot = .x, device = type
+      ),
+      ...
     )
   }
   return(invisible(NULL))

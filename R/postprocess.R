@@ -108,7 +108,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' quantile summaries for. By default these are the 5%, 20%, 80%,
 #' and 95% quantiles which are also the minimum set required for
 #' plotting functions to work (such as [plot_cases()], [plot_rt()],
-#' and [plot_voc()]).
+#' and [plot_voc_frac()]).
 #'
 #' @param digits Numeric, defaults to 3. Number of digits to round summary
 #' statistics to.

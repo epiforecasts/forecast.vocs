@@ -4,9 +4,12 @@
 \alias{summary.fv_posterior}
 \title{Summary method for fv_tidy_posterior}
 \usage{
-\method{summary}{fv_posterior}(x, type = "model", forecast = FALSE, as_dt = FALSE, ...)
+\method{summary}{fv_posterior}(object, type = "model", forecast = FALSE, as_dt = FALSE, ...)
 }
 \arguments{
+\item{object}{An object of the class \code{fv_posterior} as returned by
+\code{fv_tidy_posterior()} .}
+
 \item{type}{A character string used to filter the summarised output and
 defaulting to "model". Current options are: "model" which returns a
 summary of key model parameters, "cases" which returns summarised cases,
@@ -24,8 +27,7 @@ be used to return only forecasts rather than complete posterior.}
 \item{as_dt}{Logical defaults to \code{FALSE}. Once any filtering has been applied
 should \code{\link[=summary]{summary()}} fall back to using the default \code{data.table} method.}
 
-\item{object}{An object of the class \code{fv_posterior} as returned by
-\code{fv_tidy_posterior()} .}
+\item{...}{Additional arguments passed to \code{\link[=summary]{summary()}} when \code{as_dt = TRUE}.}
 }
 \value{
 A summary data.table table unless type "all" is used in which case

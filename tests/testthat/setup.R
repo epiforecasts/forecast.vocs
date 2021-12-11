@@ -1,4 +1,5 @@
 if (not_on_cran()) {
+  message("Running tests setup")
   options(mc.cores = 2)
   obs <- filter_by_availability(
     germany_covid19_delta_obs,

@@ -56,6 +56,8 @@ print.fv_posterior <- function(x, ...) {
 #' @param forecast Logical defaults to `FALSE`. Should [fv_extract_forecast()]
 #' be used to return only forecasts rather than complete posterior.
 #'
+#' @param ... Additional arguments passed to [summary()] when `as_dt = TRUE`.
+#' 
 #' @family postprocess
 #' @seealso fv_tidy_posterior
 #' @return A summary data.table table unless type "all" is used in which case
@@ -90,7 +92,7 @@ print.fv_posterior <- function(x, ...) {
 #'
 #' # raw posterior values
 #' summary(posterior, type = "raw")
-summary.fv_posterior <- function(x, type = "model", forecast = FALSE,
+summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
                                  as_dt = FALSE, ...) {
   type <- match.arg(
     type,
@@ -98,7 +100,7 @@ summary.fv_posterior <- function(x, type = "model", forecast = FALSE,
       "all")
   )
   etype <- type
-  out <- x
+  out <- object
   if (forecast) {
     out <- fv_extract_forecast(out)
   }
