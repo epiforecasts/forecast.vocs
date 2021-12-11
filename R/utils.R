@@ -63,6 +63,9 @@ fv_example <- function(strains = 1, type = "posterior") {
     out <- file
   } else {
     out <- fread(file)
+    if (type %in% c("posterior", "forecast")) {
+      class(out) <- c("fv_posterior", class(out))
+    }
   }
   return(out)
 }

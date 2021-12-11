@@ -51,6 +51,7 @@ plot_posterior(posterior)
 Plotting functions
 \code{\link{add_forecast_dates}()},
 \code{\link{plot.fv_forecast}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},

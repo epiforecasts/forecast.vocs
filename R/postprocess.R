@@ -342,7 +342,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   if (!(voc_label %in% "VOC")) {
     out <- update_voc_label(out, voc_label)
   }
-  class(out) <- c("fv_tidy_posterior", class(out))
+  class(out) <- c("fv_posterior", class(out))
   return(out[])
 }
 
@@ -375,7 +375,7 @@ extract_forecast_dates <- function(posterior) {
 
   if (nrow(cases) == 0 | is.null(cases$forecast_start)) {
     message(
-      "Cannot extract forecast dates to plot as case data with a forecast_date variable is not present." # nolint
+      "Cannot extract forecast dates to plot as case data with a forecast_start variable is not present." # nolint
     )
     dates <- data.table(`Data unavailable` = list(), date = list())
   } else {

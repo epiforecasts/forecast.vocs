@@ -2,33 +2,30 @@
 #'
 #' @description `summary` method for class "fv_forecast".
 #'
-#' @param object A `data.table` output from [forecast()].
+#' @param object A `data.table` output from [forecast()] of class "fv_forecast".
 #'
-#' @param type A character string indicating the type of summary to return.
-#' Currently supported options are "nowcast" which summaries the nowcast
-#' posterior using [enw_nowcast_summary()], "nowcast_samples" which returns
-#' posterior samples from the most recent nowcast, "fit" which returns the
-#' summarised `cmdstanr` fit using [enw_posterior()], and
-#' "posterior_prediction" which returns summarised posterior predictions for
-#' observations used in fitting (using [enw_pp_summary()]).
+#' @param target gwgfw
 #'
-#' @param ... Pass additional arguments to summary functions.
+#' @param ... Pass additional arguments to [summary.fv_posterior()].
 #'
+#' @inheritParams summary.fv_posterior
 #' @family forecast
-#' @seealso summary forecast unnest_posterior
-#' @return A summary data.frame
+#' @seealso summary.fv_posterior forecast unnest_posterior
+#' @return A summary `data.table`.
 #' @export
-summary.fv_forecast <- function(object, type = "posterior", ...) {
-  type <- match.arg(type, c("fit", "diagnostics", "posterior", "forecast"))
-  if (type == "fit") {
+summary.fv_forecast <- function(object, target = "posterior", type = "all",
+                                ...) {
+  target <- match.arg(target, c("fit", "diagnostics", "posterior", "forecast"))
+  if (target == "fit") {
     out <- object$fit
     if (length(out) == 1) {
       out <- out[[1]]
     }
-  }else if (type == "diagnostics") {
+  }else if (target == "diagnostics") {
     out <- copy(out)[, c("posterior", "forecast") := NULL][]
   }else{
-    out <- unnest_posterior(object, target = type)[]
+    out <- unnest_posterior(object, target = target)
+    out <- summary(out, type = type, as_dt = as_dt, ...)
   }
   return(out)
 }
@@ -37,23 +34,21 @@ summary.fv_forecast <- function(object, type = "posterior", ...) {
 #'
 #' @description `plot` method for class "fv_forecast".
 #'
-#' @param x A `data.table` of output as produced by [forecast()].
+#' @param x A `data.table` of output as produced by [forecast()] of class
+#' "fv_forecast".
 #'
-#'
-#' @param type A character string indicating the type of plot required.
+#' @param target fwfwew
 #'
 #' @param ... Pass additional arguments to lower level plot functions.
 #'
+#' @inheritParams plot.fv_posterior
 #' @family forecast
 #' @family plot
+#' @seealso plot.fv_posterior
 #' @return `ggplot2` object
 #' @export
-plot.fv_forecast <- function(x, target = "posterior", type, ...) {
+plot.fv_forecast <- function(x, target = "posterior", type = "cases", ...) {
   target <- match.arg(target, c("posterior", "forecast"))
-  type <- match.arg(
-    type,
-    c("cases", "voc_frac", "voc_advantage", "growth", "rt")
-  )
-  target <- summary(x, type = target)
+  target <- summary(x, target = target)
   plot(target, type = type, ...)
 }

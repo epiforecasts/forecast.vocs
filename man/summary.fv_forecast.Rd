@@ -4,29 +4,25 @@
 \alias{summary.fv_forecast}
 \title{Summary method for forecast}
 \usage{
-\method{summary}{fv_forecast}(object, type = "posterior", ...)
+\method{summary}{fv_forecast}(object, target = "posterior", type = "all", ...)
 }
 \arguments{
-\item{object}{A \code{data.table} output from \code{\link[=forecast]{forecast()}}.}
+\item{object}{A \code{data.table} output from \code{\link[=forecast]{forecast()}} of class "fv_forecast".}
 
-\item{type}{A character string indicating the type of summary to return.
-Currently supported options are "nowcast" which summaries the nowcast
-posterior using \code{\link[=enw_nowcast_summary]{enw_nowcast_summary()}}, "nowcast_samples" which returns
-posterior samples from the most recent nowcast, "fit" which returns the
-summarised \code{cmdstanr} fit using \code{\link[=enw_posterior]{enw_posterior()}}, and
-"posterior_prediction" which returns summarised posterior predictions for
-observations used in fitting (using \code{\link[=enw_pp_summary]{enw_pp_summary()}}).}
+\item{target}{gwgfw}
 
-\item{...}{Pass additional arguments to summary functions.}
+\item{type}{A character string used to filter the summarised output.}
+
+\item{...}{Pass additional arguments to \code{\link[=summary.fv_posterior]{summary.fv_posterior()}}.}
 }
 \value{
-A summary data.frame
+A summary \code{data.table}.
 }
 \description{
 \code{summary} method for class "fv_forecast".
 }
 \seealso{
-summary forecast unnest_posterior
+summary.fv_posterior forecast unnest_posterior
 
 Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
@@ -34,6 +30,7 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_n_strain}()},
 \code{\link{forecast}()},
 \code{\link{plot.fv_forecast}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}
