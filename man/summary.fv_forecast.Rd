@@ -30,7 +30,6 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_n_strain}()},
 \code{\link{forecast}()},
 \code{\link{plot.fv_forecast}()},
-\code{\link{plot.fv_posterior}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}

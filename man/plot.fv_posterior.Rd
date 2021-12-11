@@ -4,7 +4,15 @@
 \alias{plot.fv_posterior}
 \title{Plot method for forecast}
 \usage{
-\method{plot}{fv_posterior}(x, obs, type = "cases", ...)
+\method{plot}{fv_posterior}(
+  x,
+  type = "cases",
+  obs = NULL,
+  forecast_dates = NULL,
+  all_obs = FALSE,
+  voc_label = "variant of concern",
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{data.table} of output as produced by \code{\link[=forecast]{forecast()}}.}
@@ -19,15 +27,24 @@
 \description{
 \code{plot} method for class "fv_forecast".
 }
+\examples{
+posterior <- fv_example(strains = 2, type = "posterior")
+
+}
 \seealso{
-Functions used for forecasting across models, dates, and scenarios
-\code{\link{forecast_across_dates}()},
-\code{\link{forecast_across_scenarios}()},
-\code{\link{forecast_n_strain}()},
-\code{\link{forecast}()},
-\code{\link{plot.fv_forecast}()},
-\code{\link{summary.fv_forecast}()},
-\code{\link{unnest_posterior}()}
+Functions used for postprocessing of model fits
+\code{\link{convert_to_stanfit}()},
+\code{\link{extract_draws}()},
+\code{\link{extract_forecast_dates}()},
+\code{\link{fv_extract_forecast}()},
+\code{\link{fv_posterior}()},
+\code{\link{fv_tidy_posterior}()},
+\code{\link{link_dates_with_posterior}()},
+\code{\link{link_obs_with_posterior}()},
+\code{\link{print.fv_posterior}()},
+\code{\link{quantiles_to_long}()},
+\code{\link{summary.fv_posterior}()},
+\code{\link{update_voc_label}()}
 
 Plotting functions
 \code{\link{add_forecast_dates}()},
@@ -40,7 +57,8 @@ Plotting functions
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
 \code{\link{plot_voc_advantage}()},
-\code{\link{plot_voc_frac}()}
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 }
-\concept{forecast}
 \concept{plot}
+\concept{postprocess}

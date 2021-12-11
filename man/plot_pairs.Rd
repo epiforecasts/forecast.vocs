@@ -54,7 +54,8 @@ Plotting functions
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
 \code{\link{plot_voc_advantage}()},
-\code{\link{plot_voc_frac}()}
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 
 Functions to explore and validate models
 \code{\link{bp_launch_shinystan}()}

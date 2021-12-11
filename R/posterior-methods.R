@@ -51,13 +51,13 @@ print.fv_posterior <- function(x, ...) {
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #'
 #' # case summary
-#' summary(posterior)
+#' summary(posterior, type = "cases")
 #'
 #' # summary of the case summary
-#' summary(posterior, as_dt = TRUE)
+#' summary(posterior, type = "cases", as_dt = TRUE)
 #'
 #' # case forecast only
-#' summary(posterior, forecast = TRUE)
+#' summary(posterior, type = "cases", forecast = TRUE)
 #'
 #' # voc fraction summary
 #' summary(posterior, type = "voc_frac")
@@ -76,7 +76,7 @@ print.fv_posterior <- function(x, ...) {
 #'
 #' # raw posterior values
 #' summary(posterior, type = "raw")
-summary.fv_posterior <- function(x, type = "cases", forecast = FALSE,
+summary.fv_posterior <- function(x, type = "model", forecast = FALSE,
                                  as_dt = FALSE, ...) {
   type <- match.arg(
     type,
@@ -102,6 +102,11 @@ summary.fv_posterior <- function(x, type = "cases", forecast = FALSE,
       out[, c("obs") := NULL]
     )
   }
+  if (type %in% c("model", "raw")) {
+    suppressWarnings(
+      out[, c("observed", "type", "forecast_start", "date") := NULL]
+    )
+  }
   if (as_dt) {
     class(out) <- class(out)[-1]
     return(summary(out, ...))
@@ -124,26 +129,78 @@ summary.fv_posterior <- function(x, type = "cases", forecast = FALSE,
 #'
 #' @param ... Pass additional arguments to lower level plot functions.
 #'
-#' @family forecast
+#' @family postprocess
 #' @family plot
 #' @return `ggplot2` object
 #' @export
-plot.fv_posterior <- function(x, obs, type = "cases", ...) {
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#'
+plot.fv_posterior <- function(x, type = "cases", obs = NULL, 
+                              forecast_dates = NULL, all_obs = FALSE,
+                              voc_label = "variant of concern", ...) {
   type <- match.arg(
     type,
     c("cases", "voc_frac", "voc_advantage", "growth", "rt", "all")
   )
   if (type == "cases") {
-    plot_cases()
+    plot_cases(x, obs, forecast_dates, all_obs = all_obs, ...)
   } else if (type == "voc_frac") {
-    plot_voc_frac()
+    plot_voc_frac(
+      x, obs, forecast_dates, voc_label = voc_label, all_obs = all_obs, ...
+    )
   } else if (type == "voc_advantage") {
-    plot_voc_advantage()
+    plot_voc_advantage(x, forecast_dates, voc_label, ...)
   } else if (type == "growth") {
-    plot_growth()
+    plot_growth(x, forecast_date, ...)
   } else if (type == "rt") {
-    plot_rt()
+    plot_rt(x, forecast_dates, ...)
   } else if (type == "all") {
-    plot_posterior()
+    plot_posterior(x, obs = obs, forecast_dates = forecast_dates,
+                   all_obs = all_obs, voc_label = voc_label, ...)
   }
+}
+
+
+#' Plot posterior predictions
+#'
+#' @param save_path A character string indicating where to save plots
+#' if required.
+#'
+#' @param type A character string indicating the format to use to save plots.
+#'
+#' @return A named list of all supported package plots with sensible defaults.
+#'
+#' @family plot
+#' @export
+#' @inheritParams plot_cases
+#' @inheritParams plot_voc_frac
+#' @importFrom purrr walk2
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#' plot_posterior(posterior)
+plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
+                           save_path = NULL, type = "png",
+                           all_obs = FALSE, voc_label = "variant of concern") {
+  plots <- list()
+  plots$cases <- plot_cases(
+    posterior, obs, forecast_dates,
+    log = FALSE, all_obs = all_obs
+  )
+  plots$log_cases <- plot_cases(
+    posterior, obs, forecast_dates,
+    log = TRUE, all_obs = all_obs
+  )
+  if (nrow(posterior[value_type %in% "voc_frac"]) > 0) {
+    plots$voc_frac <- plot_voc_frac(
+      posterior, obs, forecast_dates,
+      voc_label = voc_label, all_obs = all_obs
+    )
+    plots$voc_advantage <- plot_voc_advantage(
+      posterior, forecast_dates, voc_label
+    )
+  }
+  plots$growth <- plot_growth(posterior, forecast_dates)
+  plots$rt <- plot_rt(posterior, forecast_dates)
+  return(plots)
 }

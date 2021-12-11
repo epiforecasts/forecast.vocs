@@ -335,17 +335,9 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
   }
   plots$growth <- plot_growth(posterior, forecast_dates)
   plots$rt <- plot_rt(posterior, forecast_dates)
-
-  if (!is.null(save_path)) {
-    walk2(
-      plots, names(plots),
-      ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x,
-        height = 6, width = 9
-      )
-    )
-  }
   return(plots)
 }
+
 
 #' Pairs plot of parameters of interest and fitting diagnostics
 #'

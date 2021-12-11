@@ -30,7 +30,6 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
 \code{\link{forecast}()},
-\code{\link{plot.fv_posterior}()},
 \code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 
@@ -45,7 +44,8 @@ Plotting functions
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
 \code{\link{plot_voc_advantage}()},
-\code{\link{plot_voc_frac}()}
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 }
 \concept{forecast}
 \concept{plot}

@@ -4,7 +4,7 @@
 \alias{summary.fv_posterior}
 \title{Summary method for fv_tidy_posterior}
 \usage{
-\method{summary}{fv_posterior}(x, type = "cases", forecast = FALSE, as_dt = FALSE, ...)
+\method{summary}{fv_posterior}(x, type = "model", forecast = FALSE, as_dt = FALSE, ...)
 }
 \arguments{
 \item{type}{A character string used to filter the summarised output.}
@@ -27,13 +27,13 @@ to summarise using the \code{data.table} method
 posterior <- fv_example(strains = 2, type = "posterior")
 
 # case summary
-summary(posterior)
+summary(posterior, type = "cases")
 
 # summary of the case summary
-summary(posterior, as_dt = TRUE)
+summary(posterior, type = "cases", as_dt = TRUE)
 
 # case forecast only
-summary(posterior, forecast = TRUE)
+summary(posterior, type = "cases", forecast = TRUE)
 
 # voc fraction summary
 summary(posterior, type = "voc_frac")
@@ -65,6 +65,7 @@ Functions used for postprocessing of model fits
 \code{\link{fv_tidy_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{print.fv_posterior}()},
 \code{\link{quantiles_to_long}()},
 \code{\link{update_voc_label}()}

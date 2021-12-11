@@ -48,7 +48,11 @@ summary.fv_forecast <- function(object, target = "posterior", type = "all",
 #' @return `ggplot2` object
 #' @export
 plot.fv_forecast <- function(x, target = "posterior", type = "cases", ...) {
-  target <- match.arg(target, c("posterior", "forecast"))
-  target <- summary(x, target = target)
-  plot(target, type = type, ...)
+  target <- match.arg(target, c("pairs", "posterior", "forecast"))
+  if (target == "pairs") {
+    plot_pairs(x, ...)
+  }else{
+    x <- summary(x, target = target)
+    plot(x, type = type, ...)
+  }
 }

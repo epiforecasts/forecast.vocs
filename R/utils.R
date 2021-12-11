@@ -70,6 +70,28 @@ fv_example <- function(strains = 1, type = "posterior") {
   return(out)
 }
 
+#' Save plots by name
+#'
+#' @param plots A named list of `ggplot2` plots.
+#' @return NULL
+#' @family plot
+#' @export
+#' @importFrom purrr walk2
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#' p <- plot(posterior, type = "all")
+#' save_plots(p, save_path = tempdir())
+save_plots <- function(plots, save_path = NULL, type = "png", ...) {
+  if (!is.null(save_path)) {
+    walk2(
+      plots, names(plots),
+      ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x, ...
+      )
+    )
+  }
+  return(invisible(NULL))
+}
+
 utils::globalVariables(
   c(
     ".", ".draw", "cases", "cases_available", "dates", "end", "exponentiated",

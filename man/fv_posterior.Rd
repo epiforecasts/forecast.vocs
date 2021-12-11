@@ -4,7 +4,7 @@
 \alias{fv_posterior}
 \title{Summarise the posterior}
 \usage{
-fv_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...)
+fv_posterior(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3, ...)
 }
 \arguments{
 \item{fit}{List of output as returned by \code{\link[=fv_sample]{fv_sample()}}.}
@@ -14,6 +14,9 @@ quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
 and \code{\link[=plot_voc]{plot_voc()}}).}
+
+\item{digits}{Numeric, defaults to 3. Number of digits to round summary
+statistics to.}
 
 \item{...}{Additional arguments that may be passed but will not be used.}
 }
@@ -49,6 +52,7 @@ Functions used for postprocessing of model fits
 \code{\link{fv_tidy_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{print.fv_posterior}()},
 \code{\link{quantiles_to_long}()},
 \code{\link{summary.fv_posterior}()},

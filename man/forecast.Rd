@@ -27,6 +27,7 @@ forecast(
   debug = FALSE,
   keep_fit = TRUE,
   scale_r = 1,
+  digits = 3,
   probs = c(0.05, 0.2, 0.8, 0.95),
   id = 0,
   ...
@@ -120,6 +121,9 @@ the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
+\item{digits}{Numeric, defaults to 3. Number of digits to round summary
+statistics to.}
+
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
@@ -170,7 +174,6 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
 \code{\link{plot.fv_forecast}()},
-\code{\link{plot.fv_posterior}()},
 \code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 }
