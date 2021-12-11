@@ -81,10 +81,12 @@ forecasts <- forecast(obs,
 forecasts
 ```
 
-Summarise posterior estimates for key model parameters (using the `summary()` method for `forecasts()` posterior predictions and forecasts can also be returned for cases, estimated variant proportions, and variant transmission advantages. See the documentation for details).
+Summarised posterior and forecast estimates can be directly extracted from the output using the included `summary()` method. Alternatively, the complete
+summarised posterior can be extracted using the following (which also has its own `summary()` and `plot()` options to make exploring the results easier).
+See the documentation for further details.
 
-```{r}
-summary(forecasts)
+```{r, eval = FALSE}
+summary(forecasts, target = "posterior", type = "all")
 ```
 
 Plot the posterior prediction for cases from the single strain model ("Overall"), from the two strain model ("Combined"), and the unobserved estimates for each strain.

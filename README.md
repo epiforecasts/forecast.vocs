@@ -163,77 +163,12 @@ forecasts
 #> 2: <fv_posterior[54x13]>
 ```
 
-Summarise posterior estimates for key model parameters (using the
-`summary()` method for `forecasts()` posterior predictions and forecasts
-can also be returned for cases, estimated variant proportions, and
-variant transmission advantages. See the documentation for details).
+Summarised posterior and forecast estimates can be directly extracted from the output using the included `summary()` method. Alternatively, the complete
+summarised posterior can be extracted using the following (which also has its own `summary()` and `plot()` options to make exploring the results easier).
+See the documentation for further details.
 
-``` r
-summary(forecasts)
-#>     id forecast_date strains overdispersion variant_relationship r_init
-#>  1:  0    2021-06-19       1           TRUE               pooled 0,0.25
-#>  2:  0    2021-06-19       1           TRUE               pooled 0,0.25
-#>  3:  0    2021-06-19       1           TRUE               pooled 0,0.25
-#>  4:  0    2021-06-19       1           TRUE               pooled 0,0.25
-#>  5:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#>  6:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#>  7:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#>  8:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#>  9:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 10:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 11:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 12:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 13:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 14:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#> 15:  0    2021-06-19       2           TRUE               pooled 0,0.25
-#>     voc_scale          variable                  clean_name exponentiated
-#>  1:   0.4,0.2              beta                        Beta         FALSE
-#>  2:   0.4,0.2            phi[1] Notification overdispersion         FALSE
-#>  3:   0.4,0.2            r_init              Initial growth         FALSE
-#>  4:   0.4,0.2           r_noise                 Growth (sd)         FALSE
-#>  5:   0.4,0.2 avg_voc_advantage        Average Delta effect          TRUE
-#>  6:   0.4,0.2              beta                        Beta         FALSE
-#>  7:   0.4,0.2     init_cases[1]               Initial cases          TRUE
-#>  8:   0.4,0.2     init_cases[2]         Initial Delta cases          TRUE
-#>  9:   0.4,0.2     nvoc_noise[1]              Non-Delta (sd)         FALSE
-#> 10:   0.4,0.2            phi[1] Notification overdispersion         FALSE
-#> 11:   0.4,0.2            phi[2]   Sequencing overdispersion         FALSE
-#> 12:   0.4,0.2            r_init              Initial growth         FALSE
-#> 13:   0.4,0.2           r_noise                 Growth (sd)         FALSE
-#> 14:   0.4,0.2           voc_mod        Initial Delta effect          TRUE
-#> 15:   0.4,0.2      voc_noise[1]                  Delta (sd)         FALSE
-#>             mean       median       sd      mad           q5          q20
-#>  1:     0.262000     0.318000   0.4810   0.5440    -0.617000    -0.187000
-#>  2:    95.600000    74.600000  84.4000  48.6000    22.500000    41.400000
-#>  3:     0.136000     0.137000   0.0737   0.0666     0.012200     0.079500
-#>  4:     0.113000     0.105000   0.0594   0.0594     0.035100     0.060200
-#>  5:     1.668625     1.685395   0.1340   0.1150     1.316531     1.508325
-#>  6:     0.244000     0.309000   0.5020   0.5920    -0.667000    -0.233000
-#>  7: 89321.723361 89321.723361   0.0740   0.0745 80821.637540 80821.637540
-#>  8:   221.406416   221.406416   0.1000   0.1000   188.670102   204.383882
-#>  9:     0.067000     0.056400   0.0508   0.0505     0.005200     0.020900
-#> 10:    89.700000    69.000000  90.5000  49.3000    17.700000    35.400000
-#> 11:   222.000000   161.000000 217.0000 114.0000    45.800000    85.700000
-#> 12:     0.129000     0.128000   0.0772   0.0703     0.004880     0.069800
-#> 13:     0.107000     0.095400   0.0643   0.0629     0.025800     0.050100
-#> 14:     1.791405     1.786038   0.1250   0.1110     1.462285     1.629055
-#> 15:     0.095200     0.087000   0.0647   0.0679     0.008610     0.035100
-#>              q80          q95 rhat ess_bulk ess_tail
-#>  1:     0.731000     0.923000    1     1640     2200
-#>  2:   132.000000   228.000000    1     1780     2050
-#>  3:     0.193000     0.253000    1     2260     2400
-#>  4:     0.160000     0.221000    1     1780     2420
-#>  5:     1.842273     2.046232    1     4220     3030
-#>  6:     0.746000     0.935000    1     2340     2490
-#>  7: 98715.771011 98715.771011    1     3940     2940
-#>  8:   242.257207   262.434099    1     6320     2880
-#>  9:     0.108000     0.162000    1     2020     1880
-#> 10:   126.000000   217.000000    1     1620     1630
-#> 11:   311.000000   591.000000    1     3830     3110
-#> 12:     0.190000     0.261000    1     2340     2260
-#> 13:     0.159000     0.226000    1     1170     1190
-#> 14:     1.973878     2.207808    1     2460     2340
-#> 15:     0.149000     0.216000    1     2180     1720
+```{r, eval = FALSE}
+summary(forecasts, target = "posterior", type = "all")
 ```
 
 Plot the posterior prediction for cases from the single strain model
