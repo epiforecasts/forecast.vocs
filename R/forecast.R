@@ -69,14 +69,17 @@
 #' # inspect forecasts
 #' forecasts
 #'
-#' # unnest posteriors
-#' forecasts <- unnest_posterior(forecasts)
+#' # extract the model summary
+#' summary(forecasts, type = "model")
 #'
 #' # plot case posterior predictions
-#' plot_cases(forecasts, log = TRUE)
+#' plot(forecasts, log = TRUE)
 #'
 #' # plot voc posterior predictions
-#' plot_voc(forecasts)
+#' plot(forecasts, type = "voc_frac")
+#'
+#' # extract the case forecast
+#' summary(forecasts, type = "cases", forecast = TRUE)
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
@@ -89,7 +92,7 @@ forecast <- function(obs,
                      voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
-                     debug = FALSE, keep_fit = TRUE, scale_r = 1,
+                     debug = FALSE, keep_fit = TRUE, scale_r = 1, digits = 3,
                      probs = c(0.05, 0.2, 0.8, 0.95), id = 0, ...) {
   if (!is.null(models)) {
     if (length(models) == 1 & length(strains) == 1) {
@@ -152,6 +155,8 @@ forecast <- function(obs,
           data = data,
           probs = probs,
           scale_r = scale_r,
+          digits = digits,
+          voc_label = voc_label,
           ...
         )
       out <- out[, `:=`(results = list(fit$result), error = list(fit$error))]
@@ -167,6 +172,7 @@ forecast <- function(obs,
   if (!keep_fit) {
     suppressWarnings(forecasts[, c("fit", "data", "fit_args") := NULL])
   }
+  class(forecasts) <- c("fv_forecast", class(forecasts))
   return(forecasts[])
 }
 
@@ -184,7 +190,7 @@ forecast_n_strain <- function(data, model = NULL,
                               extract_forecast = forecast.vocs::fv_extract_forecast, # nolint
                               strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),
-                              scale_r = 1, ...) {
+                              digits = 3, scale_r = 1, ...) {
   inits <- inits(data, strains = strains)
 
   if (is.null(model)) {
@@ -198,7 +204,8 @@ forecast_n_strain <- function(data, model = NULL,
 
   fit$posterior <- list(posterior(
     fit,
-    probs = probs, voc_label = voc_label, scale_r = scale_r
+    probs = probs, voc_label = voc_label, scale_r = scale_r,
+    digits = digits
   ))
   fit$forecast <- list(extract_forecast(fit$posterior[[1]]))
   return(fit)

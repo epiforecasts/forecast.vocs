@@ -53,12 +53,16 @@ plot_cases(posterior)
 \seealso{
 Plotting functions
 \code{\link{add_forecast_dates}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},
 \code{\link{plot_pairs}()},
 \code{\link{plot_posterior}()},
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
-\code{\link{plot_voc}()}
+\code{\link{plot_voc_advantage}()},
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 }
 \concept{plot}

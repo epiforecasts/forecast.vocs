@@ -72,10 +72,9 @@ check_dataframe <- function(dataframe, req_vars, req_types, rows) {
 
 #' Check observations are in the correct format
 #'
-#' @param obs A `data.frame` of observations to check for formatting issues.
-#'
 #' @return NULL
 #'
+#' @inheritParams update_obs_availability
 #' @family check
 #' @export
 #' @examples

@@ -14,6 +14,7 @@ forecast_n_strain(
   strains = 2,
   voc_label = "VOC",
   probs = c(0.05, 0.2, 0.8, 0.95),
+  digits = 3,
   scale_r = 1,
   ...
 )
@@ -53,7 +54,10 @@ rename parameters to use variant specific terminology.}
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
-and \code{\link[=plot_voc]{plot_voc()}}).}
+and \code{\link[=plot_voc_frac]{plot_voc_frac()}}).}
+
+\item{digits}{Numeric, defaults to 3. Number of digits to round summary
+statistics to.}
 
 \item{scale_r}{Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case
@@ -70,6 +74,8 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}

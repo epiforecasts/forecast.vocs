@@ -27,6 +27,7 @@ forecast(
   debug = FALSE,
   keep_fit = TRUE,
   scale_r = 1,
+  digits = 3,
   probs = c(0.05, 0.2, 0.8, 0.95),
   id = 0,
   ...
@@ -37,7 +38,12 @@ forecast(
 \code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
 and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
-on data availability.}
+on data availability. This data format allows for multiple versions of
+case and sequence data for a given date with different reporting dates.
+This is important when using the package in evaluation settings or in
+real-time where data sources are liable to be updated as new data becomes
+available. See \link{germany_covid19_delta_obs} for an example of a supported
+data set.}
 
 \item{forecast_date}{Date at which to forecast. Defaults to the
 maximum date in \code{obs}.}
@@ -120,11 +126,14 @@ the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
+\item{digits}{Numeric, defaults to 3. Number of digits to round summary
+statistics to.}
+
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for
 plotting functions to work (such as \code{\link[=plot_cases]{plot_cases()}}, \code{\link[=plot_rt]{plot_rt()}},
-and \code{\link[=plot_voc]{plot_voc()}}).}
+and \code{\link[=plot_voc_frac]{plot_voc_frac()}}).}
 
 \item{id}{ID to assign to this forecast. Defaults to 0.}
 
@@ -154,14 +163,17 @@ forecasts <- forecast(
 # inspect forecasts
 forecasts
 
-# unnest posteriors
-forecasts <- unnest_posterior(forecasts)
+# extract the model summary
+summary(forecasts, type = "model")
 
 # plot case posterior predictions
-plot_cases(forecasts, log = TRUE)
+plot(forecasts, log = TRUE)
 
 # plot voc posterior predictions
-plot_voc(forecasts)
+plot(forecasts, type = "voc_frac")
+
+# extract the case forecast
+summary(forecasts, type = "cases", forecast = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
@@ -169,6 +181,8 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}

@@ -17,7 +17,9 @@ An unnested \code{data.frame} of posterior estimates and other variables
 produced by \code{\link[=forecast]{forecast()}}.
 }
 \description{
-Unnest posterior estimates from a forecast data.frame
+Unnest posterior predictions and forecasts from output
+produced by \code{\link[=forecast]{forecast()}} (or multiple combined calls) dropping diagnostic
+and fitting variables in the process.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -43,6 +45,8 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_across_scenarios}()},
 \code{\link{forecast_n_strain}()},
-\code{\link{forecast}()}
+\code{\link{forecast}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{summary.fv_forecast}()}
 }
 \concept{forecast}

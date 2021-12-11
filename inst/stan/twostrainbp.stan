@@ -55,7 +55,7 @@ transformed parameters {
   vector<lower = 0, upper = 1>[t_seqf] frac_voc;
   vector[overdisp ? 2 : 0] phi;
 
-  // random walk growth rate
+  // differenced AR(1) growth rate
   diff = rep_vector(0, t - 2);
   for (i in 1:(t-2)) {
     if (i <= t_dep) {
@@ -167,7 +167,8 @@ model {
 }
 
 generated quantities {
-  real avg_voc_mod;
+  vector[t_seqf - 1] voc_advantage;
+  real avg_voc_advantage;
   vector[t - 1] com_r;
   int sim_voc_cases[t_seqf];
   int sim_nvoc_cases[t];
@@ -175,7 +176,8 @@ generated quantities {
   vector[output_loglik ? t_nots : 0] log_lik;
 
   // summary measures
-  avg_voc_mod = mean(voc_r - r[(t_nseq+1):(t-1)]);
+  voc_advantage = voc_r - r[(t_nseq+1):(t-1)];
+  avg_voc_advantage = mean(voc_advantage);
   com_r = r;
   com_r[(t_nseq+1):(t-1)] = (1 - frac_voc[2:t_seqf]) .* r[(t_nseq+1):(t-1)] +
      frac_voc[2:t_seqf] .* voc_r;

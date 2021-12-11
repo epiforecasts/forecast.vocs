@@ -108,7 +108,10 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' quantile summaries for. By default these are the 5%, 20%, 80%,
 #' and 95% quantiles which are also the minimum set required for
 #' plotting functions to work (such as [plot_cases()], [plot_rt()],
-#' and [plot_voc()]).
+#' and [plot_voc_frac()]).
+#'
+#' @param digits Numeric, defaults to 3. Number of digits to round summary
+#' statistics to.
 #'
 #' @param ... Additional arguments that may be passed but will not be used.
 #'
@@ -116,7 +119,7 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #'
 #' @family postprocess
 #' @export
-#' @importFrom purrr reduce
+#' @importFrom purrr reduce map
 #' @importFrom posterior quantile2 default_convergence_measures
 #' @importFrom data.table .SD .N :=
 #' @examplesIf interactive()
@@ -129,7 +132,8 @@ link_obs_with_posterior <- function(posterior, obs, horizon, target_types) {
 #' inits <- fv_inits(dt)
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_posterior(fit)
-fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
+fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3,
+                         ...) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
@@ -164,7 +168,8 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
     cbind(x, y)
   }
   sfit <- purrr::reduce(sfit, cbind_custom)
-
+  ncols <- colnames(sfit)[sapply(sfit, is.numeric)]
+  sfit[, (ncols) := purrr::map(.SD, signif, digits = digits), .SDcols = ncols]
   return(sfit[])
 }
 
@@ -185,8 +190,8 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
 #' the generation time (for COVID-19 for example this would be 5.5 / 7.
 #'
 #' @return A dataframe summarising the model posterior. Output is stratified
-#' by `value_type` with posterior summaries by case, voc, rt, growth, model,
-#' and the raw posterior summary.
+#' by `value_type` with posterior summaries by case, voc, voc advantage vs
+#' non-voc over time, rt, growth, model, and the raw posterior summary.
 #'
 #' @family postprocess
 #' @export
@@ -204,7 +209,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), ...) {
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_tidy_posterior(fit)
 fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
-                              voc_label = "VOC", scale_r = 1) {
+                              digits = 3, voc_label = "VOC", scale_r = 1) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
@@ -220,7 +225,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   seq_horizon <- data$t - data$t_seq - data$t_nseq
 
   # extract summary parameters of interest and join
-  sfit <- fv_posterior(fit, probs = probs)
+  sfit <- fv_posterior(fit, probs = probs, digits = digits)
 
   # detect if voc is in the data
   voc_present <- any(grepl("voc", sfit$variable))
@@ -244,12 +249,12 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   )
 
   # summarise VOC if present
-  voc <- sfit[grepl("frac_voc", variable)]
-  voc[, type := "VOC"]
-  if (nrow(voc) > 0) {
-    voc <- link_dates_with_posterior(voc, data)
-    voc <- link_obs_with_posterior(
-      posterior = voc, obs = data$Y / data$N,
+  voc_frac <- sfit[grepl("frac_voc", variable)]
+   voc_frac[, type := "VOC"]
+  if (nrow(voc_frac) > 0) {
+     voc_frac <- link_dates_with_posterior(voc_frac, data)
+     voc_frac <- link_obs_with_posterior(
+      posterior = voc_frac, obs = data$Y / data$N,
       target_types = "VOC"
     )
   }
@@ -282,13 +287,28 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   growth <- copy(rt)
 
   # transform growth to Rt
-  cols <- c("mean", "median", paste0("q", probs * 100))
   rt[, (cols) := lapply(.SD, exp), .SDcols = cols, by = "type"]
+
+  # summarised difference between variants over time
+  voc_advantage <- sfit[grepl("voc_advantage", variable)]
+  voc_advantage <- voc_advantage[, type := "VOC"]
+  if (nrow(voc_advantage) > 0) {
+    voc_advantage <- link_dates_with_posterior(voc_advantage, data)
+    voc_advantage <- link_obs_with_posterior(
+      posterior = voc_advantage, horizon = seq_horizon,
+      target_types = c("VOC")
+    )
+
+    voc_advantage[,
+      (cols) := purrr::map(.SD, ~ exp(. * scale_r)),
+      .SDcols = cols, by = "type"
+    ]
+  }
 
   # summarise model parameters
   param_lookup <- data.table(
     variable = c(
-      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_mod",
+      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_advantage",
       "voc_noise[1]", "nvoc_noise[1]", "init_cases[1]", "init_cases[2]",
       "phi[1]", "phi[2]", "phi"
     ),
@@ -311,7 +331,8 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   out <- list(
     model = model,
     cases = cases,
-    voc = voc,
+    voc_frac = voc_frac,
+    voc_advantage = voc_advantage,
     growth = growth,
     rt = rt,
     raw = sfit
@@ -331,6 +352,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   if (!(voc_label %in% "VOC")) {
     out <- update_voc_label(out, voc_label)
   }
+  class(out) <- c("fv_posterior", class(out))
   return(out[])
 }
 
@@ -363,7 +385,7 @@ extract_forecast_dates <- function(posterior) {
 
   if (nrow(cases) == 0 | is.null(cases$forecast_start)) {
     message(
-      "Cannot extract forecast dates to plot as case data with a forecast_date variable is not present." # nolint
+      "Cannot extract forecast dates to plot as case data with a forecast_start variable is not present." # nolint
     )
     dates <- data.table(`Data unavailable` = list(), date = list())
   } else {
@@ -438,7 +460,8 @@ fv_extract_forecast <- function(posterior) {
 #' @examples
 #' p <- fv_example(strains = 2, type = "posterior")
 #' p <- update_voc_label(p, "Delta")
-#' p[value_type == "model"]
+#' summary(p, type = "cases")
+#' summary(p, type = "model")
 update_voc_label <- function(posterior, label, target_label = "VOC") {
   if (!missing(label)) {
     stopifnot(is.character(label))

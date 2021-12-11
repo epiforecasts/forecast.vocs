@@ -63,8 +63,43 @@ fv_example <- function(strains = 1, type = "posterior") {
     out <- file
   } else {
     out <- fread(file)
+    if (type %in% c("posterior", "forecast")) {
+      class(out) <- c("fv_posterior", class(out))
+    }
   }
   return(out)
+}
+
+#' Save plots by name
+#'
+#' @param save_path A character string indicating where to save plots
+#' if required.
+#'
+#' @param type A character string indicating the format to use to save plots.
+#'
+#' @param plots A named list of `ggplot2` plots.
+#' 
+#' @param ... Additional arguments passed to [ggplot2::ggsave()]
+#' @return NULL
+#' @family plot
+#' @export
+#' @importFrom purrr walk2
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#' p <- plot(posterior, type = "all")
+#' save_plots(p, save_path = tempdir())
+save_plots <- function(plots, save_path = NULL, type = "png", ...) {
+  if (!is.null(save_path)) {
+    walk2(
+      plots, names(plots),
+      ~ ggsave(
+        filename = file.path(save_path, paste0(.y, ".", type)),
+        plot = .x, device = type
+      ),
+      ...
+    )
+  }
+  return(invisible(NULL))
 }
 
 utils::globalVariables(

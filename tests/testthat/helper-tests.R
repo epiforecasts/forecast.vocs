@@ -91,7 +91,7 @@ test_fv_extract_forecast <- function(message, strains, posterior) {
       value_types <- c("cases", "growth", "rt")
     } else if (strains == 2) {
       types <- c("Combined", "VOC", "non-VOC")
-      value_types <- c("cases", "voc", "growth", "rt")
+      value_types <- c("cases", "voc_frac", "voc_advantage", "growth", "rt")
     }
     expect_equal(unique(forecasts$type), types)
     expect_gt(min(forecasts$horizon), 0)
@@ -138,7 +138,7 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
                                    voc_label = "VOC") {
   test_that(message, {
     skip_on_cran()
-    posterior <- fv_tidy_posterior(fit, probs, voc_label)
+    posterior <- fv_tidy_posterior(fit, probs = probs, voc_label = voc_label)
     attributes(test_posterior)$index <- NULL
     attributes(posterior)$index <- NULL
     # check in comparision to default posterior
@@ -178,7 +178,7 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
     purrr::walk(
       seq_along(quantiles)[-1],
       ~ expect_true(
-        all(posterior[[quantiles[.]]] > posterior[[quantiles[. - 1]]])
+        all(posterior[[quantiles[.]]] >= posterior[[quantiles[. - 1]]])
       )
     )
     # check contents of types
@@ -187,7 +187,8 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
       value_types <- c("model", "cases", "growth", "rt", "raw")
     } else if (strains == 2) {
       types <- c(NA, "Combined", voc_label, paste0("non-", voc_label))
-      value_types <- c("model", "cases", "voc", "growth", "rt", "raw")
+      value_types <- c("model", "cases", "voc_frac", "voc_advantage",
+                       "growth", "rt", "raw")
     }
     expect_type(posterior$type, "character")
     expect_equal(unique(posterior$type), types)
@@ -203,7 +204,7 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
     expect_equal(cases$obs, cases$cases)
     # Check linked sequence observations agree with input data
     if (strains == 2) {
-      seq <- posterior[value_type %in% "voc"][, .(date, obs)][!is.na(obs)]
+      seq <- posterior[value_type %in% "voc_frac"][, .(date, obs)][!is.na(obs)]
       seq <- merge(seq, obs, all = TRUE, by = "date")
       expect_equal(seq$obs, seq$share_voc)
     }
@@ -251,7 +252,10 @@ test_forecast <- function(message, obs, forecast_fn,
     )
     # Check forecast dates are unique
     expect_dates_unique(
-      forecasts[, date := forecast_date][strains == 1 & id == 0]
+      data.table::copy(forecasts)[,
+       date := forecast_date][
+       strains == 1 & id == 0
+      ]
     )
     # Check posteriors and forecasts are the same as when run outside of the
     # wrapper

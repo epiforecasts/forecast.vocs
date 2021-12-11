@@ -36,7 +36,10 @@ Functions used for postprocessing of model fits
 \code{\link{fv_tidy_posterior}()},
 \code{\link{link_dates_with_posterior}()},
 \code{\link{link_obs_with_posterior}()},
+\code{\link{plot.fv_posterior}()},
+\code{\link{print.fv_posterior}()},
 \code{\link{quantiles_to_long}()},
+\code{\link{summary.fv_posterior}()},
 \code{\link{update_voc_label}()}
 }
 \concept{postprocess}

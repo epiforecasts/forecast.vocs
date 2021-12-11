@@ -175,13 +175,13 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @importFrom scales percent
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
-#' plot_voc(posterior)
-plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
+#' plot_voc_frac(posterior)
+plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
                      all_obs = FALSE, voc_label = "variant of concern", ...) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := share_voc]
   }
-  plot <- plot_default(posterior, "voc", obs, forecast_dates,
+  plot <- plot_default(posterior, "voc_frac", obs, forecast_dates,
     all_obs = all_obs, x = date, ...
   )
 
@@ -195,6 +195,37 @@ plot_voc <- function(posterior, obs = NULL, forecast_dates = NULL,
   plot <- plot_theme(plot)
   return(plot)
 }
+
+#' Plot the posterior prediction for the transmission advantage for the variant
+#' of concern
+#'
+#' @return A `ggplot2` plot.
+#'
+#' @family plot
+#' @inheritParams plot_voc_frac
+#' @export
+#' @importFrom scales percent
+#' @examples
+#' posterior <- fv_example(strains = 2, type = "posterior")
+#' plot_voc_advantage(posterior)
+plot_voc_advantage <- function(posterior, forecast_dates = NULL,
+                               voc_label = "variant of concern", ...) {
+  plot <- plot_default(
+    posterior, "voc_advantage",
+    obs = NULL, forecast_dates, x = date, ...
+  )
+
+  plot <- plot +
+    scale_y_continuous(labels = scales::percent) +
+    labs(
+      y = paste0("Transmission advantage for the ", voc_label),
+      x = "Date"
+    )
+
+  plot <- plot_theme(plot)
+  return(plot)
+}
+
 
 #' Plot the posterior prediction for the reproduction number
 #'
@@ -266,23 +297,17 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 
 #' Plot posterior predictions
 #'
-#' @param save_path A character string indicating where to save plots
-#' if required.
-#'
-#' @param type A character string indicating the format to use to save plots.
-#'
 #' @return A named list of all supported package plots with sensible defaults.
 #'
 #' @family plot
 #' @export
 #' @inheritParams plot_cases
-#' @inheritParams plot_voc
+#' @inheritParams plot_voc_frac
 #' @importFrom purrr walk2
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_posterior(posterior)
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           save_path = NULL, type = "png",
                            all_obs = FALSE, voc_label = "variant of concern") {
   plots <- list()
   plots$cases <- plot_cases(
@@ -293,25 +318,20 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
     posterior, obs, forecast_dates,
     log = TRUE, all_obs = all_obs
   )
-  if (nrow(posterior[value_type %in% "voc"]) > 0) {
-    plots$voc <- plot_voc(
+  if (nrow(posterior[value_type %in% "voc_frac"]) > 0) {
+    plots$voc_frac <- plot_voc_frac(
       posterior, obs, forecast_dates,
       voc_label = voc_label, all_obs = all_obs
+    )
+    plots$voc_advantage <- plot_voc_advantage(
+      posterior, forecast_dates, voc_label
     )
   }
   plots$growth <- plot_growth(posterior, forecast_dates)
   plots$rt <- plot_rt(posterior, forecast_dates)
-
-  if (!is.null(save_path)) {
-    walk2(
-      plots, names(plots),
-      ~ ggsave(file.path(save_path, paste0(.y, ".", type)), .x,
-        height = 6, width = 9
-      )
-    )
-  }
   return(plots)
 }
+
 
 #' Pairs plot of parameters of interest and fitting diagnostics
 #'

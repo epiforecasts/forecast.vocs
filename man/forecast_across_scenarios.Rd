@@ -11,7 +11,12 @@ forecast_across_scenarios(obs, scenarios, ...)
 \code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
 and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
-on data availability.}
+on data availability. This data format allows for multiple versions of
+case and sequence data for a given date with different reporting dates.
+This is important when using the package in evaluation settings or in
+real-time where data sources are liable to be updated as new data becomes
+available. See \link{germany_covid19_delta_obs} for an example of a supported
+data set.}
 
 \item{scenarios}{A \code{data.frame} of scenarios as produced by
 \code{\link[=define_scenarios]{define_scenarios()}}. If an \code{obs} variable is present this is
@@ -66,6 +71,8 @@ Functions used for forecasting across models, dates, and scenarios
 \code{\link{forecast_across_dates}()},
 \code{\link{forecast_n_strain}()},
 \code{\link{forecast}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{summary.fv_forecast}()},
 \code{\link{unnest_posterior}()}
 }
 \concept{forecast}

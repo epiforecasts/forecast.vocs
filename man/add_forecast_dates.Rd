@@ -22,6 +22,8 @@ Add the forecast dates to a plot
 }
 \seealso{
 Plotting functions
+\code{\link{plot.fv_forecast}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},
@@ -29,6 +31,8 @@ Plotting functions
 \code{\link{plot_posterior}()},
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
-\code{\link{plot_voc}()}
+\code{\link{plot_voc_advantage}()},
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 }
 \concept{plot}

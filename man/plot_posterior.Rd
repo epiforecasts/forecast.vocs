@@ -8,8 +8,6 @@ plot_posterior(
   posterior,
   obs = NULL,
   forecast_dates = NULL,
-  save_path = NULL,
-  type = "png",
   all_obs = FALSE,
   voc_label = "variant of concern"
 )
@@ -25,11 +23,6 @@ plot_posterior(
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.}
-
-\item{save_path}{A character string indicating where to save plots
-if required.}
-
-\item{type}{A character string indicating the format to use to save plots.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
@@ -50,12 +43,16 @@ plot_posterior(posterior)
 \seealso{
 Plotting functions
 \code{\link{add_forecast_dates}()},
+\code{\link{plot.fv_forecast}()},
+\code{\link{plot.fv_posterior}()},
 \code{\link{plot_cases}()},
 \code{\link{plot_default}()},
 \code{\link{plot_growth}()},
 \code{\link{plot_pairs}()},
 \code{\link{plot_rt}()},
 \code{\link{plot_theme}()},
-\code{\link{plot_voc}()}
+\code{\link{plot_voc_advantage}()},
+\code{\link{plot_voc_frac}()},
+\code{\link{save_plots}()}
 }
 \concept{plot}

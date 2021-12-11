@@ -4,7 +4,12 @@
 #' `date`, `cases`, `seq_voc`, and `seq_total`, `cases_available`,
 #' and `seq_available`. `seq_available` and `case_available` must be
 #' uniquely define data rows but other rows can be duplicated based
-#' on data availability.
+#' on data availability. This data format allows for multiple versions of
+#' case and sequence data for a given date with different reporting dates.
+#' This is important when using the package in evaluation settings or in
+#' real-time where data sources are liable to be updated as new data becomes
+#' available. See [germany_covid19_delta_obs] for an example of a supported
+#'  data set.
 #'
 #' @param cases_lag Number of weeks that case data takes to be reported.
 #' Defaults to not alter the input data.
