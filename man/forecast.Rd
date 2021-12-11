@@ -38,7 +38,12 @@ forecast(
 \code{date}, \code{cases}, \code{seq_voc}, and \code{seq_total}, \code{cases_available},
 and \code{seq_available}. \code{seq_available} and \code{case_available} must be
 uniquely define data rows but other rows can be duplicated based
-on data availability.}
+on data availability. This data format allows for multiple versions of
+case and sequence data for a given date with different reporting dates.
+This is important when using the package in evaluation settings or in
+real-time where data sources are liable to be updated as new data becomes
+available. See \link{germany_covid19_delta_obs} for an example of a supported
+data set.}
 
 \item{forecast_date}{Date at which to forecast. Defaults to the
 maximum date in \code{obs}.}
@@ -158,14 +163,17 @@ forecasts <- forecast(
 # inspect forecasts
 forecasts
 
-# unnest posteriors
-forecasts <- unnest_posterior(forecasts)
+# extract the model summary
+summary(forecasts, type = "model")
 
 # plot case posterior predictions
-plot_cases(forecasts, log = TRUE)
+plot(forecasts, log = TRUE)
 
 # plot voc posterior predictions
-plot_voc_advantage(forecasts)
+plot(forecasts, type = "voc_frac")
+
+# extract the case forecast
+summary(forecasts, type = "cases", forecast = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -17,7 +17,9 @@ An unnested \code{data.frame} of posterior estimates and other variables
 produced by \code{\link[=forecast]{forecast()}}.
 }
 \description{
-Unnest posterior estimates from a forecast data.frame
+Unnest posterior predictions and forecasts from output
+produced by \code{\link[=forecast]{forecast()}} (or multiple combined calls) dropping diagnostic
+and fitting variables in the process.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

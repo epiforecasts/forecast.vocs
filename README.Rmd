@@ -62,6 +62,7 @@ obs <- filter_by_availability(
   germany_covid19_delta_obs,
   date = as.Date("2021-06-19")
 )
+obs
 
 current_obs <- latest_obs(germany_covid19_delta_obs)
 ```
@@ -80,49 +81,46 @@ forecasts <- forecast(obs,
 forecasts
 ```
 
-Unnest posterior estimates from each model.
+Summarise posterior estimates for key model parameters (using the `summary()` method for `forecasts()` posterior predictions and forecasts can also be returned for cases, estimated variant proportions, and variant transmission advantages. See the documentation for details).
 
 ```{r}
-posteriors <- unnest_posterior(forecasts)
+summary(forecasts)
 ```
 
 Plot the posterior prediction for cases from the single strain model ("Overall"), from the two strain model ("Combined"), and the unobserved estimates for each strain.
 
 ```{r}
-plot_cases(posteriors, current_obs)
+plot(forecasts, current_obs)
 ```
 
 Plot the posterior prediction for the fraction of cases that have the Delta variant from the two strain model.
 
 ```{r}
-plot_voc_frac(posteriors, current_obs, voc_label = "Delta variant")
+plot(forecasts, current_obs, type = "voc_frac", voc_label = "Delta variant")
 ```
 
 Plot the posterior estimate for the growth rate over the mean of the generation time for COVID-19 cases (here assumed to be 5.5 days).
 
 ```{r}
-plot_growth(posteriors)
+plot(forecasts, type = "growth")
 ```
 
 Plot the posterior estimate for the effective reproduction number of Delta and non-Delta cases.
 
 ```{r}
-plot_rt(posteriors)
+plot(forecasts, type = "rt")
 ```
 
-Plot the estimated transmission advantage for Delta vs non-Delta over time.
+Plot the estimated transmission advantage for Delta vs non-Delta over time. Note that as here a model with a pooled variant scaling has been used this varies over time (potentially suitable where imports or present or a variant has greater immune escape than the baseline). If it is likely that the growth advantage is constant over time consider the fixed scaling model. If the variants are likely to be circulating in independent populations consider the independent variant model. See the documentation and model definition vignette for details.
 
 ```{r}
-plot_voc_advantage(posteriors)
+plot(forecasts, type = "voc_advantage")
 ```
 
-Alternatively a list of plots with sensible defaults can be produced using the following. 
+Alternatively a list of all plots with sensible defaults can be produced using the following. 
 
 ```{r, eval = FALSE}
-plot_posterior(
-  posteriors, current_obs,
-  voc_label = "Delta variant"
-)
+plot(forecasts, current_obs, type = "all", voc_label = "Delta variant")
 ```
 
 ### Step by step forecast
@@ -146,7 +144,11 @@ fit <- fv_sample(
 posterior <- fv_tidy_posterior(fit, voc_label = "Delta", scale_r = 5.5 / 7)
 ```
 
-As for forecasts produced with the `forecast()` function summary plots and estimates can then be produced using package functions.
+As for forecasts produced with the `forecast()` function summary plots and estimates can then be produced using `summary()`, and `plot()` methods. For example case forecasts can be returned using the following, 
+
+```{r, eval = FALSE}
+summary(posterior, type = "cases", forecast = TRUE)
+```
 
 ## Citation
 

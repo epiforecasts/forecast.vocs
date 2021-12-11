@@ -455,7 +455,8 @@ fv_extract_forecast <- function(posterior) {
 #' @examples
 #' p <- fv_example(strains = 2, type = "posterior")
 #' p <- update_voc_label(p, "Delta")
-#' p[value_type == "model"]
+#' summary(p, type = "cases")
+#' summary(p, type = "model")
 update_voc_label <- function(posterior, label, target_label = "VOC") {
   if (!missing(label)) {
     stopifnot(is.character(label))

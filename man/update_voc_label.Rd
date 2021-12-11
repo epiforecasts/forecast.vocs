@@ -28,7 +28,8 @@ output from \code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}.
 \examples{
 p <- fv_example(strains = 2, type = "posterior")
 p <- update_voc_label(p, "Delta")
-p[value_type == "model"]
+summary(p, type = "cases")
+summary(p, type = "model")
 }
 \seealso{
 Functions used for postprocessing of model fits

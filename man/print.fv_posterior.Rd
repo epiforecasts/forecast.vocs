@@ -2,7 +2,7 @@
 % Please edit documentation in R/posterior-methods.R
 \name{print.fv_posterior}
 \alias{print.fv_posterior}
-\title{Summary method for fv_tidy_posterior}
+\title{Print method for fv_tidy_posterior}
 \usage{
 \method{print}{fv_posterior}(x, ...)
 }
@@ -15,7 +15,8 @@
 A summary data.frame
 }
 \description{
-\code{summary} method for class "fv_tidy_posterior".
+\code{print} method for class "fv_posterior". Prints the available
+value types and then falls back to the \code{data.table} print method.
 }
 \examples{
 posterior <- fv_example(strains = 2, type = "posterior")

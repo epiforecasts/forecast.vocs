@@ -7,9 +7,22 @@
 \method{summary}{fv_posterior}(x, type = "model", forecast = FALSE, as_dt = FALSE, ...)
 }
 \arguments{
-\item{type}{A character string used to filter the summarised output.}
+\item{type}{A character string used to filter the summarised output and
+defaulting to "model". Current options are: "model" which returns a
+summary of key model parameters, "cases" which returns summarised cases,
+"voc_frac" which returns summarised estimates of the fraction of cases that
+have the variant of concern, "voc_advantage" that returns summarised
+estiamtes of the the transmission advantage of the variant of concern,
+"growth" which returns summarised variant specifc and overall growth rates,
+"rt" which returns summarised variant specifc and overall reproduction
+number estimates, "raw" which returns a raw posterior summary, and "all"
+which returns all tidied posterior estimates.}
 
-\item{as_dt}{Logical defaults to \code{FALSE}. Should the output}
+\item{forecast}{Logical defaults to \code{FALSE}. Should \code{\link[=fv_extract_forecast]{fv_extract_forecast()}}
+be used to return only forecasts rather than complete posterior.}
+
+\item{as_dt}{Logical defaults to \code{FALSE}. Once any filtering has been applied
+should \code{\link[=summary]{summary()}} fall back to using the default \code{data.table} method.}
 
 \item{object}{An object of the class \code{fv_posterior} as returned by
 \code{fv_tidy_posterior()} .}

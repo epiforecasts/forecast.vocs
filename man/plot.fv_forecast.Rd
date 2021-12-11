@@ -4,15 +4,26 @@
 \alias{plot.fv_forecast}
 \title{Plot method for forecast}
 \usage{
-\method{plot}{fv_forecast}(x, target = "posterior", type = "cases", ...)
+\method{plot}{fv_forecast}(x, obs = NULL, target = "posterior", type = "cases", ...)
 }
 \arguments{
 \item{x}{A \code{data.table} of output as produced by \code{\link[=forecast]{forecast()}} of class
 "fv_forecast".}
 
-\item{target}{fwfwew}
+\item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
 
-\item{type}{A character string indicating the type of plot required.}
+\item{target}{A character string indicating the target object within the
+\code{\link[=forecast]{forecast()}} to produce plots for. Current options are: posterior predictions
+("posterior"), posterior forecasts ("forecast"), and the model fit ("fit").
+When "posterior" or "forecast" are used then \code{\link[=plot.fv_posterior]{plot.fv_posterior()}} is called
+whereas when "fit" is used \code{\link[=plot_pairs]{plot_pairs()}} is used.}
+
+\item{type}{A character string indicating the type of plot required,
+defaulting to "cases". Current options are: "cases" which calls
+\code{\link[=plot_cases]{plot_cases()}}, "voc_frac" which calls \code{\link[=plot_voc_frac]{plot_voc_frac()}}, "voc_advantage"
+which calls \code{\link[=plot_voc_advantage]{plot_voc_advantage()}}, "growth" which calls \code{\link[=plot_growth]{plot_growth()}},
+"rt" which calls \code{\link[=plot_rt]{plot_rt()}}, and "all" which produces a list of all plots
+by call \code{\link[=plot_posterior]{plot_posterior()}}.}
 
 \item{...}{Pass additional arguments to lower level plot functions.}
 }
@@ -20,7 +31,33 @@
 \code{ggplot2} object
 }
 \description{
-\code{plot} method for class "fv_forecast".
+\code{plot} method for class "fv_forecast". The type of plot
+produced can be controlled using the \code{target} and \code{type} arguments with the
+latter only being functional when \code{target} is set to "posterior" or
+"forecast".
+}
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+options(mc.cores = 4)
+
+forecasts <- forecast(
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
+  horizon = 4,
+  strains = c(1, 2),
+  adapt_delta = 0.99,
+  max_treedepth = 15,
+  variant_relationship = "scaled"
+)
+# inspect forecasts
+forecasts
+
+# plot case posterior predictions
+plot(forecasts, log = TRUE)
+
+# plot voc posterior predictions
+plot(forecasts, type = "voc_frac")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 plot.fv_posterior

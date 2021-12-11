@@ -2,12 +2,12 @@
 % Please edit documentation in R/posterior-methods.R
 \name{plot.fv_posterior}
 \alias{plot.fv_posterior}
-\title{Plot method for forecast}
+\title{Plot method for fv_tidy_posterior}
 \usage{
 \method{plot}{fv_posterior}(
   x,
-  type = "cases",
   obs = NULL,
+  type = "cases",
   forecast_dates = NULL,
   all_obs = FALSE,
   voc_label = "variant of concern",
@@ -15,9 +15,27 @@
 )
 }
 \arguments{
-\item{x}{A \code{data.table} of output as produced by \code{\link[=forecast]{forecast()}}.}
+\item{x}{A \code{data.table} of output as produced by \code{\link[=fv_tidy_posterior]{fv_tidy_posterior()}}.}
 
-\item{type}{A character string indicating the type of plot required.}
+\item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
+
+\item{type}{A character string indicating the type of plot required,
+defaulting to "cases". Current options are: "cases" which calls
+\code{\link[=plot_cases]{plot_cases()}}, "voc_frac" which calls \code{\link[=plot_voc_frac]{plot_voc_frac()}}, "voc_advantage"
+which calls \code{\link[=plot_voc_advantage]{plot_voc_advantage()}}, "growth" which calls \code{\link[=plot_growth]{plot_growth()}},
+"rt" which calls \code{\link[=plot_rt]{plot_rt()}}, and "all" which produces a list of all plots
+by call \code{\link[=plot_posterior]{plot_posterior()}}.}
+
+\item{forecast_dates}{A data.frame in the format produced by
+\code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
+Data unavailable variable)). Specifies when date availability should be
+add to plots. May contain faceting variables.}
+
+\item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
+or just those in the date range of the estimates being plot.}
+
+\item{voc_label}{Character string giving the name to assign to the variant
+of concern. Defaults to  "variant of concern".}
 
 \item{...}{Pass additional arguments to lower level plot functions.}
 }
@@ -25,11 +43,26 @@
 \code{ggplot2} object
 }
 \description{
-\code{plot} method for class "fv_forecast".
+\code{plot} method for class "fv_posterior". This function wraps all
+lower level plot functions.
 }
 \examples{
 posterior <- fv_example(strains = 2, type = "posterior")
 
+# plot cases on the log scale
+plot(posterior, type = "cases", log = TRUE)
+
+# plot fraction that have the variant of concern
+plot(posterior, type = "voc_frac")
+
+# plot the transmission advantage for the the variant of concern
+plot(posterior, type = "voc_advantage")
+
+# plot the growth rates for both voc and non-voc cases
+plot(posterior, type = "growth")
+
+# plot the reproduction number estimates
+plot(posterior, type = "rt")
 }
 \seealso{
 Functions used for postprocessing of model fits

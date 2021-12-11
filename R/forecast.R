@@ -69,14 +69,17 @@
 #' # inspect forecasts
 #' forecasts
 #'
-#' # unnest posteriors
-#' forecasts <- unnest_posterior(forecasts)
+#' # extract the model summary
+#' summary(forecasts, type = "model")
 #'
 #' # plot case posterior predictions
-#' plot_cases(forecasts, log = TRUE)
+#' plot(forecasts, log = TRUE)
 #'
 #' # plot voc posterior predictions
-#' plot_voc_advantage(forecasts)
+#' plot(forecasts, type = "voc_frac")
+#'
+#' # extract the case forecast
+#' summary(forecasts, type = "cases", forecast = TRUE)
 forecast <- function(obs,
                      forecast_date = max(obs$date),
                      seq_date = forecast_date, case_date = forecast_date,
@@ -153,6 +156,7 @@ forecast <- function(obs,
           probs = probs,
           scale_r = scale_r,
           digits = digits,
+          voc_label = voc_label,
           ...
         )
       out <- out[, `:=`(results = list(fit$result), error = list(fit$error))]

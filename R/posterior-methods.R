@@ -1,6 +1,7 @@
-#' Summary method for fv_tidy_posterior
+#' Print method for fv_tidy_posterior
 #'
-#' @description `summary` method for class "fv_tidy_posterior".
+#' @description `print` method for class "fv_posterior". Prints the available
+#' value types and then falls back to the `data.table` print method.
 #'
 #' @param x An output from output from [fv_tidy_posterior()].
 #'
@@ -38,9 +39,22 @@ print.fv_posterior <- function(x, ...) {
 #' @param object An object of the class `fv_posterior` as returned by
 #' `fv_tidy_posterior()` .
 #'
-#' @param type A character string used to filter the summarised output.
+#' @param type A character string used to filter the summarised output and
+#' defaulting to "model". Current options are: "model" which returns a
+#' summary of key model parameters, "cases" which returns summarised cases,
+#' "voc_frac" which returns summarised estimates of the fraction of cases that
+#' have the variant of concern, "voc_advantage" that returns summarised
+#' estiamtes of the the transmission advantage of the variant of concern,
+#' "growth" which returns summarised variant specifc and overall growth rates,
+#' "rt" which returns summarised variant specifc and overall reproduction
+#' number estimates, "raw" which returns a raw posterior summary, and "all"
+#' which returns all tidied posterior estimates.
 #'
-#' @param as_dt Logical defaults to `FALSE`. Should the output
+#' @param as_dt Logical defaults to `FALSE`. Once any filtering has been applied
+#' should [summary()] fall back to using the default `data.table` method.
+#'
+#' @param forecast Logical defaults to `FALSE`. Should [fv_extract_forecast()]
+#' be used to return only forecasts rather than complete posterior.
 #'
 #' @family postprocess
 #' @seealso fv_tidy_posterior
@@ -118,25 +132,45 @@ summary.fv_posterior <- function(x, type = "model", forecast = FALSE,
   }
 }
 
-#' Plot method for forecast
+#' Plot method for fv_tidy_posterior
 #'
-#' @description `plot` method for class "fv_forecast".
+#' @description `plot` method for class "fv_posterior". This function wraps all
+#' lower level plot functions.
 #'
-#' @param x A `data.table` of output as produced by [forecast()].
+#' @param x A `data.table` of output as produced by [fv_tidy_posterior()].
 #'
-#'
-#' @param type A character string indicating the type of plot required.
+#' @param type A character string indicating the type of plot required,
+#' defaulting to "cases". Current options are: "cases" which calls
+#' [plot_cases()], "voc_frac" which calls [plot_voc_frac()], "voc_advantage"
+#' which calls [plot_voc_advantage()], "growth" which calls [plot_growth()],
+#' "rt" which calls [plot_rt()], and "all" which produces a list of all plots
+#' by call [plot_posterior()].
 #'
 #' @param ... Pass additional arguments to lower level plot functions.
 #'
 #' @family postprocess
 #' @family plot
+#' @inheritParams plot_posterior
 #' @return `ggplot2` object
 #' @export
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #'
-plot.fv_posterior <- function(x, type = "cases", obs = NULL, 
+#' # plot cases on the log scale
+#' plot(posterior, type = "cases", log = TRUE)
+#'
+#' # plot fraction that have the variant of concern
+#' plot(posterior, type = "voc_frac")
+#'
+#' # plot the transmission advantage for the the variant of concern
+#' plot(posterior, type = "voc_advantage")
+#'
+#' # plot the growth rates for both voc and non-voc cases
+#' plot(posterior, type = "growth")
+#'
+#' # plot the reproduction number estimates
+#' plot(posterior, type = "rt")
+plot.fv_posterior <- function(x, obs = NULL, type = "cases",
                               forecast_dates = NULL, all_obs = FALSE,
                               voc_label = "variant of concern", ...) {
   type <- match.arg(
@@ -152,55 +186,11 @@ plot.fv_posterior <- function(x, type = "cases", obs = NULL,
   } else if (type == "voc_advantage") {
     plot_voc_advantage(x, forecast_dates, voc_label, ...)
   } else if (type == "growth") {
-    plot_growth(x, forecast_date, ...)
+    plot_growth(x, forecast_dates, ...)
   } else if (type == "rt") {
     plot_rt(x, forecast_dates, ...)
   } else if (type == "all") {
     plot_posterior(x, obs = obs, forecast_dates = forecast_dates,
                    all_obs = all_obs, voc_label = voc_label, ...)
   }
-}
-
-
-#' Plot posterior predictions
-#'
-#' @param save_path A character string indicating where to save plots
-#' if required.
-#'
-#' @param type A character string indicating the format to use to save plots.
-#'
-#' @return A named list of all supported package plots with sensible defaults.
-#'
-#' @family plot
-#' @export
-#' @inheritParams plot_cases
-#' @inheritParams plot_voc_frac
-#' @importFrom purrr walk2
-#' @examples
-#' posterior <- fv_example(strains = 2, type = "posterior")
-#' plot_posterior(posterior)
-plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           save_path = NULL, type = "png",
-                           all_obs = FALSE, voc_label = "variant of concern") {
-  plots <- list()
-  plots$cases <- plot_cases(
-    posterior, obs, forecast_dates,
-    log = FALSE, all_obs = all_obs
-  )
-  plots$log_cases <- plot_cases(
-    posterior, obs, forecast_dates,
-    log = TRUE, all_obs = all_obs
-  )
-  if (nrow(posterior[value_type %in% "voc_frac"]) > 0) {
-    plots$voc_frac <- plot_voc_frac(
-      posterior, obs, forecast_dates,
-      voc_label = voc_label, all_obs = all_obs
-    )
-    plots$voc_advantage <- plot_voc_advantage(
-      posterior, forecast_dates, voc_label
-    )
-  }
-  plots$growth <- plot_growth(posterior, forecast_dates)
-  plots$rt <- plot_rt(posterior, forecast_dates)
-  return(plots)
 }
