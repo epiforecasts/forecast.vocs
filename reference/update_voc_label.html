@@ -24,7 +24,7 @@ output from fv_tidy_posterior()."><meta property="og:image" content="epiforecast
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,54 +114,213 @@ with updated labels.</p>
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
-<code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code></p></div>
+<code><a href="plot.fv_posterior.html">plot.fv_posterior</a>()</code>,
+<code><a href="print.fv_posterior.html">print.fv_posterior</a>()</code>,
+<code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
+<code><a href="summary.fv_posterior.html">summary.fv_posterior</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">update_voc_label</span><span class="op">(</span><span class="va">p</span>, <span class="st">"Delta"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">p</span><span class="op">[</span><span class="va">value_type</span> <span class="op">==</span> <span class="st">"model"</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    value_type      variable                  clean_name date type obs observed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      model   avg_voc_mod        Average Delta effect &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:      model          beta                        Beta &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:      model init_cases[1]               Initial cases &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:      model init_cases[2]         Initial Delta cases &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:      model        phi[1] Notification overdispersion &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:      model        phi[2]   Sequencing overdispersion &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:      model        r_init              Initial growth &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:      model       r_noise                 Growth (sd) &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:      model       voc_mod        Initial Delta effect &lt;NA&gt;       NA       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    forecast_start exponentiated         mean       median           sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:             NA          TRUE 1.804766e+00 1.804291e+00   0.02921097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:             NA         FALSE 3.209816e-01 3.984735e-01   0.46752521</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:             NA          TRUE 8.959069e+04 8.965731e+04   0.06936367</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             NA          TRUE 2.200103e+02 2.201898e+02   0.09745460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:             NA         FALSE 1.056693e+02 8.444825e+01 106.02242241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:             NA         FALSE 1.891149e+02 1.615045e+02 124.32716962</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:             NA         FALSE 1.325174e-01 1.341870e-01   0.07180019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:             NA         FALSE 1.092370e-01 9.991730e-02   0.05998836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:             NA          TRUE 1.804766e+00 1.804291e+00   0.02921097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            mad            q5           q20          q80          q95      rhat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  0.02825984  1.719788e+00  1.762777e+00 1.847177e+00 1.895543e+00 0.9999955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  0.51877731 -5.182967e-01 -1.379756e-01 7.690168e-01 9.354680e-01 1.0000555</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  0.06382593  7.974545e+04  8.474313e+04 9.463664e+04 1.002407e+05 1.0035276</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  0.09427853  1.877616e+02  2.027711e+02 2.384415e+02 2.594063e+02 1.0000300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: 53.64839991  2.663438e+01  4.717452e+01 1.411910e+02 2.330759e+02 1.0006074</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 93.93219864  5.013444e+01  9.281310e+01 2.663616e+02 4.393338e+02 1.0042635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:  0.06461401  1.351774e-02  7.735250e-02 1.884312e-01 2.496943e-01 1.0001805</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:  0.06087993  3.048898e-02  5.322236e-02 1.579574e-01 2.195497e-01 0.9999600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9:  0.02825984  1.719788e+00  1.762777e+00 1.847177e+00 1.895543e+00 0.9999955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ess_bulk  ess_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2121.0506 1419.0800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  521.4538 1072.1236</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: 2338.2868 1108.6765</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: 2524.9633 1311.7136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  651.3741  910.9929</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: 2584.5556 1247.1047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: 1327.3538  997.1388</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8:  574.6457 1183.9425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9: 2121.0506 1419.0800</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">p</span>, type <span class="op">=</span> <span class="st">"cases"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               variable       date      type    obs observed forecast_start</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:       sim_cases[1] 2021-03-20  Combined  87328     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:       sim_cases[2] 2021-03-27  Combined 109442     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       sim_cases[3] 2021-04-03  Combined 117965     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:       sim_cases[4] 2021-04-10  Combined 107223     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       sim_cases[5] 2021-04-17  Combined 142664     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       sim_cases[6] 2021-04-24  Combined 145568     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:       sim_cases[7] 2021-05-01  Combined 131887     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       sim_cases[8] 2021-05-08  Combined 107141     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       sim_cases[9] 2021-05-15  Combined  77261     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      sim_cases[10] 2021-05-22  Combined  57310     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:      sim_cases[11] 2021-05-29  Combined  33052     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:      sim_cases[12] 2021-06-05  Combined  22631     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      sim_cases[13] 2021-06-12  Combined  15553     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      sim_cases[14] 2021-06-19  Combined   7659     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      sim_cases[15] 2021-06-26  Combined   5033     TRUE           TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      sim_cases[16] 2021-07-03  Combined     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:      sim_cases[17] 2021-07-10  Combined     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:      sim_cases[18] 2021-07-17  Combined     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      sim_cases[19] 2021-07-24  Combined     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   sim_voc_cases[1] 2021-04-17     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:   sim_voc_cases[2] 2021-04-24     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:   sim_voc_cases[3] 2021-05-01     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   sim_voc_cases[4] 2021-05-08     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   sim_voc_cases[5] 2021-05-15     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   sim_voc_cases[6] 2021-05-22     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   sim_voc_cases[7] 2021-05-29     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   sim_voc_cases[8] 2021-06-05     Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   sim_voc_cases[9] 2021-06-12     Delta     NA     TRUE           TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:  sim_voc_cases[10] 2021-06-19     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:  sim_voc_cases[11] 2021-06-26     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:  sim_voc_cases[12] 2021-07-03     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:  sim_voc_cases[13] 2021-07-10     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:  sim_voc_cases[14] 2021-07-17     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:  sim_voc_cases[15] 2021-07-24     Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:  sim_nvoc_cases[1] 2021-03-20 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:  sim_nvoc_cases[2] 2021-03-27 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:  sim_nvoc_cases[3] 2021-04-03 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:  sim_nvoc_cases[4] 2021-04-10 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:  sim_nvoc_cases[5] 2021-04-17 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:  sim_nvoc_cases[6] 2021-04-24 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:  sim_nvoc_cases[7] 2021-05-01 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:  sim_nvoc_cases[8] 2021-05-08 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  sim_nvoc_cases[9] 2021-05-15 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44: sim_nvoc_cases[10] 2021-05-22 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45: sim_nvoc_cases[11] 2021-05-29 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46: sim_nvoc_cases[12] 2021-06-05 non-Delta     NA     TRUE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47: sim_nvoc_cases[13] 2021-06-12 non-Delta     NA     TRUE           TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48: sim_nvoc_cases[14] 2021-06-19 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49: sim_nvoc_cases[15] 2021-06-26 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50: sim_nvoc_cases[16] 2021-07-03 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51: sim_nvoc_cases[17] 2021-07-10 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52: sim_nvoc_cases[18] 2021-07-17 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53: sim_nvoc_cases[19] 2021-07-24 non-Delta     NA    FALSE          FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               variable       date      type    obs observed forecast_start</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean median      sd     mad     q5    q20    q80    q95 rhat ess_bulk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  90100  89500 13400.0 12100.0  69200  79700 100000 112000    1     2060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 102000 102000 14700.0 13100.0  78800  91000 113000 126000    1     2130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 114000 113000 17600.0 15200.0  86500 100000 126000 143000    1     1980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 123000 122000 19100.0 16700.0  93100 109000 137000 154000    1     1820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 133000 133000 19900.0 17400.0 104000 118000 148000 164000    1     1920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 138000 137000 20400.0 18200.0 106000 122000 153000 172000    1     1910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 128000 127000 19100.0 16700.0  98800 113000 142000 160000    1     1860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 106000 105000 16300.0 13700.0  82400  94800 117000 132000    1     2090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  79600  78800 11800.0 10600.0  62700  70300  88100  99600    1     1880</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  55700  55200  8510.0  6970.0  43400  49400  61500  69900    1     1890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  35800  35500  5540.0  4500.0  27800  31900  39600  45200    1     1870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  22900  22700  3230.0  2800.0  17900  20400  25200  28100    1     2200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  14200  14000  1910.0  1690.0  11400  12600  15600  17300    1     2160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:   8310   8240  1130.0   936.0   6700   7440   9080  10200    1     2340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:   5140   5060   822.0   692.0   4050   4520   5680   6470    1     2140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:   3400   3300   900.0   789.0   2170   2690   4020   5010    1     2050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:   2510   2300  1160.0   905.0   1120   1630   3210   4580    1     1780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:   2130   1710  2140.0  1030.0    551    999   2880   4920    1     1810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:   2160   1340  6260.0  1110.0    256    611   2850   5870    1     1710</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    221    218    40.0    37.1    162    189    252    288    1     2010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    410    408    71.1    68.2    301    351    469    528    1     1800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    684    673   124.0   108.0    507    588    772    900    1     1970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   1030   1010   194.0   175.0    742    869   1170   1360    1     2290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   1380   1350   269.0   234.0    991   1170   1580   1830    1     2270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   1720   1680   330.0   307.0   1230   1450   1960   2290    1     2280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   1960   1920   413.0   354.0   1390   1650   2250   2670    1     2300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   2170   2140   459.0   411.0   1500   1810   2500   2980    1     2250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   2230   2200   490.0   442.0   1510   1830   2580   3060    1     2130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   2110   2080   490.0   451.0   1420   1710   2460   2950    1     2270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:   1950   1910   464.0   422.0   1300   1570   2290   2770    1     2250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:   1780   1700   575.0   497.0   1040   1320   2170   2810    1     2210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:   1670   1520   844.0   630.0    703   1050   2160   3090    1     2010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   1660   1320  1760.0   824.0    417    744   2250   3840    1     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   1860   1150  5590.0   959.0    222    522   2450   5170    1     1760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:  90100  89500 13400.0 12100.0  69200  79700 100000 112000    1     2060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 102000 102000 14700.0 13100.0  78800  91000 113000 126000    1     2130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 114000 113000 17600.0 15200.0  86500 100000 126000 143000    1     1980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 123000 122000 19100.0 16700.0  93100 109000 137000 154000    1     1820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 133000 133000 19900.0 17400.0 103000 118000 147000 164000    1     1920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 138000 137000 20400.0 18100.0 105000 122000 153000 172000    1     1910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41: 127000 127000 19100.0 16600.0  98200 113000 141000 159000    1     1860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42: 105000 105000 16200.0 13600.0  81500  93700 116000 131000    1     2090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  78300  77400 11700.0 10500.0  61300  69000  86700  97800    1     1880</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:  54000  53500  8450.0  6980.0  41700  47700  59700  67900    1     1890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:  33900  33500  5430.0  4340.0  26000  30100  37600  43100    1     1870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:  20700  20600  3130.0  2630.0  15900  18300  23000  25800    1     2180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:  11900  11800  1830.0  1630.0   9290  10500  13300  15100    1     2200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:   6200   6130  1040.0   901.0   4680   5400   6940   7860    1     2220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:   3190   3130   664.0   544.0   2290   2700   3620   4290    1     1950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:   1620   1550   498.0   423.0    958   1240   1960   2490    1     1950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    837    753   415.0   322.0    351    517   1090   1580    1     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:    467    368   432.0   232.0    113    212    641   1080    1     1720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:    296    177   709.0   151.0     32     79    381    827    1     1510</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean median      sd     mad     q5    q20    q80    q95 rhat ess_bulk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ess_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     1860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     1700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     1760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     1350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     1860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     1780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     1820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     1750</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     1650</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     1700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     1780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     1750</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:     1580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     1620</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     1460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:     1720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:     1750</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:     1770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:     1820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:     1550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:     1650</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:     1720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:     1660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:     1660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:     1630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:     1450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:     1640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:     1610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:     1720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:     1860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:     1700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:     1760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:     1350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:     1790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:     1780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:     1820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:     1780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:     1670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:     1670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:     1880</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:     1850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:     1700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:     1420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:     1420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:     1720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:     1500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:     1490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ess_tail</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">p</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             variable                  clean_name exponentiated         mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: avg_voc_advantage        Average Delta effect          TRUE     1.805793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:              beta                        Beta         FALSE     0.359000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:     init_cases[1]               Initial cases          TRUE 89321.723361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     init_cases[2]         Initial Delta cases          TRUE   219.203386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:            phi[1] Notification overdispersion         FALSE    92.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:            phi[2]   Sequencing overdispersion         FALSE   189.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:            r_init              Initial growth         FALSE     0.131000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:           r_noise                 Growth (sd)         FALSE     0.105000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9:           voc_mod        Initial Delta effect          TRUE     1.805793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          median       sd     mad           q5          q20          q80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     1.805793   0.0283  0.0265     1.724608     1.764734     1.847808</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     0.457000   0.4700  0.4870    -0.523000    -0.086800     0.798000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: 89321.723361   0.0713  0.0721 80821.637540 80821.637540 98715.771011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   219.203386   0.0975  0.0971   186.792804   202.350228   237.460193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:    77.000000  62.0000 47.8000    23.600000    43.500000   130.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:   164.000000 119.0000 99.5000    50.400000    92.800000   266.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:     0.130000   0.0740  0.0652     0.015100     0.074400     0.187000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:     0.092800   0.0597  0.0576     0.031900     0.052500     0.154000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9:     1.805793   0.0283  0.0265     1.724608     1.764734     1.847808</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           q95 rhat ess_bulk ess_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     1.8908    1     1880     1410</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     0.9490    1      616     1090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: 98715.7710    1     1720     1260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   257.2376    1     2220     1480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:   212.0000    1      809     1100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:   424.0000    1     2140     1190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:     0.2510    1     1240      859</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:     0.2200    1      578     1160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9:     1.8908    1     1880     1410</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

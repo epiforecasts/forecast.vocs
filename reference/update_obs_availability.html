@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,12 @@
 <code>date</code>, <code>cases</code>, <code>seq_voc</code>, and <code>seq_total</code>, <code>cases_available</code>,
 and <code>seq_available</code>. <code>seq_available</code> and <code>case_available</code> must be
 uniquely define data rows but other rows can be duplicated based
-on data availability.</p></dd>
+on data availability. This data format allows for multiple versions of
+case and sequence data for a given date with different reporting dates.
+This is important when using the package in evaluation settings or in
+real-time where data sources are liable to be updated as new data becomes
+available. See <a href="germany_covid19_delta_obs.html">germany_covid19_delta_obs</a> for an example of a supported
+data set.</p></dd>
 <dt>cases_lag</dt>
 <dd><p>Number of weeks that case data takes to be reported.
 Defaults to not alter the input data.</p></dd>

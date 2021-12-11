@@ -30,7 +30,7 @@ and transforming parameters for interpretability."><meta property="og:image" con
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@ and transforming parameters for interpretability.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_posterior</span><span class="op">(</span><span class="va">fit</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_posterior</span><span class="op">(</span><span class="va">fit</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -103,7 +103,10 @@ and transforming parameters for interpretability.</p>
 quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
 plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
-and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></dd>
+and <code><a href="plot_voc_frac.html">plot_voc_frac()</a></code>).</p></dd>
+<dt>digits</dt>
+<dd><p>Numeric, defaults to 3. Number of digits to round summary
+statistics to.</p></dd>
 <dt>...</dt>
 <dd><p>Additional arguments that may be passed but will not be used.</p></dd>
 </dl></div>
@@ -121,7 +124,10 @@ and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></dd>
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
+<code><a href="plot.fv_posterior.html">plot.fv_posterior</a>()</code>,
+<code><a href="print.fv_posterior.html">print.fv_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
+<code><a href="summary.fv_posterior.html">summary.fv_posterior</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
     </div>
 

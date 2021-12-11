@@ -26,7 +26,7 @@ for forecast dates only."><meta property="og:image" content="epiforecasts.io/for
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,10 @@ by <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> but wit
 <code><a href="fv_tidy_posterior.html">fv_tidy_posterior</a>()</code>,
 <code><a href="link_dates_with_posterior.html">link_dates_with_posterior</a>()</code>,
 <code><a href="link_obs_with_posterior.html">link_obs_with_posterior</a>()</code>,
+<code><a href="plot.fv_posterior.html">plot.fv_posterior</a>()</code>,
+<code><a href="print.fv_posterior.html">print.fv_posterior</a>()</code>,
 <code><a href="quantiles_to_long.html">quantiles_to_long</a>()</code>,
+<code><a href="summary.fv_posterior.html">summary.fv_posterior</a>()</code>,
 <code><a href="update_voc_label.html">update_voc_label</a>()</code></p></div>
     </div>
 
@@ -119,174 +122,193 @@ by <code><a href="fv_tidy_posterior.html">fv_tidy_posterior()</a></code> but wit
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="fv_example.html">fv_example</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">fv_extract_forecast</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     value_type     type       date horizon forecast_start          mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      cases Combined 2021-07-03       1          FALSE 3429.24600000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      cases Combined 2021-07-10       2          FALSE 2588.25250000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      cases Combined 2021-07-17       3          FALSE 2401.54200000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      cases Combined 2021-07-24       4          FALSE 3449.94100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      cases      VOC 2021-06-19       1          FALSE 2098.75500000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      cases      VOC 2021-06-26       2          FALSE 1951.21250000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      cases      VOC 2021-07-03       3          FALSE 1793.53600000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      cases      VOC 2021-07-10       4          FALSE 1712.20950000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      cases      VOC 2021-07-17       5          FALSE 1875.48200000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      cases      VOC 2021-07-24       6          FALSE 2967.00100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:      cases  non-VOC 2021-06-19       1          FALSE 6203.23450000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:      cases  non-VOC 2021-06-26       2          FALSE 3187.24000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      cases  non-VOC 2021-07-03       3          FALSE 1635.71000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      cases  non-VOC 2021-07-10       4          FALSE  876.04300000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:      cases  non-VOC 2021-07-17       5          FALSE  526.06000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      cases  non-VOC 2021-07-24       6          FALSE  482.94100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:        voc      VOC 2021-06-19       1          FALSE    0.25325522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:        voc      VOC 2021-06-26       2          FALSE    0.37860417</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:        voc      VOC 2021-07-03       3          FALSE    0.52155912</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:        voc      VOC 2021-07-10       4          FALSE    0.66026949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:        voc      VOC 2021-07-17       5          FALSE    0.77564376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:        voc      VOC 2021-07-24       6          FALSE    0.86002722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:     growth Combined 2021-06-26       1          FALSE   -0.30251201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:     growth Combined 2021-07-03       2          FALSE   -0.24626492</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:     growth Combined 2021-07-10       3          FALSE   -0.19733734</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:     growth Combined 2021-07-17       4          FALSE   -0.16751240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:     growth      VOC 2021-06-12       1          FALSE   -0.05034430</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:     growth      VOC 2021-06-19       2          FALSE   -0.06464587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:     growth      VOC 2021-06-26       3          FALSE   -0.08196106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:     growth      VOC 2021-07-03       4          FALSE   -0.09005981</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:     growth      VOC 2021-07-10       5          FALSE   -0.09445468</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:     growth      VOC 2021-07-17       6          FALSE   -0.10348861</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:     growth  non-VOC 2021-06-12       1          FALSE   -0.51425415</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:     growth  non-VOC 2021-06-19       2          FALSE   -0.52855571</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:     growth  non-VOC 2021-06-26       3          FALSE   -0.54587090</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:     growth  non-VOC 2021-07-03       4          FALSE   -0.55396964</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:     growth  non-VOC 2021-07-10       5          FALSE   -0.55836450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:     growth  non-VOC 2021-07-17       6          FALSE   -0.56739846</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:         rt Combined 2021-06-26       1          FALSE    0.73895962</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:         rt Combined 2021-07-03       2          FALSE    0.78171510</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:         rt Combined 2021-07-10       3          FALSE    0.82091366</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:         rt Combined 2021-07-17       4          FALSE    0.84576613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:         rt      VOC 2021-06-12       1          FALSE    0.95090197</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:         rt      VOC 2021-06-19       2          FALSE    0.93739936</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:         rt      VOC 2021-06-26       3          FALSE    0.92130783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:         rt      VOC 2021-07-03       4          FALSE    0.91387652</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:         rt      VOC 2021-07-10       5          FALSE    0.90986897</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:         rt      VOC 2021-07-17       6          FALSE    0.90168629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:         rt  non-VOC 2021-06-12       1          FALSE    0.59794641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:         rt  non-VOC 2021-06-19       2          FALSE    0.58945570</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:         rt  non-VOC 2021-06-26       3          FALSE    0.57933702</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:         rt  non-VOC 2021-07-03       4          FALSE    0.57466406</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:         rt  non-VOC 2021-07-10       5          FALSE    0.57214404</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:         rt  non-VOC 2021-07-17       6          FALSE    0.56699859</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     value_type     type       date horizon forecast_start          mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            median           sd          mad           q5           q20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 3296.00000000 1.001209e+03 7.872606e+02 2141.0000000 2670.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2279.50000000 1.448296e+03 9.644313e+02 1109.9000000 1609.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1706.50000000 4.534740e+03 1.076368e+03  525.9000000  983.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1355.50000000 3.075086e+04 1.177926e+03  260.0000000  599.60000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2058.00000000 4.517657e+02 4.329192e+02 1431.0000000 1727.80000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1905.50000000 4.597504e+02 4.158693e+02 1298.9500000 1574.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1694.50000000 6.112130e+02 5.018601e+02 1012.9500000 1322.80000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1492.00000000 9.742778e+02 6.716178e+02  685.9500000 1015.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1314.00000000 3.573439e+03 8.658384e+02  396.9500000  746.60000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1167.00000000 2.593159e+04 1.028183e+03  223.8500000  514.60000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 6141.50000000 1.008974e+03 8.977143e+02 4683.9500000 5418.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 3131.50000000 6.230724e+02 5.656119e+02 2291.6000000 2685.80000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1571.50000000 5.363618e+02 4.588647e+02  953.0000000 1209.80000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  767.00000000 5.564496e+02 3.409980e+02  338.0000000  523.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  376.00000000 9.875049e+02 2.401812e+02  111.0000000  206.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  187.00000000 4.844803e+03 1.601208e+02   31.0000000   79.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    0.25022550 4.128863e-02 3.843863e-02    0.1940648    0.22025600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    0.37543400 5.664506e-02 5.366864e-02    0.2944653    0.33303260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    0.51962900 6.588415e-02 6.362949e-02    0.4196759    0.46830080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    0.66141100 6.500086e-02 6.270212e-02    0.5539496    0.60841360</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    0.77836850 5.552442e-02 5.238545e-02    0.6804697    0.73277000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    0.86398600 4.236880e-02 3.836524e-02    0.7866587    0.82870060</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   -0.30435350 1.749757e-01 1.594180e-01   -0.5138655   -0.40969814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   -0.25116418 2.375012e-01 2.150889e-01   -0.5408795   -0.39256250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   -0.20213089 3.027830e-01 2.561703e-01   -0.5815155   -0.37631597</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   -0.16941100 3.601256e-01 2.980068e-01   -0.6166901   -0.36961713</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   -0.04720850 7.286879e-02 6.092433e-02   -0.1500362   -0.09199646</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   -0.06584034 9.793869e-02 8.574543e-02   -0.1866830   -0.12390699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   -0.08494750 1.735136e-01 1.552123e-01   -0.2927158   -0.18954949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:   -0.09163864 2.360269e-01 2.143995e-01   -0.3852124   -0.23445871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:   -0.09590507 3.018693e-01 2.588064e-01   -0.4763217   -0.27169937</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:   -0.10277064 3.597775e-01 2.972860e-01   -0.5539901   -0.30884779</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   -0.51256582 7.698416e-02 6.571031e-02   -0.6213916   -0.55927960</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   -0.53001182 1.012330e-01 9.031332e-02   -0.6539449   -0.59201764</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:   -0.54815043 1.755339e-01 1.575633e-01   -0.7639700   -0.65529483</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:   -0.55424639 2.374524e-01 2.134114e-01   -0.8522537   -0.70461663</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:   -0.56193382 3.032762e-01 2.584668e-01   -0.9418290   -0.73827050</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:   -0.56841086 3.614116e-01 2.978380e-01   -1.0206790   -0.76961641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:    0.73760008 1.749757e-01 1.594180e-01    0.5981789    0.66385061</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:    0.77789465 2.375012e-01 2.150889e-01    0.5822359    0.67532414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:    0.81698798 3.027830e-01 2.561703e-01    0.5590505    0.68638542</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:    0.84416188 3.601256e-01 2.980068e-01    0.5397279    0.69099884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:    0.95388849 7.286879e-02 6.092433e-02    0.8606769    0.91210838</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:    0.93628034 9.793869e-02 8.574543e-02    0.8297067    0.88346201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    0.91856051 1.735136e-01 1.552123e-01    0.7462342    0.82733177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    0.91243480 2.360269e-01 2.143995e-01    0.6803061    0.79099889</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    0.90855026 3.018693e-01 2.588064e-01    0.6210637    0.76208333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    0.90233391 3.597775e-01 2.972860e-01    0.5746523    0.73429253</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    0.59895679 7.698416e-02 6.571031e-02    0.5371963    0.57162071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    0.58859801 1.012330e-01 9.031332e-02    0.5199904    0.55320998</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    0.57801791 1.755339e-01 1.575633e-01    0.4658135    0.51928894</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:    0.57450505 2.374524e-01 2.134114e-01    0.4264528    0.49429804</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:    0.57010551 3.032762e-01 2.584668e-01    0.3899140    0.47793980</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:    0.56642485 3.614116e-01 2.978380e-01    0.3603502    0.46319071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            median           sd          mad           q5           q20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               q80           q95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  4.053400e+03 5099.25000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  3.313000e+03 4882.10000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  3.071000e+03 5946.05000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  2.970400e+03 7898.60000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  2.434000e+03 2912.05000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  2.285200e+03 2742.05000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  2.209600e+03 2860.05000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  2.232200e+03 3372.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  2.407000e+03 4733.85000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  2.565000e+03 6839.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  6.954200e+03 7939.25000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  3.636200e+03 4299.90000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  1.977200e+03 2516.10000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  1.131200e+03 1689.95000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  6.660000e+02 1354.30000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  4.090000e+02 1067.25000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  2.849324e-01    0.32067325</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:  4.232296e-01    0.47110610</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:  5.745284e-01    0.62755680</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:  7.140604e-01    0.76101130</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:  8.217192e-01    0.85734490</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:  8.945640e-01    0.91952600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: -1.953094e-01   -0.07420857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: -1.066186e-01    0.06081701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: -2.388700e-02    0.18918916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:  2.207108e-02    0.29103101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: -8.905679e-03    0.03542019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: -6.473509e-03    0.06004202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:  2.229543e-02    0.14784746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:  5.016352e-02    0.21281221</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:  7.704944e-02    0.29192888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:  8.521904e-02    0.34726018</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: -4.699099e-01   -0.41819937</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: -4.660493e-01   -0.39885210</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: -4.402726e-01   -0.30736911</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: -4.167730e-01   -0.24578137</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: -3.804664e-01   -0.16630252</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: -3.762457e-01   -0.11241972</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:  8.225801e-01    0.92847803</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:  8.988684e-01    1.06270443</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:  9.763960e-01    1.20826948</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:  1.022316e+00    1.33780606</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  9.911339e-01    1.03605496</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:  9.935474e-01    1.06188117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:  1.022546e+00    1.15933604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:  1.051443e+00    1.23715230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:  1.080095e+00    1.33900779</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:  1.088956e+00    1.41518488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:  6.250586e-01    0.65823098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:  6.274764e-01    0.67108995</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:  6.438609e-01    0.73537911</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:  6.591705e-01    0.78209320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:  6.835425e-01    0.84679003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:  6.864336e-01    0.89366908</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               q80           q95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Available value types: cases, voc_frac, voc_advantage, growth, rt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        value_type     type       date horizon forecast_start          mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:         cases Combined 2021-07-03       1          FALSE 3400.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:         cases Combined 2021-07-10       2          FALSE 2510.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:         cases Combined 2021-07-17       3          FALSE 2130.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:         cases Combined 2021-07-24       4          FALSE 2160.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:         cases      VOC 2021-06-19       1          FALSE 2110.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:         cases      VOC 2021-06-26       2          FALSE 1950.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:         cases      VOC 2021-07-03       3          FALSE 1780.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:         cases      VOC 2021-07-10       4          FALSE 1670.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:         cases      VOC 2021-07-17       5          FALSE 1660.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:         cases      VOC 2021-07-24       6          FALSE 1860.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:         cases  non-VOC 2021-06-19       1          FALSE 6200.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:         cases  non-VOC 2021-06-26       2          FALSE 3190.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:         cases  non-VOC 2021-07-03       3          FALSE 1620.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:         cases  non-VOC 2021-07-10       4          FALSE  837.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:         cases  non-VOC 2021-07-17       5          FALSE  467.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:         cases  non-VOC 2021-07-24       6          FALSE  296.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:      voc_frac      VOC 2021-06-19       1          FALSE    0.25400000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:      voc_frac      VOC 2021-06-26       2          FALSE    0.37900000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      voc_frac      VOC 2021-07-03       3          FALSE    0.52300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:      voc_frac      VOC 2021-07-10       4          FALSE    0.66200000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:      voc_frac      VOC 2021-07-17       5          FALSE    0.77700000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:      voc_frac      VOC 2021-07-24       6          FALSE    0.86100000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: voc_advantage      VOC 2021-06-19       1          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: voc_advantage      VOC 2021-06-26       2          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: voc_advantage      VOC 2021-07-03       3          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: voc_advantage      VOC 2021-07-10       4          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: voc_advantage      VOC 2021-07-17       5          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: voc_advantage      VOC 2021-07-24       6          FALSE    1.59099108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:        growth Combined 2021-06-26       1          FALSE   -0.30800000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:        growth Combined 2021-07-03       2          FALSE   -0.25378571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:        growth Combined 2021-07-10       3          FALSE   -0.21292857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:        growth Combined 2021-07-17       4          FALSE   -0.18228571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:        growth      VOC 2021-06-12       1          FALSE   -0.04816429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:        growth      VOC 2021-06-19       2          FALSE   -0.06442857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:        growth      VOC 2021-06-26       3          FALSE   -0.08800000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:        growth      VOC 2021-07-03       4          FALSE   -0.09742857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:        growth      VOC 2021-07-10       5          FALSE   -0.11078571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:        growth      VOC 2021-07-17       6          FALSE   -0.11864286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:        growth  non-VOC 2021-06-12       1          FALSE   -0.51228571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:        growth  non-VOC 2021-06-19       2          FALSE   -0.52878571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:        growth  non-VOC 2021-06-26       3          FALSE   -0.55235714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:        growth  non-VOC 2021-07-03       4          FALSE   -0.56178571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:        growth  non-VOC 2021-07-10       5          FALSE   -0.57514286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:        growth  non-VOC 2021-07-17       6          FALSE   -0.58300000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:            rt Combined 2021-06-26       1          FALSE    0.73491532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:            rt Combined 2021-07-03       2          FALSE    0.77585804</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:            rt Combined 2021-07-10       3          FALSE    0.80821386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:            rt Combined 2021-07-17       4          FALSE    0.83336320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:            rt      VOC 2021-06-12       1          FALSE    0.95297721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:            rt      VOC 2021-06-19       2          FALSE    0.93760308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:            rt      VOC 2021-06-26       3          FALSE    0.91576088</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:            rt      VOC 2021-07-03       4          FALSE    0.90716714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:            rt      VOC 2021-07-10       5          FALSE    0.89513054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54:            rt      VOC 2021-07-17       6          FALSE    0.88812493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55:            rt  non-VOC 2021-06-12       1          FALSE    0.59912458</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56:            rt  non-VOC 2021-06-19       2          FALSE    0.58932014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57:            rt  non-VOC 2021-06-26       3          FALSE    0.57559146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58:            rt  non-VOC 2021-07-03       4          FALSE    0.57018996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59:            rt  non-VOC 2021-07-10       5          FALSE    0.56262449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60:            rt  non-VOC 2021-07-17       6          FALSE    0.55822119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        value_type     type       date horizon forecast_start          mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            median       sd      mad           q5           q20           q80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 3300.00000000 9.00e+02 7.89e+02 2170.0000000 2690.00000000  4.020000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2300.00000000 1.16e+03 9.05e+02 1120.0000000 1630.00000000  3.210000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1710.00000000 2.14e+03 1.03e+03  551.0000000  999.00000000  2.880000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1340.00000000 6.26e+03 1.11e+03  256.0000000  611.00000000  2.850000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2080.00000000 4.90e+02 4.51e+02 1420.0000000 1710.00000000  2.460000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1910.00000000 4.64e+02 4.22e+02 1300.0000000 1570.00000000  2.290000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1700.00000000 5.75e+02 4.97e+02 1040.0000000 1320.00000000  2.170000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1520.00000000 8.44e+02 6.30e+02  703.0000000 1050.00000000  2.160000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1320.00000000 1.76e+03 8.24e+02  417.0000000  744.00000000  2.250000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1150.00000000 5.59e+03 9.59e+02  222.0000000  522.00000000  2.450000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 6130.00000000 1.04e+03 9.01e+02 4680.0000000 5400.00000000  6.940000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 3130.00000000 6.64e+02 5.44e+02 2290.0000000 2700.00000000  3.620000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1550.00000000 4.98e+02 4.23e+02  958.0000000 1240.00000000  1.960000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  753.00000000 4.15e+02 3.22e+02  351.0000000  517.00000000  1.090000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  368.00000000 4.32e+02 2.32e+02  113.0000000  212.00000000  6.410000e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  177.00000000 7.09e+02 1.51e+02   32.0000000   79.00000000  3.810000e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    0.25200000 3.95e-02 3.71e-02    0.1930000    0.22200000  2.850000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    0.37800000 5.44e-02 5.22e-02    0.2930000    0.33500000  4.230000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    0.52400000 6.34e-02 6.14e-02    0.4190000    0.47100000  5.740000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    0.66500000 6.25e-02 6.03e-02    0.5560000    0.61100000  7.140000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    0.78200000 5.31e-02 5.00e-02    0.6830000    0.73600000  8.210000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    0.86600000 4.02e-02 3.70e-02    0.7890000    0.83100000  8.950000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    1.59099108 2.83e-02 2.65e-02    1.5345149    1.56249783  1.620004e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   -0.30878571 1.64e-01 1.49e-01   -0.5170000   -0.40542857 -2.105714e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:   -0.25378571 2.23e-01 1.99e-01   -0.5366429   -0.38657143 -1.210000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:   -0.20350000 2.76e-01 2.54e-01   -0.5743571   -0.38185714 -4.612143e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:   -0.17521429 3.35e-01 2.96e-01   -0.6199286   -0.37478571  1.830714e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   -0.04604286 7.73e-02 6.53e-02   -0.1492857   -0.09035714 -3.912857e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   -0.06702143 9.50e-02 8.78e-02   -0.1815000   -0.12414286 -6.262143e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:   -0.08721429 1.62e-01 1.47e-01   -0.2962143   -0.18385714  9.585714e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:   -0.09742857 2.22e-01 1.98e-01   -0.3795000   -0.22942857  3.504286e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:   -0.10450000 2.76e-01 2.55e-01   -0.4761429   -0.27657143  5.649286e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:   -0.11078571 3.36e-01 2.97e-01   -0.5555000   -0.31035714  8.250000e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:   -0.51071429 7.87e-02 6.84e-02   -0.6144286   -0.55864286 -4.651429e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:   -0.52957143 9.89e-02 9.07e-02   -0.6521429   -0.59007143 -4.675000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:   -0.55314286 1.65e-01 1.49e-01   -0.7676429   -0.64821429 -4.510000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:   -0.56178571 2.26e-01 2.01e-01   -0.8485714   -0.69692857 -4.242857e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:   -0.56807143 2.79e-01 2.55e-01   -0.9428571   -0.74328571 -4.070000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:   -0.57278571 3.39e-01 2.97e-01   -1.0214286   -0.77707143 -3.810714e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    0.73433811 1.64e-01 1.49e-01    0.5963068    0.66669102  8.101212e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    0.77585804 2.23e-01 1.99e-01    0.5847079    0.67938220  8.860340e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    0.81587020 2.76e-01 2.54e-01    0.5630667    0.68259256  9.549260e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    0.83927716 3.35e-01 2.96e-01    0.5379829    0.68743657  1.018476e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    0.95500103 7.73e-02 6.53e-02    0.8613230    0.91360484  9.960948e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    0.93517516 9.50e-02 8.78e-02    0.8340182    0.88325365  9.937574e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    0.91648069 1.62e-01 1.47e-01    0.7436281    0.83205466  1.009632e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:    0.90716714 2.22e-01 1.98e-01    0.6842034    0.79498775  1.035664e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:    0.90077480 2.76e-01 2.55e-01    0.6211747    0.75837945  1.058119e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54:    0.89513054 3.36e-01 2.97e-01    0.5737853    0.73318506  1.085999e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55:    0.60006681 7.87e-02 6.84e-02    0.5409499    0.57198480  6.280454e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56:    0.58885728 9.89e-02 9.07e-02    0.5209283    0.55428769  6.265667e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57:    0.57513939 1.65e-01 1.49e-01    0.4641057    0.52297883  6.369908e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58:    0.57018996 2.26e-01 2.01e-01    0.4280260    0.49811287  6.542369e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59:    0.56661715 2.79e-01 2.55e-01    0.3895133    0.47554883  6.656442e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60:    0.56395224 3.39e-01 2.97e-01    0.3600802    0.45975045  6.831291e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            median       sd      mad           q5           q20           q80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               q95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 5010.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 4580.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 4920.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 5870.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2950.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2770.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2810.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 3090.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 3840.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 5170.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 7860.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 4290.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2490.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 1580.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 1080.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  827.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    0.31900000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    0.46800000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    0.62500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    0.75900000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21:    0.85600000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:    0.91800000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:    1.64954584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   -0.10292857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:    0.02530000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:    0.12414286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:    0.21371429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:    0.04140714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:    0.05665000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:    0.11628571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    0.17914286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:    0.21921429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:    0.27657143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:   -0.42114286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:   -0.40071429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:   -0.34335714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:   -0.28600000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:   -0.24042857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:   -0.18228571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:    0.90219141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:    1.02562276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:    1.13217760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:    1.23826881</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:    1.04227637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    1.05828535</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:    1.12331677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:    1.19619162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:    1.24509805</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54:    1.31860114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55:    0.65629634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56:    0.66984142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57:    0.70938481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58:    0.75126262</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59:    0.78629081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60:    0.83336320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               q95</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

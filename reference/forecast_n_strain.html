@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,7 @@
   strains <span class="op">=</span> <span class="fl">2</span>,
   voc_label <span class="op">=</span> <span class="st">"VOC"</span>,
   probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span><span class="op">)</span>,
+  digits <span class="op">=</span> <span class="fl">3</span>,
   scale_r <span class="op">=</span> <span class="fl">1</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
@@ -131,7 +132,10 @@ rename parameters to use variant specific terminology.</p></dd>
 quantile summaries for. By default these are the 5%, 20%, 80%,
 and 95% quantiles which are also the minimum set required for
 plotting functions to work (such as <code><a href="plot_cases.html">plot_cases()</a></code>, <code><a href="plot_rt.html">plot_rt()</a></code>,
-and <code><a href="plot_voc.html">plot_voc()</a></code>).</p></dd>
+and <code><a href="plot_voc_frac.html">plot_voc_frac()</a></code>).</p></dd>
+<dt>digits</dt>
+<dd><p>Numeric, defaults to 3. Number of digits to round summary
+statistics to.</p></dd>
 <dt>scale_r</dt>
 <dd><p>Numeric, defaults to 1. Rescale the timespan over which
 the growth rate and reproduction number is calculated. An example use case
@@ -146,6 +150,8 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.</p></dd>
 <code><a href="forecast_across_dates.html">forecast_across_dates</a>()</code>,
 <code><a href="forecast_across_scenarios.html">forecast_across_scenarios</a>()</code>,
 <code><a href="forecast.html">forecast</a>()</code>,
+<code><a href="plot.fv_forecast.html">plot.fv_forecast</a>()</code>,
+<code><a href="summary.fv_forecast.html">summary.fv_forecast</a>()</code>,
 <code><a href="unnest_posterior.html">unnest_posterior</a>()</code></p></div>
     </div>
 

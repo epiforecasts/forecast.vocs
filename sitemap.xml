@@ -121,6 +121,12 @@
     <loc>epiforecasts.io/forecast.vocs/reference/link_obs_with_posterior.html</loc>
   </url>
   <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/plot.fv_forecast.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/plot.fv_posterior.html</loc>
+  </url>
+  <url>
     <loc>epiforecasts.io/forecast.vocs/reference/plot_cases.html</loc>
   </url>
   <url>
@@ -142,13 +148,28 @@
     <loc>epiforecasts.io/forecast.vocs/reference/plot_theme.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_voc.html</loc>
+    <loc>epiforecasts.io/forecast.vocs/reference/plot_voc_advantage.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/plot_voc_frac.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/print.fv_posterior.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/quantiles_to_long.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/sample_sequences.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/save_plots.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/summary.fv_forecast.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/forecast.vocs/reference/summary.fv_posterior.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/forecast.vocs/reference/unnest_posterior.html</loc>

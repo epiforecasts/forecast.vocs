@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.7.6000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,8 +83,6 @@
   <span class="va">posterior</span>,
   obs <span class="op">=</span> <span class="cn">NULL</span>,
   forecast_dates <span class="op">=</span> <span class="cn">NULL</span>,
-  save_path <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="st">"png"</span>,
   all_obs <span class="op">=</span> <span class="cn">FALSE</span>,
   voc_label <span class="op">=</span> <span class="st">"variant of concern"</span>
 <span class="op">)</span></code></pre></div>
@@ -103,11 +101,6 @@
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.</p></dd>
-<dt>save_path</dt>
-<dd><p>A character string indicating where to save plots
-if required.</p></dd>
-<dt>type</dt>
-<dd><p>A character string indicating the format to use to save plots.</p></dd>
 <dt>all_obs</dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
 or just those in the date range of the estimates being plot.</p></dd>
@@ -123,13 +116,17 @@ of concern. Defaults to  "variant of concern".</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Plotting functions
 <code><a href="add_forecast_dates.html">add_forecast_dates</a>()</code>,
+<code><a href="plot.fv_forecast.html">plot.fv_forecast</a>()</code>,
+<code><a href="plot.fv_posterior.html">plot.fv_posterior</a>()</code>,
 <code><a href="plot_cases.html">plot_cases</a>()</code>,
 <code><a href="plot_default.html">plot_default</a>()</code>,
 <code><a href="plot_growth.html">plot_growth</a>()</code>,
 <code><a href="plot_pairs.html">plot_pairs</a>()</code>,
 <code><a href="plot_rt.html">plot_rt</a>()</code>,
 <code><a href="plot_theme.html">plot_theme</a>()</code>,
-<code><a href="plot_voc.html">plot_voc</a>()</code></p></div>
+<code><a href="plot_voc_advantage.html">plot_voc_advantage</a>()</code>,
+<code><a href="plot_voc_frac.html">plot_voc_frac</a>()</code>,
+<code><a href="save_plots.html">save_plots</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -142,14 +139,17 @@ of concern. Defaults to  "variant of concern".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $log_cases</span>
 <span class="r-plt img"><img src="plot_posterior-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $voc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $voc_frac</span>
 <span class="r-plt img"><img src="plot_posterior-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $growth</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $voc_advantage</span>
 <span class="r-plt img"><img src="plot_posterior-4.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $rt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $growth</span>
 <span class="r-plt img"><img src="plot_posterior-5.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $rt</span>
+<span class="r-plt img"><img src="plot_posterior-6.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
