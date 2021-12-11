@@ -247,9 +247,9 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   voc_frac <- sfit[grepl("frac_voc", variable)]
    voc_frac[, type := "VOC"]
   if (nrow(voc_frac) > 0) {
-     voc_frac <- link_dates_with_posterior(voc, data)
+     voc_frac <- link_dates_with_posterior(voc_frac, data)
      voc_frac <- link_obs_with_posterior(
-      posterior = voc, obs = data$Y / data$N,
+      posterior = voc_frac, obs = data$Y / data$N,
       target_types = "VOC"
     )
   }
