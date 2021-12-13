@@ -19,7 +19,7 @@ test_that("Can summarise forecasts", {
       ) %in% "fv_posterior"
     )
   )
-  expect_equal(
+  expect_true(
     all(
         grepl("r",
           summary(
@@ -28,7 +28,7 @@ test_that("Can summarise forecasts", {
         )
       )
     )
-  expect_equal(
+  expect_true(
     all(
       summary(posterior2, target = "forecast", type = "rt")$date
         >= as.Date("2021-03-20")

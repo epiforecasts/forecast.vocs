@@ -9,7 +9,8 @@ fv_tidy_posterior(
   probs = c(0.05, 0.2, 0.8, 0.95),
   digits = 3,
   voc_label = "VOC",
-  scale_r = 1
+  scale_r = 1,
+  timespan = 7
 )
 }
 \arguments{

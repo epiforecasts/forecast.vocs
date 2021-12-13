@@ -4,7 +4,7 @@
 \alias{link_dates_with_posterior}
 \title{Link dates by time for posterior parameter estimates}
 \usage{
-link_dates_with_posterior(posterior, data, mod_end = 0)
+link_dates_with_posterior(posterior, data, timespan = 7, mod_end = 0)
 }
 \arguments{
 \item{posterior}{A data frame of summarised posterior estimates
@@ -14,6 +14,9 @@ which contains the following character string options: "non-VOC",
 
 \item{data}{A list of data as returned in the "data" entry of the output
 returned by \code{\link[=fv_sample]{fv_sample()}}.}
+
+\item{timespan}{Integer, defaults to 7. Indicates the number of days between
+each observation. Defaults to a week.}
 
 \item{mod_end}{Integer, defaults to 0. Amount to shift the end date of
 estimates.}

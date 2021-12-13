@@ -8,23 +8,27 @@
 #' @param data A list of data as returned in the "data" entry of the output
 #' returned by [fv_sample()].
 #'
+#' @param timespan Integer, defaults to 7. Indicates the number of days between
+#' each observation. Defaults to a week.
+#' 
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
 #' estimates.
 #'
 #' @return A posterior `data.frame` with an additional data column.
 #'
 #' @family postprocess
-link_dates_with_posterior <- function(posterior, data, mod_end = 0) {
+link_dates_with_posterior <- function(posterior, data, timespan = 7, 
+                                      mod_end = 0) {
   # extract info from lis
   t <- data$t
   t_nseq <- data$t_nseq
   t_seqf <- data$t_seqf
   start_date <- data$start_date
-  end_date <- start_date + 7 * t - 1 - mod_end
+  end_date <- start_date + timespan * (t - 1 - mod_end)
 
   # build dates data frame
   dates <- data.table(
-    start = c(rep(start_date, 3), start_date + t_nseq * 7),
+    start = c(rep(start_date, 3), start_date + t_nseq * timespan),
     end = end_date,
     type = c("non-VOC", "Combined", "Overall", "VOC")
   )
@@ -209,7 +213,8 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3,
 #' fit <- fv_sample(dt, init = inits, adapt_delta = 0.99, max_treedepth = 15)
 #' fv_tidy_posterior(fit)
 fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
-                              digits = 3, voc_label = "VOC", scale_r = 1) {
+                              digits = 3, voc_label = "VOC", scale_r = 1,
+                              timespan = 7) {
   check_dataframe(
     fit,
     req_vars = c("fit", "data"),
@@ -238,7 +243,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     rep(voc_present, .N), "Combined",
     default = "Overall"
   )]
-  cases <- link_dates_with_posterior(cases, data)
+  cases <- link_dates_with_posterior(cases, data, timespan = timespan)
   cases <- link_obs_with_posterior(
     posterior = cases, obs = data$X,
     target_types = c("Overall", "Combined")
@@ -252,7 +257,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   voc_frac <- sfit[grepl("frac_voc", variable)]
    voc_frac[, type := "VOC"]
   if (nrow(voc_frac) > 0) {
-     voc_frac <- link_dates_with_posterior(voc_frac, data)
+     voc_frac <- link_dates_with_posterior(voc_frac, data, timespan = timespan)
      voc_frac <- link_obs_with_posterior(
       posterior = voc_frac, obs = data$Y / data$N,
       target_types = "VOC"
@@ -267,7 +272,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
     grepl("r\\[", variable) & voc_present, "non-VOC",
     grepl("r\\[", variable), "Overall"
   )]
-  rt <- link_dates_with_posterior(rt, data, mod_end = 1)
+  rt <- link_dates_with_posterior(rt, data, mod_end = 1, timespan = timespan)
   rt <- link_obs_with_posterior(
     posterior = rt, horizon = case_horizon,
     target_types = c("Overall", "Combined")
@@ -293,7 +298,9 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   voc_advantage <- sfit[grepl("voc_advantage", variable)]
   voc_advantage <- voc_advantage[, type := "VOC"]
   if (nrow(voc_advantage) > 0) {
-    voc_advantage <- link_dates_with_posterior(voc_advantage, data)
+    voc_advantage <- link_dates_with_posterior(
+      voc_advantage, data, timespan = timespan, mod_end = 1
+    )
     voc_advantage <- link_obs_with_posterior(
       posterior = voc_advantage, horizon = seq_horizon,
       target_types = c("VOC")
