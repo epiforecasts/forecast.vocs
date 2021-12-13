@@ -482,9 +482,11 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
       dt <- dt[,
         (char_cols) := purrr::map(
           .SD,
-          ~ gsub(target_label,
-            replacement = label, x = .,
-            ignore.case = FALSE
+          ~ gsub(
+              target_label,
+              replacement = label,
+              x = .,
+              ignore.case = FALSE
           )
         ),
         .SDcols = char_cols
