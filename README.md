@@ -167,7 +167,7 @@ Summarised posterior and forecast estimates can be directly extracted from the o
 summarised posterior can be extracted using the following (which also has its own `summary()` and `plot()` options to make exploring the results easier).
 See the documentation for further details.
 
-```{r, eval = FALSE}
+``` r
 summary(forecasts, target = "posterior", type = "all")
 ```
 

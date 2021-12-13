@@ -28,9 +28,9 @@ defaulting to "model". Current options are: "model" which returns a
 summary of key model parameters, "cases" which returns summarised cases,
 "voc_frac" which returns summarised estimates of the fraction of cases that
 have the variant of concern, "voc_advantage" that returns summarised
-estiamtes of the the transmission advantage of the variant of concern,
-"growth" which returns summarised variant specifc and overall growth rates,
-"rt" which returns summarised variant specifc and overall reproduction
+estimates of the the transmission advantage of the variant of concern,
+"growth" which returns summarised variant specific and overall growth rates,
+"rt" which returns summarised variant specific and overall reproduction
 number estimates, "raw" which returns a raw posterior summary, and "all"
 which returns all tidied posterior estimates.}
 
