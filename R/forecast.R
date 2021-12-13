@@ -93,7 +93,8 @@ forecast <- function(obs,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
                      debug = FALSE, keep_fit = TRUE, scale_r = 1, digits = 3,
-                     probs = c(0.05, 0.2, 0.8, 0.95), id = 0, ...) {
+                     timespan = 7, probs = c(0.05, 0.2, 0.8, 0.95), id = 0,
+                    ...) {
   if (!is.null(models)) {
     if (length(models) == 1 & length(strains) == 1) {
       models <- list(models)
@@ -157,6 +158,7 @@ forecast <- function(obs,
           scale_r = scale_r,
           digits = digits,
           voc_label = voc_label,
+          timespan = timespan,
           ...
         )
       out <- out[, `:=`(results = list(fit$result), error = list(fit$error))]
@@ -190,7 +192,7 @@ forecast_n_strain <- function(data, model = NULL,
                               extract_forecast = forecast.vocs::fv_extract_forecast, # nolint
                               strains = 2, voc_label = "VOC",
                               probs = c(0.05, 0.2, 0.8, 0.95),
-                              digits = 3, scale_r = 1, ...) {
+                              digits = 3, scale_r = 1, timespan = 7, ...) {
   inits <- inits(data, strains = strains)
 
   if (is.null(model)) {
@@ -205,7 +207,7 @@ forecast_n_strain <- function(data, model = NULL,
   fit$posterior <- list(posterior(
     fit,
     probs = probs, voc_label = voc_label, scale_r = scale_r,
-    digits = digits
+    digits = digits, timespan = timespan
   ))
   fit$forecast <- list(extract_forecast(fit$posterior[[1]]))
   return(fit)

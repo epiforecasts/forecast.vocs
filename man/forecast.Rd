@@ -28,6 +28,7 @@ forecast(
   keep_fit = TRUE,
   scale_r = 1,
   digits = 3,
+  timespan = 7,
   probs = c(0.05, 0.2, 0.8, 0.95),
   id = 0,
   ...
