@@ -1,7 +1,7 @@
 Package: forecast.vocs
 Title: Forecast Case and Sequence Notifications using Variant of Concern
     Strain Dynamics
-Version: 0.0.8.3000
+Version: 0.0.8
 Authors@R:
     person(given = "Sam Abbott",
            role = c("aut", "cre"),
