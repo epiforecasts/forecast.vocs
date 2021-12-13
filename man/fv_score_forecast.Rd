@@ -61,17 +61,17 @@ forecasts <- summary(forecasts, target = "forecast", type = "cases")
 obs <- latest_obs(germany_covid19_delta_obs)
 
 # score overall
-fv_score_forecast(forecasts, obs, summarise_by = "strain")
+fv_score_forecast(forecasts, obs, summarise_by = "strains")
 
 # score overall on a log scale
-fv_score_forecast(forecasts, obs, summarise_by = "strain", log = TRUE)
+fv_score_forecast(forecasts, obs, summarise_by = "strains", log = TRUE)
 
 # score by horizon
-fv_score_forecast(forecasts, obs, summarise_by = c("strain", "horizon"))
+fv_score_forecast(forecasts, obs, summarise_by = c("strains", "horizon"))
 
 # score by horizon on a log scale
 fv_score_forecast(
- forecasts, obs, summarise_by = c("strain", "horizon"), log = TRUE
+ forecasts, obs, summarise_by = c("strains", "horizon"), log = TRUE
 )
 \dontshow{\}) # examplesIf}
 }
