@@ -32,6 +32,7 @@
 #' @importFrom data.table copy setnames
 #' @export
 #' @examplesIf interactive()
+#' options(mc.cores = 4)
 #' library(data.table)
 #' library(scoringutils)
 #'

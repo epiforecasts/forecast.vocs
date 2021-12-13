@@ -40,6 +40,7 @@ and examples below for simple examples in the context of \link{forecast.vocs}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+options(mc.cores = 4)
 library(data.table)
 library(scoringutils)
 
