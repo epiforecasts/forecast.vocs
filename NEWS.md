@@ -8,7 +8,7 @@
 * Adds a new plotting function `plot_voc_advantage()` to extract and plot this.
 * Adds `plot_voc_advantage()` to `plot_posterior` as an additional output.
 * Added a new `timespan` argument that allows custom date processing. This allows the use
-of data with non-weekly spaces (thought spacing must be constant across both sequences and case counts). 
+of data with non-weekly spaces (though spacing must be constant across both sequences and case counts). 
 * Updates all example data to include this new output.
 * Adds tests for all new functionality.
 
