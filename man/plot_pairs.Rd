@@ -58,7 +58,8 @@ Plotting functions
 \code{\link{save_plots}()}
 
 Functions to explore and validate models
-\code{\link{bp_launch_shinystan}()}
+\code{\link{bp_launch_shinystan}()},
+\code{\link{fv_score_forecast}()}
 }
 \concept{modelvalidation}
 \concept{plot}

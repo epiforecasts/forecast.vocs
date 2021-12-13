@@ -78,7 +78,7 @@ fv_example <- function(strains = 1, type = "posterior") {
 #' @param type A character string indicating the format to use to save plots.
 #'
 #' @param plots A named list of `ggplot2` plots.
-#' 
+#'
 #' @param ... Additional arguments passed to [ggplot2::ggsave()]
 #' @return NULL
 #' @family plot

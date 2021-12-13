@@ -127,37 +127,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 19.1 seconds.
-#> Chain 3 finished in 21.5 seconds.
-#> Chain 2 finished in 22.2 seconds.
-#> Chain 4 finished in 24.1 seconds.
+#> Chain 4 finished in 27.6 seconds.
+#> Chain 2 finished in 28.2 seconds.
+#> Chain 1 finished in 28.8 seconds.
+#> Chain 3 finished in 33.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 21.7 seconds.
-#> Total execution time: 24.2 seconds.
+#> Mean chain execution time: 29.4 seconds.
+#> Total execution time: 33.1 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 64.6 seconds.
-#> Chain 4 finished in 67.4 seconds.
-#> Chain 2 finished in 67.5 seconds.
-#> Chain 3 finished in 69.5 seconds.
+#> Chain 2 finished in 75.0 seconds.
+#> Chain 1 finished in 77.5 seconds.
+#> Chain 3 finished in 79.3 seconds.
+#> Chain 4 finished in 106.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 67.3 seconds.
-#> Total execution time: 69.5 seconds.
+#> Mean chain execution time: 84.4 seconds.
+#> Total execution time: 106.0 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
-#> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
-#> 2:  0    2021-06-19       2           TRUE               pooled 0,0.25
+#> 1:  0    2021-06-19       1           TRUE               pooled      0
+#> 2:  0    2021-06-19       2           TRUE               pooled   0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
-#> 2:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
+#> 1:       0.4       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
+#> 2:       0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                     4                     1e-03            10
-#> 2:                     2                     5e-04            10
-#>    no_at_max_treedepth per_at_max_treedepth time              posterior
-#> 1:                2517              0.62925 24.2 <fv_posterior[148x20]>
-#> 2:                3901              0.97525 69.5 <fv_posterior[426x20]>
+#> 1:                     0                   0.00000            11
+#> 2:                     7                   0.00175            11
+#>    no_at_max_treedepth per_at_max_treedepth  time              posterior
+#> 1:                 234              0.05850  33.1 <fv_posterior[148x20]>
+#> 2:                 861              0.21525 106.0 <fv_posterior[426x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
 #> 2: <fv_posterior[60x13]>
@@ -232,6 +232,27 @@ using the following.
 ``` r
 plot(forecasts, current_obs, type = "all", voc_label = "Delta variant")
 ```
+
+A potentially useful optional integration with [`scoringutils`](https://epiforecasts.io/scoringutils/)
+package is also provided to streamline scoring forecasts using proper
+scoring rules. See the documentation of the `scoringutils` package for
+more on this but as a simple example below we calculate average scores
+both the single and two strain models for this single Forecast
+
+``` r
+library(scoringutils)
+#> Note: The definition of the weighted interval score has slightly changed in version 0.1.5. If you want to use the old definition, use the argument `count_median_twice = TRUE` in the function `eval_forecasts()`
+library(knitr)
+
+pp_forecasts <- summary(forecasts, target = "forecast", type = "cases")
+scores <- fv_score_forecast(pp_forecasts, current_obs, summarise_by = "strains")
+kable(scores)
+```
+
+| strains | interval\_score | sharpness | underprediction | overprediction | coverage\_deviation |    bias | aem |
+| ------: | --------------: | --------: | --------------: | -------------: | ------------------: | ------: | --: |
+|       1 |            2010 |       283 |            1720 |              0 |             \-0.375 | \-0.967 | NaN |
+|       2 |            1110 |       495 |             612 |              0 |               0.000 | \-0.900 | NaN |
 
 ### Step by step forecast
 

@@ -125,6 +125,18 @@ Alternatively a list of all plots with sensible defaults can be produced using t
 plot(forecasts, current_obs, type = "all", voc_label = "Delta variant")
 ```
 
+
+A potentially useful optional integration with [`scoringutils`](https://epiforecasts.io/scoringutils/) package is also provided to streamline scoring forecasts using proper scoring rules. See the documentation of the `scoringutils` package for more on this but as a simple example below we calculate average scores both the single and two strain models for this single Forecast
+
+```{r}
+library(scoringutils)
+library(knitr)
+
+pp_forecasts <- summary(forecasts, target = "forecast", type = "cases")
+scores <- fv_score_forecast(pp_forecasts, current_obs, summarise_by = "strains")
+kable(scores)
+```
+
 ### Step by step forecast
 
 Rather than using the all-in-one `forecast()` function individual package functions can be used to produce a forecast as follows.

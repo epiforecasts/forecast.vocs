@@ -10,7 +10,7 @@
 #'
 #' @param timespan Integer, defaults to 7. Indicates the number of days between
 #' each observation. Defaults to a week.
-#' 
+#'
 #' @param mod_end Integer, defaults to 0. Amount to shift the end date of
 #' estimates.
 #'

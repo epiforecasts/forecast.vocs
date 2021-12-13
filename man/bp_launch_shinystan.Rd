@@ -27,6 +27,7 @@ bp_launch_shinystan(fit)
 }
 \seealso{
 Functions to explore and validate models
+\code{\link{fv_score_forecast}()},
 \code{\link{plot_pairs}()}
 }
 \concept{modelvalidation}
