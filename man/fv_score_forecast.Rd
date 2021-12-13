@@ -43,11 +43,23 @@ and examples below for simple examples in the context of \link{forecast.vocs}.
 library(data.table)
 library(scoringutils)
 
-forecast1 <- fv_example(strains = 1, type = "forecast")
-forecast2 <- fv_example(strains = 2, type = "forecast")
-forecasts <- rbind(forecast1[, strain := 1], forecast2[, strain := 2])
+# Fit and forecast using both the one and two strain models
+forecasts <- forecast(
+  germany_covid19_delta_obs,
+  forecast_date = as.Date("2021-06-12"),
+  horizon = 4,
+  strains = c(1, 2),
+  adapt_delta = 0.99,
+  max_treedepth = 15,
+  variant_relationship = "scaled"
+)
 
+# Extract forecasts
+forecasts <- summary(forecasts, target = "forecast", type = "cases")
+
+# Filter for the latest available observations
 obs <- latest_obs(germany_covid19_delta_obs)
+
 # score overall
 fv_score_forecast(forecasts, obs, summarise_by = "strain")
 

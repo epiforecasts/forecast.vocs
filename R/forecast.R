@@ -66,6 +66,7 @@
 #'   max_treedepth = 15,
 #'   variant_relationship = "scaled"
 #' )
+#'
 #' # inspect forecasts
 #' forecasts
 #'
