@@ -5,6 +5,10 @@
 * Adds an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
 * Adds an example of using `fv_score_forecast()` to the README.
 
+## Bug fixes
+
+* Fixed a bug in the output of the `forecast()` function where the prior specifications for the initial growth and the variant scaling were only partially included.
+
 # forecast.vocs 0.0.8
 
 ## Features

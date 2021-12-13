@@ -136,8 +136,8 @@ forecast <- function(obs,
     strains = strains,
     overdispersion = overdispersion,
     variant_relationship = variant_relationship,
-    r_init = purrr::map_chr(r_init, paste, collapse = ", ", sep = ", "),
-    voc_scale = purrr::map_chr(voc_scale, paste, collapse = ", ", sep = ", ")
+    r_init = paste(r_init, collapse = ", ", sep = ", "),
+    voc_scale = paste(voc_scale, collapse = ", ", sep = ", ")
   )
 
   # forecast required strain models
