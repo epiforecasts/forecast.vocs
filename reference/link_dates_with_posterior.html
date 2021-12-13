@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">link_dates_with_posterior</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">data</span>, mod_end <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">link_dates_with_posterior</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">data</span>, timespan <span class="op">=</span> <span class="fl">7</span>, mod_end <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -92,6 +92,9 @@ which contains the following character string options: "non-VOC",
 <dt>data</dt>
 <dd><p>A list of data as returned in the "data" entry of the output
 returned by <code><a href="fv_sample.html">fv_sample()</a></code>.</p></dd>
+<dt>timespan</dt>
+<dd><p>Integer, defaults to 7. Indicates the number of days between
+each observation. Defaults to a week.</p></dd>
 <dt>mod_end</dt>
 <dd><p>Integer, defaults to 0. Amount to shift the end date of
 estimates.</p></dd>

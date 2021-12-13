@@ -56,7 +56,7 @@
     
     <a class="navbar-brand me-2" href="index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,24 +192,24 @@
 <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 38.6 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 38.6 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 44.8 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 48.4 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 19.1 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 21.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 22.2 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 24.1 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 42.6 seconds.</span>
-<span class="co">#&gt; Total execution time: 48.5 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 21.7 seconds.</span>
+<span class="co">#&gt; Total execution time: 24.2 seconds.</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 57.7 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 67.0 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 73.0 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 74.4 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 64.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 67.4 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 67.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 69.5 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 68.0 seconds.</span>
-<span class="co">#&gt; Total execution time: 74.4 seconds.</span>
+<span class="co">#&gt; Mean chain execution time: 67.3 seconds.</span>
+<span class="co">#&gt; Total execution time: 69.5 seconds.</span>
 <span class="va">forecasts</span>
 <span class="co">#&gt;    id forecast_date strains overdispersion variant_relationship r_init</span>
 <span class="co">#&gt; 1:  0    2021-06-19       1           TRUE               pooled 0,0.25</span>
@@ -218,45 +218,46 @@
 <span class="co">#&gt; 1:   0.4,0.2       &lt;CmdStanMCMC[31]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000        1</span>
 <span class="co">#&gt; 2:   0.4,0.2       &lt;CmdStanMCMC[31]&gt; &lt;list[20]&gt; &lt;list[5]&gt;    4000        1</span>
 <span class="co">#&gt;    divergent_transitions per_divergent_transitions max_treedepth</span>
-<span class="co">#&gt; 1:                     0                     0.000            11</span>
-<span class="co">#&gt; 2:                     8                     0.002            10</span>
+<span class="co">#&gt; 1:                     4                     1e-03            10</span>
+<span class="co">#&gt; 2:                     2                     5e-04            10</span>
 <span class="co">#&gt;    no_at_max_treedepth per_at_max_treedepth time              posterior</span>
-<span class="co">#&gt; 1:                1147              0.28675 48.5 &lt;fv_posterior[148x20]&gt;</span>
-<span class="co">#&gt; 2:                3056              0.76400 74.4 &lt;fv_posterior[427x20]&gt;</span>
+<span class="co">#&gt; 1:                2517              0.62925 24.2 &lt;fv_posterior[148x20]&gt;</span>
+<span class="co">#&gt; 2:                3901              0.97525 69.5 &lt;fv_posterior[426x20]&gt;</span>
 <span class="co">#&gt;                 forecast</span>
 <span class="co">#&gt; 1: &lt;fv_posterior[12x13]&gt;</span>
-<span class="co">#&gt; 2: &lt;fv_posterior[54x13]&gt;</span></code></pre></div>
+<span class="co">#&gt; 2: &lt;fv_posterior[60x13]&gt;</span></code></pre></div>
 <p>Summarised posterior and forecast estimates can be directly extracted from the output using the included <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method. Alternatively, the complete summarised posterior can be extracted using the following (which also has its own <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> options to make exploring the results easier). See the documentation for further details.</p>
-<p><code>{r, eval = FALSE} summary(forecasts, target = "posterior", type = "all")</code></p>
-<p>Plot the posterior prediction for cases from the single strain model (“Overall”), from the two strain model (“Combined”), and the unobserved estimates for each strain.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">forecasts</span>, target <span class="op">=</span> <span class="st">"posterior"</span>, type <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div>
+<p>Plot the posterior prediction for cases from the single strain model (“Overall”), from the two strain model (“Combined”), and the unobserved estimates for each strain.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">current_obs</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
 <p>Plot the posterior prediction for the fraction of cases that have the Delta variant from the two strain model.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">current_obs</span>, type <span class="op">=</span> <span class="st">"voc_frac"</span>, voc_label <span class="op">=</span> <span class="st">"Delta variant"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 <p>Plot the posterior estimate for the growth rate over the mean of the generation time for COVID-19 cases (here assumed to be 5.5 days).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, type <span class="op">=</span> <span class="st">"growth"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
 <p>Plot the posterior estimate for the effective reproduction number of Delta and non-Delta cases.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, type <span class="op">=</span> <span class="st">"rt"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 <p>Plot the estimated transmission advantage for Delta vs non-Delta over time. Note that as here a model with a pooled variant scaling has been used this varies over time (potentially suitable where imports or present or a variant has greater immune escape than the baseline). If it is likely that the growth advantage is constant over time consider the fixed scaling model. If the variants are likely to be circulating in independent populations consider the independent variant model. See the documentation and model definition vignette for details.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, type <span class="op">=</span> <span class="st">"voc_advantage"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
 <p>Alternatively a list of all plots with sensible defaults can be produced using the following.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">current_obs</span>, type <span class="op">=</span> <span class="st">"all"</span>, voc_label <span class="op">=</span> <span class="st">"Delta variant"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-by-step-forecast">Step by step forecast<a class="anchor" aria-label="anchor" href="#step-by-step-forecast"></a>
 </h3>
 <p>Rather than using the all-in-one <code><a href="reference/forecast.html">forecast()</a></code> function individual package functions can be used to produce a forecast as follows.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fv_as_data_list.html">fv_as_data_list</a></span><span class="op">(</span><span class="va">obs</span>, horizon <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
@@ -272,7 +273,7 @@
 
 <span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fv_tidy_posterior.html">fv_tidy_posterior</a></span><span class="op">(</span><span class="va">fit</span>, voc_label <span class="op">=</span> <span class="st">"Delta"</span>, scale_r <span class="op">=</span> <span class="fl">5.5</span> <span class="op">/</span> <span class="fl">7</span><span class="op">)</span></code></pre></div>
 <p>As for forecasts produced with the <code><a href="reference/forecast.html">forecast()</a></code> function summary plots and estimates can then be produced using <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods. For example case forecasts can be returned using the following,</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"cases"</span>, forecast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
@@ -280,22 +281,22 @@
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>If using <code>forecast.vocs</code> in your work please consider citing it using the following,</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt; To cite forecast.vocs in publications use:</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; </span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt;   Sam Abbott (2021). forecast.vocs: Forecast case and sequence</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt;   notifications using variant of concern strain dynamics, DOI:</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt;   10.5281/zenodo.5559016</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; </span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; </span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt;   @Article{,</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt;     title = {forecast.vocs: Forecast case and sequence notifications using variant of concern strain dynamics},</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt;     author = {Sam Abbott},</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt;     journal = {Zenodo},</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt;     year = {2021},</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt;     doi = {10.5281/zenodo.5559016},</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt;   }</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#&gt; To cite forecast.vocs in publications use:</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#&gt; </span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt;   Sam Abbott (2021). forecast.vocs: Forecast case and sequence</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt;   notifications using variant of concern strain dynamics, DOI:</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt;   10.5281/zenodo.5559016</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt; </span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; </span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;   @Article{,</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt;     title = {forecast.vocs: Forecast case and sequence notifications using variant of concern strain dynamics},</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt;     author = {Sam Abbott},</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt;     journal = {Zenodo},</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt;     year = {2021},</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt;     doi = {10.5281/zenodo.5559016},</span></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="how-to-make-a-bug-report-or-feature-request">How to make a bug report or feature request<a class="anchor" aria-label="anchor" href="#how-to-make-a-bug-report-or-feature-request"></a>

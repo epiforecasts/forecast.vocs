@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.8.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,11 +76,13 @@
 <h2 class="pkg-version" data-toc-text="0.0.8" id="forecastvocs-008">forecast.vocs 0.0.8<a class="anchor" aria-label="anchor" href="#forecastvocs-008"></a></h2>
 <div class="section level3">
 <h3 id="features-0-0-8">Features<a class="anchor" aria-label="anchor" href="#features-0-0-8"></a></h3>
-<ul><li>Adds <code>summary</code> and <code>plot</code> methods for <code><a href="../reference/forecast.html">forecast()</a></code> and <code>fc_tidy_posterior()</code> as interfaces to lower level functions.</li>
+<ul><li>Adds <code>summary</code> and <code>plot</code> methods for <code><a href="../reference/forecast.html">forecast()</a></code> and <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code> as interfaces to lower level functions.</li>
 <li>Adds a new summary variable for the transmission advantage of the VOC to the output from <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code>.</li>
 <li>Adds a new plotting function <code><a href="../reference/plot_voc_advantage.html">plot_voc_advantage()</a></code> to extract and plot this.</li>
 <li>Adds <code><a href="../reference/plot_voc_advantage.html">plot_voc_advantage()</a></code> to <code>plot_posterior</code> as an additional output.</li>
+<li>Added a new <code>timespan</code> argument that allows custom date processing. This allows the use of data with non-weekly spaces (thought spacing must be constant across both sequences and case counts).</li>
 <li>Updates all example data to include this new output.</li>
+<li>Adds tests for all new functionality.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-0-8">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-8"></a></h3>
@@ -90,7 +92,9 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-8">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-8"></a></h3>
-<ul><li>Fixed an issue where <code>voc_label</code> was not being passed by <code><a href="../reference/forecast.html">forecast()</a></code> to lower level methods and hence new labels specifying the VOC were not being assigned.</li>
+<ul><li>Spell checks documentation.</li>
+<li>Refactors model description to improve clarity.</li>
+<li>Fixed an issue where <code>voc_label</code> was not being passed by <code><a href="../reference/forecast.html">forecast()</a></code> to lower level methods and hence new labels specifying the VOC were not being assigned.</li>
 </ul></div>
 </div>
     <div class="section level2">
