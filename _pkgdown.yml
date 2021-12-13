@@ -42,7 +42,7 @@ reference:
     contents:
       - has_concept("plot")
   - title: Model validation
-    desc: Functions for validating model fits.
+    desc: Functions for validating model fits and forecasts.
     contents:
       - has_concept("modelvalidation")
   - title: Generate data

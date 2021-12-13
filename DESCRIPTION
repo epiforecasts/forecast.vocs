@@ -33,6 +33,7 @@ Suggests:
     knitr,
     readxl,
     rmarkdown,
+    scoringutils,
     shinystan,
     spelling,
     testthat (>= 3.0.0),
