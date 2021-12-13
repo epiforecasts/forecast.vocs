@@ -48,10 +48,10 @@
 #'
 #' # Extract forecasts
 #' forecasts <- summary(forecasts, target = "forecast", type = "cases")
-#' 
+#'
 #' # Filter for the latest available observations
 #' obs <- latest_obs(germany_covid19_delta_obs)
-#' 
+#'
 #' # score overall
 #' fv_score_forecast(forecasts, obs, summarise_by = "strain")
 #'
