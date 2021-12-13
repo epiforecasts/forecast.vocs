@@ -127,24 +127,24 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 38.6 seconds.
-#> Chain 3 finished in 38.6 seconds.
-#> Chain 1 finished in 44.8 seconds.
-#> Chain 4 finished in 48.4 seconds.
+#> Chain 1 finished in 19.1 seconds.
+#> Chain 3 finished in 21.5 seconds.
+#> Chain 2 finished in 22.2 seconds.
+#> Chain 4 finished in 24.1 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 42.6 seconds.
-#> Total execution time: 48.5 seconds.
+#> Mean chain execution time: 21.7 seconds.
+#> Total execution time: 24.2 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 57.7 seconds.
-#> Chain 4 finished in 67.0 seconds.
-#> Chain 1 finished in 73.0 seconds.
-#> Chain 3 finished in 74.4 seconds.
+#> Chain 1 finished in 64.6 seconds.
+#> Chain 4 finished in 67.4 seconds.
+#> Chain 2 finished in 67.5 seconds.
+#> Chain 3 finished in 69.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 68.0 seconds.
-#> Total execution time: 74.4 seconds.
+#> Mean chain execution time: 67.3 seconds.
+#> Total execution time: 69.5 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship r_init
 #> 1:  0    2021-06-19       1           TRUE               pooled 0,0.25
@@ -153,21 +153,24 @@ forecasts
 #> 1:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
 #> 2:   0.4,0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000        1
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                     0                     0.000            11
-#> 2:                     8                     0.002            10
+#> 1:                     4                     1e-03            10
+#> 2:                     2                     5e-04            10
 #>    no_at_max_treedepth per_at_max_treedepth time              posterior
-#> 1:                1147              0.28675 48.5 <fv_posterior[148x20]>
-#> 2:                3056              0.76400 74.4 <fv_posterior[427x20]>
+#> 1:                2517              0.62925 24.2 <fv_posterior[148x20]>
+#> 2:                3901              0.97525 69.5 <fv_posterior[426x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
-#> 2: <fv_posterior[54x13]>
+#> 2: <fv_posterior[60x13]>
 ```
 
-Summarised posterior and forecast estimates can be directly extracted from the output using the included `summary()` method. Alternatively, the complete
-summarised posterior can be extracted using the following (which also has its own `summary()` and `plot()` options to make exploring the results easier).
-See the documentation for further details.
+Summarised posterior and forecast estimates can be directly extracted
+from the output using the included `summary()` method. Alternatively,
+the complete summarised posterior can be extracted using the following
+(which also has its own `summary()` and `plot()` options to make
+exploring the results easier). See the documentation for further
+details.
 
-```{r, eval = FALSE}
+``` r
 summary(forecasts, target = "posterior", type = "all")
 ```
 
@@ -208,7 +211,14 @@ plot(forecasts, type = "rt")
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
-Plot the estimated transmission advantage for Delta vs non-Delta over time. Note that as here a model with a pooled variant scaling has been used this varies over time (potentially suitable where imports or present or a variant has greater immune escape than the baseline). If it is likely that the growth advantage is constant over time consider the fixed scaling model. If the variants are likely to be circulating in independent populations consider the independent variant model. See the documentation and model definition vignette for details.
+Plot the estimated transmission advantage for Delta vs non-Delta over
+time. Note that as here a model with a pooled variant scaling has been
+used this varies over time (potentially suitable where imports or
+present or a variant has greater immune escape than the baseline). If it
+is likely that the growth advantage is constant over time consider the
+fixed scaling model. If the variants are likely to be circulating in
+independent populations consider the independent variant model. See the
+documentation and model definition vignette for details.
 
 ``` r
 plot(forecasts, type = "voc_advantage")

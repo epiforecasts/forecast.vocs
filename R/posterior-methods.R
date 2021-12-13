@@ -33,7 +33,7 @@ print.fv_posterior <- function(x, ...) {
 #' Summary method for fv_tidy_posterior
 #'
 #' @description `summary` method for class "fv_tidy_posterior". Can be used to
-#' filter the posterior for variables of interest, to return forecats only, and
+#' filter the posterior for variables of interest, to return forecasts only, and
 #' to summarise using the `data.table` method
 #'
 #' @param object An object of the class `fv_posterior` as returned by
@@ -44,9 +44,9 @@ print.fv_posterior <- function(x, ...) {
 #' summary of key model parameters, "cases" which returns summarised cases,
 #' "voc_frac" which returns summarised estimates of the fraction of cases that
 #' have the variant of concern, "voc_advantage" that returns summarised
-#' estiamtes of the the transmission advantage of the variant of concern,
-#' "growth" which returns summarised variant specifc and overall growth rates,
-#' "rt" which returns summarised variant specifc and overall reproduction
+#' estimates of the the transmission advantage of the variant of concern,
+#' "growth" which returns summarised variant specific and overall growth rates,
+#' "rt" which returns summarised variant specific and overall reproduction
 #' number estimates, "raw" which returns a raw posterior summary, and "all"
 #' which returns all tidied posterior estimates.
 #'
@@ -57,7 +57,7 @@ print.fv_posterior <- function(x, ...) {
 #' be used to return only forecasts rather than complete posterior.
 #'
 #' @param ... Additional arguments passed to [summary()] when `as_dt = TRUE`.
-#' 
+#'
 #' @family postprocess
 #' @seealso fv_tidy_posterior
 #' @return A summary data.table table unless type "all" is used in which case

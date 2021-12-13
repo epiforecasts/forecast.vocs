@@ -92,7 +92,7 @@ Where,
   s^{\beta} &\sim \text{Normal}(0, 0.5)
 \end{align}
 
-Which assumes an uninformed transmissibility difference for the VoC vs non-VoC cases. It is strongly encouraged that users use their domain knowledge to inform this prior. The relationship between variations can be altered so that the VoC differs only by the transmissibility difference (s^{\beta}) to the non-VOC strain and any variation over time is shared between strains. Optionally strains can also be modelled to evolve independently over time. See the documentation for `variant_relationship` in `?forecast()` for details. For most users the default pooled method is recommended. 
+Which assumes an uninformed transmissibility difference for the VoC vs non-VoC cases. It is strongly encouraged that users use their domain knowledge to inform this prior. The relationship between variants can be altered so that the VoC differs only by the transmissibility difference ($s^{\beta}$) to the non-VOC strain and any variation over time is shared between strains. Optionally strains can also be modelled to evolve independently over time. See the documentation for `variant_relationship` in `?forecast()` for details. 
 
 
 Finally, the mean proportion of samples that have the VoC ($p_t$) is then estimated using the mean reported cases with the VoC and the overall mean reported cases.

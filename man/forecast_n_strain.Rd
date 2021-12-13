@@ -16,6 +16,7 @@ forecast_n_strain(
   probs = c(0.05, 0.2, 0.8, 0.95),
   digits = 3,
   scale_r = 1,
+  timespan = 7,
   ...
 )
 }

@@ -209,8 +209,8 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
       expect_equal(seq$obs, seq$share_voc)
     }
     # Check contents of fit diagnostics and minimum values for example fit
-    expect_gt(min(posterior$ess_bulk), 250)
-    expect_gt(min(posterior$ess_tail), 250)
+    expect_gt(min(posterior$ess_bulk), 200)
+    expect_gt(min(posterior$ess_tail), 200)
     expect_lte(max(posterior$rhat, na.rm = TRUE), 1.1)
   })
 }
