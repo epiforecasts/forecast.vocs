@@ -2,12 +2,15 @@
 
 ## Features
 
-* Adds `summary` and `plot` methods for `forecast()` and `fc_tidy_posterior()` as interfaces to lower level functions.
+* Adds `summary` and `plot` methods for `forecast()` and `fv_tidy_posterior()` as interfaces to lower level functions.
 * Adds a new summary variable for the transmission advantage of the VOC to the output from
  `fv_tidy_posterior()`.
 * Adds a new plotting function `plot_voc_advantage()` to extract and plot this.
 * Adds `plot_voc_advantage()` to `plot_posterior` as an additional output.
+* Added a new `timespan` argument that allows custom date processing. This allows the use
+of data with non-weekly spaces (thought spacing must be constant across both sequences and case counts). 
 * Updates all example data to include this new output.
+* Adds tests for all new functionality.
 
 ## Breaking changes
 
@@ -16,6 +19,8 @@
 
 ## Bug fixes
 
+* Spell checks documentation.
+* Refactors model description to improve clarity.
 * Fixed an issue where `voc_label` was not being passed by `forecast()` to lower level methods and hence new labels specifying the VOC were not being assigned.
 
 # forecast.vocs 0.0.7
