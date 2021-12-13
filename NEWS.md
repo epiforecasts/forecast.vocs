@@ -2,6 +2,7 @@
 
 ## Features
 
+* Adds an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
 
 # forecast.vocs 0.0.8
 
