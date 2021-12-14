@@ -12,7 +12,7 @@ vector convolve(vector vec1, vector vec2) {
 real convolve_step(vector vec1, vector vec2, int index) {
   int lvec2 = num_elements(vec2);
   real conv = 1e-8;
-  conv[s] += dot_product(vec1[max(1, (index - lvec2 + 1)):index], 
-                         tail(vec2, min(lvec2, index)));
+  conv += dot_product(vec1[max(1, (index - lvec2 + 1)):index], 
+                      tail(vec2, min(lvec2, index)));
   return(conv);
 }

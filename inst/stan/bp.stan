@@ -41,7 +41,7 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   real phi[overdisp ? 1 : 0];
 
-  diff = diff_ar(beta, eta, eta_loc, t - 2);
+  diff = diff_ar(beta, r_noise, eta, eta_loc, t - 2);
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 

@@ -2,8 +2,16 @@
 
 ## Features
 
+### Model
+
+
+### Evaluation and visualisation
+
 * Adds an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
 * Adds an example of using `fv_score_forecast()` to the README.
+* Generalise plot labels. 
+* Updated `plot_cases()` to use a log 2 scaling rather than a log scaling.
+* Updated the default scaling to be logit for `plot_voc_frac().
 
 ## Bug fixes
 

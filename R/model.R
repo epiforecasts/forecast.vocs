@@ -136,10 +136,9 @@ fv_inits <- function(data, strains = 2) {
         1, data$voc_mean,
         data$voc_sd * 0.1
       )
+      inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_noise <- abs(rnorm(1, 0, 0.01))
-      inits$nvoc_noise <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
-      inits$nvoc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
     }
     return(inits)
   }
@@ -148,11 +147,21 @@ fv_inits <- function(data, strains = 2) {
 
 #' Load and compile a strain model
 #'
+#'
+#' @param model A character string indicating the path to the model.
+#' If not supplied the package default model is used.
+#'
+#' @param include A character string specifying the path to any stan
+#' files to include in the model. If missing the package default is used.
+#'
 #' @param strains Integer number of strains. Defaults to 2. Current
 #' maximum is 2.
 #'
 #' @param compile Logical, defaults to `TRUE`. Should the model
 #' be loaded and compiled using [cmdstanr::cmdstan_model()].
+#'
+#' @param verbose Logical, defaults to `TRUE`. Should verbose
+#' messages be shown.
 #'
 #' @param ... Additional arguments passed to [cmdstanr::cmdstan_model()].
 #'
@@ -166,20 +175,36 @@ fv_inits <- function(data, strains = 2) {
 #'
 #' # two strain model
 #' two_strain_mod <- fv_model(strains = 2)
-fv_model <- function(strains = 2, compile = TRUE, ...) {
+fv_model <- function(model, include, strains = 2, compile = TRUE,
+                     verbose = FALSE, ...) {
   check_param(strains, "strains", "numeric")
   check_param(compile, "compile", "logical")
-  if (strains == 1) {
-    model <- "stan/bp.stan"
-  } else if (strains == 2) {
-    model <- "stan/twostrainbp.stan"
-  } else {
-    stop("Only 1 or 2 strain models are supported")
+if (missing(model)) {
+    if (strains == 1) {
+      model <- "stan/bp.stan"
+    } else if (strains == 2) {
+      model <- "stan/twostrainbp.stan"
+    } else {
+      stop("Only 1 or 2 strain models are supported")
+    }
+    model <- system.file(model, package = "forecast.vocs")
+  }
+  if (missing(include)) {
+    include <- system.file("stan", package = "forecast.vocs")
   }
 
-  model <- system.file(model, package = "forecast.vocs")
   if (compile) {
-    suppressMessages(cmdstanr::cmdstan_model(model, ...))
+    if (verbose) {
+      model <- cmdstanr::cmdstan_model(model,
+        include_path = include, ...
+      )
+    } else {
+      suppressMessages(
+        model <- cmdstanr::cmdstan_model(model,
+          include_path = include, ...
+        )
+      )
+    }
   }
   return(model)
 }

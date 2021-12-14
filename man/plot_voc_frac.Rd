@@ -11,6 +11,7 @@ plot_voc_frac(
   forecast_dates = NULL,
   all_obs = FALSE,
   voc_label = "variant of concern",
+  logit = TRUE,
   ...
 )
 }
@@ -31,6 +32,9 @@ or just those in the date range of the estimates being plot.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}
+
+\item{logit}{Logical, defaults to \code{TRUE}. Should variant proportions be
+plot on the logit scale.}
 
 \item{...}{Additional parameters passed to \code{\link[=plot_default]{plot_default()}}.}
 }
