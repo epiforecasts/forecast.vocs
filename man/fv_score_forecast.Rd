@@ -17,7 +17,7 @@ wise to implement a custom wrapper.}
 \item{obs}{A data frame of observed data as produced by \code{\link[=latest_obs]{latest_obs()}}.}
 
 \item{log}{Logical, defaults to FALSE. Should scores be calculated on the
-log scale (with a 0.01 shift) for both observatiosn and forecasts. Scoring in
+log scale (with a 0.01 shift) for both observations and forecasts. Scoring in
 this way can be thought of as a relative score vs the more usual absolute
 measure. It may be useful when targets are on very different scales or when
 the forecaster is more interested in good all round performance versus good
@@ -32,7 +32,7 @@ output to.}
 A \code{data.table} as returned by \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}.
 }
 \description{
-Acts as a wrapper t \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}. In particular,
+Acts as a wrapper to \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}. In particular,
 handling filtering the output for various \link{forecast.vocs} functions and
 linking this output to observed data. See the documentation for the
 \link{scoringutils} package for more on forecast scoring and the documentation

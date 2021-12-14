@@ -1,6 +1,6 @@
 #' Evaluate forecasts using proper scoring rules
 #'
-#' Acts as a wrapper t [scoringutils::eval_forecasts()]. In particular,
+#' Acts as a wrapper to [scoringutils::eval_forecasts()]. In particular,
 #' handling filtering the output for various [forecast.vocs] functions and
 #' linking this output to observed data. See the documentation for the
 #' [scoringutils] package for more on forecast scoring and the documentation
@@ -10,11 +10,11 @@
 #'[summary.fv_posterior()], [summary.fv_forecast()] or [fv_extract_forecast()].
 #' Internally case forecasts are filtered for using the `value_type` variable
 #' if present as are only overall or combined case counts (i.e as returned)
-#' by the 1 and 2 strain models. If looking for more complex scoring it may be 
+#' by the 1 and 2 strain models. If looking for more complex scoring it may be
 #' wise to implement a custom wrapper.
 #'
 #' @param log Logical, defaults to FALSE. Should scores be calculated on the
-#' log scale (with a 0.01 shift) for both observatiosn and forecasts. Scoring in
+#' log scale (with a 0.01 shift) for both observations and forecasts. Scoring in
 #' this way can be thought of as a relative score vs the more usual absolute
 #' measure. It may be useful when targets are on very different scales or when
 #' the forecaster is more interested in good all round performance versus good

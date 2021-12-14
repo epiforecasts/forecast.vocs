@@ -17,7 +17,7 @@
 #' @return A posterior `data.frame` with an additional data column.
 #'
 #' @family postprocess
-link_dates_with_posterior <- function(posterior, data, timespan = 7, 
+link_dates_with_posterior <- function(posterior, data, timespan = 7,
                                       mod_end = 0) {
   # extract info from lis
   t <- data$t
@@ -32,7 +32,7 @@ link_dates_with_posterior <- function(posterior, data, timespan = 7,
     end = end_date,
     type = c("non-VOC", "Combined", "Overall", "VOC")
   )
-  dates <- dates[, .(date = seq(start, end, by = "weeks")), by = "type"]
+  dates <- dates[, .(date = seq(start, end, by = timespan)), by = "type"]
   dates <- dates[, id := 1:.N, by = "type"]
 
   # link to input data frame
