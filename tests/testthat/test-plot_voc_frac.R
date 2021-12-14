@@ -31,6 +31,10 @@ test_that("Can plot using example data", {
     plot_voc_frac(posterior2)
   )
   vdiffr::expect_doppelganger(
+    "VoC plot on natural scale with two strain",
+    plot_voc_frac(posterior2, logit = FALSE)
+  )
+  vdiffr::expect_doppelganger(
     "Two strain VoC plot with current observations",
     plot_voc_frac(posterior2, current_obs)
   )

@@ -13,8 +13,11 @@ test_that(
   { # nolint
     skip_on_cran()
     single <- suppressMessages(fv_model(strains = 1, compile = TRUE))
-    single <- suppressMessages(cmdstanr::cmdstan_model(single))
-    expect_error(suppressMessages(single$check_syntax()), NA)
+    expect_error(
+      suppressMessages(single$check_syntax(
+        include_path = system.file("stan", package = "forecast.vocs")
+        )
+      ), NA)
   }
 )
 
@@ -23,8 +26,9 @@ test_that(
   { # nolint
     skip_on_cran()
     two <- suppressMessages(fv_model(strains = 2, compile = TRUE))
-    two <- suppressMessages(cmdstanr::cmdstan_model(two))
-    expect_error(suppressMessages(two$check_syntax()), NA)
+    expect_error(suppressMessages(two$check_syntax(
+      include_path = system.file("stan", package = "forecast.vocs")
+    )), NA)
   }
 )
 

@@ -10,8 +10,7 @@ test_strain_inits <- function(message, strains, dt) {
       names <- c(
         names,
         c(
-          "voc_mod", "voc_noise", "voc_eta", "voc_noise", "nvoc_noise",
-          "voc_eta", "nvoc_eta"
+          "voc_mod", "voc_noise", "voc_eta", "voc_beta"
         )
       )
     }
@@ -26,16 +25,13 @@ test_strain_inits <- function(message, strains, dt) {
     expect_length(inits1$sqrt_phi, strains)
     expect_type(inits1$sqrt_phi, "double")
     expect_type(inits1$eta, "double")
-    expect_length(inits1$eta, dt$t - 2)
+    expect_length(inits1$eta, dt$eta_n)
     if (strains == 2) {
       expect_type(inits1$voc_mod, "double")
       expect_type(inits1$voc_noise, "double")
-      expect_type(inits1$nvoc_noise, "double")
       expect_length(inits1$voc_mod, 1)
       expect_length(inits1$voc_noise, 1)
-      expect_length(inits1$nvoc_noise, 1)
-      expect_length(inits1$voc_eta, dt$t_seqf - 2)
-      expect_length(inits1$nvoc_eta, dt$t_seqf - 2)
+      expect_length(inits1$voc_eta, dt$voc_eta_n)
     }
   })
 }

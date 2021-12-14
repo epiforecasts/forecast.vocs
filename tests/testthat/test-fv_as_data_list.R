@@ -30,7 +30,6 @@ test_that("Index variables are correctly defined", {
   expect_equal(nlist$t_nseq, 4)
   expect_equal(nlist$t_seqf, t - 4 + h)
   expect_equal(nlist$t_seq, t - seq_na)
-  expect_equal(nlist$t_dep, t - 2 + h)
 })
 
 test_that("Count variables are correctly defined", {
