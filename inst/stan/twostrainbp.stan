@@ -7,7 +7,6 @@ functions {
 data {
   int t;
   int t_nseq;
-  int t_dep;
   int t_seq;
   int t_seqf;
   int t_nots;
@@ -24,9 +23,9 @@ data {
   int overdisp;
   int debug;
   int eta_n;
-  int eta_loc[eta_n];  
+  int eta_loc[t - 2];  
   int voc_eta_n;
-  int voc_eta_loc[voc_eta_n];
+  int voc_eta_loc[relat ? t_seqf - 2 : 0];
 }
 
 transformed data {

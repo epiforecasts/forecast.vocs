@@ -48,7 +48,7 @@ posterior <- fv_example(strains = 2, type = "posterior")
 plot_cases(posterior)
 
 # without log transform
-plot_cases(posterior)
+plot_cases(posterior, log = FALSE)
 }
 \seealso{
 Plotting functions

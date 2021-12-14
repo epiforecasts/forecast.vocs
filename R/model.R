@@ -8,6 +8,9 @@
 #' @param r_init Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate.
 #'
+#' @param r_step Integer, defaults to 1. The number of observations between
+#' each change in the growth rate. 
+#' 
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
@@ -38,6 +41,7 @@
 #' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 fv_as_data_list <- function(obs, horizon = 4,
                             r_init = c(0, 0.25),
+                            r_step = 1,
                             voc_scale = c(0, 0.2),
                             variant_relationship = "pooled",
                             overdispersion = TRUE,
@@ -75,8 +79,6 @@ fv_as_data_list <- function(obs, horizon = 4,
     N = obs[!is.na(seq_total)]$seq_total,
     # number of sequenced samples with voc variant
     Y = obs[!is.na(seq_total)]$seq_voc,
-    likelihood = as.numeric(likelihood),
-    output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
     seq_start_date = seq_start_date,
     r_init_mean = r_init[1],
@@ -89,10 +91,27 @@ fv_as_data_list <- function(obs, horizon = 4,
       variant_relationship %in% "independent", 2
     ),
     overdisp = as.numeric(overdispersion),
+    likelihood = as.numeric(likelihood),
+    output_loglik = as.numeric(output_loglik),
     debug = as.numeric(debug)
   )
-  # assign time where strains share a noise parameter
-  data$t_dep <- ifelse(data$relat == 2, data$t_nseq, data$t - 2)
+
+  ## add autoregressive control terms
+  r_steps <- piecewise_steps(data$t - 2, r_step)
+  if (data$relat == 0) {
+    voc_r_steps <- list(n = 0, steps = numeric())
+  }else{
+    voc_r_steps <- piecewise_steps(data$t_seqf - 2, r_step)
+  }
+  data <- c(
+    data,
+    list(
+      eta_n = r_steps$n,
+      eta_loc = r_steps$steps,
+      voc_eta_n = voc_r_steps$n,
+      voc_eta_loc = voc_r_steps$steps
+    )
+  )
   return(data)
 }
 
@@ -124,7 +143,7 @@ fv_inits <- function(data, strains = 2) {
       ),
       r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
       r_noise = abs(rnorm(1, 0, 0.01)),
-      eta = rnorm(data$t_dep, 0, 0.01),
+      eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
@@ -138,7 +157,7 @@ fv_inits <- function(data, strains = 2) {
       )
       inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_noise <- abs(rnorm(1, 0, 0.01))
-      inits$voc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
     }
     return(inits)
   }
@@ -264,7 +283,6 @@ fv_sample <- function(data, model = forecast.vocs::fv_model(strains = 2),
   cdata <- data
   cdata$start_date <- NULL
   cdata$seq_start_date <- NULL
-  model <- suppressMessages(cmdstanr::cmdstan_model(model))
   fit <- model$sample(data = cdata, ...)
 
   out <- data.table(

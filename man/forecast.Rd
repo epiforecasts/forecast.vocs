@@ -16,6 +16,7 @@ forecast(
   extract_forecast = forecast.vocs::fv_extract_forecast,
   horizon = 4,
   r_init = c(0, 0.25),
+  r_step = 1,
   voc_scale = c(0, 0.2),
   voc_label = "VOC",
   strains = 2,
@@ -83,6 +84,9 @@ the summarised \code{posterior}. If not supplied the package default
 
 \item{r_init}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate.}
+
+\item{r_step}{Integer, defaults to 1. The number of observations between
+each change in the growth rate.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier

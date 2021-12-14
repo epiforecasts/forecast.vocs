@@ -2,8 +2,8 @@
 % Please edit documentation in R/plot.R
 \name{plot_voc_frac}
 \alias{plot_voc_frac}
-\title{Plot the posterior prediction for the fraction of samples with the variant
-of concern}
+\title{Plot the population posterior prediction for the fraction of samples with the
+variant of concern}
 \usage{
 plot_voc_frac(
   posterior,
@@ -42,8 +42,8 @@ plot on the logit scale.}
 A \code{ggplot2} plot.
 }
 \description{
-Plot the posterior prediction for the fraction of samples with the variant
-of concern
+Plot the population posterior prediction for the fraction of samples with the
+variant of concern
 }
 \examples{
 posterior <- fv_example(strains = 2, type = "posterior")
