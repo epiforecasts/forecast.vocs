@@ -16,8 +16,8 @@ test_that(
     expect_error(
       suppressMessages(single$check_syntax(
         include_path = system.file("stan", package = "forecast.vocs")
-        )
-      ), NA)
+      )), NA
+    )
   }
 )
 

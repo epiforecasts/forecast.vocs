@@ -41,12 +41,18 @@ transformed data {
 
 parameters {
   real<upper = 4> r_init;
+  real rn_mean[relat == 2 ? 1 : 0];
+  real<lower = 0> rn_sd[relat == 2 ? 1 : 0];
   real<lower = 0> r_noise;
-  real<lower = -1, upper = 1> beta;
+  real<lower = -1, upper = 1> beta_mean[relat == 2 ? 1 : 0];
+  real<lower = 0> beta_sd[relat == 2 ? 1 : 0];
+  real<lower = -1, upper = 1>  beta;
   vector[eta_n] eta;
   real voc_mod;
   real<lower = -1, upper = 1> voc_beta[relat ? 1 : 0];
   real<lower = 0> voc_noise[relat ? 1 : 0];
+  real eta_mean[relat == 2 ? voc_eta_n : 0];
+  real<lower = 0> eta_sd[relat == 2 ? 1 : 0];
   vector[voc_eta_n] voc_eta;
   vector[2] init_cases;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
@@ -139,17 +145,37 @@ model {
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
   voc_mod ~ normal(voc_mean, voc_sd);
-  r_noise ~ normal(0, 0.2) T[0,];
-  if (relat) {
-    voc_noise[1] ~ normal(0, 0.2) T[0,];
+  if (relat < 2) {
+    r_noise ~ normal(0, 0.2) T[0,];
+    if (relat) {
+      voc_noise[1] ~ normal(0, 0.2) T[0,];
+    }
+  }else{
+    rn_mean[1] ~ normal(0, 0.2) T[0,];
+    rn_sd[1] ~ normal(0, 0.1) T[0, ];
+    r_noise ~ normal(rn_mean, rn_sd) T[0,];
+    voc_noise[1] ~ normal(rn_mean, rn_sd) T[0,];
   }
 
-  // AR(1) priors for non-voc and vov
-  beta ~ std_normal();
-  eta ~ std_normal();
-  if (relat) {
-    voc_beta ~ std_normal();
-    voc_eta ~ std_normal();
+  // AR(1) priors for non-voc and voc
+  if (relat < 2) {
+    beta ~ std_normal();
+    eta ~ std_normal();
+    if (relat) {
+      voc_beta ~ std_normal();
+      voc_eta ~ std_normal();
+    }
+  }else{
+    beta_mean ~ std_normal();
+    beta_sd[1] ~ std_normal() T[0,];
+    beta ~ normal(beta_mean, beta_sd);
+    voc_beta ~ normal(beta_mean, beta_sd);
+
+    head(eta, eta_n - voc_eta_n) ~ std_normal(); 
+    eta_mean ~ std_normal();
+    eta_sd[1] ~ std_normal() T[0,];
+    tail(eta, voc_eta_n) ~ normal(eta_mean, eta_sd[1]);
+    voc_eta ~ normal(eta_mean, eta_sd[1]);
   }
 
   // observation model priors

@@ -21,7 +21,7 @@ print.fv_posterior <- function(x, ...) {
     cat(
       paste0(
         "Available value types: ",
-        paste(unique(x$value_type), sep = ", ", collapse = ", "), 
+        paste(unique(x$value_type), sep = ", ", collapse = ", "),
         "\n"
       )
     )
@@ -96,8 +96,10 @@ summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
                                  as_dt = FALSE, ...) {
   type <- match.arg(
     type,
-    c("model", "cases", "voc_frac", "voc_advantage", "growth", "rt", "raw",
-      "all")
+    c(
+      "model", "cases", "voc_frac", "voc_advantage", "growth", "rt", "raw",
+      "all"
+    )
   )
   etype <- type
   out <- object
@@ -126,11 +128,11 @@ summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
   if (as_dt) {
     class(out) <- class(out)[-1]
     return(summary(out, ...))
-  }else {
-      if (!(type == "all")) {
-        class(out) <- class(out)[-1]
-      }
-      return(out[])
+  } else {
+    if (!(type == "all")) {
+      class(out) <- class(out)[-1]
+    }
+    return(out[])
   }
 }
 
@@ -183,7 +185,8 @@ plot.fv_posterior <- function(x, obs = NULL, type = "cases",
     plot_cases(x, obs, forecast_dates, all_obs = all_obs, ...)
   } else if (type == "voc_frac") {
     plot_voc_frac(
-      x, obs, forecast_dates, voc_label = voc_label, all_obs = all_obs, ...
+      x, obs, forecast_dates,
+      voc_label = voc_label, all_obs = all_obs, ...
     )
   } else if (type == "voc_advantage") {
     plot_voc_advantage(x, forecast_dates, voc_label, ...)
@@ -192,7 +195,9 @@ plot.fv_posterior <- function(x, obs = NULL, type = "cases",
   } else if (type == "rt") {
     plot_rt(x, forecast_dates, ...)
   } else if (type == "all") {
-    plot_posterior(x, obs = obs, forecast_dates = forecast_dates,
-                   all_obs = all_obs, voc_label = voc_label, ...)
+    plot_posterior(x,
+      obs = obs, forecast_dates = forecast_dates,
+      all_obs = all_obs, voc_label = voc_label, ...
+    )
   }
 }

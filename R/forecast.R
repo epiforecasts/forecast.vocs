@@ -89,13 +89,13 @@ forecast <- function(obs,
                      fit = forecast.vocs::fv_sample,
                      posterior = forecast.vocs::fv_tidy_posterior,
                      extract_forecast = forecast.vocs::fv_extract_forecast,
-                     horizon = 4, r_init = c(0, 0.25), r_step = 1, 
+                     horizon = 4, r_init = c(0, 0.25), r_step = 1,
                      voc_scale = c(0, 0.2), voc_label = "VOC", strains = 2,
                      variant_relationship = "pooled", overdispersion = TRUE,
                      models = NULL, likelihood = TRUE, output_loglik = FALSE,
                      debug = FALSE, keep_fit = TRUE, scale_r = 1, digits = 3,
                      timespan = 7, probs = c(0.05, 0.2, 0.8, 0.95), id = 0,
-                    ...) {
+                     ...) {
   if (!is.null(models)) {
     if (length(models) == 1 & length(strains) == 1) {
       models <- list(models)

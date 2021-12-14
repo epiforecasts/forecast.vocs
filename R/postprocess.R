@@ -255,10 +255,10 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 
   # summarise VOC if present
   voc_frac <- sfit[grepl("frac_voc", variable)]
-   voc_frac[, type := "VOC"]
+  voc_frac[, type := "VOC"]
   if (nrow(voc_frac) > 0) {
-     voc_frac <- link_dates_with_posterior(voc_frac, data, timespan = timespan)
-     voc_frac <- link_obs_with_posterior(
+    voc_frac <- link_dates_with_posterior(voc_frac, data, timespan = timespan)
+    voc_frac <- link_obs_with_posterior(
       posterior = voc_frac, obs = data$Y / data$N,
       target_types = "VOC"
     )
@@ -299,7 +299,8 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   voc_advantage <- voc_advantage[, type := "VOC"]
   if (nrow(voc_advantage) > 0) {
     voc_advantage <- link_dates_with_posterior(
-      voc_advantage, data, timespan = timespan, mod_end = 1
+      voc_advantage, data,
+      timespan = timespan, mod_end = 1
     )
     voc_advantage <- link_obs_with_posterior(
       posterior = voc_advantage, horizon = seq_horizon,
@@ -483,10 +484,10 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
         (char_cols) := purrr::map(
           .SD,
           ~ gsub(
-              target_label,
-              replacement = label,
-              x = .,
-              ignore.case = FALSE
+            target_label,
+            replacement = label,
+            x = .,
+            ignore.case = FALSE
           )
         ),
         .SDcols = char_cols

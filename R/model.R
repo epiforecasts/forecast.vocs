@@ -9,8 +9,8 @@
 #' standard deviation for the initial growth rate.
 #'
 #' @param r_step Integer, defaults to 1. The number of observations between
-#' each change in the growth rate. 
-#' 
+#' each change in the growth rate.
+#'
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
@@ -86,9 +86,9 @@ fv_as_data_list <- function(obs, horizon = 4,
     voc_mean = voc_scale[1],
     voc_sd = voc_scale[2],
     relat = fcase(
-      variant_relationship %in% "pooled", 1,
+      variant_relationship %in% "pooled", 2,
       variant_relationship %in% "scaled", 0,
-      variant_relationship %in% "independent", 2
+      variant_relationship %in% "independent", 1
     ),
     overdisp = as.numeric(overdispersion),
     likelihood = as.numeric(likelihood),
@@ -100,7 +100,7 @@ fv_as_data_list <- function(obs, horizon = 4,
   r_steps <- piecewise_steps(data$t - 2, r_step)
   if (data$relat == 0) {
     voc_r_steps <- list(n = 0, steps = numeric())
-  }else{
+  } else {
     voc_r_steps <- piecewise_steps(data$t_seqf - 2, r_step)
   }
   data <- c(
@@ -158,6 +158,14 @@ fv_inits <- function(data, strains = 2) {
       inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_noise <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
+      if (data$relat == 2) {
+        inits$rn_mean <- abs(rnorm(1, 0, 0.01))
+        inits$rn_sd <- abs(rnorm(1, 0, 0.001))
+        inits$beta_mean <- rnorm(1, 0, 0.1)
+        inits$beta_sd <- abs(rnorm(1, 0, 0.001))
+        inits$eta_mean <- rnorm(data$voc_eta_n, 0, 0.01)
+        inits$eta_sd <- abs(rnorm(1, 0, 0.01))
+      }
     }
     return(inits)
   }
@@ -198,7 +206,7 @@ fv_model <- function(model, include, strains = 2, compile = TRUE,
                      verbose = FALSE, ...) {
   check_param(strains, "strains", "numeric")
   check_param(compile, "compile", "logical")
-if (missing(model)) {
+  if (missing(model)) {
     if (strains == 1) {
       model <- "stan/bp.stan"
     } else if (strains == 2) {

@@ -10,7 +10,8 @@ test_that("Can summarise forecasts", {
     any(
       class(
         summary(
-          forecast_wrapper, target = "posterior", type = "all"
+          forecast_wrapper,
+          target = "posterior", type = "all"
         )
       ) %in% "fv_posterior"
     )
@@ -19,7 +20,8 @@ test_that("Can summarise forecasts", {
     any(
       class(
         summary(
-          forecast_wrapper, target = "forecast", type = "all"
+          forecast_wrapper,
+          target = "forecast", type = "all"
         )
       ) %in% "fv_posterior"
     )
@@ -28,7 +30,8 @@ test_that("Can summarise forecasts", {
     !any(
       class(
         summary(
-          forecast_wrapper, target = "forecast", type = "rt"
+          forecast_wrapper,
+          target = "forecast", type = "rt"
         )
       ) %in% "fv_posterior"
     )

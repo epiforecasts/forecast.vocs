@@ -7,7 +7,7 @@
 #' and examples below for simple examples in the context of [forecast.vocs].
 #'
 #' @param forecast A posterior forecast or posterior prediction as returned by
-#'[summary.fv_posterior()], [summary.fv_forecast()] or [fv_extract_forecast()].
+#' [summary.fv_posterior()], [summary.fv_forecast()] or [fv_extract_forecast()].
 #' Internally case forecasts are filtered for using the `value_type` variable
 #' if present as are only overall or combined case counts (i.e as returned)
 #' by the 1 and 2 strain models. If looking for more complex scoring it may be
@@ -64,7 +64,8 @@
 #'
 #' # score by horizon on a log scale
 #' fv_score_forecast(
-#'  forecasts, obs, summarise_by = c("strains", "horizon"), log = TRUE
+#'   forecasts, obs,
+#'   summarise_by = c("strains", "horizon"), log = TRUE
 #' )
 fv_score_forecast <- function(forecast, obs, log = FALSE,
                               round_to = 3, ...) {

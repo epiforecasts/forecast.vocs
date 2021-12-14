@@ -164,7 +164,7 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
 #'
-#' @param logit Logical, defaults to `TRUE`. Should variant proportions be 
+#' @param logit Logical, defaults to `TRUE`. Should variant proportions be
 #' plot on the logit scale.
 #'
 #' @param ... Additional parameters passed to [plot_default()].
@@ -179,8 +179,8 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_voc_frac(posterior)
 plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
-                     all_obs = FALSE, voc_label = "variant of concern",
-                     logit = TRUE, ...) {
+                          all_obs = FALSE, voc_label = "variant of concern",
+                          logit = TRUE, ...) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := share_voc]
   }

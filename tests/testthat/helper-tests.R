@@ -183,8 +183,10 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
       value_types <- c("model", "cases", "growth", "rt", "raw")
     } else if (strains == 2) {
       types <- c(NA, "Combined", voc_label, paste0("non-", voc_label))
-      value_types <- c("model", "cases", "voc_frac", "voc_advantage",
-                       "growth", "rt", "raw")
+      value_types <- c(
+        "model", "cases", "voc_frac", "voc_advantage",
+        "growth", "rt", "raw"
+      )
     }
     expect_type(posterior$type, "character")
     expect_equal(unique(posterior$type), types)
@@ -248,9 +250,11 @@ test_forecast <- function(message, obs, forecast_fn,
     )
     # Check forecast dates are unique
     expect_dates_unique(
-      data.table::copy(forecasts)[,
-       date := forecast_date][
-       strains == 1 & id == 0
+      data.table::copy(forecasts)[
+        ,
+        date := forecast_date
+      ][
+        strains == 1 & id == 0
       ]
     )
     # Check posteriors and forecasts are the same as when run outside of the

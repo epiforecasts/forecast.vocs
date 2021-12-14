@@ -49,9 +49,9 @@ summary.fv_forecast <- function(object, target = "posterior", type = "model",
     if (length(out) == 1) {
       out <- out[[1]]
     }
-  }else if (target == "diagnostics") {
+  } else if (target == "diagnostics") {
     out <- copy(out)[, c("posterior", "forecast") := NULL][]
-  }else{
+  } else {
     out <- unnest_posterior(object, target = target)
     out <- summary(out, type = type, as_dt = as_dt, foreast = forecast, ...)
   }
@@ -107,7 +107,7 @@ plot.fv_forecast <- function(x, obs = NULL, target = "posterior",
   target <- match.arg(target, c("fit", "posterior", "forecast"))
   if (target == "fit") {
     plot_pairs(x, ...)
-  }else{
+  } else {
     x <- summary(x, target = target, type = "all")
     plot(x, obs = obs, type = type, ...)
   }
