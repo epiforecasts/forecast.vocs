@@ -70,7 +70,7 @@ transformed parameters {
 
   // non-voc evolves according to first diff AR(1)
   r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + diff
+  r[2:(t-1)] = r[2:(t-1)] + diff;
   
   if (relat) {
     // Initial VOC growth based on non-voc + mod
@@ -79,7 +79,7 @@ transformed parameters {
     voc_diff = diff_ar(voc_beta[1], voc_noise[1], voc_eta, voc_eta_loc,
                        t_seqf - 2);
     voc_diff = cumulative_sum(voc_diff);
-    voc_diff = voc_r + voc_diff;
+    voc_r[2:(t_seqf-1)] = voc_r[2:(t_seqf-1)] + voc_diff;
   }else{
     // voc growth rate scaled to non-voc
     voc_r = tail(r, t_seqf - 1) + voc_mod;
