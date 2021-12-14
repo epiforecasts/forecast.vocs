@@ -72,7 +72,8 @@ fv_score_forecast(forecasts, obs, summarise_by = c("strains", "horizon"))
 
 # score by horizon on a log scale
 fv_score_forecast(
- forecasts, obs, summarise_by = c("strains", "horizon"), log = TRUE
+  forecasts, obs,
+  summarise_by = c("strains", "horizon"), log = TRUE
 )
 \dontshow{\}) # examplesIf}
 }
