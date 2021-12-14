@@ -1,3 +1,9 @@
+functions {
+#include functions/convolve.stan
+#include functions/diff_ar.stan
+#include functions/cases_ar.stan
+}
+
 data {
   int t;
   int t_nots;
@@ -8,6 +14,8 @@ data {
   int output_loglik;
   int overdisp;
   int debug;
+  int eta_n;
+  int eta_loc[eta_n];
 }
 
 transformed data {
@@ -22,7 +30,7 @@ parameters {
   real r_init;
   real<lower = 0> r_noise;
   real<lower = -1, upper = 1> beta;
-  vector[t - 2] eta;
+  vector[eta_n] eta;
   real init_cases;
   real<lower = 0> sqrt_phi[overdisp ? 1 : 0];
 }
@@ -33,13 +41,7 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   real phi[overdisp ? 1 : 0];
 
-  diff = rep_vector(0, t - 2);
-  for (i in 1:(t-2)) {
-    if (i > 1) {
-      diff[i] = beta * diff[i - 1];
-    }
-    diff[i] += r_noise * eta[i];
-  }
+  diff = diff_ar(beta, eta, eta_loc, t - 2);
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 

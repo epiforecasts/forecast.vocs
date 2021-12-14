@@ -1,3 +1,9 @@
+functions {
+#include functions/convolve.stan
+#include functions/diff_ar.stan
+#include functions/cases_ar.stan
+}
+
 data {
   int t;
   int t_nseq;
@@ -17,7 +23,8 @@ data {
   int relat;
   int overdisp;
   int debug;
-
+  int eta_n;
+  int eta_loc[eta_n];
 }
 
 transformed data {
