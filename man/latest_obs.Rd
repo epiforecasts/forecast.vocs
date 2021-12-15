@@ -35,6 +35,6 @@ latest_obs(dt)
 \seealso{
 Preprocessing functions
 \code{\link{filter_by_availability}()},
-\code{\link{save_plots}()}
+\code{\link{piecewise_steps}()}
 }
 \concept{preprocess}

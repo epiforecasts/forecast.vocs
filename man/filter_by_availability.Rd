@@ -64,6 +64,6 @@ filter_by_availability(dt,
 \seealso{
 Preprocessing functions
 \code{\link{latest_obs}()},
-\code{\link{save_plots}()}
+\code{\link{piecewise_steps}()}
 }
 \concept{preprocess}

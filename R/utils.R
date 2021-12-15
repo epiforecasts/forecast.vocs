@@ -83,7 +83,6 @@ fv_example <- function(strains = 1, type = "posterior") {
 #'
 #' @return NULL
 #'
-#' @family preprocess
 #' @family plot
 #' @export
 #' @importFrom purrr walk2
@@ -116,6 +115,8 @@ save_plots <- function(plots, save_path = NULL, type = "png", ...) {
 #'
 #' @return A list containing two elements: `n` (the number of steps) and `steps`
 #' the location of steps as a binary variable.
+#'
+#' @family preprocess
 piecewise_steps <- function(t, step) {
   steps <- as.integer(1:t %% step == 0)
   return(list(n = sum(steps), steps = steps))

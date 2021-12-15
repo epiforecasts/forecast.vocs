@@ -19,3 +19,9 @@ the location of steps as a binary variable.
 This helper function streamlines the calculation of piecewise steps.
 This may be useful when specifying random walks, AR processes, etc.
 }
+\seealso{
+Preprocessing functions
+\code{\link{filter_by_availability}()},
+\code{\link{latest_obs}()}
+}
+\concept{preprocess}

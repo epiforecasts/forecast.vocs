@@ -15,6 +15,11 @@ if (test_sample) {
       overdispersion = TRUE, variant_relationship = "correlated",
       voc_scale = c(0.4, 0.2)
     )
+    overdisp_dt_step <- fv_as_data_list(
+      obs,
+      overdispersion = TRUE, variant_relationship = "correlated",
+      voc_scale = c(0.4, 0.2), r_step = 7
+    )
     nooverdisp_dt <- fv_as_data_list(obs, overdispersion = FALSE)
     scaled_dt <- fv_as_data_list(
       obs,
@@ -38,6 +43,7 @@ if (test_sample) {
     )
     inits1 <- fv_inits(overdisp_dt, strains = 1)
     inits2 <- fv_inits(overdisp_dt, strains = 2)
+    inits2_step <- fv_inits(overdisp_dt_step, strains = 2)
     one_model <- suppressMessages(fv_model(strains = 1))
     two_model <- suppressMessages(fv_model(strains = 2))
   }
@@ -57,6 +63,12 @@ if (test_sample) {
     "The two strain model with pooling and overdispersion can be fit as
     expected",
     overdisp_dt, two_model, inits2
+  )
+
+  test_fv_sample(
+    "The two strain model with pooling, a weekly random walk and overdispersion
+    can be fit as expected",
+    overdisp_dt_step, two_model, inits2_step
   )
 
   test_fv_sample(
