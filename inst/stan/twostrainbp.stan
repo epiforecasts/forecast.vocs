@@ -43,12 +43,10 @@ transformed data {
 parameters {
   real<upper = 4> r_init;
   real<lower = 0> r_scale;
-  real<lower = -1, upper = 1> beta_mean[relat == 2 ? 1 : 0];
-  real<lower = 0> beta_sd[relat == 2 ? 1 : 0];
   real<lower = -1, upper = 1>  beta;
   vector[eta_n] eta;
   real voc_mod;
-  real<lower = -1, upper = 1> voc_beta[relat ? 1 : 0];
+  real<lower = -1, upper = 1> voc_beta[relat == 1 ? 1 : 0];
   real<lower = 0> voc_scale[relat ? 1 : 0];
   cholesky_factor_corr[relat == 2 ? 2 : 0] L_Omega;  
   vector[voc_eta_n] voc_eta;
@@ -81,6 +79,7 @@ transformed parameters {
       svoc_eta[i] = t_eta[2];
     }
   }else{
+    // If they aren't then residuals are independent or not present
     snvoc_eta = r_scale * eta;
     if (relat) {
       svoc_eta = voc_scale[1] * voc_eta;
@@ -95,11 +94,16 @@ transformed parameters {
   r[2:(t-1)] = r[2:(t-1)] + diff;
   
   if (relat) {
+    real vbeta;
     // Initial VOC growth based on non-voc + mod
     voc_r = rep_vector(r[t_nseq + 1], t_seqf - 1) + voc_mod;
     // VOC AR(1) differened onwards variation
-    voc_diff = diff_ar(voc_beta[1], svoc_eta, voc_eta_loc,
-                       t_seqf - 2);
+    if (relat == 1) {
+      vbeta = voc_beta[1];
+    }else{
+      vbeta = beta;
+    }
+    voc_diff = diff_ar(vbeta, svoc_eta, voc_eta_loc, t_seqf - 2);
     voc_r[2:(t_seqf-1)] = voc_r[2:(t_seqf-1)] + voc_diff;
   }else{
     // voc growth rate scaled to non-voc
@@ -167,22 +171,16 @@ model {
   }
 
   // AR(1) priors for non-voc and voc
-  if (relat < 2) {
-    beta ~ std_normal();
-    eta ~ std_normal();
-    if (relat) {
-      voc_beta ~ std_normal();
-      voc_eta ~ std_normal();
-    }
-  }else{
-    beta_mean ~ std_normal();
-    beta_sd[1] ~ std_normal() T[0,];
-    beta ~ normal(beta_mean, beta_sd);
-    voc_beta ~ normal(beta_mean, beta_sd);
-
-    L_Omega ~ lkj_corr_cholesky(2);
-    eta ~ std_normal(); 
+  beta ~ std_normal();
+  eta ~ std_normal();
+  if (relat) {
     voc_eta ~ std_normal();
+  }
+  if (relat == 1) {
+    voc_beta ~ std_normal();
+  }
+  if (relat == 2) {
+    L_Omega ~ lkj_corr_cholesky(2);
   }
 
   // observation model priors

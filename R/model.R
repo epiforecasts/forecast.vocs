@@ -15,10 +15,11 @@
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
 #'
-#' @param variant_relationship Character string, defaulting to "pooled".
-#' Controls the relationship of strains with options being "pooled" (dependence
-#' determined from the data), "scaled" (a fixed scaling between strains), and
-#' "independent" (fully independent strains after initial scaling).
+#' @param variant_relationship Character string, defaulting to "correlated".
+#' Controls the relationship of strains with options being "correlated"
+#' (strains growth rates are correlated over time), "scaled" (a fixed scaling
+#'  between strains), and "independent" (fully independent strains after
+#'  initial scaling).
 #'
 #' @param overdispersion Logical, defaults to `TRUE`. Should the observations
 #' used include overdispersion.
@@ -43,14 +44,14 @@ fv_as_data_list <- function(obs, horizon = 4,
                             r_init = c(0, 0.25),
                             r_step = 1,
                             voc_scale = c(0, 0.2),
-                            variant_relationship = "pooled",
+                            variant_relationship = "correlated",
                             overdispersion = TRUE,
                             likelihood = TRUE,
                             output_loglik = TRUE,
                             debug = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
-    choices = c("pooled", "scaled", "independent")
+    choices = c("correlated", "scaled", "independent")
   )
   check_observations(obs)
   check_param(horizon, "horizon", length = 1, type = "numeric")
@@ -86,7 +87,7 @@ fv_as_data_list <- function(obs, horizon = 4,
     voc_mean = voc_scale[1],
     voc_sd = voc_scale[2],
     relat = fcase(
-      variant_relationship %in% "pooled", 2,
+      variant_relationship %in% "correlated", 2,
       variant_relationship %in% "scaled", 0,
       variant_relationship %in% "independent", 1
     ),

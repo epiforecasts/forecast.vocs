@@ -113,7 +113,7 @@ Plot the posterior estimate for the effective reproduction number of Delta and n
 plot(forecasts, type = "rt")
 ```
 
-Plot the estimated transmission advantage for Delta vs non-Delta over time. Note that as here a model with a pooled variant scaling has been used this varies over time (potentially suitable where imports or present or a variant has greater immune escape than the baseline). If it is likely that the growth advantage is constant over time consider the fixed scaling model. If the variants are likely to be circulating in independent populations consider the independent variant model. See the documentation and model definition vignette for details.
+Plot the estimated transmission advantage for Delta vs non-Delta over time. Note that as here a model with a correlated variant growth rates has been used meaning that the difference between variants may vary over time (potentially suitable where imports or present or a variant has greater immune escape than the baseline). If it is likely that the growth advantage is constant over time consider the fixed scaling model. If the variants are likely to be circulating in independent populations consider the independent variant model. See the documentation and model definition vignette for details.
 
 ```{r}
 plot(forecasts, type = "voc_advantage")
