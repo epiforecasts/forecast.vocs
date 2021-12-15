@@ -3,7 +3,7 @@
 #' Acts as a wrapper to [scoringutils::eval_forecasts()]. In particular,
 #' handling filtering the output for various [forecast.vocs] functions and
 #' linking this output to observed data. See the documentation for the
-#' [scoringutils] package for more on forecast scoring and the documentation
+#' `scoringutils` package for more on forecast scoring and the documentation
 #' and examples below for simple examples in the context of [forecast.vocs].
 #'
 #' @param forecast A posterior forecast or posterior prediction as returned by

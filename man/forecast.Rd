@@ -135,6 +135,9 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.}
 \item{digits}{Numeric, defaults to 3. Number of digits to round summary
 statistics to.}
 
+\item{timespan}{Integer, defaults to 7. Indicates the number of days between
+each observation. Defaults to a week.}
+
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,
 and 95\% quantiles which are also the minimum set required for

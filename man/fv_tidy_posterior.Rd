@@ -33,6 +33,9 @@ rename parameters to use variant specific terminology.}
 the growth rate and reproduction number is calculated. An example use case
 is rescaling the growth rate from weekly to be scaled by the mean of
 the generation time (for COVID-19 for example this would be 5.5 / 7.}
+
+\item{timespan}{Integer, defaults to 7. Indicates the number of days between
+each observation. Defaults to a week.}
 }
 \value{
 A dataframe summarising the model posterior. Output is stratified

@@ -180,7 +180,7 @@ model {
     voc_beta ~ std_normal();
   }
   if (relat == 2) {
-    L_Omega ~ lkj_corr_cholesky(2);
+    L_Omega ~ lkj_corr_cholesky(1);
   }
 
   // observation model priors

@@ -200,6 +200,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3,
 #' @family postprocess
 #' @export
 #' @inheritParams fv_posterior
+#' @inheritParams link_dates_with_posterior
 #' @importFrom purrr map walk
 #' @importFrom data.table .SD .N := setcolorder
 #' @examplesIf interactive()

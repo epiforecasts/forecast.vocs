@@ -5,12 +5,12 @@ test_strain_inits <- function(message, strains, dt) {
     inits1 <- inits()
     inits2 <- inits()
     expect_type(inits1, "list")
-    names <- c("init_cases", "r_init", "r_noise", "eta", "beta", "sqrt_phi")
+    names <- c("init_cases", "r_init", "r_scale", "eta", "beta", "sqrt_phi")
     if (strains == 2) {
       names <- c(
         names,
         c(
-          "voc_mod", "voc_noise", "voc_eta", "voc_beta"
+          "voc_mod", "voc_scale", "voc_eta", "voc_beta"
         )
       )
     }
@@ -28,9 +28,9 @@ test_strain_inits <- function(message, strains, dt) {
     expect_length(inits1$eta, dt$eta_n)
     if (strains == 2) {
       expect_type(inits1$voc_mod, "double")
-      expect_type(inits1$voc_noise, "double")
+      expect_type(inits1$voc_scale, "double")
       expect_length(inits1$voc_mod, 1)
-      expect_length(inits1$voc_noise, 1)
+      expect_length(inits1$voc_scale, 1)
       expect_length(inits1$voc_eta, dt$voc_eta_n)
     }
   })
