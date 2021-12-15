@@ -69,7 +69,7 @@ transformed parameters {
   vector[overdisp ? 2 : 0] phi;
 
   // differenced AR(1) growth rate
-  diff = diff_ar(beta, r_noise, eta, eta_loc, t - 2);
+  diff = diff_ar(beta, r_noise * eta, eta_loc, t - 2);
   diff = cumulative_sum(diff);
 
   // non-voc evolves according to first diff AR(1)
@@ -80,7 +80,7 @@ transformed parameters {
     // Initial VOC growth based on non-voc + mod
     voc_r = rep_vector(r[t_nseq + 1], t_seqf - 1) + voc_mod;
     // VOC AR(1) differened onwards variation
-    voc_diff = diff_ar(voc_beta[1], voc_noise[1], voc_eta, voc_eta_loc,
+    voc_diff = diff_ar(voc_beta[1], voc_noise[1] * voc_eta, voc_eta_loc,
                        t_seqf - 2);
     voc_diff = cumulative_sum(voc_diff);
     voc_r[2:(t_seqf-1)] = voc_r[2:(t_seqf-1)] + voc_diff;
