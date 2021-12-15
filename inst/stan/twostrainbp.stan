@@ -73,7 +73,9 @@ transformed parameters {
   if (relat == 2) {
     matrix[2, 2] L;
     vector[2] t_eta;
-    snvoc_eta[1:nvoc_eta_n] = r_scale * head(eta, nvoc_eta_n);
+    if (nvoc_eta_n) {
+      snvoc_eta[1:nvoc_eta_n] = r_scale * head(eta, nvoc_eta_n);
+    }
     L = diag_pre_multiply(to_vector({r_scale, voc_scale[1]}), L_Omega);
     for (i in 1:voc_eta_n) {
       t_eta = to_vector({eta[nvoc_eta_n + i], voc_eta[i]});

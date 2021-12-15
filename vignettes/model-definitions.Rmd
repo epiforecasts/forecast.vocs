@@ -66,6 +66,8 @@ readLines(fv_model(strains = 1, compile = FALSE))
 
 We model strain dynamics using the single strain model as a starting point but with the addition of strain specific AR(1) variation and a beta binomial (or optionally binomial) observation process for sequence data. The variant of concerns growth rate is modelled either as a fixed scaling of the non-variant of concern growth rate, as an independent AR(1) process, or in a vector autoregression framework as correlated AR(1) process. This last formulation is desribed in detail below along with the modifications required for the other two formulation. Parameters related to the variant of concern (VoC) are given the $\delta$ superscript and parameters related to non-VoC cases are given the $o$ superscript.
 
+**Warning: Detailed model description is currently being updated to include the new correlation structure.**
+
 Mean reported cases are again defined using a AR(1) process on the log scale for each strain and the combined for overall mean reported cases. 
 
 \begin{align}
