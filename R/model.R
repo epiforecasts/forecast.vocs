@@ -143,7 +143,7 @@ fv_inits <- function(data, strains = 2) {
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
       r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
-      r_noise = abs(rnorm(1, 0, 0.01)),
+      r_scale = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))

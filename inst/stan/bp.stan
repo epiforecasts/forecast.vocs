@@ -28,7 +28,7 @@ transformed data {
 
 parameters {
   real r_init;
-  real<lower = 0> r_noise;
+  vector<lower = 0>[1] r_scale;
   real<lower = -1, upper = 1> beta;
   vector[eta_n] eta;
   real init_cases;
@@ -41,9 +41,9 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   real phi[overdisp ? 1 : 0];
 
-  diff = diff_ar(beta, r_noise, eta, eta_loc, t - 2);
+  diff = diff_ar(beta, r_scale * eta, eta_loc, t - 2);
   r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
+  r[2:(t-1)] = r[2:(t-1)] + diff;
 
   // initialise log mean cases
   mean_cases = rep_vector(init_cases, t);
@@ -80,7 +80,7 @@ model {
 
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
-  r_noise ~ normal(0, 0.2) T[0,];
+  r_scale ~ normal(0, 0.2) T[0,];
   
   // random walk priors
   beta ~ std_normal();

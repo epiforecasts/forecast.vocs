@@ -369,8 +369,8 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' plot_pairs(fit)
 plot_pairs <- function(fit,
                        pars = c(
-                         "r_init", "r_noise", "beta", "voc_beta",
-                         "voc_noise[1]", "init_cases[1]", "init_cases[2]",
+                         "r_init", "r_scale", "beta", "voc_beta",
+                         "voc_scale[1]", "init_cases[1]", "init_cases[2]",
                          "eta[1]", "voc_eta[1]",
                          "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"
                        ),

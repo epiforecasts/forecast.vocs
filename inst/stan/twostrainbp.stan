@@ -32,6 +32,7 @@ transformed data {
   // initialise cases using observed data
   vector[2] mean_init_cases;
   vector[2] sd_init_cases;
+  int nvoc_eta_n = eta_n - voc_eta_n;
   mean_init_cases = to_vector(
     {X[1], max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})}
   );
@@ -41,17 +42,15 @@ transformed data {
 
 parameters {
   real<upper = 4> r_init;
-  real rn_mean[relat == 2 ? 1 : 0];
-  real<lower = 0> rn_sd[relat == 2 ? 1 : 0];
-  real<lower = 0> r_noise;
+  real<lower = 0> r_scale;
   real<lower = -1, upper = 1> beta_mean[relat == 2 ? 1 : 0];
   real<lower = 0> beta_sd[relat == 2 ? 1 : 0];
   real<lower = -1, upper = 1>  beta;
   vector[eta_n] eta;
   real voc_mod;
   real<lower = -1, upper = 1> voc_beta[relat ? 1 : 0];
-  real<lower = 0> voc_noise[relat ? 1 : 0];
-  real<lower = 0> eta_sd[relat == 2 ? 1 : 0];
+  real<lower = 0> voc_scale[relat ? 1 : 0];
+  cholesky_factor_corr[relat == 2 ? 2 : 0] L_Omega;  
   vector[voc_eta_n] voc_eta;
   vector[2] init_cases;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
@@ -67,11 +66,30 @@ transformed parameters {
   vector<lower = 0>[t] mean_cases;
   vector<lower = 0, upper = 1>[t_seqf] frac_voc;
   vector[overdisp ? 2 : 0] phi;
+  vector[eta_n] snvoc_eta;
+  vector[relat ? voc_eta_n : 0] svoc_eta;
+  // if variants are correlated set up correlation
+  if (relat == 2) {
+    matrix[2, 2] L;
+    vector[2] t_eta;
+    snvoc_eta[1:nvoc_eta_n] = r_scale * head(eta, nvoc_eta_n);
+    L = diag_pre_multiply(to_vector({r_scale, voc_scale[1]}), L_Omega);
+    for (i in 1:voc_eta_n) {
+      t_eta = to_vector({eta[nvoc_eta_n + i], voc_eta[i]});
+      t_eta = L * t_eta;
+      snvoc_eta[nvoc_eta_n + i] = t_eta[1];
+      svoc_eta[i] = t_eta[2];
+    }
+  }else{
+    snvoc_eta = r_scale * eta;
+    if (relat) {
+      svoc_eta = voc_scale[1] * voc_eta;
+    }
+  }
 
   // differenced AR(1) growth rate
-  diff = diff_ar(beta, r_noise * eta, eta_loc, t - 2);
-  diff = cumulative_sum(diff);
-
+  diff = diff_ar(beta, snvoc_eta, eta_loc, t - 2);
+  
   // non-voc evolves according to first diff AR(1)
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + diff;
@@ -80,9 +98,8 @@ transformed parameters {
     // Initial VOC growth based on non-voc + mod
     voc_r = rep_vector(r[t_nseq + 1], t_seqf - 1) + voc_mod;
     // VOC AR(1) differened onwards variation
-    voc_diff = diff_ar(voc_beta[1], voc_noise[1] * voc_eta, voc_eta_loc,
+    voc_diff = diff_ar(voc_beta[1], svoc_eta, voc_eta_loc,
                        t_seqf - 2);
-    voc_diff = cumulative_sum(voc_diff);
     voc_r[2:(t_seqf-1)] = voc_r[2:(t_seqf-1)] + voc_diff;
   }else{
     // voc growth rate scaled to non-voc
@@ -144,16 +161,9 @@ model {
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
   voc_mod ~ normal(voc_mean, voc_sd);
-  if (relat < 2) {
-    r_noise ~ normal(0, 0.2) T[0,];
-    if (relat) {
-      voc_noise[1] ~ normal(0, 0.2) T[0,];
-    }
-  }else{
-    rn_mean[1] ~ normal(0, 0.2) T[0,];
-    rn_sd[1] ~ normal(0, 0.1) T[0, ];
-    r_noise ~ normal(rn_mean, rn_sd) T[0,];
-    voc_noise[1] ~ normal(rn_mean, rn_sd) T[0,];
+  r_scale ~ normal(0, 0.2) T[0,];
+  if (relat) {
+    voc_scale[1] ~ normal(0, 0.2) T[0,];
   }
 
   // AR(1) priors for non-voc and voc
@@ -170,9 +180,9 @@ model {
     beta ~ normal(beta_mean, beta_sd);
     voc_beta ~ normal(beta_mean, beta_sd);
 
+    L_Omega ~ lkj_corr_cholesky(2);
     eta ~ std_normal(); 
-    eta_sd[1] ~ std_normal() T[0,];
-    voc_eta ~ normal(tail(eta, voc_eta_n), eta_sd[1]);
+    voc_eta ~ std_normal();
   }
 
   // observation model priors
