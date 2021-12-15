@@ -17,8 +17,11 @@ data {
   int output_loglik;
   real r_init_mean;
   real r_init_sd;
+  real beta_mean;
+  real beta_sd;
   real voc_mean;
   real voc_sd;
+  real lkj_prior;
   int relat;
   int overdisp;
   int debug;
@@ -171,16 +174,16 @@ model {
   }
 
   // AR(1) priors for non-voc and voc
-  beta ~ std_normal();
+  beta ~ normal(beta_mean, beta_sd);
   eta ~ std_normal();
   if (relat) {
     voc_eta ~ std_normal();
   }
   if (relat == 1) {
-    voc_beta ~ std_normal();
+    voc_beta ~ normal(beta_mean, beta_sd);
   }
   if (relat == 2) {
-    L_Omega ~ lkj_corr_cholesky(1);
+    L_Omega ~ lkj_corr_cholesky(lkj_prior);
   }
 
   // observation model priors

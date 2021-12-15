@@ -5,12 +5,26 @@
 #'
 #' @param horizon Integer forecast horizon. Defaults to 4.
 #'
-#' @param r_init Numeric vector of length 2. Prior mean and
-#' standard deviation for the initial growth rate.
+#' @param r_init Numeric vector of length 2. Mean and
+#' standard deviation for the normal prior on the initial log growth rate.
 #'
 #' @param r_step Integer, defaults to 1. The number of observations between
 #' each change in the growth rate.
 #'
+#' @param beta Numeric vector, defaults to c(0, 0.5). Represents the mean and
+#' standard deviation of the normal prior (truncated at 1 and -1) on the
+#' weighting in the differenced AR process of  the previous difference.
+#' Placing a tight prior around zero effectively reduces the AR process to a
+#' random walk on the growth rate.
+#'
+#' @param lkj Numeric defaults to 0.5. The assumed prior covariance between
+#' variants growth rates when using the "correlated" model. This sets the shape
+#' parameter for the Lewandowski-Kurowicka-Joe (LKJ) prior distribution. If set
+#' to 1 assigns a uniform prior for all correlations, values less than 1
+#' indicate increased belief in strong correlations and values greater than 1
+#' indicate increased belief weaker correlations. Our default setting places
+#' increased weight on some correlation between strains.
+#' 
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
@@ -42,8 +56,8 @@
 #' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 fv_as_data_list <- function(obs, horizon = 4,
                             r_init = c(0, 0.25),
-                            r_step = 1,
-                            voc_scale = c(0, 0.2),
+                            r_step = 1, beta = c(0, 0.5),
+                            lkj = 0.5, voc_scale = c(0, 0.2),
                             variant_relationship = "correlated",
                             overdispersion = TRUE,
                             likelihood = TRUE,
@@ -84,6 +98,8 @@ fv_as_data_list <- function(obs, horizon = 4,
     seq_start_date = seq_start_date,
     r_init_mean = r_init[1],
     r_init_sd = r_init[2],
+    beta_mean = beta[1],
+    beta_sd = beta[2],
     voc_mean = voc_scale[1],
     voc_sd = voc_scale[2],
     relat = fcase(
@@ -111,7 +127,8 @@ fv_as_data_list <- function(obs, horizon = 4,
       eta_n = r_steps$n,
       eta_loc = r_steps$steps,
       voc_eta_n = voc_r_steps$n,
-      voc_eta_loc = voc_r_steps$steps
+      voc_eta_loc = voc_r_steps$steps,
+      lkj_prior = lkj
     )
   )
   return(data)

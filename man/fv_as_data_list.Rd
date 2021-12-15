@@ -9,6 +9,8 @@ fv_as_data_list(
   horizon = 4,
   r_init = c(0, 0.25),
   r_step = 1,
+  beta = c(0, 0.5),
+  lkj = 0.5,
   voc_scale = c(0, 0.2),
   variant_relationship = "correlated",
   overdispersion = TRUE,
@@ -23,11 +25,25 @@ fv_as_data_list(
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
-\item{r_init}{Numeric vector of length 2. Prior mean and
-standard deviation for the initial growth rate.}
+\item{r_init}{Numeric vector of length 2. Mean and
+standard deviation for the normal prior on the initial log growth rate.}
 
 \item{r_step}{Integer, defaults to 1. The number of observations between
 each change in the growth rate.}
+
+\item{beta}{Numeric vector, defaults to c(0, 0.5). Represents the mean and
+standard deviation of the normal prior (truncated at 1 and -1) on the
+weighting in the differenced AR process of  the previous difference.
+Placing a tight prior around zero effectively reduces the AR process to a
+random walk on the growth rate.}
+
+\item{lkj}{Numeric defaults to 0.5. The assumed prior covariance between
+variants growth rates when using the "correlated" model. This sets the shape
+parameter for the Lewandowski-Kurowicka-Joe (LKJ) prior distribution. If set
+to 1 assigns a uniform prior for all correlations, values less than 1
+indicate increased belief in strong correlations and values greater than 1
+indicate increased belief weaker correlations. Our default setting places
+increased weight on some correlation between strains.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier

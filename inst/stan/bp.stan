@@ -16,6 +16,8 @@ data {
   int debug;
   int eta_n;
   int eta_loc[eta_n];
+  real beta_mean;
+  real beta_sd;
 }
 
 transformed data {
@@ -83,7 +85,7 @@ model {
   r_scale ~ normal(0, 0.2) T[0,];
   
   // random walk priors
-  beta ~ std_normal();
+  beta ~ normal(beta_mean, beta_sd);
   eta ~ std_normal();
 
   // observation model priors
