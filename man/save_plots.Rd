@@ -25,6 +25,10 @@ p <- plot(posterior, type = "all")
 save_plots(p, save_path = tempdir())
 }
 \seealso{
+Preprocessing functions
+\code{\link{filter_by_availability}()},
+\code{\link{latest_obs}()}
+
 Plotting functions
 \code{\link{add_forecast_dates}()},
 \code{\link{plot.fv_forecast}()},
@@ -40,3 +44,4 @@ Plotting functions
 \code{\link{plot_voc_frac}()}
 }
 \concept{plot}
+\concept{preprocess}

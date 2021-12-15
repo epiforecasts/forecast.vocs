@@ -80,7 +80,10 @@ fv_example <- function(strains = 1, type = "posterior") {
 #' @param plots A named list of `ggplot2` plots.
 #'
 #' @param ... Additional arguments passed to [ggplot2::ggsave()]
+#'
 #' @return NULL
+#'
+#' @family preprocess
 #' @family plot
 #' @export
 #' @importFrom purrr walk2
