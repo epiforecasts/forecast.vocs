@@ -33,7 +33,7 @@ stratify the ribbon plot. Defaults to "type" which indicates the
 data stream.}
 
 \item{log}{Logical, defaults to \code{TRUE}. Should cases be plot on
-a log scale?}
+the log 2 scale?}
 }
 \value{
 A \code{ggplot2} plot.
@@ -48,7 +48,7 @@ posterior <- fv_example(strains = 2, type = "posterior")
 plot_cases(posterior)
 
 # without log transform
-plot_cases(posterior)
+plot_cases(posterior, log = FALSE)
 }
 \seealso{
 Plotting functions

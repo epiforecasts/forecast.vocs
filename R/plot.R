@@ -109,7 +109,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' Plot the posterior prediction for cases
 #'
 #' @param log Logical, defaults to `TRUE`. Should cases be plot on
-#' a log scale?
+#' the log 2 scale?
 #'
 #' @param col A character string denoting the variable to use to
 #' stratify the ribbon plot. Defaults to "type" which indicates the
@@ -120,7 +120,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' @family plot
 #' @inheritParams plot_default
 #' @export
-#' @importFrom scales comma log_trans
+#' @importFrom scales comma log2_trans
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #'
@@ -128,7 +128,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' plot_cases(posterior)
 #'
 #' # without log transform
-#' plot_cases(posterior)
+#' plot_cases(posterior, log = FALSE)
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
                        all_obs = FALSE, col = NULL, log = TRUE) {
   if (!is.null(obs)) {
@@ -143,27 +143,29 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 
   if (log) {
     plot <- plot +
-      scale_y_continuous(labels = scales::comma, trans = scales::log_trans()) +
-      labs(y = "Weekly test positive cases (log scale)", x = "Date")
+      scale_y_continuous(labels = scales::comma, trans = scales::log2_trans())
   } else {
     plot <- plot +
-      scale_y_continuous(labels = scales::comma) +
-      labs(y = "Weekly test positive cases", x = "Date")
+      scale_y_continuous(labels = scales::comma)
   }
 
   plot <- plot +
     scale_color_brewer(palette = "Dark2") +
-    scale_fill_brewer(palette = "Dark2")
+    scale_fill_brewer(palette = "Dark2") +
+    labs(y = "Notifications", x = "Date")
 
   plot <- plot_theme(plot)
   return(plot)
 }
 
-#' Plot the posterior prediction for the fraction of samples with the variant
-#' of concern
+#' Plot the population posterior prediction for the fraction of samples with the
+#' variant of concern
 #'
 #' @param voc_label Character string giving the name to assign to the variant
 #' of concern. Defaults to  "variant of concern".
+#'
+#' @param logit Logical, defaults to `TRUE`. Should variant proportions be
+#' plot on the logit scale.
 #'
 #' @param ... Additional parameters passed to [plot_default()].
 #'
@@ -172,12 +174,13 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' @family plot
 #' @inheritParams plot_default
 #' @export
-#' @importFrom scales percent
+#' @importFrom scales percent logit_trans
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_voc_frac(posterior)
 plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
-                     all_obs = FALSE, voc_label = "variant of concern", ...) {
+                          all_obs = FALSE, voc_label = "variant of concern",
+                          logit = TRUE, ...) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := share_voc]
   }
@@ -185,8 +188,16 @@ plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
     all_obs = all_obs, x = date, ...
   )
 
+  if (logit) {
+    plot <- plot +
+      scale_y_continuous(
+        labels = scales::percent, trans = scales::logit_trans()
+      )
+  } else {
+    plot <- plot +
+      scale_y_continuous(labels = scales::percent)
+  }
   plot <- plot +
-    scale_y_continuous(labels = scales::percent) +
     labs(
       y = paste0("Percentage of overall cases with the ", voc_label),
       x = "Date"
@@ -253,7 +264,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   plot <- plot +
     scale_y_continuous() +
     labs(
-      y = "Effective reproduction number of observed cases",
+      y = "Effective reproduction number of notifications",
       x = "Date"
     )
   plot <- plot_theme(plot)
@@ -287,7 +298,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   plot <- plot +
     scale_y_continuous() +
     labs(
-      y = "Growth rate of observed cases",
+      y = "Growth rate of notifications",
       x = "Date"
     )
   plot <- plot_theme(plot)
@@ -358,10 +369,9 @@ plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' plot_pairs(fit)
 plot_pairs <- function(fit,
                        pars = c(
-                         "r_init", "r_noise", "beta", "voc_noise[1]",
-                         "nvoc_noise[1]", "init_cases",
-                         "init_cases[1]", "init_cases[2]",
-                         "eta[1]", "voc_eta[1]", "nvoc_eta[1]",
+                         "r_init", "r_scale", "beta", "voc_beta",
+                         "voc_scale[1]", "init_cases[1]", "init_cases[2]",
+                         "eta[1]", "voc_eta[1]",
                          "sqrt_phi[1]", "sqrt_phi[2]", "sqrt_phi"
                        ),
                        diagnostics = TRUE, ...) {

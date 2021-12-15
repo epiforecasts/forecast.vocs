@@ -12,7 +12,6 @@ current_obs <- filter_by_availability(
 dt <- fv_as_data_list(
   obs,
   overdispersion = TRUE,
-  variant_relationship = "scaled",
   voc_scale = c(0.4, 0.2)
 )
 

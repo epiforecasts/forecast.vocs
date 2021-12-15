@@ -16,10 +16,13 @@ forecast(
   extract_forecast = forecast.vocs::fv_extract_forecast,
   horizon = 4,
   r_init = c(0, 0.25),
+  r_step = 1,
+  beta = c(0, 0.1),
+  lkj = 0.5,
   voc_scale = c(0, 0.2),
   voc_label = "VOC",
   strains = 2,
-  variant_relationship = "pooled",
+  variant_relationship = "correlated",
   overdispersion = TRUE,
   models = NULL,
   likelihood = TRUE,
@@ -81,8 +84,25 @@ the summarised \code{posterior}. If not supplied the package default
 
 \item{horizon}{Integer forecast horizon. Defaults to 4.}
 
-\item{r_init}{Numeric vector of length 2. Prior mean and
-standard deviation for the initial growth rate.}
+\item{r_init}{Numeric vector of length 2. Mean and
+standard deviation for the normal prior on the initial log growth rate.}
+
+\item{r_step}{Integer, defaults to 1. The number of observations between
+each change in the growth rate.}
+
+\item{beta}{Numeric vector, defaults to c(0, 0.5). Represents the mean and
+standard deviation of the normal prior (truncated at 1 and -1) on the
+weighting in the differenced AR process of  the previous difference.
+Placing a tight prior around zero effectively reduces the AR process to a
+random walk on the growth rate.}
+
+\item{lkj}{Numeric defaults to 0.5. The assumed prior covariance between
+variants growth rates when using the "correlated" model. This sets the shape
+parameter for the Lewandowski-Kurowicka-Joe (LKJ) prior distribution. If set
+to 1 assigns a uniform prior for all correlations, values less than 1
+indicate increased belief in strong correlations and values greater than 1
+indicate increased belief weaker correlations. Our default setting places
+increased weight on some correlation between strains.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
@@ -96,10 +116,11 @@ rename parameters to use variant specific terminology.}
 maximum is 2. A numeric vector can be passed if forecasts from multiple
 strain models are desired.}
 
-\item{variant_relationship}{Character string, defaulting to "pooled".
-Controls the relationship of strains with options being "pooled" (dependence
-determined from the data), "scaled" (a fixed scaling between strains), and
-"independent" (fully independent strains after initial scaling).}
+\item{variant_relationship}{Character string, defaulting to "correlated".
+Controls the relationship of strains with options being "correlated"
+(strains growth rates are correlated over time), "scaled" (a fixed scaling
+between strains), and "independent" (fully independent strains after
+initial scaling).}
 
 \item{overdispersion}{Logical, defaults to \code{TRUE}. Should the observations
 used include overdispersion.}
@@ -129,6 +150,9 @@ the generation time (for COVID-19 for example this would be 5.5 / 7.}
 
 \item{digits}{Numeric, defaults to 3. Number of digits to round summary
 statistics to.}
+
+\item{timespan}{Integer, defaults to 7. Indicates the number of days between
+each observation. Defaults to a week.}
 
 \item{probs}{A vector of numeric probabilities to produce
 quantile summaries for. By default these are the 5\%, 20\%, 80\%,

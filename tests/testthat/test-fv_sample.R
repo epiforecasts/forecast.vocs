@@ -12,7 +12,7 @@ if (test_sample) {
 
     overdisp_dt <- fv_as_data_list(
       obs,
-      overdispersion = TRUE, variant_relationship = "pooled",
+      overdispersion = TRUE, variant_relationship = "correlated",
       voc_scale = c(0.4, 0.2)
     )
     nooverdisp_dt <- fv_as_data_list(obs, overdispersion = FALSE)

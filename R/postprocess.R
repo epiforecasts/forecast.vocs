@@ -200,6 +200,7 @@ fv_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95), digits = 3,
 #' @family postprocess
 #' @export
 #' @inheritParams fv_posterior
+#' @inheritParams link_dates_with_posterior
 #' @importFrom purrr map walk
 #' @importFrom data.table .SD .N := setcolorder
 #' @examplesIf interactive()
@@ -255,10 +256,10 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
 
   # summarise VOC if present
   voc_frac <- sfit[grepl("frac_voc", variable)]
-   voc_frac[, type := "VOC"]
+  voc_frac[, type := "VOC"]
   if (nrow(voc_frac) > 0) {
-     voc_frac <- link_dates_with_posterior(voc_frac, data, timespan = timespan)
-     voc_frac <- link_obs_with_posterior(
+    voc_frac <- link_dates_with_posterior(voc_frac, data, timespan = timespan)
+    voc_frac <- link_obs_with_posterior(
       posterior = voc_frac, obs = data$Y / data$N,
       target_types = "VOC"
     )
@@ -299,7 +300,8 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   voc_advantage <- voc_advantage[, type := "VOC"]
   if (nrow(voc_advantage) > 0) {
     voc_advantage <- link_dates_with_posterior(
-      voc_advantage, data, timespan = timespan, mod_end = 1
+      voc_advantage, data,
+      timespan = timespan, mod_end = 1
     )
     voc_advantage <- link_obs_with_posterior(
       posterior = voc_advantage, horizon = seq_horizon,
@@ -315,14 +317,14 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   # summarise model parameters
   param_lookup <- data.table(
     variable = c(
-      "r_init", "r_noise", "beta", "voc_mod", "avg_voc_advantage",
-      "voc_noise[1]", "nvoc_noise[1]", "init_cases[1]", "init_cases[2]",
+      "r_init", "r_scale", "beta", "voc_beta", "voc_mod", "avg_voc_advantage",
+      "voc_scale[1]", "init_cases[1]", "init_cases[2]",
       "phi[1]", "phi[2]", "phi"
     ),
     clean_name = c(
-      "Initial growth", "Growth (sd)", "Beta",
+      "Initial growth", "Growth (sd)", "Beta", "VOC Beta",
       "Initial VOC effect", "Average VOC effect",
-      "VOC (sd)", "Non-VOC (sd)", "Initial cases",
+      "VOC (sd)", "Initial cases",
       "Initial VOC cases", "Notification overdispersion",
       "Sequencing overdispersion", "Notification overdispersion"
     ),
@@ -483,10 +485,10 @@ update_voc_label <- function(posterior, label, target_label = "VOC") {
         (char_cols) := purrr::map(
           .SD,
           ~ gsub(
-              target_label,
-              replacement = label,
-              x = .,
-              ignore.case = FALSE
+            target_label,
+            replacement = label,
+            x = .,
+            ignore.case = FALSE
           )
         ),
         .SDcols = char_cols

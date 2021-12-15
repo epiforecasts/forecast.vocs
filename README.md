@@ -123,41 +123,41 @@ forecasts <- forecast(obs,
   strains = c(1, 2), voc_scale = c(0.4, 0.2),
   voc_label = "Delta", scale_r = 5.5 / 7,
   adapt_delta = 0.99, max_treedepth = 15,
-  refresh = 0, show_messages = FALSE,
+  refresh = 0, show_messages = FALSE
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 20.3 seconds.
-#> Chain 2 finished in 20.6 seconds.
-#> Chain 3 finished in 21.0 seconds.
-#> Chain 1 finished in 31.7 seconds.
+#> Chain 2 finished in 18.9 seconds.
+#> Chain 4 finished in 19.6 seconds.
+#> Chain 3 finished in 23.2 seconds.
+#> Chain 1 finished in 28.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 23.4 seconds.
-#> Total execution time: 31.9 seconds.
+#> Mean chain execution time: 22.6 seconds.
+#> Total execution time: 28.6 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 4 finished in 62.6 seconds.
-#> Chain 2 finished in 62.7 seconds.
-#> Chain 1 finished in 67.6 seconds.
-#> Chain 3 finished in 82.8 seconds.
+#> Chain 4 finished in 65.0 seconds.
+#> Chain 3 finished in 67.8 seconds.
+#> Chain 2 finished in 85.3 seconds.
+#> Chain 1 finished in 88.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 68.9 seconds.
-#> Total execution time: 82.9 seconds.
+#> Mean chain execution time: 76.6 seconds.
+#> Total execution time: 88.4 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship  r_init
-#> 1:  0    2021-06-19       1           TRUE               pooled 0, 0.25
-#> 2:  0    2021-06-19       2           TRUE               pooled 0, 0.25
+#> 1:  0    2021-06-19       1           TRUE           correlated 0, 0.25
+#> 2:  0    2021-06-19       2           TRUE           correlated 0, 0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:  0.4, 0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000     1.01
-#> 2:  0.4, 0.2       <CmdStanMCMC[31]> <list[20]> <list[5]>    4000     1.01
+#> 1:  0.4, 0.2       <CmdStanMCMC[31]> <list[26]> <list[5]>    4000        1
+#> 2:  0.4, 0.2       <CmdStanMCMC[31]> <list[26]> <list[5]>    4000        1
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                     2                     5e-04            11
-#> 2:                    28                     7e-03            10
+#> 1:                     6                   0.00150            11
+#> 2:                     1                   0.00025            10
 #>    no_at_max_treedepth per_at_max_treedepth time              posterior
-#> 1:                 841              0.21025 31.9 <fv_posterior[148x20]>
-#> 2:                2139              0.53475 82.9 <fv_posterior[426x20]>
+#> 1:                  50               0.0125 28.6 <fv_posterior[148x20]>
+#> 2:                1812               0.4530 88.4 <fv_posterior[456x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
 #> 2: <fv_posterior[60x13]>
@@ -212,13 +212,14 @@ plot(forecasts, type = "rt")
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 Plot the estimated transmission advantage for Delta vs non-Delta over
-time. Note that as here a model with a pooled variant scaling has been
-used this varies over time (potentially suitable where imports or
-present or a variant has greater immune escape than the baseline). If it
-is likely that the growth advantage is constant over time consider the
-fixed scaling model. If the variants are likely to be circulating in
-independent populations consider the independent variant model. See the
-documentation and model definition vignette for details.
+time. Note that as here a model with a correlated variant growth rates
+has been used meaning that the difference between variants may vary over
+time (potentially suitable where imports or present or a variant has
+greater immune escape than the baseline). If it is likely that the
+growth advantage is constant over time consider the fixed scaling model.
+If the variants are likely to be circulating in independent populations
+consider the independent variant model. See the documentation and model
+definition vignette for details.
 
 ``` r
 plot(forecasts, type = "voc_advantage")
@@ -252,8 +253,8 @@ kable(scores)
 
 | strains | interval\_score | sharpness | underprediction | overprediction | coverage\_deviation |    bias | aem |
 | ------: | --------------: | --------: | --------------: | -------------: | ------------------: | ------: | --: |
-|       1 |            2040 |       272 |            1760 |              0 |             \-0.375 | \-0.967 | NaN |
-|       2 |            1110 |       499 |             616 |              0 |               0.000 | \-0.900 | NaN |
+|       1 |            1950 |       291 |            1660 |              0 |             \-0.375 | \-0.967 | NaN |
+|       2 |            1100 |       503 |             600 |              0 |               0.000 | \-0.900 | NaN |
 
 ### Step by step forecast
 

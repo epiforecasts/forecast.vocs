@@ -4,14 +4,23 @@
 \alias{fv_model}
 \title{Load and compile a strain model}
 \usage{
-fv_model(strains = 2, compile = TRUE, ...)
+fv_model(model, include, strains = 2, compile = TRUE, verbose = FALSE, ...)
 }
 \arguments{
+\item{model}{A character string indicating the path to the model.
+If not supplied the package default model is used.}
+
+\item{include}{A character string specifying the path to any stan
+files to include in the model. If missing the package default is used.}
+
 \item{strains}{Integer number of strains. Defaults to 2. Current
 maximum is 2.}
 
 \item{compile}{Logical, defaults to \code{TRUE}. Should the model
 be loaded and compiled using \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
+
+\item{verbose}{Logical, defaults to \code{TRUE}. Should verbose
+messages be shown.}
 
 \item{...}{Additional arguments passed to \code{\link[cmdstanr:cmdstan_model]{cmdstanr::cmdstan_model()}}.}
 }

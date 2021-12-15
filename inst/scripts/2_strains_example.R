@@ -13,7 +13,8 @@ dt <- fv_as_data_list(
   obs,
   overdispersion = TRUE,
   variant_relationship = "scaled",
-  voc_scale = c(0.4, 0.2)
+  voc_scale = c(0.4, 0.2),
+  r_step = 1
 )
 
 inits <- fv_inits(dt, strains = 2)

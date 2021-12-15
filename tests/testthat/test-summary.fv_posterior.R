@@ -5,7 +5,8 @@ test_that("Can summarise forecasts", {
     any(
       class(
         summary(
-          posterior2, type = "all"
+          posterior2,
+          type = "all"
         )
       ) %in% "fv_posterior"
     )
@@ -14,24 +15,27 @@ test_that("Can summarise forecasts", {
     any(
       class(
         summary(
-          posterior2, type = "all"
+          posterior2,
+          type = "all"
         )
       ) %in% "fv_posterior"
     )
   )
   expect_true(
     all(
-        grepl("r",
-          summary(
-            posterior2, target = "posterior", type = "rt"
-          )$variable
-        )
+      grepl(
+        "r",
+        summary(
+          posterior2,
+          target = "posterior", type = "rt"
+        )$variable
       )
     )
+  )
   expect_true(
     all(
       summary(posterior2, target = "forecast", type = "rt")$date
-        >= as.Date("2021-03-20")
-      )
+      >= as.Date("2021-03-20")
+    )
   )
 })

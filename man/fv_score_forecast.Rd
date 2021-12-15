@@ -35,7 +35,7 @@ A \code{data.table} as returned by \code{\link[scoringutils:eval_forecasts]{scor
 Acts as a wrapper to \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}. In particular,
 handling filtering the output for various \link{forecast.vocs} functions and
 linking this output to observed data. See the documentation for the
-\link{scoringutils} package for more on forecast scoring and the documentation
+\code{scoringutils} package for more on forecast scoring and the documentation
 and examples below for simple examples in the context of \link{forecast.vocs}.
 }
 \examples{
@@ -72,7 +72,8 @@ fv_score_forecast(forecasts, obs, summarise_by = c("strains", "horizon"))
 
 # score by horizon on a log scale
 fv_score_forecast(
- forecasts, obs, summarise_by = c("strains", "horizon"), log = TRUE
+  forecasts, obs,
+  summarise_by = c("strains", "horizon"), log = TRUE
 )
 \dontshow{\}) # examplesIf}
 }

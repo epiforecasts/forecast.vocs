@@ -1,7 +1,12 @@
+functions {
+#include functions/convolve.stan
+#include functions/diff_ar.stan
+#include functions/cases_ar.stan
+}
+
 data {
   int t;
   int t_nseq;
-  int t_dep;
   int t_seq;
   int t_seqf;
   int t_nots;
@@ -12,18 +17,25 @@ data {
   int output_loglik;
   real r_init_mean;
   real r_init_sd;
+  real beta_mean;
+  real beta_sd;
   real voc_mean;
   real voc_sd;
+  real lkj_prior;
   int relat;
   int overdisp;
   int debug;
-
+  int eta_n;
+  int eta_loc[t - 2];  
+  int voc_eta_n;
+  int voc_eta_loc[relat ? t_seqf - 2 : 0];
 }
 
 transformed data {
   // initialise cases using observed data
   vector[2] mean_init_cases;
   vector[2] sd_init_cases;
+  int nvoc_eta_n = eta_n - voc_eta_n;
   mean_init_cases = to_vector(
     {X[1], max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})}
   );
@@ -33,14 +45,14 @@ transformed data {
 
 parameters {
   real<upper = 4> r_init;
-  real<lower = 0> r_noise;
-  real<lower = -1, upper = 1> beta;
+  real<lower = 0> r_scale;
+  real<lower = -1, upper = 1>  beta;
+  vector[eta_n] eta;
   real voc_mod;
-  real<lower = 0> voc_noise[relat ? 1 : 0];
-  real<lower = 0> nvoc_noise[relat ? 1 : 0];
-  vector[t_dep] eta;
-  vector[relat ? t_seqf - 2 : 0] voc_eta;
-  vector[relat ? t_seqf - 2 : 0] nvoc_eta;
+  real<lower = -1, upper = 1> voc_beta[relat == 1 ? 1 : 0];
+  real<lower = 0> voc_scale[relat ? 1 : 0];
+  cholesky_factor_corr[relat == 2 ? 2 : 0] L_Omega;  
+  vector[voc_eta_n] voc_eta;
   vector[2] init_cases;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
@@ -48,35 +60,59 @@ parameters {
 transformed parameters {
   vector[t - 1] r;
   vector[t - 2] diff;
+  vector[relat ? t_seqf - 2 : 0] voc_diff;
   vector[t_seqf - 1] voc_r;
   vector[t] mean_nvoc_cases;
   vector[t_seqf] mean_voc_cases;
   vector<lower = 0>[t] mean_cases;
   vector<lower = 0, upper = 1>[t_seqf] frac_voc;
   vector[overdisp ? 2 : 0] phi;
-
-  // differenced AR(1) growth rate
-  diff = rep_vector(0, t - 2);
-  for (i in 1:(t-2)) {
-    if (i <= t_dep) {
-      if (i > 1) {
-        diff[i] = beta * diff[i - 1];
-      }
-      diff[i] += r_noise * eta[i];
+  vector[eta_n] snvoc_eta;
+  vector[relat ? voc_eta_n : 0] svoc_eta;
+  // if variants are correlated set up correlation
+  if (relat == 2) {
+    matrix[2, 2] L;
+    vector[2] t_eta;
+    snvoc_eta[1:nvoc_eta_n] = r_scale * head(eta, nvoc_eta_n);
+    L = diag_pre_multiply(to_vector({r_scale, voc_scale[1]}), L_Omega);
+    for (i in 1:voc_eta_n) {
+      t_eta = to_vector({eta[nvoc_eta_n + i], voc_eta[i]});
+      t_eta = L * t_eta;
+      snvoc_eta[nvoc_eta_n + i] = t_eta[1];
+      svoc_eta[i] = t_eta[2];
+    }
+  }else{
+    // If they aren't then residuals are independent or not present
+    snvoc_eta = r_scale * eta;
+    if (relat) {
+      svoc_eta = voc_scale[1] * voc_eta;
     }
   }
-  r = rep_vector(r_init, t - 1);
-  r[2:(t-1)] = r[2:(t-1)] + cumulative_sum(diff);
 
-  // voc growth rate scaled to overall
-  voc_r = tail(r, t_seqf - 1) + voc_mod;
-  // Independent RW residuals for variant and non-variant
+  // differenced AR(1) growth rate
+  diff = diff_ar(beta, snvoc_eta, eta_loc, t - 2);
+  
+  // non-voc evolves according to first diff AR(1)
+  r = rep_vector(r_init, t - 1);
+  r[2:(t-1)] = r[2:(t-1)] + diff;
+  
   if (relat) {
-    voc_r[2:(t_seqf-1)] = tail(voc_r, t_seqf - 2) +
-                             cumulative_sum(voc_noise[1] * voc_eta);
-    r[(t_nseq+2):(t-1)] = tail(r, t_seqf - 2) +
-                            cumulative_sum(nvoc_noise[1] * nvoc_eta);
-  }
+    real vbeta;
+    // Initial VOC growth based on non-voc + mod
+    voc_r = rep_vector(r[t_nseq + 1], t_seqf - 1) + voc_mod;
+    // VOC AR(1) differened onwards variation
+    if (relat == 1) {
+      vbeta = voc_beta[1];
+    }else{
+      vbeta = beta;
+    }
+    voc_diff = diff_ar(vbeta, svoc_eta, voc_eta_loc, t_seqf - 2);
+    voc_r[2:(t_seqf-1)] = voc_r[2:(t_seqf-1)] + voc_diff;
+  }else{
+    // voc growth rate scaled to non-voc
+    voc_r = tail(r, t_seqf - 1) + voc_mod;
+  }  
+
   // initialise log mean cases
   mean_nvoc_cases = t_nseq > 0 ? rep_vector(init_cases[1], t) : 
     rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
@@ -132,18 +168,22 @@ model {
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
   voc_mod ~ normal(voc_mean, voc_sd);
-  r_noise ~ normal(0, 0.2) T[0,];
+  r_scale ~ normal(0, 0.2) T[0,];
   if (relat) {
-    voc_noise[1] ~ normal(0, 0.1) T[0,]; 
-    nvoc_noise[1] ~ normal(0, 0.1) T[0,]; 
+    voc_scale[1] ~ normal(0, 0.2) T[0,];
   }
 
-  // random walk priors
-  beta ~ std_normal();
+  // AR(1) priors for non-voc and voc
+  beta ~ normal(beta_mean, beta_sd);
   eta ~ std_normal();
   if (relat) {
     voc_eta ~ std_normal();
-    nvoc_eta ~ std_normal();
+  }
+  if (relat == 1) {
+    voc_beta ~ normal(beta_mean, beta_sd);
+  }
+  if (relat == 2) {
+    L_Omega ~ lkj_corr_cholesky(lkj_prior);
   }
 
   // observation model priors

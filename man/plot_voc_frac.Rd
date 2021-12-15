@@ -2,8 +2,8 @@
 % Please edit documentation in R/plot.R
 \name{plot_voc_frac}
 \alias{plot_voc_frac}
-\title{Plot the posterior prediction for the fraction of samples with the variant
-of concern}
+\title{Plot the population posterior prediction for the fraction of samples with the
+variant of concern}
 \usage{
 plot_voc_frac(
   posterior,
@@ -11,6 +11,7 @@ plot_voc_frac(
   forecast_dates = NULL,
   all_obs = FALSE,
   voc_label = "variant of concern",
+  logit = TRUE,
   ...
 )
 }
@@ -32,14 +33,17 @@ or just those in the date range of the estimates being plot.}
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}
 
+\item{logit}{Logical, defaults to \code{TRUE}. Should variant proportions be
+plot on the logit scale.}
+
 \item{...}{Additional parameters passed to \code{\link[=plot_default]{plot_default()}}.}
 }
 \value{
 A \code{ggplot2} plot.
 }
 \description{
-Plot the posterior prediction for the fraction of samples with the variant
-of concern
+Plot the population posterior prediction for the fraction of samples with the
+variant of concern
 }
 \examples{
 posterior <- fv_example(strains = 2, type = "posterior")

@@ -5,17 +5,35 @@
 #'
 #' @param horizon Integer forecast horizon. Defaults to 4.
 #'
-#' @param r_init Numeric vector of length 2. Prior mean and
-#' standard deviation for the initial growth rate.
+#' @param r_init Numeric vector of length 2. Mean and
+#' standard deviation for the normal prior on the initial log growth rate.
 #'
+#' @param r_step Integer, defaults to 1. The number of observations between
+#' each change in the growth rate.
+#'
+#' @param beta Numeric vector, defaults to c(0, 0.5). Represents the mean and
+#' standard deviation of the normal prior (truncated at 1 and -1) on the
+#' weighting in the differenced AR process of  the previous difference.
+#' Placing a tight prior around zero effectively reduces the AR process to a
+#' random walk on the growth rate.
+#'
+#' @param lkj Numeric defaults to 0.5. The assumed prior covariance between
+#' variants growth rates when using the "correlated" model. This sets the shape
+#' parameter for the Lewandowski-Kurowicka-Joe (LKJ) prior distribution. If set
+#' to 1 assigns a uniform prior for all correlations, values less than 1
+#' indicate increased belief in strong correlations and values greater than 1
+#' indicate increased belief weaker correlations. Our default setting places
+#' increased weight on some correlation between strains.
+#' 
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
 #'
-#' @param variant_relationship Character string, defaulting to "pooled".
-#' Controls the relationship of strains with options being "pooled" (dependence
-#' determined from the data), "scaled" (a fixed scaling between strains), and
-#' "independent" (fully independent strains after initial scaling).
+#' @param variant_relationship Character string, defaulting to "correlated".
+#' Controls the relationship of strains with options being "correlated"
+#' (strains growth rates are correlated over time), "scaled" (a fixed scaling
+#'  between strains), and "independent" (fully independent strains after
+#'  initial scaling).
 #'
 #' @param overdispersion Logical, defaults to `TRUE`. Should the observations
 #' used include overdispersion.
@@ -38,15 +56,16 @@
 #' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 fv_as_data_list <- function(obs, horizon = 4,
                             r_init = c(0, 0.25),
-                            voc_scale = c(0, 0.2),
-                            variant_relationship = "pooled",
+                            r_step = 1, beta = c(0, 0.5),
+                            lkj = 0.5, voc_scale = c(0, 0.2),
+                            variant_relationship = "correlated",
                             overdispersion = TRUE,
                             likelihood = TRUE,
                             output_loglik = TRUE,
                             debug = FALSE) {
   variant_relationship <- match.arg(
     variant_relationship,
-    choices = c("pooled", "scaled", "independent")
+    choices = c("correlated", "scaled", "independent")
   )
   check_observations(obs)
   check_param(horizon, "horizon", length = 1, type = "numeric")
@@ -75,24 +94,43 @@ fv_as_data_list <- function(obs, horizon = 4,
     N = obs[!is.na(seq_total)]$seq_total,
     # number of sequenced samples with voc variant
     Y = obs[!is.na(seq_total)]$seq_voc,
-    likelihood = as.numeric(likelihood),
-    output_loglik = as.numeric(output_loglik),
     start_date = min(obs$date),
     seq_start_date = seq_start_date,
     r_init_mean = r_init[1],
     r_init_sd = r_init[2],
+    beta_mean = beta[1],
+    beta_sd = beta[2],
     voc_mean = voc_scale[1],
     voc_sd = voc_scale[2],
     relat = fcase(
-      variant_relationship %in% "pooled", 1,
+      variant_relationship %in% "correlated", 2,
       variant_relationship %in% "scaled", 0,
-      variant_relationship %in% "independent", 2
+      variant_relationship %in% "independent", 1
     ),
     overdisp = as.numeric(overdispersion),
+    likelihood = as.numeric(likelihood),
+    output_loglik = as.numeric(output_loglik),
     debug = as.numeric(debug)
   )
-  # assign time where strains share a noise parameter
-  data$t_dep <- ifelse(data$relat == 2, data$t_nseq, data$t - 2)
+
+  ## add autoregressive control terms
+  r_steps <- piecewise_steps(data$t - 2, r_step)
+  if (data$relat == 0) {
+    voc_r_steps <- list(n = 0, steps = numeric())
+  } else {
+    voc_r_steps <- r_steps$steps[(data$t_nseq + 1):(data$t - 2)]
+    voc_r_steps <- list(n = sum(voc_r_steps), steps = voc_r_steps)
+  }
+  data <- c(
+    data,
+    list(
+      eta_n = r_steps$n,
+      eta_loc = r_steps$steps,
+      voc_eta_n = voc_r_steps$n,
+      voc_eta_loc = voc_r_steps$steps,
+      lkj_prior = lkj
+    )
+  )
   return(data)
 }
 
@@ -123,8 +161,8 @@ fv_inits <- function(data, strains = 2) {
         ~ log(abs(rnorm(1, ., . * 0.01)))
       ),
       r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
-      r_noise = abs(rnorm(1, 0, 0.01)),
-      eta = rnorm(data$t_dep, 0, 0.01),
+      r_scale = abs(rnorm(1, 0, 0.01)),
+      eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
@@ -136,10 +174,10 @@ fv_inits <- function(data, strains = 2) {
         1, data$voc_mean,
         data$voc_sd * 0.1
       )
-      inits$voc_noise <- abs(rnorm(1, 0, 0.01))
-      inits$nvoc_noise <- abs(rnorm(1, 0, 0.01))
-      inits$voc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
-      inits$nvoc_eta <- rnorm(data$t_seqf - 2, 0, 0.01)
+      inits$voc_beta <- rnorm(1, 0, 0.1)
+      inits$voc_scale <- abs(rnorm(1, 0, 0.01))
+      inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
+      inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2 , 2) # nolint
     }
     return(inits)
   }
@@ -148,11 +186,21 @@ fv_inits <- function(data, strains = 2) {
 
 #' Load and compile a strain model
 #'
+#'
+#' @param model A character string indicating the path to the model.
+#' If not supplied the package default model is used.
+#'
+#' @param include A character string specifying the path to any stan
+#' files to include in the model. If missing the package default is used.
+#'
 #' @param strains Integer number of strains. Defaults to 2. Current
 #' maximum is 2.
 #'
 #' @param compile Logical, defaults to `TRUE`. Should the model
 #' be loaded and compiled using [cmdstanr::cmdstan_model()].
+#'
+#' @param verbose Logical, defaults to `TRUE`. Should verbose
+#' messages be shown.
 #'
 #' @param ... Additional arguments passed to [cmdstanr::cmdstan_model()].
 #'
@@ -166,20 +214,36 @@ fv_inits <- function(data, strains = 2) {
 #'
 #' # two strain model
 #' two_strain_mod <- fv_model(strains = 2)
-fv_model <- function(strains = 2, compile = TRUE, ...) {
+fv_model <- function(model, include, strains = 2, compile = TRUE,
+                     verbose = FALSE, ...) {
   check_param(strains, "strains", "numeric")
   check_param(compile, "compile", "logical")
-  if (strains == 1) {
-    model <- "stan/bp.stan"
-  } else if (strains == 2) {
-    model <- "stan/twostrainbp.stan"
-  } else {
-    stop("Only 1 or 2 strain models are supported")
+  if (missing(model)) {
+    if (strains == 1) {
+      model <- "stan/bp.stan"
+    } else if (strains == 2) {
+      model <- "stan/twostrainbp.stan"
+    } else {
+      stop("Only 1 or 2 strain models are supported")
+    }
+    model <- system.file(model, package = "forecast.vocs")
+  }
+  if (missing(include)) {
+    include <- system.file("stan", package = "forecast.vocs")
   }
 
-  model <- system.file(model, package = "forecast.vocs")
   if (compile) {
-    suppressMessages(cmdstanr::cmdstan_model(model, ...))
+    if (verbose) {
+      model <- cmdstanr::cmdstan_model(model,
+        include_path = include, ...
+      )
+    } else {
+      suppressMessages(
+        model <- cmdstanr::cmdstan_model(model,
+          include_path = include, ...
+        )
+      )
+    }
   }
   return(model)
 }
@@ -239,7 +303,6 @@ fv_sample <- function(data, model = forecast.vocs::fv_model(strains = 2),
   cdata <- data
   cdata$start_date <- NULL
   cdata$seq_start_date <- NULL
-  model <- suppressMessages(cmdstanr::cmdstan_model(model))
   fit <- model$sample(data = cdata, ...)
 
   out <- data.table(

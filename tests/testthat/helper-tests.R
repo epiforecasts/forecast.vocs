@@ -5,13 +5,12 @@ test_strain_inits <- function(message, strains, dt) {
     inits1 <- inits()
     inits2 <- inits()
     expect_type(inits1, "list")
-    names <- c("init_cases", "r_init", "r_noise", "eta", "beta", "sqrt_phi")
+    names <- c("init_cases", "r_init", "r_scale", "eta", "beta", "sqrt_phi")
     if (strains == 2) {
       names <- c(
         names,
         c(
-          "voc_mod", "voc_noise", "voc_eta", "voc_noise", "nvoc_noise",
-          "voc_eta", "nvoc_eta"
+          "voc_mod", "voc_scale", "voc_eta", "voc_beta"
         )
       )
     }
@@ -26,16 +25,13 @@ test_strain_inits <- function(message, strains, dt) {
     expect_length(inits1$sqrt_phi, strains)
     expect_type(inits1$sqrt_phi, "double")
     expect_type(inits1$eta, "double")
-    expect_length(inits1$eta, dt$t - 2)
+    expect_length(inits1$eta, dt$eta_n)
     if (strains == 2) {
       expect_type(inits1$voc_mod, "double")
-      expect_type(inits1$voc_noise, "double")
-      expect_type(inits1$nvoc_noise, "double")
+      expect_type(inits1$voc_scale, "double")
       expect_length(inits1$voc_mod, 1)
-      expect_length(inits1$voc_noise, 1)
-      expect_length(inits1$nvoc_noise, 1)
-      expect_length(inits1$voc_eta, dt$t_seqf - 2)
-      expect_length(inits1$nvoc_eta, dt$t_seqf - 2)
+      expect_length(inits1$voc_scale, 1)
+      expect_length(inits1$voc_eta, dt$voc_eta_n)
     }
   })
 }
@@ -187,8 +183,10 @@ test_fv_tidy_posterior <- function(message, fit, test_posterior,
       value_types <- c("model", "cases", "growth", "rt", "raw")
     } else if (strains == 2) {
       types <- c(NA, "Combined", voc_label, paste0("non-", voc_label))
-      value_types <- c("model", "cases", "voc_frac", "voc_advantage",
-                       "growth", "rt", "raw")
+      value_types <- c(
+        "model", "cases", "voc_frac", "voc_advantage",
+        "growth", "rt", "raw"
+      )
     }
     expect_type(posterior$type, "character")
     expect_equal(unique(posterior$type), types)
@@ -252,9 +250,11 @@ test_forecast <- function(message, obs, forecast_fn,
     )
     # Check forecast dates are unique
     expect_dates_unique(
-      data.table::copy(forecasts)[,
-       date := forecast_date][
-       strains == 1 & id == 0
+      data.table::copy(forecasts)[
+        ,
+        date := forecast_date
+      ][
+        strains == 1 & id == 0
       ]
     )
     # Check posteriors and forecasts are the same as when run outside of the

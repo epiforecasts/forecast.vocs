@@ -162,14 +162,16 @@ unnest_posterior <- function(forecasts, target = "posterior") {
 
   targets <- forecasts[,
     rbindlist(
-      map(get(target), as.data.table), fill = TRUE
+      map(get(target), as.data.table),
+      fill = TRUE
     ),
     by = row_id
   ]
   forecasts <- merge(forecasts, targets, all.x = TRUE, by = "row_id")
   forecasts <- forecasts[, c(target, "row_id") := NULL]
   dcols <- setdiff(
-    c("posterior", "forecast", "fit", "data", "fit_args",
+    c(
+      "posterior", "forecast", "fit", "data", "fit_args",
       "samples", "max_rhat", "divergent_transitions",
       "per_divergent_transitions", "max_treedepth",
       "no_at_max_treedepth", "per_at_max_treedepth", "time", "error"
