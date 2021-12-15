@@ -28,7 +28,7 @@ transformed data {
 
 parameters {
   real r_init;
-  vector<lower = 0>[1] r_scale;
+  real<lower = 0> r_scale;
   real<lower = -1, upper = 1> beta;
   vector[eta_n] eta;
   real init_cases;

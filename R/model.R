@@ -158,14 +158,8 @@ fv_inits <- function(data, strains = 2) {
         data$voc_sd * 0.1
       )
       inits$voc_beta <- rnorm(1, 0, 0.1)
-      inits$voc_noise <- abs(rnorm(1, 0, 0.01))
+      inits$voc_scale <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
-      inits$rn_mean <- abs(rnorm(1, 0, 0.01))
-      inits$rn_sd <- abs(rnorm(1, 0, 0.001))
-      inits$beta_mean <- rnorm(1, 0, 0.1)
-      inits$beta_sd <- abs(rnorm(1, 0, 0.001))
-      inits$eta_mean <- rnorm(data$voc_eta_n, 0, 0.01)
-      inits$eta_sd <- abs(rnorm(1, 0, 0.01))
     }
     return(inits)
   }
