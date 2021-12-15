@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.1000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,17 +79,26 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_model</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_model</span><span class="op">(</span><span class="va">model</span>, <span class="va">include</span>, strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>strains</dt>
+    <dl><dt>model</dt>
+<dd><p>A character string indicating the path to the model.
+If not supplied the package default model is used.</p></dd>
+<dt>include</dt>
+<dd><p>A character string specifying the path to any stan
+files to include in the model. If missing the package default is used.</p></dd>
+<dt>strains</dt>
 <dd><p>Integer number of strains. Defaults to 2. Current
 maximum is 2.</p></dd>
 <dt>compile</dt>
 <dd><p>Logical, defaults to <code>TRUE</code>. Should the model
 be loaded and compiled using <code><a href="https://mc-stan.org/cmdstanr/reference/cmdstan_model.html" class="external-link">cmdstanr::cmdstan_model()</a></code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>Logical, defaults to <code>TRUE</code>. Should verbose
+messages be shown.</p></dd>
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code><a href="https://mc-stan.org/cmdstanr/reference/cmdstan_model.html" class="external-link">cmdstanr::cmdstan_model()</a></code>.</p></dd>
 </dl></div>

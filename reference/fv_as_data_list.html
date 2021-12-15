@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.1000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,8 +83,11 @@
   <span class="va">obs</span>,
   horizon <span class="op">=</span> <span class="fl">4</span>,
   r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span>,
+  r_step <span class="op">=</span> <span class="fl">1</span>,
+  beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,
+  lkj <span class="op">=</span> <span class="fl">0.5</span>,
   voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
-  variant_relationship <span class="op">=</span> <span class="st">"pooled"</span>,
+  variant_relationship <span class="op">=</span> <span class="st">"correlated"</span>,
   overdispersion <span class="op">=</span> <span class="cn">TRUE</span>,
   likelihood <span class="op">=</span> <span class="cn">TRUE</span>,
   output_loglik <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -100,17 +103,35 @@
 <dt>horizon</dt>
 <dd><p>Integer forecast horizon. Defaults to 4.</p></dd>
 <dt>r_init</dt>
-<dd><p>Numeric vector of length 2. Prior mean and
-standard deviation for the initial growth rate.</p></dd>
+<dd><p>Numeric vector of length 2. Mean and
+standard deviation for the normal prior on the initial log growth rate.</p></dd>
+<dt>r_step</dt>
+<dd><p>Integer, defaults to 1. The number of observations between
+each change in the growth rate.</p></dd>
+<dt>beta</dt>
+<dd><p>Numeric vector, defaults to c(0, 0.5). Represents the mean and
+standard deviation of the normal prior (truncated at 1 and -1) on the
+weighting in the differenced AR process of  the previous difference.
+Placing a tight prior around zero effectively reduces the AR process to a
+random walk on the growth rate.</p></dd>
+<dt>lkj</dt>
+<dd><p>Numeric defaults to 0.5. The assumed prior covariance between
+variants growth rates when using the "correlated" model. This sets the shape
+parameter for the Lewandowski-Kurowicka-Joe (LKJ) prior distribution. If set
+to 1 assigns a uniform prior for all correlations, values less than 1
+indicate increased belief in strong correlations and values greater than 1
+indicate increased belief weaker correlations. Our default setting places
+increased weight on some correlation between strains.</p></dd>
 <dt>voc_scale</dt>
 <dd><p>Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant of concern.</p></dd>
 <dt>variant_relationship</dt>
-<dd><p>Character string, defaulting to "pooled".
-Controls the relationship of strains with options being "pooled" (dependence
-determined from the data), "scaled" (a fixed scaling between strains), and
-"independent" (fully independent strains after initial scaling).</p></dd>
+<dd><p>Character string, defaulting to "correlated".
+Controls the relationship of strains with options being "correlated"
+(strains growth rates are correlated over time), "scaled" (a fixed scaling
+between strains), and "independent" (fully independent strains after
+initial scaling).</p></dd>
 <dt>overdispersion</dt>
 <dd><p>Logical, defaults to <code>TRUE</code>. Should the observations
 used include overdispersion.</p></dd>
@@ -166,12 +187,6 @@ information be returned.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   6  34  54  89 101 119 102 181 309 414 451 631 643 521</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $likelihood</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $output_loglik</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $start_date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2021-03-20"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -184,6 +199,12 @@ information be returned.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_init_sd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $beta_mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $beta_sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -191,16 +212,34 @@ information be returned.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $relat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $overdisp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $likelihood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $output_loglik</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $debug</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $t_dep</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $eta_n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $eta_loc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $voc_eta_n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $voc_eta_loc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lkj_prior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

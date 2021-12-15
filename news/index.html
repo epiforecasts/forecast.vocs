@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.1000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,9 +76,21 @@
 <h2 class="pkg-version" data-toc-text="0.0.9" id="forecastvocs-009">forecast.vocs 0.0.9<a class="anchor" aria-label="anchor" href="#forecastvocs-009"></a></h2>
 <div class="section level3">
 <h3 id="features-0-0-9">Features<a class="anchor" aria-label="anchor" href="#features-0-0-9"></a></h3>
+<div class="section level4">
+<h4 id="model-0-0-9">Model<a class="anchor" aria-label="anchor" href="#model-0-0-9"></a></h4>
+<ul><li>Switched the “pooled” model to use a vector autoregression set up and renamed the resulting control parameter “correlated”. On test data this performs substantially better than the old model and should be more readily extensible.</li>
+<li>Added the ability (via the <code>r_step</code> argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.</li>
+<li>Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via <code>beta</code>) and specify the expected amount of correlation between strains in the “correlated” model (<code>lkj</code>).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="evaluation-and-visualisation-0-0-9">Evaluation and visualisation<a class="anchor" aria-label="anchor" href="#evaluation-and-visualisation-0-0-9"></a></h4>
 <ul><li>Adds an optional integration with the <a href="https://epiforecasts.io/scoringutils/" class="external-link"><code>scoringutils</code></a> package to streamline evaluating forecasts using proper scoring rules.</li>
 <li>Adds an example of using <code><a href="../reference/fv_score_forecast.html">fv_score_forecast()</a></code> to the README.</li>
+<li>Generalise plot labels.</li>
+<li>Updated <code><a href="../reference/plot_cases.html">plot_cases()</a></code> to use a log 2 scaling rather than a log scaling.</li>
+<li>Updated the default scaling to be logit for `plot_voc_frac().</li>
 </ul></div>
+</div>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-9">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-9"></a></h3>
 <ul><li>Fixed a bug in the output of the <code><a href="../reference/forecast.html">forecast()</a></code> function where the prior specifications for the initial growth and the variant scaling were only partially included.</li>
