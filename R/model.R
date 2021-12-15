@@ -160,6 +160,7 @@ fv_inits <- function(data, strains = 2) {
       inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_scale <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
+      inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2 , 2) # nolint
     }
     return(inits)
   }

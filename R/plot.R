@@ -264,7 +264,7 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
   plot <- plot +
     scale_y_continuous() +
     labs(
-      y = "Effective reproduction number of observed cases",
+      y = "Effective reproduction number of notifications",
       x = "Date"
     )
   plot <- plot_theme(plot)
@@ -298,7 +298,7 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
   plot <- plot +
     scale_y_continuous() +
     labs(
-      y = "Growth rate of observed cases",
+      y = "Growth rate of notifications",
       x = "Date"
     )
   plot <- plot_theme(plot)

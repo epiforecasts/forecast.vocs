@@ -127,26 +127,24 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 16.2 seconds.
-#> Chain 3 finished in 18.5 seconds.
-#> Chain 2 finished in 23.1 seconds.
-#> Chain 4 finished in 23.2 seconds.
+#> Chain 3 finished in 17.2 seconds.
+#> Chain 4 finished in 20.9 seconds.
+#> Chain 2 finished in 22.6 seconds.
+#> Chain 1 finished in 24.5 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 20.2 seconds.
-#> Total execution time: 23.4 seconds.
+#> Mean chain execution time: 21.3 seconds.
+#> Total execution time: 24.6 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 72.2 seconds.
-#> Chain 3 Exception: neg_binomial_2_rng: Random number that came from gamma distribution is 1.14325e+09, but must be less than 1073741824.000000 (in '/tmp/RtmpWEAAQr/model-16f34bfbee95.stan', line 233, column 6 to column 71) 
-#> Chain 3 finished in 83.7 seconds.
-#> Chain 4 Exception: neg_binomial_2_rng: Random number that came from gamma distribution is 8.77704e+09, but must be less than 1073741824.000000 (in '/tmp/RtmpWEAAQr/model-16f34bfbee95.stan', line 233, column 6 to column 71) 
-#> Chain 4 finished in 108.0 seconds.
-#> Chain 2 finished in 117.1 seconds.
+#> Chain 2 finished in 87.4 seconds.
+#> Chain 4 finished in 99.0 seconds.
+#> Chain 3 finished in 132.3 seconds.
+#> Chain 1 finished in 140.8 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 95.3 seconds.
-#> Total execution time: 117.1 seconds.
+#> Mean chain execution time: 114.9 seconds.
+#> Total execution time: 140.7 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship  r_init
 #> 1:  0    2021-06-19       1           TRUE           correlated 0, 0.25
@@ -155,11 +153,11 @@ forecasts
 #> 1:  0.4, 0.2       <CmdStanMCMC[31]> <list[23]> <list[5]>    4000     1.00
 #> 2:  0.4, 0.2       <CmdStanMCMC[31]> <list[23]> <list[5]>    4000     1.01
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                    10                    0.0025            10
-#> 2:                     6                    0.0015            11
+#> 1:                    11                   0.00275            10
+#> 2:                     4                   0.00100            11
 #>    no_at_max_treedepth per_at_max_treedepth  time              posterior
-#> 1:                1171              0.29275  23.4 <fv_posterior[148x20]>
-#> 2:                 975              0.24375 117.1 <fv_posterior[456x20]>
+#> 1:                1306               0.3265  24.6 <fv_posterior[148x20]>
+#> 2:                1488               0.3720 140.7 <fv_posterior[456x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
 #> 2: <fv_posterior[60x13]>
@@ -256,8 +254,8 @@ kable(scores)
 
 | strains | interval\_score | sharpness | underprediction | overprediction | coverage\_deviation |    bias | aem |
 | ------: | --------------: | --------: | --------------: | -------------: | ------------------: | ------: | --: |
-|       1 |            2040 |       282 |            1760 |              0 |             \-0.375 | \-0.967 | NaN |
-|       2 |            1130 |       642 |             492 |              0 |               0.000 | \-0.900 | NaN |
+|       1 |            2040 |       280 |            1760 |              0 |             \-0.375 | \-0.967 | NaN |
+|       2 |            1180 |       575 |             601 |              0 |               0.000 | \-0.900 | NaN |
 
 ### Step by step forecast
 

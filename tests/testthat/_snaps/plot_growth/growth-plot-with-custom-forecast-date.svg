@@ -130,7 +130,7 @@
 <text transform='translate(664.00,465.10) rotate(-90)' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='23.49px' lengthAdjust='spacingAndGlyphs'>Jul 12</text>
 <text transform='translate(700.17,465.10) rotate(-90)' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='23.49px' lengthAdjust='spacingAndGlyphs'>Jul 19</text>
 <text x='376.34' y='489.84' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='23.24px' lengthAdjust='spacingAndGlyphs'>Date</text>
-<text transform='translate(13.05,234.26) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='149.83px' lengthAdjust='spacingAndGlyphs'>Growth rate of observed cases</text>
+<text transform='translate(13.05,234.26) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='149.83px' lengthAdjust='spacingAndGlyphs'>Growth rate of notifications</text>
 <rect x='330.58' y='503.08' width='91.54' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='336.06' y='520.99' style='font-size: 11.00px; font-family: sans;' textLength='24.46px' lengthAdjust='spacingAndGlyphs'>Type</text>
 <rect x='366.00' y='508.56' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
