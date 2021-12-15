@@ -4,6 +4,9 @@
 
 ### Model
 
+* Switched the "pooled" model to use a vector autoregression set up and renamed the resulting control parameter "correlated". On test data this performs substantially better than the old model and should be more readily extensible.
+* Added the ability (via the `r_step` argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.
+* Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via `beta`) and specify the expected amount of correlation between strains in the "correlated" model (`lkj`).
 
 ### Evaluation and visualisation
 

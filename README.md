@@ -127,37 +127,37 @@ forecasts <- forecast(obs,
 )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 17.2 seconds.
-#> Chain 4 finished in 20.9 seconds.
-#> Chain 2 finished in 22.6 seconds.
-#> Chain 1 finished in 24.5 seconds.
+#> Chain 2 finished in 18.9 seconds.
+#> Chain 4 finished in 19.6 seconds.
+#> Chain 3 finished in 23.2 seconds.
+#> Chain 1 finished in 28.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 21.3 seconds.
-#> Total execution time: 24.6 seconds.
+#> Mean chain execution time: 22.6 seconds.
+#> Total execution time: 28.6 seconds.
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 87.4 seconds.
-#> Chain 4 finished in 99.0 seconds.
-#> Chain 3 finished in 132.3 seconds.
-#> Chain 1 finished in 140.8 seconds.
+#> Chain 4 finished in 65.0 seconds.
+#> Chain 3 finished in 67.8 seconds.
+#> Chain 2 finished in 85.3 seconds.
+#> Chain 1 finished in 88.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 114.9 seconds.
-#> Total execution time: 140.7 seconds.
+#> Mean chain execution time: 76.6 seconds.
+#> Total execution time: 88.4 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship  r_init
 #> 1:  0    2021-06-19       1           TRUE           correlated 0, 0.25
 #> 2:  0    2021-06-19       2           TRUE           correlated 0, 0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:  0.4, 0.2       <CmdStanMCMC[31]> <list[23]> <list[5]>    4000     1.00
-#> 2:  0.4, 0.2       <CmdStanMCMC[31]> <list[23]> <list[5]>    4000     1.01
+#> 1:  0.4, 0.2       <CmdStanMCMC[31]> <list[26]> <list[5]>    4000        1
+#> 2:  0.4, 0.2       <CmdStanMCMC[31]> <list[26]> <list[5]>    4000        1
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                    11                   0.00275            10
-#> 2:                     4                   0.00100            11
-#>    no_at_max_treedepth per_at_max_treedepth  time              posterior
-#> 1:                1306               0.3265  24.6 <fv_posterior[148x20]>
-#> 2:                1488               0.3720 140.7 <fv_posterior[456x20]>
+#> 1:                     6                   0.00150            11
+#> 2:                     1                   0.00025            10
+#>    no_at_max_treedepth per_at_max_treedepth time              posterior
+#> 1:                  50               0.0125 28.6 <fv_posterior[148x20]>
+#> 2:                1812               0.4530 88.4 <fv_posterior[456x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
 #> 2: <fv_posterior[60x13]>
@@ -180,7 +180,6 @@ unobserved estimates for each strain.
 
 ``` r
 plot(forecasts, current_obs)
-#> Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
@@ -254,8 +253,8 @@ kable(scores)
 
 | strains | interval\_score | sharpness | underprediction | overprediction | coverage\_deviation |    bias | aem |
 | ------: | --------------: | --------: | --------------: | -------------: | ------------------: | ------: | --: |
-|       1 |            2040 |       280 |            1760 |              0 |             \-0.375 | \-0.967 | NaN |
-|       2 |            1180 |       575 |             601 |              0 |               0.000 | \-0.900 | NaN |
+|       1 |            1950 |       291 |            1660 |              0 |             \-0.375 | \-0.967 | NaN |
+|       2 |            1100 |       503 |             600 |              0 |               0.000 | \-0.900 | NaN |
 
 ### Step by step forecast
 
