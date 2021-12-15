@@ -101,7 +101,8 @@ fv_as_data_list <- function(obs, horizon = 4,
   if (data$relat == 0) {
     voc_r_steps <- list(n = 0, steps = numeric())
   } else {
-    voc_r_steps <- piecewise_steps(data$t_seqf - 2, r_step)
+    voc_r_steps <- r_steps$steps[(data$t_nseq + 1):(data$t - 2)]
+    voc_r_steps <- list(n = sum(voc_r_steps), steps = voc_r_steps)
   }
   data <- c(
     data,
@@ -158,14 +159,12 @@ fv_inits <- function(data, strains = 2) {
       inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_noise <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
-      if (data$relat == 2) {
-        inits$rn_mean <- abs(rnorm(1, 0, 0.01))
-        inits$rn_sd <- abs(rnorm(1, 0, 0.001))
-        inits$beta_mean <- rnorm(1, 0, 0.1)
-        inits$beta_sd <- abs(rnorm(1, 0, 0.001))
-        inits$eta_mean <- rnorm(data$voc_eta_n, 0, 0.01)
-        inits$eta_sd <- abs(rnorm(1, 0, 0.01))
-      }
+      inits$rn_mean <- abs(rnorm(1, 0, 0.01))
+      inits$rn_sd <- abs(rnorm(1, 0, 0.001))
+      inits$beta_mean <- rnorm(1, 0, 0.1)
+      inits$beta_sd <- abs(rnorm(1, 0, 0.001))
+      inits$eta_mean <- rnorm(data$voc_eta_n, 0, 0.01)
+      inits$eta_sd <- abs(rnorm(1, 0, 0.01))
     }
     return(inits)
   }

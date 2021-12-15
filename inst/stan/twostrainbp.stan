@@ -51,7 +51,6 @@ parameters {
   real voc_mod;
   real<lower = -1, upper = 1> voc_beta[relat ? 1 : 0];
   real<lower = 0> voc_noise[relat ? 1 : 0];
-  real eta_mean[relat == 2 ? voc_eta_n : 0];
   real<lower = 0> eta_sd[relat == 2 ? 1 : 0];
   vector[voc_eta_n] voc_eta;
   vector[2] init_cases;
@@ -171,11 +170,9 @@ model {
     beta ~ normal(beta_mean, beta_sd);
     voc_beta ~ normal(beta_mean, beta_sd);
 
-    head(eta, eta_n - voc_eta_n) ~ std_normal(); 
-    eta_mean ~ std_normal();
+    eta ~ std_normal(); 
     eta_sd[1] ~ std_normal() T[0,];
-    tail(eta, voc_eta_n) ~ normal(eta_mean, eta_sd[1]);
-    voc_eta ~ normal(eta_mean, eta_sd[1]);
+    voc_eta ~ normal(tail(eta, voc_eta_n), eta_sd[1]);
   }
 
   // observation model priors

@@ -12,14 +12,14 @@ current_obs <- filter_by_availability(
 dt <- fv_as_data_list(
   obs,
   overdispersion = TRUE,
-  variant_relationship = "pooled",
+  variant_relationship = "scaled",
   voc_scale = c(0.4, 0.2),
   r_step = 1
 )
 
 inits <- fv_inits(dt, strains = 2)
 
-model <- suppressMessages(fv_model(strains = 2))
+model <- suppressMessages(fv_model(strains = 2, verbose = TRUE))
 
 fit <- fv_sample(
   data = dt, model = model, init = inits,
