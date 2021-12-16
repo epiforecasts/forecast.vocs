@@ -69,6 +69,7 @@
 #' )
 fv_score_forecast <- function(forecast, obs, log = FALSE,
                               round_to = 3, ...) {
+  forecast <- data.table::copy(forecast)
   if (!requireNamespace("scoringutils")) {
     stop("scoringutils is required for this function to work")
   }
