@@ -2,6 +2,8 @@
 title: Model definitions
 author: Sam Abbott
 output: rmarkdown::html_document
+bibliography: library.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa-numeric-superscript-brackets.csl
 vignette: >
   %\VignetteIndexEntry{Model definitions}
   %\VignetteEngine{knitr::rmarkdown}
