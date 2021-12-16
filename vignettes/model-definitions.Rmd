@@ -25,16 +25,16 @@ The package currently supports two models both with various options. A baseline 
 We model the mean ($\lambda_t$) of reported cases ($C_t$) as an order 1 autoregressive (AR(P)) process by time unit ($t$). The model is initialised by assuming that the initial reported cases are representative with a small amount of error (2.5%) for each $t \lt P$.
 
 \begin{align}
-  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right),\ t \lt P \\
-  \lambda_t &= \text{exp}\left(r_t\right) \sum_{p = 1}^{P} \alpha_p  \lambda_{t-p},\ t \ge P  
+  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right),\ t \leq P \\
+  \lambda_t &= \text{exp}\left(r_t\right) \sum_{p = 1}^{P} \alpha_p  \lambda_{t-p},\ t \gt P  
 \end{align}
 
 Where $r_t$ can be interpreted as the growth rate and the exponential of $r_t$ as the effective reproduction number ($R_t$) assuming a mean generation time equal to the scaling rate used (see the documentation for `scale_r` in `?forecast()`). $r_t$ is then itself modelled as a piecewise constant differenced AR(1) process, 
 
 \begin{align}
-  r_0 &\sim \text{Normal}\left(0, 0.25 \right) \\
+  r_1 &\sim \text{Normal}\left(0, 0.25 \right) \\
   r_t &= r_{t-1} + \epsilon_t  \\
-  \epsilon_0 &= \eta_0 \\
+  \epsilon_1 &= \eta_1 \\
   \epsilon_t &= \beta \epsilon_{t-1} + \eta_t
 \end{align}
 
@@ -69,11 +69,11 @@ We model strain dynamics using the single strain model as a starting point but w
 Mean reported cases are again defined using a AR(1) process on the log scale for each strain and then combined for overall mean reported cases. 
 
 \begin{align}
-  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right) ,\ t \lt P\\
-  \lambda^{\delta}_t &\sim \text{LogNormal}\left(\log C^{\delta}_t , 0.025 \times \log C^{\delta}_t \right),\ t \lt P \\
-  \lambda^{o}_t &= \lambda_t - \lambda^{\delta}_t,\ t \lt P \\
-  \lambda^{\delta}_t &= \text{exp}\left(r^{\delta}_t\right) \sum_{p = 1}^{P} \alpha^{\delta}_p  \lambda^{\delta}_{t-p},\ t \ge P \\
-  \lambda^{o}_t &= \text{exp}\left(r^{o}_t\right) \sum_{p = 1}^{P} \alpha^{o}_p  \lambda^{o}_{t-p}, t \ge P   \\
+  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right) ,\ t \leq P\\
+  \lambda^{\delta}_t &\sim \text{LogNormal}\left(\log C^{\delta}_t , 0.025 \times \log C^{\delta}_t \right),\ t \leq P \\
+  \lambda^{o}_t &= \lambda_t - \lambda^{\delta}_t,\ t \leq P \\
+  \lambda^{\delta}_t &= \text{exp}\left(r^{\delta}_t\right) \sum_{p = 1}^{P} \alpha^{\delta}_p  \lambda^{\delta}_{t-p},\ t \gt P \\
+  \lambda^{o}_t &= \text{exp}\left(r^{o}_t\right) \sum_{p = 1}^{P} \alpha^{o}_p  \lambda^{o}_{t-p}, t \gt P   \\
   \lambda_t &= \lambda^{\delta}_t + \lambda^{o}_t
 \end{align}
 
@@ -81,8 +81,8 @@ Where $C^{\delta}_0$ is derived by calculating the mean proportion of cases that
 
 
 \begin{align}
-  r^{o}_0 &\sim \text{Normal}\left(0, 0.25 \right),\\
-  r^{\delta}_{t_{seq}} &= r^{o}_0 + s^{\delta} \\
+  r^{o}_1 &\sim \text{Normal}\left(0, 0.25 \right),\\
+  r^{\delta}_{t_{seq}} &= r^{o}_{t_{seq}} + s^{\delta} \\
   r^{o, \delta}_t &= r^{o, \delta}_{t-1} + \epsilon^{o, \delta}_t  \\
   \epsilon^{o, \delta}_0 &= \eta^{o, \delta}_0 \\
   \epsilon^{o, \delta}_t &= \beta \epsilon^{o, \delta}_{t-1} + \eta^{o, \delta}_t
@@ -93,7 +93,6 @@ Where,
 \begin{align}
   s^{\beta} &\sim \text{Normal}(0, 0.5)  \\
   \eta^{o, \delta}_t &\sim \text{MVN}\left(0, \boldsymbol \Sigma \right) \\
-  \sigma^{o, \delta} &\sim \text{Normal}\left(0, 0.1 \right) \\
   \beta &\sim \text{Normal}\left(0, 0.5 \right)
 \end{align}
 
@@ -109,7 +108,7 @@ Where $\boldsymbol \Sigma$ is a $2 \times 2$ covariance matrix which we decompos
                             1 & \omega \\
                             \omega & 1 \\
                               \end{array} } \right] \\
-  \sigma^{o, \delta} &\sim \text{Normal}\left(0, 0.1 \right)
+  \sigma^{o, \delta} &\sim \text{Normal}\left(0, 0.2 \right)
 \end{align}
 
 Where $\boldsymbol \Omega$ has a Lewandowski-Kurowicka-Joe (LKJ) prior where
@@ -136,7 +135,7 @@ We assume a beta binomial observation model for the number of sequences ($N_t$) 
 
 \begin{align}
   P_{t} &\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
-  \frac{1}{\sqrt{\phi_s}} &\sim \mathcal{N}(0, 1) 
+  \frac{1}{\sqrt{\phi_s}} &\sim \text{Normal}(0, 0.5) 
 \end{align}
 
 Where $\sigma^{o, \delta}$, and $\frac{1}{\sqrt{\phi_s}}$ are truncated to be greater than 0. A binomial observation model is also available (see the documentation for `overdispersion` in `?forecast()`).
