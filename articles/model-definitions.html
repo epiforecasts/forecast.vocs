@@ -171,7 +171,7 @@
   \eta^{o, \delta}_t &amp;\sim \text{MVN}\left(0, \boldsymbol \Sigma \right) \\
   \beta &amp;\sim \text{Normal}\left(0, 0.5 \right)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\boldsymbol \Sigma\)</span> is a <span class="math inline">\(2 \times 2\)</span> covariance matrix which we decompose for computational stability into a diagonal matrix containing variant specific scale parameters (<span class="math inline">\(\boldsymbol \Delta\)</span>) and a symmetric correlation matrix (<span class="math inline">\(\boldsymbol \Omega\)</span>) as follows <span class="citation">[@stan]</span>,</p>
+<p>Where <span class="math inline">\(\boldsymbol \Sigma\)</span> is a <span class="math inline">\(2 \times 2\)</span> covariance matrix which we decompose for computational stability into a diagonal matrix containing variant specific scale parameters (<span class="math inline">\(\boldsymbol \Delta\)</span>) and a symmetric correlation matrix (<span class="math inline">\(\boldsymbol \Omega\)</span>) as follows,<span class="citation"><sup>[1]</sup></span></p>
 <p><span class="math display">\[\begin{align}
   \boldsymbol \Sigma &amp;= \boldsymbol \Delta \boldsymbol \Omega \boldsymbol \Delta \\
   \boldsymbol \Delta &amp;=  \left[ {\begin{array}{cc}
@@ -221,11 +221,28 @@
 <div class="section level1">
 <h1 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
 </h1>
-<p>The models are implemented in <code>stan</code> using <code>cmdstanr</code> with no defaults altered<span class="citation">[@stan; @cmdstanr]</span>. Due to the complexity of the posterior it is likely that increasing the <code>adapt_delta</code> may be required to mitigate potential bias in posterior estimates <span class="citation">[@betancourt_2017]</span>. <code>forecast.vocs</code> incorporates additional functionality written in R<span class="citation">[@R]</span> to enable plotting forcasts and posterior predictions, summarising forecasts, and scoring them using <code>scoringutils</code><span class="citation">[@scoringutils]</span>. All functionality is modular allowing users to extend and alter the underlying model whilst continuing to use the package framework.</p>
+<p>The models are implemented in <code>stan</code> using <code>cmdstanr</code> with no defaults altered<span class="citation"><sup>[1,2]</sup></span>. Due to the complexity of the posterior it is likely that increasing the <code>adapt_delta</code> may be required to mitigate potential bias in posterior estimates.<span class="citation"><sup>[3]</sup></span> <code>forecast.vocs</code> incorporates additional functionality written in R<span class="citation"><sup>[4]</sup></span> to enable plotting forcasts and posterior predictions, summarising forecasts, and scoring them using <code>scoringutils</code><span class="citation"><sup>[5]</sup></span>. All functionality is modular allowing users to extend and alter the underlying model whilst continuing to use the package framework.</p>
 </div>
-<div class="section level1">
+<div class="section level1 unnumbered">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h1>
+<div id="refs" class="references">
+<div id="ref-stan">
+<p>1. Team, S. D. (2021). <em>Stan modeling language users guide and reference manual, 2.28.1</em>.</p>
+</div>
+<div id="ref-cmdstanr">
+<p>2. Gabry, J., &amp; Češnovar, R. (2021). <em>Cmdstanr: R interface to ’cmdstan’</em>.</p>
+</div>
+<div id="ref-betancourt_2017">
+<p>3. Betancourt, M. (2017). Diagnosing biased inference with divergences. <em>Stan Case Studies</em>, <em>4</em>. <a href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html" class="external-link">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a></p>
+</div>
+<div id="ref-R">
+<p>4. R Core Team. (2019). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a></p>
+</div>
+<div id="ref-scoringutils">
+<p>5. Bosse, N. (2020). <em>Scoringutils: A collection of proper scoring rules and metrics to assess predictions</em>. <a href="https://github.com/epiforecasts/scoringutils" class="external-link">https://github.com/epiforecasts/scoringutils</a></p>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
