@@ -42,7 +42,7 @@
 #' # extract the case forecast
 #' summary(forecasts, type = "cases", forecast = TRUE)
 summary.fv_forecast <- function(object, target = "posterior", type = "model",
-                                as_dt = FALSE, forecast = FALSE, ...) {
+                                as_dt = FALSE, forecast = FALSE) {
   target <- match.arg(target, c("fit", "diagnostics", "posterior", "forecast"))
   if (target == "fit") {
     out <- object$fit
@@ -53,7 +53,7 @@ summary.fv_forecast <- function(object, target = "posterior", type = "model",
     out <- copy(out)[, c("posterior", "forecast") := NULL][]
   } else {
     out <- unnest_posterior(object, target = target)
-    out <- summary(out, type = type, as_dt = as_dt, foreast = forecast, ...)
+    out <- summary(out, type = type, as_dt = as_dt, forecast = forecast)
   }
   return(out)
 }

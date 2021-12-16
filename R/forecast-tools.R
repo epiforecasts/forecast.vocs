@@ -159,7 +159,9 @@ forecast_across_scenarios <- function(obs, scenarios, ...) {
 #' forecasts
 unnest_posterior <- function(forecasts, target = "posterior") {
   forecasts <- copy(forecasts)[, row_id := 1:.N]
-
+  if (is.null(forecasts[[target]])) {
+    stop("target not present to be extracted")
+  }
   targets <- forecasts[,
     rbindlist(
       map(get(target), as.data.table),
@@ -179,6 +181,7 @@ unnest_posterior <- function(forecasts, target = "posterior") {
     target
   )
   suppressWarnings(forecasts[, (dcols) := NULL])
+  class(forecasts) <- setdiff(class(forecasts), "fv_forecast")
   class(forecasts) <- c("fv_posterior", class(forecasts))
   return(forecasts[])
 }

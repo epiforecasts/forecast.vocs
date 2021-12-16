@@ -9,8 +9,7 @@
   target = "posterior",
   type = "model",
   as_dt = FALSE,
-  forecast = FALSE,
-  ...
+  forecast = FALSE
 )
 }
 \arguments{
