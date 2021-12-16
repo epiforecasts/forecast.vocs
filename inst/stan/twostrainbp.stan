@@ -102,7 +102,7 @@ transformed parameters {
     real vbeta;
     // Initial VOC growth based on non-voc + mod
     voc_r = rep_vector(r[t_nseq + 1], t_seqf - 1) + voc_mod;
-    // VOC AR(1) differened onwards variation
+    // VOC AR(1) differenced onwards variation
     if (relat == 1) {
       vbeta = voc_beta[1];
     }else{
