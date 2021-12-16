@@ -94,6 +94,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-0-9">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-9"></a></h3>
 <ul><li>Fixed a bug in the output of the <code><a href="../reference/forecast.html">forecast()</a></code> function where the prior specifications for the initial growth and the variant scaling were only partially included.</li>
+<li>Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn’t exist. This could lead to bugs in user code that are hard to spot.</li>
 </ul></div>
 </div>
     <div class="section level2">
