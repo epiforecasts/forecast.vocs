@@ -69,7 +69,7 @@
 #' )
 fv_score_forecast <- function(forecast, obs, log = FALSE,
                               round_to = 3, ...) {
-  forecast <- data.table::copy(forecast)
+  forecast <- data.table::as.data.table(forecast)
   if (!requireNamespace("scoringutils")) {
     stop("scoringutils is required for this function to work")
   }
@@ -80,7 +80,7 @@ fv_score_forecast <- function(forecast, obs, log = FALSE,
     forecast <- forecast[type %in% c("Overall", "Combined")]
   }
   long_forecast <- quantiles_to_long(forecast)
-  latest_obs <- data.table::copy(obs)
+  latest_obs <- data.table::as.data.table(obs)
   data.table::setnames(latest_obs, "cases", "true_value", skip_absent = TRUE)
   cols <- intersect(colnames(forecast), colnames(latest_obs))
   long_forecast <- merge(long_forecast, latest_obs, by = cols)
