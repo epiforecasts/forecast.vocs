@@ -254,8 +254,8 @@ generated quantities {
     for (i in 1:t_seq) {
       if (overdisp) {
         log_lik[t_nseq + i] += beta_binomial_lpmf(Y[i] | N[i],
-                                                  frac_voc[i] * phi[1], 
-                                                  (1 - frac_voc[i]) * phi[1]);
+                                                  frac_voc[i] * phi[2], 
+                                                  (1 - frac_voc[i]) * phi[2]);
       }else{
         log_lik[t_nseq + i] += binomial_lpmf(Y[i] | N[i], frac_voc[i]);
       }
