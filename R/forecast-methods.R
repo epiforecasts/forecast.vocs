@@ -48,7 +48,7 @@ summary.fv_forecast <- function(object, target = "posterior", type = "model",
       out <- out[[1]]
     }
   } else if (target == "diagnostics") {
-    out <- copy(object)[, c("posterior", "forecast") := NULL][]
+    out <- data.table::copy(object)[, c("posterior", "forecast") := NULL][]
   } else {
     out <- unnest_posterior(object, target = target)
     out <- summary(out, type = type, as_dt = as_dt, forecast = forecast)
