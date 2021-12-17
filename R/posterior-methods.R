@@ -56,10 +56,14 @@ print.fv_posterior <- function(x, ...) {
 #' @param forecast Logical defaults to `FALSE`. Should [fv_extract_forecast()]
 #' be used to return only forecasts rather than complete posterior.
 #'
-#' @family postprocess
-#' @seealso fv_tidy_posterior
+#' @param ... Additional summary arguments.
+#'
+#'
 #' @return A summary data.table table unless type "all" is used in which case
-#' the output is still of type "fv_posterior"
+#' the output is still of type "fv_posterior".
+#'
+#' @family postprocess
+#' @seealso [fv_tidy_posterior]()
 #' @export
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
@@ -91,7 +95,7 @@ print.fv_posterior <- function(x, ...) {
 #' # raw posterior values
 #' summary(posterior, type = "raw")
 summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
-                                 as_dt = FALSE) {
+                                 as_dt = FALSE, ...) {
   type <- match.arg(
     type,
     c(
@@ -161,6 +165,9 @@ summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
 #' # plot cases on the log scale
 #' plot(posterior, type = "cases", log = TRUE)
 #'
+#' # plot cases with central estimates
+#' plot(posterior, type = "cases", log = FALSE, central = TRUE)
+#'
 #' # plot fraction that have the variant of concern
 #' plot(posterior, type = "voc_frac")
 #'
@@ -173,29 +180,34 @@ summary.fv_posterior <- function(object, type = "model", forecast = FALSE,
 #' # plot the reproduction number estimates
 #' plot(posterior, type = "rt")
 plot.fv_posterior <- function(x, obs = NULL, type = "cases",
-                              forecast_dates = NULL, all_obs = FALSE,
+                              forecast_dates = NULL, central = FALSE,
+                              all_obs = FALSE,
                               voc_label = "variant of concern", ...) {
   type <- match.arg(
     type,
     c("cases", "voc_frac", "voc_advantage", "growth", "rt", "all")
   )
   if (type == "cases") {
-    plot_cases(x, obs, forecast_dates, all_obs = all_obs, ...)
+    plot_cases(x, obs, forecast_dates,
+      central = central,
+      all_obs = all_obs, ...
+    )
   } else if (type == "voc_frac") {
     plot_voc_frac(
       x, obs, forecast_dates,
+      central = central,
       voc_label = voc_label, all_obs = all_obs, ...
     )
   } else if (type == "voc_advantage") {
-    plot_voc_advantage(x, forecast_dates, voc_label, ...)
+    plot_voc_advantage(x, forecast_dates, , central = central, voc_label, ...)
   } else if (type == "growth") {
-    plot_growth(x, forecast_dates, ...)
+    plot_growth(x, forecast_dates, , central = central, ...)
   } else if (type == "rt") {
-    plot_rt(x, forecast_dates, ...)
+    plot_rt(x, forecast_dates, central = central, ...)
   } else if (type == "all") {
     plot_posterior(x,
       obs = obs, forecast_dates = forecast_dates,
-      all_obs = all_obs, voc_label = voc_label, ...
+      central = central, all_obs = all_obs, voc_label = voc_label, ...
     )
   }
 }

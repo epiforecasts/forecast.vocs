@@ -27,7 +27,7 @@ add to plots. May contain faceting variables.}
 
 \item{central}{Logical, defaults to FALSE. Should the mean and median
 central estimates be plot as dashed and solid lines respectively. Requires
-\code{mean} and \code{median} varibales to be present in the input.}
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}

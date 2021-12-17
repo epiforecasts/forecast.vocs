@@ -9,7 +9,8 @@
   target = "posterior",
   type = "model",
   as_dt = FALSE,
-  forecast = FALSE
+  forecast = FALSE,
+  ...
 )
 }
 \arguments{
@@ -39,7 +40,7 @@ should \code{\link[=summary]{summary()}} fall back to using the default \code{da
 \item{forecast}{Logical defaults to \code{FALSE}. Should \code{\link[=fv_extract_forecast]{fv_extract_forecast()}}
 be used to return only forecasts rather than complete posterior.}
 
-\item{...}{Pass additional arguments to \code{\link[=summary.fv_posterior]{summary.fv_posterior()}}.}
+\item{...}{Additional summary arguments.}
 }
 \value{
 A summary \code{data.table}.

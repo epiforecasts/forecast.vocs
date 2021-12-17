@@ -7,7 +7,11 @@ CmdStanR
 CmdStanR's
 CmdStanR’s
 Codecov
+Kurowicka
+LKJ
+Lewandowski
 LogNormal
+MVN
 NegBinomial
 ORCID
 Poisson
@@ -16,6 +20,7 @@ Unnest
 VOC
 VoC
 aem
+boldsymbol
 brancing
 cmdstanr
 cran
@@ -23,7 +28,9 @@ etc
 frac
 fv
 generatedata
-mathcal
+gt
+leq
+lt
 mathrm
 modelvalidation
 obs

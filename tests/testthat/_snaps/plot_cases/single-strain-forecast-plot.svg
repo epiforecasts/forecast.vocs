@@ -40,8 +40,6 @@
 <polyline points='133.42,490.31 133.42,22.78 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
 <polyline points='336.30,490.31 336.30,22.78 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
 <polyline points='539.18,490.31 539.18,22.78 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
-<polyline points='75.46,170.25 278.34,220.56 481.21,270.68 684.09,322.61 ' style='stroke-width: 2.13; stroke: #1B9E77; stroke-opacity: 0.60; stroke-linecap: butt;' />
-<polyline points='75.46,166.46 278.34,210.18 481.21,247.67 684.09,269.75 ' style='stroke-width: 1.07; stroke: #1B9E77; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 <polygon points='75.46,127.79 278.34,150.25 481.21,166.15 684.09,169.61 684.09,469.06 481.21,373.51 278.34,286.75 75.46,210.67 ' style='stroke-width: 0.00; stroke: none; fill: #1B9E77; fill-opacity: 0.20;' />
 <polyline points='75.46,127.79 278.34,150.25 481.21,166.15 684.09,169.61 ' style='stroke-width: 0.43; stroke: #1B9E77;' />
 <polyline points='684.09,469.06 481.21,373.51 278.34,286.75 75.46,210.67 ' style='stroke-width: 0.43; stroke: #1B9E77;' />
@@ -72,8 +70,6 @@
 <rect x='334.01' y='542.28' width='91.54' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='339.49' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='24.46px' lengthAdjust='spacingAndGlyphs'>Type</text>
 <rect x='369.42' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='371.15' y1='556.40' x2='384.98' y2='556.40' style='stroke-width: 2.13; stroke: #1B9E77; stroke-opacity: 0.60; stroke-linecap: butt;' />
-<line x1='371.15' y1='556.40' x2='384.98' y2='556.40' style='stroke-width: 1.07; stroke: #1B9E77; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 <rect x='369.71' y='548.04' width='16.71' height='16.71' style='stroke-width: 0.43; stroke: #1B9E77; stroke-linecap: square; stroke-linejoin: miter; fill: #1B9E77; fill-opacity: 0.20;' />
 <rect x='370.13' y='548.47' width='15.86' height='15.86' style='stroke-width: 1.07; stroke: #1B9E77; stroke-linecap: square; stroke-linejoin: miter; fill: #1B9E77; fill-opacity: 0.20;' />
 <circle cx='378.06' cy='556.40' r='1.95' style='stroke-width: 0.71; stroke: #1B9E77; fill: #1B9E77;' />

@@ -18,7 +18,7 @@ add to plots. May contain faceting variables.}
 
 \item{central}{Logical, defaults to FALSE. Should the mean and median
 central estimates be plot as dashed and solid lines respectively. Requires
-\code{mean} and \code{median} varibales to be present in the input.}
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{col}{A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the

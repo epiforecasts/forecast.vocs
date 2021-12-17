@@ -9,7 +9,7 @@ plot_cases(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
-  central = central,
+  central = FALSE,
   col = NULL,
   log = TRUE
 )
@@ -31,7 +31,7 @@ or just those in the date range of the estimates being plot.}
 
 \item{central}{Logical, defaults to FALSE. Should the mean and median
 central estimates be plot as dashed and solid lines respectively. Requires
-\code{mean} and \code{median} varibales to be present in the input.}
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{col}{A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the

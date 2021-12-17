@@ -53,7 +53,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #'
 #' @param central Logical, defaults to FALSE. Should the mean and median
 #' central estimates be plot as dashed and solid lines respectively. Requires
-#' `mean` and `median` varibales to be present in the input.
+#' `mean` and `median` variables to be present in the input.
 #'
 #' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
 #' or just those in the date range of the estimates being plot.
@@ -137,7 +137,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' # without log transform
 #' plot_cases(posterior, log = FALSE)
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       all_obs = FALSE, central = central,
+                       all_obs = FALSE, central = FALSE,
                        col = NULL, log = TRUE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := cases]

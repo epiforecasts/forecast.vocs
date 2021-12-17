@@ -9,6 +9,7 @@
   obs = NULL,
   type = "cases",
   forecast_dates = NULL,
+  central = FALSE,
   all_obs = FALSE,
   voc_label = "variant of concern",
   ...
@@ -31,6 +32,10 @@ by call \code{\link[=plot_posterior]{plot_posterior()}}.}
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.}
 
+\item{central}{Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+\code{mean} and \code{median} variables to be present in the input.}
+
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
 
@@ -51,6 +56,9 @@ posterior <- fv_example(strains = 2, type = "posterior")
 
 # plot cases on the log scale
 plot(posterior, type = "cases", log = TRUE)
+
+# plot cases with central estimates
+plot(posterior, type = "cases", log = FALSE, central = TRUE)
 
 # plot fraction that have the variant of concern
 plot(posterior, type = "voc_frac")

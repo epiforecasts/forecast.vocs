@@ -25,7 +25,7 @@ add to plots. May contain faceting variables.}
 
 \item{central}{Logical, defaults to FALSE. Should the mean and median
 central estimates be plot as dashed and solid lines respectively. Requires
-\code{mean} and \code{median} varibales to be present in the input.}
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}

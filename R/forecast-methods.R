@@ -11,8 +11,6 @@
 #' are used then [summary.fv_posterior()] is called on the nested posterior or
 #' forecast.
 #'
-#' @param ... Pass additional arguments to [summary.fv_posterior()].
-#'
 #' @inheritParams summary.fv_posterior
 #' @family forecast
 #' @seealso summary.fv_posterior forecast unnest_posterior
@@ -42,7 +40,7 @@
 #' # extract the case forecast
 #' summary(forecasts, type = "cases", forecast = TRUE)
 summary.fv_forecast <- function(object, target = "posterior", type = "model",
-                                as_dt = FALSE, forecast = FALSE) {
+                                as_dt = FALSE, forecast = FALSE, ...) {
   target <- match.arg(target, c("fit", "diagnostics", "posterior", "forecast"))
   if (target == "fit") {
     out <- object$fit
@@ -99,6 +97,9 @@ summary.fv_forecast <- function(object, target = "posterior", type = "model",
 #'
 #' # plot case posterior predictions
 #' plot(forecasts, log = TRUE)
+#'
+#' # plot case posterior predictions with central estimates
+#' plot(forecasts, log = TRUE, central = TRUE)
 #'
 #' # plot voc posterior predictions
 #' plot(forecasts, type = "voc_frac")
