@@ -10,6 +10,7 @@ plot_voc_frac(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
+  central = FALSE,
   voc_label = "variant of concern",
   logit = TRUE,
   ...
@@ -29,6 +30,10 @@ add to plots. May contain faceting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
+
+\item{central}{Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}

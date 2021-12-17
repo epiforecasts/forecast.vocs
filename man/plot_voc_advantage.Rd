@@ -8,6 +8,7 @@ of concern}
 plot_voc_advantage(
   posterior,
   forecast_dates = NULL,
+  central = FALSE,
   voc_label = "variant of concern",
   ...
 )
@@ -21,6 +22,10 @@ plot_voc_advantage(
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.}
+
+\item{central}{Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{voc_label}{Character string giving the name to assign to the variant
 of concern. Defaults to  "variant of concern".}

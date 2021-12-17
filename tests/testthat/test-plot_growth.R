@@ -11,6 +11,7 @@ test_that("Can plot using freshly generated forecasts", {
     )
   )
   expect_ggplot(plot_growth(posterior2))
+  expect_ggplot(plot_growth(posterior2, central = TRUE))
 })
 
 test_that("Can plot using example data", {

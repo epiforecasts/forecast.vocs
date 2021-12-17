@@ -24,7 +24,7 @@
 #' indicate increased belief in strong correlations and values greater than 1
 #' indicate increased belief weaker correlations. Our default setting places
 #' increased weight on some correlation between strains.
-#' 
+#'
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
@@ -145,6 +145,7 @@ fv_as_data_list <- function(obs, horizon = 4,
 #' @export
 #' @inheritParams fv_model
 #' @importFrom purrr map_dbl
+#' @importFrom stats runif
 #' @examples
 #' dt <- fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 #' inits <- fv_inits(dt)
@@ -177,7 +178,7 @@ fv_inits <- function(data, strains = 2) {
       inits$voc_beta <- rnorm(1, 0, 0.1)
       inits$voc_scale <- abs(rnorm(1, 0, 0.01))
       inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
-      inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2 , 2) # nolint
+      inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2, 2) # nolint
     }
     return(inits)
   }

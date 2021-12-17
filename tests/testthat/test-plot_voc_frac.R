@@ -39,7 +39,7 @@ test_that("Can plot using example data", {
     plot_voc_frac(posterior2, current_obs)
   )
   vdiffr::expect_doppelganger(
-    "Two strain VoC plot with all current observations",
+    "Two strain VoC plot, all current observations",
     plot_voc_frac(posterior2, current_obs, all_obs = FALSE)
   )
 })

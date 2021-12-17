@@ -55,6 +55,9 @@ forecasts
 # plot case posterior predictions
 plot(forecasts, log = TRUE)
 
+# plot case posterior predictions with central estimates
+plot(forecasts, log = TRUE, central = TRUE)
+
 # plot voc posterior predictions
 plot(forecasts, type = "voc_frac")
 \dontshow{\}) # examplesIf}

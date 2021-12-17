@@ -4,7 +4,7 @@
 \alias{summary.fv_posterior}
 \title{Summary method for fv_tidy_posterior}
 \usage{
-\method{summary}{fv_posterior}(object, type = "model", forecast = FALSE, as_dt = FALSE)
+\method{summary}{fv_posterior}(object, type = "model", forecast = FALSE, as_dt = FALSE, ...)
 }
 \arguments{
 \item{object}{An object of the class \code{fv_posterior} as returned by
@@ -26,10 +26,12 @@ be used to return only forecasts rather than complete posterior.}
 
 \item{as_dt}{Logical defaults to \code{FALSE}. Once any filtering has been applied
 should \code{\link[=summary]{summary()}} fall back to using the default \code{data.table} method.}
+
+\item{...}{Additional summary arguments.}
 }
 \value{
 A summary data.table table unless type "all" is used in which case
-the output is still of type "fv_posterior"
+the output is still of type "fv_posterior".
 }
 \description{
 \code{summary} method for class "fv_tidy_posterior". Can be used to
@@ -67,7 +69,7 @@ summary(posterior, type = "model")
 summary(posterior, type = "raw")
 }
 \seealso{
-fv_tidy_posterior
+\url{fv_tidy_posterior}
 
 Functions used for postprocessing of model fits
 \code{\link{convert_to_stanfit}()},

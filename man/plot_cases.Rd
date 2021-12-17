@@ -9,6 +9,7 @@ plot_cases(
   obs = NULL,
   forecast_dates = NULL,
   all_obs = FALSE,
+  central = FALSE,
   col = NULL,
   log = TRUE
 )
@@ -27,6 +28,10 @@ add to plots. May contain faceting variables.}
 
 \item{all_obs}{Logical, defaults to \code{FALSE}. Should all observations be plot
 or just those in the date range of the estimates being plot.}
+
+\item{central}{Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+\code{mean} and \code{median} variables to be present in the input.}
 
 \item{col}{A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the
