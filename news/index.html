@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.3000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,6 +96,7 @@
 <h3 id="bug-fixes-0-0-9">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-9"></a></h3>
 <ul><li>Fixed a bug in the output of the <code><a href="../reference/forecast.html">forecast()</a></code> function where the prior specifications for the initial growth and the variant scaling were only partially included.</li>
 <li>Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn’t exist. This could lead to bugs in user code that are hard to spot.</li>
+<li>Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases.</li>
 </ul></div>
 </div>
     <div class="section level2">
