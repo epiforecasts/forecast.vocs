@@ -27,14 +27,14 @@ test_that("Can summarise forecasts", {
         "r",
         summary(
           posterior2,
-          target = "posterior", type = "rt"
+          type = "rt"
         )$variable
       )
     )
   )
   expect_true(
     all(
-      summary(posterior2, target = "forecast", type = "rt")$date
+      summary(posterior2, forecast = TRUE, type = "rt")$date
       >= as.Date("2021-03-20")
     )
   )
