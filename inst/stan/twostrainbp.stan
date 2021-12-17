@@ -243,6 +243,7 @@ generated quantities {
   }
   // include log likelihood
   if (output_loglik) {
+    log_lik = rep_vector(0, max(t_nots, t_seq));
     for (i in 1:t_nots) {
       if (overdisp) {
         log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
