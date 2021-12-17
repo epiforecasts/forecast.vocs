@@ -26,7 +26,7 @@ to summarise using the data.table method'><meta property="og:image" content="epi
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@ to summarise using the <code>data.table</code> method</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for fv_posterior</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="st">"model"</span>, forecast <span class="op">=</span> <span class="cn">FALSE</span>, as_dt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="st">"model"</span>, forecast <span class="op">=</span> <span class="cn">FALSE</span>, as_dt <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -111,15 +111,17 @@ be used to return only forecasts rather than complete posterior.</p></dd>
 <dt>as_dt</dt>
 <dd><p>Logical defaults to <code>FALSE</code>. Once any filtering has been applied
 should <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> fall back to using the default <code>data.table</code> method.</p></dd>
+<dt>...</dt>
+<dd><p>Additional summary arguments.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A summary data.table table unless type "all" is used in which case
-the output is still of type "fv_posterior"</p>
+the output is still of type "fv_posterior".</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>fv_tidy_posterior</p>
+    <div class="dont-index"><p><a href="fv_tidy_posterior">fv_tidy_posterior</a></p>
 <p>Functions used for postprocessing of model fits
 <code><a href="convert_to_stanfit.html">convert_to_stanfit</a>()</code>,
 <code><a href="extract_draws.html">extract_draws</a>()</code>,

@@ -24,7 +24,7 @@ lower level plot functions.'><meta property="og:image" content="epiforecasts.io/
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,6 +88,7 @@ lower level plot functions.</p>
   obs <span class="op">=</span> <span class="cn">NULL</span>,
   type <span class="op">=</span> <span class="st">"cases"</span>,
   forecast_dates <span class="op">=</span> <span class="cn">NULL</span>,
+  central <span class="op">=</span> <span class="cn">FALSE</span>,
   all_obs <span class="op">=</span> <span class="cn">FALSE</span>,
   voc_label <span class="op">=</span> <span class="st">"variant of concern"</span>,
   <span class="va">...</span>
@@ -112,6 +113,10 @@ by call <code><a href="plot_posterior.html">plot_posterior()</a></code>.</p></dd
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.</p></dd>
+<dt>central</dt>
+<dd><p>Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+<code>mean</code> and <code>median</code> variables to be present in the input.</p></dd>
 <dt>all_obs</dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should all observations be plot
 or just those in the date range of the estimates being plot.</p></dd>
@@ -163,21 +168,25 @@ of concern. Defaults to  "variant of concern".</p></dd>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"cases"</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="plot.fv_posterior-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># plot cases with central estimates</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"cases"</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, central <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="plot.fv_posterior-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co"># plot fraction that have the variant of concern</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"voc_frac"</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot.fv_posterior-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot.fv_posterior-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot the transmission advantage for the the variant of concern</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"voc_advantage"</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot.fv_posterior-3.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot.fv_posterior-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot the growth rates for both voc and non-voc cases</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"growth"</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot.fv_posterior-4.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot.fv_posterior-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot the reproduction number estimates</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posterior</span>, type <span class="op">=</span> <span class="st">"rt"</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="plot.fv_posterior-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot.fv_posterior-6.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

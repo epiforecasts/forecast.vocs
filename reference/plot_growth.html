@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.2000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.3000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_growth</span><span class="op">(</span><span class="va">posterior</span>, forecast_dates <span class="op">=</span> <span class="cn">NULL</span>, col <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_growth</span><span class="op">(</span><span class="va">posterior</span>, forecast_dates <span class="op">=</span> <span class="cn">NULL</span>, central <span class="op">=</span> <span class="cn">FALSE</span>, col <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -93,6 +93,10 @@
 <code><a href="extract_forecast_dates.html">extract_forecast_dates()</a></code> (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.</p></dd>
+<dt>central</dt>
+<dd><p>Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+<code>mean</code> and <code>median</code> variables to be present in the input.</p></dd>
 <dt>col</dt>
 <dd><p>A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the
