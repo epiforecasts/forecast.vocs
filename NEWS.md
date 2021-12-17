@@ -15,7 +15,7 @@
 * Generalise plot labels. 
 * Updated `plot_cases()` to use a log 2 scaling rather than a log scaling.
 * Updated the default scaling to be logit for `plot_voc_frac().
-* Added a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot. 
+* Adds a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot. 
 
 ## Bug fixes
 
