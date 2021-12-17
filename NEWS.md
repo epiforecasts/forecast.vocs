@@ -21,6 +21,7 @@
 
 * Fixed a bug in the output of the `forecast()` function where the prior specifications for the initial growth and the variant scaling were only partially included.
 * Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn't exist. This could lead to bugs in user code that are hard to spot. 
+* Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases. 
 
 # forecast.vocs 0.0.8
 
