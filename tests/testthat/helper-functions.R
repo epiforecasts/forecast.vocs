@@ -3,7 +3,7 @@ on_ci <- function() {
 }
 
 not_on_cran <- function() {
-  on_ci() || identical(Sys.getenv("NOT_CRAN"), "true")
+  identical(Sys.getenv("NOT_CRAN"), "true")
 }
 
 silent_fv_sample <- function(...) {

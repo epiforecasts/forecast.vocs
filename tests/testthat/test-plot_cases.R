@@ -33,7 +33,7 @@ test_that("Can plot using example data", {
     plot_cases(posterior1, log = TRUE)
   )
   vdiffr::expect_doppelganger(
-    "Logged case plot with single strain and central estimates",
+    "Logged case plot with ss and central",
     plot_cases(posterior1, log = TRUE, central = TRUE)
   )
   vdiffr::expect_doppelganger(
