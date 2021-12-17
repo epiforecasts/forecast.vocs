@@ -215,7 +215,7 @@ generated quantities {
   int sim_voc_cases[t_seqf];
   int sim_nvoc_cases[t];
   int sim_cases[t];
-  vector[output_loglik ? t_nots : 0] log_lik;
+  vector[output_loglik ? max(t_nots, t_seq) : 0] log_lik;
 
   // summary measures
   voc_advantage = voc_r - r[(t_nseq+1):(t-1)];
