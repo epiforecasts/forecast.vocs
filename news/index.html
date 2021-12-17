@@ -97,6 +97,7 @@
 <ul><li>Fixed a bug in the output of the <code><a href="../reference/forecast.html">forecast()</a></code> function where the prior specifications for the initial growth and the variant scaling were only partially included.</li>
 <li>Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn’t exist. This could lead to bugs in user code that are hard to spot.</li>
 <li>Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases.</li>
+<li>Fixed a bug where <code><a href="../reference/summary.fv_forecast.html">summary.fv_forecast()</a></code> failed to return diagnostics.</li>
 </ul></div>
 </div>
     <div class="section level2">
