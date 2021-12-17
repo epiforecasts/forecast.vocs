@@ -4,7 +4,7 @@
 \alias{plot_rt}
 \title{Plot the posterior prediction for the reproduction number}
 \usage{
-plot_rt(posterior, forecast_dates = NULL, col = NULL)
+plot_rt(posterior, forecast_dates = NULL, central = FALSE, col = NULL)
 }
 \arguments{
 \item{posterior}{A dataframe of posterior output as produced by
@@ -15,6 +15,10 @@ plot_rt(posterior, forecast_dates = NULL, col = NULL)
 \code{\link[=extract_forecast_dates]{extract_forecast_dates()}} (with at least a date variable and a
 Data unavailable variable)). Specifies when date availability should be
 add to plots. May contain faceting variables.}
+
+\item{central}{Logical, defaults to FALSE. Should the mean and median
+central estimates be plot as dashed and solid lines respectively. Requires
+\code{mean} and \code{median} varibales to be present in the input.}
 
 \item{col}{A character string denoting the variable to use to
 stratify the ribbon plot. Defaults to "type" which indicates the

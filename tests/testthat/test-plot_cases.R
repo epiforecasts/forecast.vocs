@@ -13,6 +13,7 @@ test_that("Can plot using freshly generated forecasts", {
   )
   expect_ggplot(plot_cases(posterior2))
   expect_ggplot(plot_cases(posterior2, current_obs))
+  expect_ggplot(plot_cases(posterior2, current_obs, central = TRUE))
   expect_ggplot(plot_cases(posterior2, current_obs, all_obs = FALSE))
   expect_ggplot(plot_cases(forecast1, current_obs))
   expect_ggplot(plot_cases(forecast2, current_obs))
@@ -30,6 +31,10 @@ test_that("Can plot using example data", {
   vdiffr::expect_doppelganger(
     "Logged case plot with single strain",
     plot_cases(posterior1, log = TRUE)
+  )
+  vdiffr::expect_doppelganger(
+    "Logged case plot with single strain and central estimates",
+    plot_cases(posterior1, log = TRUE, central = TRUE)
   )
   vdiffr::expect_doppelganger(
     "Case plot with custom forecast date",

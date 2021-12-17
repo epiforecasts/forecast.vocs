@@ -51,6 +51,10 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @param target A character string indicating which variable to extract
 #' from the posterior list.
 #'
+#' @param central Logical, defaults to FALSE. Should the mean and median
+#' central estimates be plot as dashed and solid lines respectively. Requires
+#' `mean` and `median` varibales to be present in the input.
+#'
 #' @param all_obs Logical, defaults to `FALSE`. Should all observations be plot
 #' or just those in the date range of the estimates being plot.
 #'
@@ -64,7 +68,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
 #' @importFrom purrr map_lgl
 #' @export
 plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
-                         all_obs = FALSE, ...) {
+                         central = FALSE, all_obs = FALSE, ...) {
   data <- posterior[value_type %in% target]
   setnames(data, "type", "Type", skip_absent = TRUE)
 
@@ -79,9 +83,12 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 
   plot <- add_forecast_dates(plot, forecast_dates)
 
+  if (central) {
+    plot <- plot +
+      geom_line(aes(y = median), size = 1, alpha = 0.6) +
+      geom_line(aes(y = mean), linetype = 2)
+  }
   plot <- plot +
-    geom_line(aes(y = median), size = 1, alpha = 0.6) +
-    geom_line(aes(y = mean), linetype = 2) +
     geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.2) +
     geom_ribbon(aes(ymin = q20, ymax = q80, col = NULL), alpha = 0.2)
 
@@ -130,14 +137,17 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 #' # without log transform
 #' plot_cases(posterior, log = FALSE)
 plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
-                       all_obs = FALSE, col = NULL, log = TRUE) {
+                       all_obs = FALSE, central = central,
+                       col = NULL, log = TRUE) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := cases]
   }
   if (is.null(col)) {
     col <- "Type"
   }
-  plot <- plot_default(posterior, "cases", obs, forecast_dates,
+  plot <- plot_default(
+    posterior, "cases", obs, forecast_dates,
+    central = central,
     all_obs = all_obs, x = date, col = .data[[col]], fill = .data[[col]]
   )
 
@@ -179,13 +189,14 @@ plot_cases <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_voc_frac(posterior)
 plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
-                          all_obs = FALSE, voc_label = "variant of concern",
-                          logit = TRUE, ...) {
+                          all_obs = FALSE, central = FALSE,
+                          voc_label = "variant of concern", logit = TRUE, ...) {
   if (!is.null(obs)) {
     obs <- copy(obs)[, value := share_voc]
   }
-  plot <- plot_default(posterior, "voc_frac", obs, forecast_dates,
-    all_obs = all_obs, x = date, ...
+  plot <- plot_default(
+    posterior, "voc_frac", obs, forecast_dates,
+    central = central, all_obs = all_obs, x = date, ...
   )
 
   if (logit) {
@@ -220,10 +231,13 @@ plot_voc_frac <- function(posterior, obs = NULL, forecast_dates = NULL,
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_voc_advantage(posterior)
 plot_voc_advantage <- function(posterior, forecast_dates = NULL,
+                               central = FALSE,
                                voc_label = "variant of concern", ...) {
   plot <- plot_default(
     posterior, "voc_advantage",
-    obs = NULL, forecast_dates, x = date, ...
+    obs = NULL, forecast_dates,
+    central = central,
+    x = date, ...
   )
 
   plot <- plot +
@@ -249,14 +263,19 @@ plot_voc_advantage <- function(posterior, forecast_dates = NULL,
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_rt(posterior)
-plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
+plot_rt <- function(posterior, forecast_dates = NULL, central = FALSE,
+                    col = NULL) {
   if (is.null(col)) {
     col <- "Type"
   }
   plot <- plot_default(
     posterior, "rt",
     obs = NULL,
-    forecast_dates, x = date, col = .data[[col]], fill = .data[[col]]
+    forecast_dates,
+    central = central,
+    x = date,
+    col = .data[[col]],
+    fill = .data[[col]]
   )
   plot <- plot +
     geom_hline(yintercept = 1, linetype = 3, col = "black")
@@ -282,14 +301,17 @@ plot_rt <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' @examples
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_growth(posterior)
-plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
+plot_growth <- function(posterior, forecast_dates = NULL, central = FALSE,
+                        col = NULL) {
   if (is.null(col)) {
     col <- "Type"
   }
   plot <- plot_default(
     posterior, "growth",
     obs = NULL,
-    forecast_dates, x = date, col = .data[[col]],
+    forecast_dates,
+    central = central,
+    x = date, col = .data[[col]],
     fill = .data[[col]]
   )
   plot <- plot +
@@ -319,27 +341,28 @@ plot_growth <- function(posterior, forecast_dates = NULL, col = NULL) {
 #' posterior <- fv_example(strains = 2, type = "posterior")
 #' plot_posterior(posterior)
 plot_posterior <- function(posterior, obs = NULL, forecast_dates = NULL,
-                           all_obs = FALSE, voc_label = "variant of concern") {
+                           central = FALSE, all_obs = FALSE,
+                           voc_label = "variant of concern") {
   plots <- list()
   plots$cases <- plot_cases(
     posterior, obs, forecast_dates,
-    log = FALSE, all_obs = all_obs
+    central = central, log = FALSE, all_obs = all_obs
   )
   plots$log_cases <- plot_cases(
     posterior, obs, forecast_dates,
-    log = TRUE, all_obs = all_obs
+    central = central, log = TRUE, all_obs = all_obs
   )
   if (nrow(posterior[value_type %in% "voc_frac"]) > 0) {
     plots$voc_frac <- plot_voc_frac(
       posterior, obs, forecast_dates,
-      voc_label = voc_label, all_obs = all_obs
+      central = central, voc_label = voc_label, all_obs = all_obs
     )
     plots$voc_advantage <- plot_voc_advantage(
-      posterior, forecast_dates, voc_label
+      central = central, posterior, forecast_dates, voc_label
     )
   }
-  plots$growth <- plot_growth(posterior, forecast_dates)
-  plots$rt <- plot_rt(posterior, forecast_dates)
+  plots$growth <- plot_growth(posterior, forecast_dates, central = central)
+  plots$rt <- plot_rt(posterior, forecast_dates, central = central)
   return(plots)
 }
 
