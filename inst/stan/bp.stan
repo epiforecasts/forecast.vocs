@@ -40,7 +40,7 @@ parameters {
   vector[eta_n] eta;
   vector[1] init_cases;
   vector[period > 1 ? 1 : 0] period_sd;
-  vector[period] period_eff;
+  vector[period > 1 ? period : 0] period_eff;
   real<lower = 0> sqrt_phi[overdisp ? 1 : 0];
 }
 

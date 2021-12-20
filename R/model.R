@@ -130,8 +130,8 @@ fv_as_data_list <- function(obs, horizon = 4,
 
   ## add period
   if (is.null(period)) {
-    data$period <- 0
-    data$periodic <- rep(0, data$t)
+    data$period <- 1
+    data$periodic <- rep(1, data$t)
   } else {
     data$periodic <- period(
       t = data$t, obs$date[1],
@@ -189,7 +189,9 @@ fv_inits <- function(data, strains = 2) {
       r_scale = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
-      sqrt_phi = abs(rnorm(2, 0, 0.01))
+      sqrt_phi = abs(rnorm(2, 0, 0.01)),
+      period_eff = array(rnorm(data$period, 0, 0.1)),
+      period_sd = array(rnorm(1, 0, 0.1))
     )
     if (strains == 1) {
       inits$sqrt_phi <- inits$sqrt_phi[1]

@@ -68,7 +68,7 @@ parameters {
   vector[1] init_cases;
   vector[1] init_voc_cases;
   vector[period > 1 ? 1 : 0] period_sd;
-  vector[period] period_eff;
+  vector[period > 1 ? period : 0] period_eff;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
 
