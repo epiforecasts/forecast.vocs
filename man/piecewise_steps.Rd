@@ -28,6 +28,7 @@ This may be useful when specifying random walks, AR processes, etc.
 \seealso{
 Preprocessing functions
 \code{\link{filter_by_availability}()},
+\code{\link{fv_dow_period}()},
 \code{\link{latest_obs}()}
 }
 \concept{preprocess}

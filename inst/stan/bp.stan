@@ -2,6 +2,7 @@ functions {
 #include functions/convolve.stan
 #include functions/diff_ar.stan
 #include functions/cases_ar.stan
+#include functions/periodic_adjustment.stan
 }
 
 data {
@@ -18,6 +19,8 @@ data {
   int eta_loc[t - 2];
   real beta_mean;
   real beta_sd;
+  int period;
+  int periodic[t];
 }
 
 transformed data {
@@ -36,6 +39,8 @@ parameters {
   real<lower = -1, upper = 1> beta;
   vector[eta_n] eta;
   vector[1] init_cases;
+  vector[period > 1 ? 1 : 0] period_sd;
+  vector[period] period_eff;
   real<lower = 0> sqrt_phi[overdisp ? 1 : 0];
 }
 
@@ -53,7 +58,8 @@ transformed parameters {
   // update case using initial cases, generation time and growth
   mean_cases = cases_ar(init_cases, gt, exp(r), t); 
   rep_by_case = convolve(mean_cases, case_delay);
-
+  rep_by_case = periodic_adjustment(rep_by_case, periodic, period_eff,
+                                    period_sd);
   // rescale observation model
   if (overdisp) {
     phi[1] = 1 ./ sqrt(sqrt_phi[1]);
@@ -91,6 +97,12 @@ model {
   // observation model priors
   if (overdisp) {
     sqrt_phi[1] ~ std_normal() T[0,];
+  }
+
+  // periodic effect if any
+  if (period > 1) {
+    period_sd[1] ~ std_normal() T[0,];
+    period_eff ~ std_normal();
   }
 
   // observation model 

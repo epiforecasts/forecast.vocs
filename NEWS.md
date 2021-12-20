@@ -11,6 +11,8 @@
 * Added new functionality to delay case reporting and sequence reporting by some probability mass function. This funcationality has not yet been exposed to users via the control interface.
 * Made piecewise constant growth rates backwards looking from the last available data rather than forward looking as was previously the case. This means that forecasts are made using a full window of data to estimate the growth rate but also means that the precise dates of steps change as new data is added.
 * Add a new argument `r_forecast` which controls if the growth rate is allowed to vary outside the range of the data. 
+* Add optional adjustment for periodic case data based on a random effect. This can be used to account for day of the week or month effects.
+
 
 ### Evaluation and visualisation
 

@@ -1,3 +1,44 @@
+#' Calculate the day of the week periodicity
+#'
+#' This helper function allows the user to generate a vector of day of the
+#' the week periods.
+#'
+#' @param t An integer indicating the number of dates
+#'
+#' @param start_date A date indicating the start date
+#'
+#' @param specials A vector of special dates to modify the day of the week for.
+#'
+#' @param special_to A character string indicating which day of the week or
+#' other label to assign holidays. By default this is set to "Sunday"
+#'
+#' @return A vector indicating the period of the dates.
+#'
+#' @export
+#' @importFrom data.table data.table
+#' @family preprocess
+#' @examples
+#' fv_dow_period(t = 10, start_date = as.Date("2021-12-01"))
+fv_dow_period <- function(t, start_date, specials = c(),
+                          special_to = "Sunday") {
+  obs <- data.table::data.table(
+    date = seq(start_date, length.out = t, by = "days")
+  )
+  obs[, day_of_week := weekdays(date)]
+  obs[, special := FALSE]
+
+  # make holidays be sundays
+  if (length(specials) != 0) {
+    obs <- obs[date %in% specials, special := TRUE]
+    obs <- obs[special == TRUE, day_of_week := specials_to]
+  }
+
+  # make day of week a factor
+  obs[, day_of_week := factor(day_of_week)]
+  obs[, period := as.numeric(day_of_week)]
+  return(obs$period)
+}
+
 #' Filter data based on availability and forecast date
 #'
 #' @param date Date at which to filter. Defaults to the

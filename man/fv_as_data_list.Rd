@@ -13,6 +13,8 @@ fv_as_data_list(
   beta = c(0, 0.5),
   lkj = 0.5,
   voc_scale = c(0, 0.2),
+  period = NULL,
+  special_periods = c(),
   variant_relationship = "correlated",
   overdispersion = TRUE,
   likelihood = TRUE,
@@ -52,6 +54,16 @@ increased weight on some correlation between strains.}
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant of concern.}
+
+\item{period}{Logical defaults to \code{NULL}. If specified should be a function
+that accepts a vector of dates. This can be used to assign periodic effects
+to dates which will then be adjusted for in the case model. An example
+is adjusting for day of the week effects for which the \code{\link[=fv_dow_period]{fv_dow_period()}}
+can be used.}
+
+\item{special_periods}{A vector of dates to pass to the \code{period} function
+argument with the same name to be treated as "special" for example holidays
+being treated as sundays in \code{\link[=fv_dow_period]{fv_dow_period()}}.}
 
 \item{variant_relationship}{Character string, defaulting to "correlated".
 Controls the relationship of strains with options being "correlated"

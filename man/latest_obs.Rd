@@ -35,6 +35,7 @@ latest_obs(dt)
 \seealso{
 Preprocessing functions
 \code{\link{filter_by_availability}()},
+\code{\link{fv_dow_period}()},
 \code{\link{piecewise_steps}()}
 }
 \concept{preprocess}

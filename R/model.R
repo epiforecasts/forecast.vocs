@@ -32,6 +32,16 @@
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
 #'
+#' @param period Logical defaults to `NULL`. If specified should be a function
+#' that accepts a vector of dates. This can be used to assign periodic effects
+#' to dates which will then be adjusted for in the case model. An example
+#' is adjusting for day of the week effects for which the [fv_dow_period()]
+#' can be used.
+#'
+#' @param special_periods A vector of dates to pass to the `period` function
+#' argument with the same name to be treated as "special" for example holidays
+#' being treated as sundays in [fv_dow_period()].
+#'
 #' @param variant_relationship Character string, defaulting to "correlated".
 #' Controls the relationship of strains with options being "correlated"
 #' (strains growth rates are correlated over time), "scaled" (a fixed scaling
@@ -62,6 +72,7 @@ fv_as_data_list <- function(obs, horizon = 4,
                             r_step = 1, r_forecast = TRUE,
                             beta = c(0, 0.5),
                             lkj = 0.5, voc_scale = c(0, 0.2),
+                            period = NULL, special_periods = c(),
                             variant_relationship = "correlated",
                             overdispersion = TRUE,
                             likelihood = TRUE,
@@ -116,6 +127,18 @@ fv_as_data_list <- function(obs, horizon = 4,
     output_loglik = as.numeric(output_loglik),
     debug = as.numeric(debug)
   )
+
+  ## add period
+  if (is.null(period)) {
+    data$period <- 0
+    data$periodic <- rep(0, data$t)
+  } else {
+    data$periodic <- period(
+      t = data$t, obs$date[1],
+      special = special_periods
+    )
+    data$period <- max(data$periodic)
+  }
 
   ## add autoregressive control terms
   r_steps <- piecewise_steps(data$t - 2, r_step,

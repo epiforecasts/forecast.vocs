@@ -2,6 +2,7 @@ functions {
 #include functions/convolve.stan
 #include functions/diff_ar.stan
 #include functions/cases_ar.stan
+#include functions/periodic_adjustment.stan
 }
 
 data {
@@ -29,6 +30,8 @@ data {
   int eta_loc[t - 2];  
   int voc_eta_n;
   int voc_eta_loc[relat ? t_seqf - 2 : 0];
+  int period;
+  int periodic[t];
 }
 
 transformed data {
@@ -64,6 +67,8 @@ parameters {
   vector[voc_eta_n] voc_eta;
   vector[1] init_cases;
   vector[1] init_voc_cases;
+  vector[period > 1 ? 1 : 0] period_sd;
+  vector[period] period_eff;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
 
@@ -139,7 +144,8 @@ transformed parameters {
   mean_cases = mean_nvoc_cases;
   mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_voc_cases;
   rep_by_case = convolve(mean_cases, case_delay);
-
+  rep_by_case = periodic_adjustment(rep_by_case, periodic, period_eff,
+                                    period_sd);
   // rescale observation model
   if (overdisp) {
     phi = 1 ./ sqrt(sqrt_phi);
@@ -208,6 +214,12 @@ model {
     }
   }
 
+  // periodic effect if any
+  if (period > 1) {
+    period_sd[1] ~ std_normal() T[0,];
+    period_eff ~ std_normal();
+  }
+
   // observation model 
   if (likelihood) {
     if (overdisp) {
@@ -237,31 +249,45 @@ generated quantities {
   com_r[(t_nseq+1):(t-1)] = (1 - frac_voc[2:t_seqf]) .* r[(t_nseq+1):(t-1)] +
      frac_voc[2:t_seqf] .* voc_r;
 
-  // simulated cases
-  for (i in 1:t) {
-    if (overdisp) {
-      sim_nvoc_cases[i] = neg_binomial_2_rng(mean_nvoc_cases[i], phi[1]);
-    }else{
-      sim_nvoc_cases[i] = poisson_rng(mean_nvoc_cases[i]);
+
+  // simulate report cases by VOC status
+  {
+    vector[t_seqf] voc_by_case;
+    vector[t] nvoc_by_case;
+
+    nvoc_by_case = convolve(mean_nvoc_cases, case_delay);
+    nvoc_by_case = periodic_adjustment(nvoc_by_case, periodic, period_eff,
+                                       period_sd);
+    voc_by_case = convolve(mean_voc_cases, case_delay);
+    voc_by_case = periodic_adjustment(voc_by_case, periodic, period_eff,
+                                      period_sd);
+    
+    // simulated cases
+    for (i in 1:t) {
+      if (overdisp) {
+        sim_nvoc_cases[i] = neg_binomial_2_rng(nvoc_by_case[i], phi[1]);
+      }else{
+        sim_nvoc_cases[i] = poisson_rng(nvoc_by_case[i]);
+      }
     }
-  }
-  sim_cases = sim_nvoc_cases;
-  for (i in 1:t_seqf) {
-    if (overdisp) {
-      sim_voc_cases[i] = neg_binomial_2_rng(mean_voc_cases[i], phi[1]);
-    }else{
-      sim_voc_cases[i] = poisson_rng(mean_voc_cases[i]);
+    sim_cases = sim_nvoc_cases;
+    for (i in 1:t_seqf) {
+      if (overdisp) {
+        sim_voc_cases[i] = neg_binomial_2_rng(voc_by_case[i], phi[1]);
+      }else{
+        sim_voc_cases[i] = poisson_rng(voc_by_case[i]);
+      }
+      sim_cases[t_nseq+i] += sim_voc_cases[i];
     }
-    sim_cases[t_nseq+i] += sim_voc_cases[i];
   }
   // include log likelihood
   if (output_loglik) {
     log_lik = rep_vector(0, max(t_nots, t_seq));
     for (i in 1:t_nots) {
       if (overdisp) {
-        log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+        log_lik[i] = neg_binomial_2_lpmf(X[i] | rep_by_case[i], phi[1]);
       }else{
-        log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
+        log_lik[i] = poisson_lpmf(X[i] | rep_by_case[i]);
       }
     }
     for (i in 1:t_seq) {

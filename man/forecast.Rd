@@ -20,6 +20,8 @@ forecast(
   r_forecast = TRUE,
   beta = c(0, 0.1),
   lkj = 0.5,
+  period = NULL,
+  special_periods = c(),
   voc_scale = c(0, 0.2),
   voc_label = "VOC",
   strains = 2,
@@ -107,6 +109,16 @@ to 1 assigns a uniform prior for all correlations, values less than 1
 indicate increased belief in strong correlations and values greater than 1
 indicate increased belief weaker correlations. Our default setting places
 increased weight on some correlation between strains.}
+
+\item{period}{Logical defaults to \code{NULL}. If specified should be a function
+that accepts a vector of dates. This can be used to assign periodic effects
+to dates which will then be adjusted for in the case model. An example
+is adjusting for day of the week effects for which the \code{\link[=fv_dow_period]{fv_dow_period()}}
+can be used.}
+
+\item{special_periods}{A vector of dates to pass to the \code{period} function
+argument with the same name to be treated as "special" for example holidays
+being treated as sundays in \code{\link[=fv_dow_period]{fv_dow_period()}}.}
 
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
