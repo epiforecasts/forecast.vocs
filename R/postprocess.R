@@ -318,7 +318,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
   param_lookup <- data.table(
     variable = c(
       "r_init", "r_scale", "beta", "voc_beta", "voc_mod", "avg_voc_advantage",
-      "voc_scale[1]", "init_cases[1]", "init_cases[2]",
+      "voc_scale[1]", "init_cases[1]", "init_voc_cases[1]",
       "phi[1]", "phi[2]", "phi"
     ),
     clean_name = c(
@@ -329,8 +329,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
       "Sequencing overdispersion", "Notification overdispersion"
     ),
     exponentiated = c(
-      rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2),
-      rep(TRUE, 2), rep(FALSE, 3)
+      rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2), rep(FALSE, 5)
     )
   )
   model <- merge(param_lookup, sfit, by = "variable")

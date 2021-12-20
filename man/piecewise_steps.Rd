@@ -4,12 +4,18 @@
 \alias{piecewise_steps}
 \title{Calculate piecewise steps}
 \usage{
-piecewise_steps(t, step)
+piecewise_steps(t, step, offset = 0, steps_post_offset = TRUE)
 }
 \arguments{
 \item{t}{Integer, the timespan over which to calculate steps}
 
 \item{step}{Integer, the frequency at which to step.}
+
+\item{offset}{Integer, the amount to offset steps. This can be used to
+index steps from this index.}
+
+\item{steps_post_offset}{Logical, defaults to \code{TRUE}. Should steps be added
+after the offset.}
 }
 \value{
 A list containing two elements: \code{n} (the number of steps) and \code{steps}
@@ -22,6 +28,7 @@ This may be useful when specifying random walks, AR processes, etc.
 \seealso{
 Preprocessing functions
 \code{\link{filter_by_availability}()},
+\code{\link{fv_dow_period}()},
 \code{\link{latest_obs}()}
 }
 \concept{preprocess}

@@ -63,6 +63,7 @@ filter_by_availability(dt,
 }
 \seealso{
 Preprocessing functions
+\code{\link{fv_dow_period}()},
 \code{\link{latest_obs}()},
 \code{\link{piecewise_steps}()}
 }

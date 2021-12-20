@@ -11,6 +11,9 @@
 #' @param r_step Integer, defaults to 1. The number of observations between
 #' each change in the growth rate.
 #'
+#' @param r_forecast Logical, defaults `TRUE`. Should the growth rate be
+#' forecast beyond the data horizon.
+#'
 #' @param beta Numeric vector, defaults to c(0, 0.5). Represents the mean and
 #' standard deviation of the normal prior (truncated at 1 and -1) on the
 #' weighting in the differenced AR process of  the previous difference.
@@ -28,6 +31,16 @@
 #' @param voc_scale Numeric vector of length 2. Prior mean and
 #' standard deviation for the initial growth rate modifier
 #' due to the variant of concern.
+#'
+#' @param period Logical defaults to `NULL`. If specified should be a function
+#' that accepts a vector of dates. This can be used to assign periodic effects
+#' to dates which will then be adjusted for in the case model. An example
+#' is adjusting for day of the week effects for which the [fv_dow_period()]
+#' can be used.
+#'
+#' @param special_periods A vector of dates to pass to the `period` function
+#' argument with the same name to be treated as "special" for example holidays
+#' being treated as sundays in [fv_dow_period()].
 #'
 #' @param variant_relationship Character string, defaulting to "correlated".
 #' Controls the relationship of strains with options being "correlated"
@@ -56,8 +69,10 @@
 #' fv_as_data_list(latest_obs(germany_covid19_delta_obs))
 fv_as_data_list <- function(obs, horizon = 4,
                             r_init = c(0, 0.25),
-                            r_step = 1, beta = c(0, 0.5),
+                            r_step = 1, r_forecast = TRUE,
+                            beta = c(0, 0.5),
                             lkj = 0.5, voc_scale = c(0, 0.2),
+                            period = NULL, special_periods = c(),
                             variant_relationship = "correlated",
                             overdispersion = TRUE,
                             likelihood = TRUE,
@@ -113,8 +128,23 @@ fv_as_data_list <- function(obs, horizon = 4,
     debug = as.numeric(debug)
   )
 
+  ## add period
+  if (is.null(period)) {
+    data$period <- 1
+    data$periodic <- rep(1, data$t)
+  } else {
+    data$periodic <- period(
+      t = data$t, obs$date[1],
+      specials = special_periods
+    )
+    data$period <- max(data$periodic)
+  }
+
   ## add autoregressive control terms
-  r_steps <- piecewise_steps(data$t - 2, r_step)
+  r_steps <- piecewise_steps(data$t - 2, r_step,
+    offset = nrow(obs) - 2,
+    steps_post_offset = r_forecast
+  )
   if (data$relat == 0) {
     voc_r_steps <- list(n = 0, steps = numeric())
   } else {
@@ -154,23 +184,24 @@ fv_as_data_list <- function(obs, horizon = 4,
 fv_inits <- function(data, strains = 2) {
   init_fn <- function() {
     inits <- list(
-      init_cases = purrr::map_dbl(
-        c(
-          data$X[1],
-          max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1])
-        ),
-        ~ log(abs(rnorm(1, ., . * 0.01)))
-      ),
+      init_cases = array(log(abs(rnorm(1, data$X[1], data$X[1] * 0.01)))),
       r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
       r_scale = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
-      sqrt_phi = abs(rnorm(2, 0, 0.01))
+      sqrt_phi = abs(rnorm(2, 0, 0.01)),
+      period_eff = array(rnorm(data$period, 0, 0.1)),
+      period_sd = array(abs(rnorm(1, 0, 0.1)))
     )
     if (strains == 1) {
-      inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     } else {
+      inits$init_voc_cases <- array(
+        log(abs(rnorm(
+          1, max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]),
+          max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]) * 0.01
+        )))
+      )
       inits$voc_mod <- rnorm(
         1, data$voc_mean,
         data$voc_sd * 0.1

@@ -9,9 +9,12 @@ fv_as_data_list(
   horizon = 4,
   r_init = c(0, 0.25),
   r_step = 1,
+  r_forecast = TRUE,
   beta = c(0, 0.5),
   lkj = 0.5,
   voc_scale = c(0, 0.2),
+  period = NULL,
+  special_periods = c(),
   variant_relationship = "correlated",
   overdispersion = TRUE,
   likelihood = TRUE,
@@ -31,6 +34,9 @@ standard deviation for the normal prior on the initial log growth rate.}
 \item{r_step}{Integer, defaults to 1. The number of observations between
 each change in the growth rate.}
 
+\item{r_forecast}{Logical, defaults \code{TRUE}. Should the growth rate be
+forecast beyond the data horizon.}
+
 \item{beta}{Numeric vector, defaults to c(0, 0.5). Represents the mean and
 standard deviation of the normal prior (truncated at 1 and -1) on the
 weighting in the differenced AR process of  the previous difference.
@@ -48,6 +54,16 @@ increased weight on some correlation between strains.}
 \item{voc_scale}{Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
 due to the variant of concern.}
+
+\item{period}{Logical defaults to \code{NULL}. If specified should be a function
+that accepts a vector of dates. This can be used to assign periodic effects
+to dates which will then be adjusted for in the case model. An example
+is adjusting for day of the week effects for which the \code{\link[=fv_dow_period]{fv_dow_period()}}
+can be used.}
+
+\item{special_periods}{A vector of dates to pass to the \code{period} function
+argument with the same name to be treated as "special" for example holidays
+being treated as sundays in \code{\link[=fv_dow_period]{fv_dow_period()}}.}
 
 \item{variant_relationship}{Character string, defaulting to "correlated".
 Controls the relationship of strains with options being "correlated"

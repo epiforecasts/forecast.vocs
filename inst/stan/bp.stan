@@ -2,6 +2,7 @@ functions {
 #include functions/convolve.stan
 #include functions/diff_ar.stan
 #include functions/cases_ar.stan
+#include functions/periodic_adjustment.stan
 }
 
 data {
@@ -15,15 +16,19 @@ data {
   int overdisp;
   int debug;
   int eta_n;
-  int eta_loc[eta_n];
+  int eta_loc[t - 2];
   real beta_mean;
   real beta_sd;
+  int period;
+  int periodic[t];
 }
 
 transformed data {
   // initialise cases using observed data
   real mean_init_cases;
   real sd_init_cases;
+  vector[1] gt = rep_vector(1, 1);
+  vector[1] case_delay = rep_vector(1, 1);
   mean_init_cases = log(X[1]);
   sd_init_cases = 0.1;
 }
@@ -33,7 +38,9 @@ parameters {
   real<lower = 0> r_scale;
   real<lower = -1, upper = 1> beta;
   vector[eta_n] eta;
-  real init_cases;
+  vector[1] init_cases;
+  vector[period > 1 ? 1 : 0] period_sd;
+  vector[period > 1 ? period : 0] period_eff;
   real<lower = 0> sqrt_phi[overdisp ? 1 : 0];
 }
 
@@ -41,19 +48,18 @@ transformed parameters {
   vector[t - 2] diff;
   vector[t - 1] r;
   vector<lower = 0>[t] mean_cases;
+  vector<lower = 0>[t] rep_by_case;
   real phi[overdisp ? 1 : 0];
 
   diff = diff_ar(beta, r_scale * eta, eta_loc, t - 2);
   r = rep_vector(r_init, t - 1);
   r[2:(t-1)] = r[2:(t-1)] + diff;
 
-  // initialise log mean cases
-  mean_cases = rep_vector(init_cases, t);
-  // Combine with growth on the log scale
-  mean_cases[2:t] = mean_cases[2:t] + cumulative_sum(r);
-  // convert to natural scale (with small numeric stabiliser)
-  mean_cases = exp(mean_cases) + rep_vector(1e-4, t);
-
+  // update case using initial cases, generation time and growth
+  mean_cases = cases_ar(init_cases, gt, exp(r), t); 
+  rep_by_case = convolve(mean_cases, case_delay);
+  rep_by_case = periodic_adjustment(rep_by_case, periodic, period_eff,
+                                    period_sd);
   // rescale observation model
   if (overdisp) {
     phi[1] = 1 ./ sqrt(sqrt_phi[1]);
@@ -78,7 +84,7 @@ transformed parameters {
 
 model {
   // initial cases
-  init_cases ~ normal(mean_init_cases, sd_init_cases);
+  init_cases ~ lognormal(mean_init_cases, sd_init_cases);
 
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
@@ -93,12 +99,18 @@ model {
     sqrt_phi[1] ~ std_normal() T[0,];
   }
 
+  // periodic effect if any
+  if (period > 1) {
+    period_sd[1] ~ std_normal() T[0,];
+    period_eff ~ std_normal();
+  }
+
   // observation model 
   if (likelihood) {
     if (overdisp){
-      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+      X ~ neg_binomial_2(rep_by_case[1:t_nots], phi[1]);
     }else{
-      X ~ poisson(mean_cases[1:t_nots]);
+      X ~ poisson(rep_by_case[1:t_nots]);
     }
   }
 }
@@ -109,18 +121,18 @@ generated quantities {
 
   for (i in 1:t) {
     if (overdisp) {
-      sim_cases[i] = neg_binomial_2_rng(mean_cases[i], phi[1]);
+      sim_cases[i] = neg_binomial_2_rng(rep_by_case[i], phi[1]);
     }else{
-      sim_cases[i] = poisson_rng(mean_cases[i]);
+      sim_cases[i] = poisson_rng(rep_by_case[i]);
     }
   }
 
   if (output_loglik) {
     for (i in 1:t_nots) {
       if (overdisp) {
-        log_lik[i] = neg_binomial_2_lpmf(X[i] | mean_cases[i], phi[1]);
+        log_lik[i] = neg_binomial_2_lpmf(X[i] | rep_by_case[i], phi[1]);
       }else{
-        log_lik[i] = poisson_lpmf(X[i] | mean_cases[i]);
+        log_lik[i] = poisson_lpmf(X[i] | rep_by_case[i]);
       }
     }
   }
