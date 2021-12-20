@@ -135,7 +135,7 @@ fv_as_data_list <- function(obs, horizon = 4,
   } else {
     data$periodic <- period(
       t = data$t, obs$date[1],
-      special = special_periods
+      specials = special_periods
     )
     data$period <- max(data$periodic)
   }
