@@ -7,15 +7,17 @@
 * Switched the "pooled" model to use a vector autoregression set up and renamed the resulting control parameter "correlated". On test data this performs substantially better than the old model and should be more readily extensible.
 * Added the ability (via the `r_step` argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.
 * Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via `beta`) and specify the expected amount of correlation between strains in the "correlated" model (`lkj`).
+* Update the internal model configuration to be non-vectorised so that the case AR(1) process can be easily generalised to an AR(P) process. This funcationality has not yet been exposed to users via the control interface.
+* Added new functionality to delay case reporting and sequence reporting by some probability mass function. This funcationality has not yet been exposed to users via the control interface.
 
 ### Evaluation and visualisation
 
-* Adds an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
-* Adds an example of using `fv_score_forecast()` to the README.
+* Added an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
+* Added an example of using `fv_score_forecast()` to the README.
 * Generalise plot labels. 
 * Updated `plot_cases()` to use a log 2 scaling rather than a log scaling.
 * Updated the default scaling to be logit for `plot_voc_frac().
-* Adds a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot. 
+* Added a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot. 
 
 ## Bug fixes
 

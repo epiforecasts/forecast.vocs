@@ -154,13 +154,7 @@ fv_as_data_list <- function(obs, horizon = 4,
 fv_inits <- function(data, strains = 2) {
   init_fn <- function() {
     inits <- list(
-      init_cases = purrr::map_dbl(
-        c(
-          data$X[1],
-          max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1])
-        ),
-        ~ log(abs(rnorm(1, ., . * 0.01)))
-      ),
+      init_cases = array(log(abs(rnorm(1, data$X[1], data$X[1] * 0.01)))),
       r_init = rnorm(1, data$r_init_mean, data$r_init_sd * 0.1),
       r_scale = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$eta_n, 0, 0.01),
@@ -168,9 +162,14 @@ fv_inits <- function(data, strains = 2) {
       sqrt_phi = abs(rnorm(2, 0, 0.01))
     )
     if (strains == 1) {
-      inits$init_cases <- inits$init_cases[1]
       inits$sqrt_phi <- inits$sqrt_phi[1]
     } else {
+      inits$init_voc_cases <- array(
+        log(abs(rnorm(
+          1, max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]),
+          max(2, data$X[data$t_nseq + 1] * data$Y[1] / data$N[1]) * 0.01
+        )))
+      )
       inits$voc_mod <- rnorm(
         1, data$voc_mean,
         data$voc_sd * 0.1

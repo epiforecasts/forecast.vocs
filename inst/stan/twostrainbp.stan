@@ -33,14 +33,23 @@ data {
 
 transformed data {
   // initialise cases using observed data
-  vector[2] mean_init_cases;
-  vector[2] sd_init_cases;
+  vector[1] mean_init_cases;
+  vector[1] sd_init_cases;
+  vector[1] mean_init_voc_cases;
+  vector[1] sd_init_voc_cases;
   int nvoc_eta_n = eta_n - voc_eta_n;
-  mean_init_cases = to_vector(
-    {X[1], max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})}
-  );
+  vector[1] gt = rep_vector(1, 1);
+  vector[1] gt_voc = rep_vector(1, 1);
+  vector[1] case_delay = rep_vector(1, 1);
+  vector[1] seq_delay = rep_vector(1, 1);
+  mean_init_cases = to_vector({X[1]});
   mean_init_cases = log(mean_init_cases);
-  sd_init_cases = rep_vector(0.1, 2);
+  sd_init_cases = rep_vector(0.1, 1);
+  mean_init_voc_cases = to_vector(
+    {max({2.0, X[t_nseq + 1] * Y[1] * 1.0 / N[1]})}
+  );
+  mean_init_voc_cases = log(mean_init_voc_cases);
+  sd_init_voc_cases = rep_vector(0.1, 1);
 }
 
 parameters {
@@ -53,7 +62,8 @@ parameters {
   real<lower = 0> voc_scale[relat ? 1 : 0];
   cholesky_factor_corr[relat == 2 ? 2 : 0] L_Omega;  
   vector[voc_eta_n] voc_eta;
-  vector[2] init_cases;
+  vector[1] init_cases;
+  vector[1] init_voc_cases;
   vector<lower = 0>[overdisp ? 2 : 0] sqrt_phi;
 }
 
@@ -65,6 +75,7 @@ transformed parameters {
   vector[t] mean_nvoc_cases;
   vector[t_seqf] mean_voc_cases;
   vector<lower = 0>[t] mean_cases;
+  vector<lower = 0>[t] rep_by_case;
   vector<lower = 0, upper = 1>[t_seqf] frac_voc;
   vector[overdisp ? 2 : 0] phi;
   vector[eta_n] snvoc_eta;
@@ -115,31 +126,32 @@ transformed parameters {
     voc_r = tail(r, t_seqf - 1) + voc_mod;
   }  
 
-  // initialise log mean cases
-  mean_nvoc_cases = t_nseq > 0 ? rep_vector(init_cases[1], t) : 
-    rep_vector(log_sum_exp(init_cases[1], -init_cases[2]), t);
-  mean_voc_cases = rep_vector(init_cases[2], t_seqf);
-
-  // log cases combined with growth
-  mean_nvoc_cases[2:t] = mean_nvoc_cases[2:t] + cumulative_sum(r);
-  mean_voc_cases[2:t_seqf] = mean_voc_cases[2:t_seqf] +
-                                 cumulative_sum(voc_r);
-
-  // natural scale cases (add a small numeric shift to avoid at 0 errors)
-  mean_nvoc_cases = exp(mean_nvoc_cases) + rep_vector(1e-4, t);
-  mean_voc_cases = exp(mean_voc_cases) + rep_vector(1e-4, t_seqf);
+  // update case using initial cases, generation time and growth
+  {
+    vector[1] init_nvoc_cases;
+    init_nvoc_cases[1] = t_nseq > 0 ? init_cases[1] : 
+                                      init_cases[1]  - init_nvoc_cases[1];
+    mean_nvoc_cases = cases_ar(init_nvoc_cases, gt, exp(r), t); 
+  }
+  mean_voc_cases = cases_ar(init_voc_cases, gt_voc, exp(voc_r), t_seqf); 
 
   // combine to overall cases
   mean_cases = mean_nvoc_cases;
   mean_cases[(t_nseq + 1):t] = mean_cases[(t_nseq + 1):t] + mean_voc_cases;
+  rep_by_case = convolve(mean_cases, case_delay);
 
   // rescale observation model
   if (overdisp) {
     phi = 1 ./ sqrt(sqrt_phi);
   }
 
-  // calculate fraction voc
-  frac_voc = mean_voc_cases ./ mean_cases[(t_nseq + 1):t];
+  // calculate fraction voc by date of sequencing
+  {
+    vector[t] rep_by_seq = convolve(mean_cases, seq_delay);
+    vector[t_seq] voc_by_seq = convolve(mean_voc_cases, seq_delay);
+    frac_voc = voc_by_seq ./ rep_by_seq[(t_nseq + 1):t];
+  }
+  
   
   //Debug information
   if (debug) {
@@ -165,7 +177,8 @@ transformed parameters {
 
 model {
   // initial cases
-  init_cases ~ normal(mean_init_cases, sd_init_cases);
+  init_cases ~ lognormal(mean_init_cases, sd_init_cases);
+  init_voc_cases ~ lognormal(mean_init_voc_cases, sd_init_voc_cases);
 
   // growth priors
   r_init ~ normal(r_init_mean, r_init_sd);
@@ -198,11 +211,11 @@ model {
   // observation model 
   if (likelihood) {
     if (overdisp) {
-      X ~ neg_binomial_2(mean_cases[1:t_nots], phi[1]);
+      X ~ neg_binomial_2(rep_by_case[1:t_nots], phi[1]);
       Y ~ beta_binomial(N, frac_voc[1:t_seq] * phi[2], 
                        (1 - frac_voc[1:t_seq]) * phi[2]);
     }else{
-      X ~ poisson(mean_cases[1:t_nots]);
+      X ~ poisson(rep_by_case[1:t_nots]);
       Y ~ binomial(N, frac_voc[1:t_seq]);
     }
   }
