@@ -72,12 +72,6 @@ if (test_sample) {
   )
 
   test_fv_sample(
-    "The two strain model with pooling and without overdispersion can be fit as
-    expected",
-    nooverdisp_dt, two_model, inits2
-  )
-
-  test_fv_sample(
     "The two strain model with scaling and overdispersion can be fit as
     expected",
     scaled_dt, two_model, inits2
