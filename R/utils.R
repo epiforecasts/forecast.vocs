@@ -115,7 +115,7 @@ save_plots <- function(plots, save_path = NULL, type = "png", ...) {
 #' @param step Integer, the frequency at which to step.
 #'
 #' @param offset Integer, the amount to offset steps. This can be used to
-#' index steps fromm this index.
+#' index steps from this index.
 #'
 #' @param steps_post_offset Logical, defaults to `TRUE`. Should steps be added
 #' after the offset.
@@ -141,6 +141,6 @@ utils::globalVariables(
     "q20", "q5", "q80", "q95", "quantile", "results", "row_id", "sd",
     "seq_available", "seq_total", "seq_voc", "share_voc", "start", "type",
     "Type", "value", "value_type", "..non_list_cols", "forecast_start",
-    "data", "time"
+    "data", "time", "day_of_week", "perio", "special", "specials_to"
   )
 )

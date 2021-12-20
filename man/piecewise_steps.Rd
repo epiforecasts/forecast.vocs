@@ -12,7 +12,7 @@ piecewise_steps(t, step, offset = 0, steps_post_offset = TRUE)
 \item{step}{Integer, the frequency at which to step.}
 
 \item{offset}{Integer, the amount to offset steps. This can be used to
-index steps fromm this index.}
+index steps from this index.}
 
 \item{steps_post_offset}{Logical, defaults to \code{TRUE}. Should steps be added
 after the offset.}

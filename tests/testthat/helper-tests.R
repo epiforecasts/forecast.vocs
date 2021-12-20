@@ -43,7 +43,7 @@ test_fv_sample <- function(message, dt, model, inits, convergence = TRUE) {
   test_that(message, {
     skip_on_cran()
     fit <- silent_fv_sample(
-      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.95,
+      data = dt, model = model, init = inits, chains = 2, adapt_delta = 0.99,
       max_treedepth = 15, refresh = 0, show_messages = FALSE,
       iter_warmup = 1000, iter_sampling = 1000
     )
