@@ -28,7 +28,7 @@ without needing to install cmdstanr."><meta property="og:image" content="epifore
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,85 +120,85 @@ and the script used to generate these examples respectively.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load the summarised posterior from an example fit of the one strain model</span></span>
 <span class="r-in"><span class="fu">fv_example</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Available value types: model, cases, growth, rt, raw</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      value_type     variable                  clean_name       date    type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      model         beta                        Beta       &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      model       phi[1] Notification overdispersion       &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      model       r_init              Initial growth       &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      model      r_scale                 Growth (sd)       &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      cases sim_cases[1]                             2021-03-20 Overall</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 167:        raw  log_lik[11]                                   &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 168:        raw  log_lik[12]                                   &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 169:        raw  log_lik[13]                                   &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 170:        raw  log_lik[14]                                   &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 171:        raw  log_lik[15]                                   &lt;NA&gt;        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        obs observed forecast_start exponentiated      mean    median       sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:    NA       NA             NA         FALSE     0.190     0.201 4.18e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:    NA       NA             NA         FALSE   102.000    80.200 8.84e+01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:    NA       NA             NA         FALSE     0.138     0.137 7.07e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:    NA       NA             NA         FALSE     0.111     0.104 5.37e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 87328     TRUE          FALSE            NA 90100.000 89000.000 1.31e+04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 167:    NA       NA             NA            NA    -9.570    -9.490 5.67e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 168:    NA       NA             NA            NA    -8.970    -8.930 4.47e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 169:    NA       NA             NA            NA    -8.950    -8.830 7.01e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 170:    NA       NA             NA            NA    -8.200    -8.080 6.52e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 171:    NA       NA             NA            NA    -7.680    -7.550 6.47e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      value_type      variable                  clean_name date type obs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      model          beta                        Beta &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      model init_cases[1]               Initial cases &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      model        phi[1] Notification overdispersion &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      model        r_init              Initial growth &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      model       r_scale                 Growth (sd) &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187:        raw   log_lik[11]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188:        raw   log_lik[12]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189:        raw   log_lik[13]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190:        raw   log_lik[14]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191:        raw   log_lik[15]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      observed forecast_start exponentiated      mean    median       sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       NA             NA         FALSE     0.146     0.141 3.99e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       NA             NA         FALSE 89700.000 89400.000 6.15e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       NA             NA         FALSE   108.000    88.400 8.50e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       NA             NA         FALSE     0.141     0.139 7.16e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:       NA             NA         FALSE     0.117     0.112 5.20e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187:       NA             NA            NA    -9.540    -9.470 5.69e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188:       NA             NA            NA    -8.940    -8.900 4.33e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189:       NA             NA            NA    -8.920    -8.800 6.72e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190:       NA             NA            NA    -8.150    -8.050 5.99e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191:       NA             NA            NA    -7.600    -7.500 6.33e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           mad        q5       q20       q80       q95 rhat ess_bulk ess_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 4.72e-01 -5.13e-01 -1.87e-01     0.587  8.45e-01    1      803      859</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 4.92e+01  2.63e+01  4.80e+01   140.000  2.31e+02    1      629      476</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 6.65e-02  2.71e-02  8.12e-02     0.195  2.58e-01    1     1270     1250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 5.10e-02  3.94e-02  6.45e-02     0.151  2.12e-01    1      688      968</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 1.13e+04  7.05e+04  7.97e+04 99600.000  1.13e+05    1     1920     1520</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 4.40e-01 -5.09e-01 -2.10e-01     0.522  7.99e-01    1     1050      781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 6.02e+03  7.97e+04  8.46e+04 94800.000  1.00e+05    1     1930     1340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 5.50e+01  2.66e+01  4.91e+01   149.000  2.65e+02    1      728      920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 6.78e-02  2.25e-02  8.41e-02     0.198  2.61e-01    1     1310     1190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 5.04e-02  4.42e-02  7.16e-02     0.157  2.11e-01    1      930     1060</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 167: 4.83e-01 -1.06e+01 -9.97e+00    -9.130 -8.82e+00    1     1070      897</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 168: 3.90e-01 -9.74e+00 -9.28e+00    -8.620 -8.37e+00    1      642      754</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 169: 5.13e-01 -1.03e+01 -9.35e+00    -8.460 -8.10e+00    1     1000      921</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 170: 5.01e-01 -9.40e+00 -8.60e+00    -7.730 -7.42e+00    1     1230     1100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 171: 4.90e-01 -8.90e+00 -8.06e+00    -7.190 -6.93e+00    1      659     1060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187: 4.97e-01 -1.06e+01 -9.92e+00    -9.080 -8.76e+00    1     1010      853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 188: 3.95e-01 -9.72e+00 -9.27e+00    -8.590 -8.31e+00    1      834     1140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 189: 5.21e-01 -1.02e+01 -9.34e+00    -8.420 -8.07e+00    1     1300     1110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 190: 5.16e-01 -9.26e+00 -8.57e+00    -7.670 -7.38e+00    1     1320     1320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 191: 4.71e-01 -8.76e+00 -7.96e+00    -7.140 -6.85e+00    1      833      993</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Load the summarised forecast from this posterior</span></span>
 <span class="r-in"><span class="fu">fv_example</span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"forecast"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Available value types: cases, growth, rt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     value_type    type       date horizon forecast_start         mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      cases Overall 2021-07-03       1          FALSE 3060.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      cases Overall 2021-07-10       2          FALSE 1930.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      cases Overall 2021-07-17       3          FALSE 1300.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      cases Overall 2021-07-24       4          FALSE 1030.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     growth Overall 2021-06-26       1          FALSE   -0.4117143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     growth Overall 2021-07-03       2          FALSE   -0.4132857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     growth Overall 2021-07-10       3          FALSE   -0.4156429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     growth Overall 2021-07-17       4          FALSE   -0.4156429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:         rt Overall 2021-06-26       1          FALSE    0.6625135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:         rt Overall 2021-07-03       2          FALSE    0.6614733</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:         rt Overall 2021-07-10       3          FALSE    0.6599159</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:         rt Overall 2021-07-17       4          FALSE    0.6599159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      cases Overall 2021-07-03       1          FALSE 3010.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      cases Overall 2021-07-10       2          FALSE 1910.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      cases Overall 2021-07-17       3          FALSE 1320.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      cases Overall 2021-07-24       4          FALSE 1070.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     growth Overall 2021-06-26       1          FALSE   -0.4140714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     growth Overall 2021-07-03       2          FALSE   -0.4085714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     growth Overall 2021-07-10       3          FALSE   -0.4109286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     growth Overall 2021-07-17       4          FALSE   -0.4085714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:         rt Overall 2021-06-26       1          FALSE    0.6609537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:         rt Overall 2021-07-03       2          FALSE    0.6645990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:         rt Overall 2021-07-10       3          FALSE    0.6630343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:         rt Overall 2021-07-17       4          FALSE    0.6645990</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           median       sd     mad           q5          q20          q80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 2940.0000000  855.000 745.000 1920.0000000 2360.0000000 3670.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1730.0000000  943.000 689.000  861.0000000 1230.0000000 2470.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1020.0000000 1270.000 601.000  345.0000000  602.0000000 1700.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  590.0000000 2280.000 454.000  126.0000000  293.0000000 1260.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   -0.4172143    0.170   0.153   -0.6160000   -0.5154286   -0.3127143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   -0.4172143    0.223   0.197   -0.6922143   -0.5437143   -0.2805000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   -0.4195714    0.273   0.238   -0.7637143   -0.5735714   -0.2506429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   -0.4195714    0.322   0.283   -0.8250000   -0.5947857   -0.2294286</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    0.6588797    0.170   0.153    0.5401005    0.5972446    0.7314589</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    0.6588797    0.223   0.197    0.5004667    0.5805878    0.7554059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    0.6573285    0.273   0.238    0.4659326    0.5635093    0.7783003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    0.6573285    0.322   0.283    0.4382350    0.5516808    0.7949878</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 2910.0000000  797.000 661.000 1900.0000000 2400.0000000 3570.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1720.0000000  942.000 660.000  843.0000000 1250.0000000 2450.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1030.0000000 1440.000 592.000  342.0000000  628.0000000 1700.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  616.0000000 3900.000 477.000  133.0000000  297.0000000 1230.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   -0.4140714    0.163   0.145   -0.6277857   -0.5107143   -0.3166429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   -0.4109286    0.227   0.198   -0.6945714   -0.5390000   -0.2757857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   -0.4148571    0.272   0.236   -0.7472143   -0.5696429   -0.2514286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   -0.4156429    0.317   0.276   -0.7857143   -0.5971429   -0.2231429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    0.6609537    0.163   0.145    0.5337724    0.6000668    0.7285909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    0.6630343    0.227   0.198    0.4992884    0.5833313    0.7589756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    0.6604346    0.272   0.236    0.4736843    0.5657274    0.7776890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    0.6599159    0.317   0.276    0.4557940    0.5503819    0.8000006</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               q95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  4.600000e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  3.630000e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  3.070000e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  2.960000e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -1.893571e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -1.233571e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -7.857143e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -9.507143e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  8.274909e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  8.839479e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  9.244360e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  9.905379e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  4.470000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  3.420000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  3.010000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  2.780000e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -2.145000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -1.265000e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -6.655000e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  4.714286e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  8.069448e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  8.811741e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  9.356161e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  1.004725e+00</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Load the script used to generate these examples</span></span>
 <span class="r-in"><span class="co"># Optionally source this script to regenerate the example</span></span>

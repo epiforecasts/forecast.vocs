@@ -24,7 +24,7 @@ value types and then falls back to the data.table print method.'><meta property=
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,38 +126,38 @@ value types and then falls back to the <code>data.table</code> print method.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1:      model avg_voc_advantage          Average VOC effect &lt;NA&gt;       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2:      model              beta                        Beta &lt;NA&gt;       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   3:      model     init_cases[1]               Initial cases &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      model     init_cases[2]           Initial VOC cases &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      model init_voc_cases[1]           Initial VOC cases &lt;NA&gt;       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5:      model            phi[1] Notification overdispersion &lt;NA&gt;       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 450:        raw       log_lik[11]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 451:        raw       log_lik[12]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 452:        raw       log_lik[13]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 453:        raw       log_lik[14]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 454:        raw       log_lik[15]                             &lt;NA&gt;       NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      observed forecast_start exponentiated       mean     median       sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       NA             NA         FALSE     0.5890     0.5880   0.0287</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       NA             NA         FALSE     0.2030     0.2090   0.4080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       NA             NA          TRUE 89321.7234 89321.7234   0.0670</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       NA             NA          TRUE   219.2034   219.2034   0.0982</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:       NA             NA         FALSE   103.0000    79.1000 121.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 450:       NA             NA            NA   -14.7000   -14.7000   0.7240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 451:       NA             NA            NA   -14.1000   -14.0000   0.7040</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 452:       NA             NA            NA   -13.6000   -13.6000   0.9010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 453:       NA             NA            NA    -8.1300    -8.0400   0.5760</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 454:       NA             NA            NA    -7.7100    -7.5700   0.6990</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          mad         q5        q20        q80        q95 rhat ess_bulk ess_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  0.0273     0.5440     0.5660     0.6110     0.6360    1     1670     1510</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  0.4480    -0.4990    -0.1600     0.5820     0.8530    1      892     1010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  0.0652 80821.6375 80821.6375 98715.7710 98715.7710    1     1570     1320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  0.0948   186.7928   202.3502   237.4602   259.8228    1     2530     1550</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 52.4000    23.5000    44.2000   137.0000   232.0000    1      675      729</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 450:  0.6410   -16.0000   -15.2000   -14.1000   -13.7000    1     1110     1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 451:  0.6900   -15.3000   -14.6000   -13.5000   -13.0000    1      649      779</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 452:  0.7840   -15.2000   -14.3000   -12.9000   -12.3000    1      996     1190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 453:  0.4690    -9.2200    -8.5100    -7.6800    -7.4100    1     1130      951</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 454:  0.5280    -8.9600    -8.1200    -7.1900    -6.8900    1      863      785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 469:        raw       log_lik[11]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 470:        raw       log_lik[12]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 471:        raw       log_lik[13]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 472:        raw       log_lik[14]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 473:        raw       log_lik[15]                             &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      observed forecast_start exponentiated      mean    median       sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       NA             NA         FALSE     0.589     0.589 3.08e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       NA             NA         FALSE     0.230     0.260 4.08e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       NA             NA         FALSE 89800.000 89600.000 6.14e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       NA             NA         FALSE   222.000   221.000 2.27e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:       NA             NA         FALSE    95.300    78.000 7.42e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 469:       NA             NA            NA   -14.700   -14.600 6.93e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 470:       NA             NA            NA   -13.800   -13.800 5.79e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 471:       NA             NA            NA   -13.500   -13.400 8.67e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 472:       NA             NA            NA    -8.160    -8.070 5.98e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 473:       NA             NA            NA    -7.730    -7.590 6.97e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           mad        q5       q20       q80       q95 rhat ess_bulk ess_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 2.97e-02     0.541     0.564     0.613     0.639 1.00     1270     1250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 4.53e-01    -0.466    -0.151     0.621     0.846 1.00      779      923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 5.82e+03 79900.000 84800.000 94600.000 99900.000 1.00     1360     1340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 2.16e+01   186.000   203.000   240.000   261.000 1.00     1610     1060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 5.32e+01    21.200    41.200   135.000   231.000 1.00      746     1030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 469: 6.23e-01   -16.000   -15.200   -14.100   -13.700 1.00     1300     1500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 470: 5.44e-01   -14.800   -14.300   -13.400   -13.000 1.01      915     1160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 471: 7.77e-01   -15.100   -14.100   -12.700   -12.300 1.00     1220     1490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 472: 4.91e-01    -9.200    -8.560    -7.690    -7.420 1.00     1070     1250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 473: 5.32e-01    -9.010    -8.150    -7.200    -6.880 1.00      910     1320</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

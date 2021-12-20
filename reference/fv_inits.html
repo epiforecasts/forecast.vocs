@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,17 +110,20 @@ for the package stan models.</p>
 <span class="r-in"><span class="va">inits</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     inits &lt;- list(init_cases = purrr::map_dbl(c(data$X[1], max(2, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         data$X[data$t_nseq + 1] * data$Y[1]/data$N[1])), ~log(abs(rnorm(1, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ., . * 0.01)))), r_init = rnorm(1, data$r_init_mean, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     inits &lt;- list(init_cases = array(log(abs(rnorm(1, data$X[1], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         data$X[1] * 0.01)))), r_init = rnorm(1, data$r_init_mean, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         data$r_init_sd * 0.1), r_scale = abs(rnorm(1, 0, 0.01)), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         eta = rnorm(data$eta_n, 0, 0.01), beta = rnorm(1, 0, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             0.1), sqrt_phi = abs(rnorm(2, 0, 0.01)))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             0.1), sqrt_phi = abs(rnorm(2, 0, 0.01)), period_eff = array(rnorm(data$period, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             0, 0.1)), period_sd = array(abs(rnorm(1, 0, 0.1))))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (strains == 1) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         inits$init_cases &lt;- inits$init_cases[1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         inits$sqrt_phi &lt;- inits$sqrt_phi[1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         inits$init_voc_cases &lt;- array(log(abs(rnorm(1, max(2, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             data$X[data$t_nseq + 1] * data$Y[1]/data$N[1]), max(2, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             data$X[data$t_nseq + 1] * data$Y[1]/data$N[1]) * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             0.01))))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         inits$voc_mod &lt;- rnorm(1, data$voc_mean, data$voc_sd * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0.1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         inits$voc_beta &lt;- rnorm(1, 0, 0.1)</span>
@@ -131,52 +134,61 @@ for the package stan models.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     return(inits)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7fb202875890&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7fb2028791c8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x7f99abfc4f58&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x7f99abfcb9a0&gt;</span>
 <span class="r-in"><span class="fu">inits</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $init_cases</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.37758  5.34663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.38877</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_init</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.03245208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01648097</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r_scale</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002037142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.005107305</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0012153491  0.0067319743  0.0061354331  0.0111809456  0.0031962047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0096041621 -0.0029822292  0.0224598715  0.0170358973 -0.0037693796</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.0172956851  0.0048436408 -0.0103621269  0.0195423333  0.0101880689</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0007756009  0.0039727094  0.0018579644 -0.0140042431  0.0117643866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0071021872 -0.0084077726  0.0121935790 -0.0014545449  0.0015487679</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -0.0091579182 -0.0022355364 -0.0229296717</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0160592580  0.0138089737 -0.0052545805  0.0119594776 -0.0216035174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0092893197  0.0093115770 -0.0152559935 -0.0149790582 -0.0073810739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.0024586544  0.0168512946  0.0085366370  0.0107904784  0.0094454701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0108034437  0.0035309509 -0.0011107630  0.0043028691  0.0027113191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21]  0.0123321701 -0.0140668569 -0.0180685410 -0.0009347459 -0.0147043184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] -0.0139130392 -0.0213460468 -0.0032179424</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1066318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1207343</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sqrt_phi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0012347991 0.0006325834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.001645952 0.010125633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $period_eff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.07280782</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $period_sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1159385</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $init_voc_cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.324426</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_mod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.007560771</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.01270095</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.0536487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06453459</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_scale</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.008889722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01157651</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $voc_eta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.0052809035 -0.0093971437 -0.0005151607 -0.0073266606 -0.0075127559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.0021154927 -0.0004229335  0.0113314964 -0.0069253818 -0.0001770097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.0084441593  0.0034054999 -0.0194274274  0.0133179486  0.0091854521</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -0.0003883272 -0.0055483118  0.0023281246  0.0039286881 -0.0130005257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -0.0076321982 -0.0209935000  0.0092318511  0.0037858221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  3.485662e-03  1.027900e-02  6.182256e-03 -2.469086e-03 -3.279031e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -1.551423e-03  3.048142e-04 -3.035059e-03 -2.229684e-03 -1.900536e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  1.510001e-02 -4.387383e-03 -8.259682e-03  8.941430e-03  2.617728e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] -5.314303e-03  3.537001e-03 -2.140941e-03 -3.627236e-03  4.627450e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] -8.945271e-03 -3.947404e-04 -1.111791e-03  1.180832e-02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $L_Omega</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.3134196 0.1117661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.8907488 0.1828737</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,15 +81,20 @@
 <ul><li>Switched the “pooled” model to use a vector autoregression set up and renamed the resulting control parameter “correlated”. On test data this performs substantially better than the old model and should be more readily extensible.</li>
 <li>Added the ability (via the <code>r_step</code> argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.</li>
 <li>Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via <code>beta</code>) and specify the expected amount of correlation between strains in the “correlated” model (<code>lkj</code>).</li>
+<li>Update the internal model configuration to be non-vectorised so that the case AR(1) process can be easily generalised to an AR(P) process. Thisfunctionality has not yet been exposed to users via the control interface.</li>
+<li>Added new functionality to delay case reporting and sequence reporting by some probability mass function. Thisfunctionality has not yet been exposed to users via the control interface.</li>
+<li>Made piecewise constant growth rates backwards looking from the last available data rather than forward looking as was previously the case. This means that forecasts are made using a full window of data to estimate the growth rate but also means that the precise dates of steps change as new data is added.</li>
+<li>Add a new argument <code>r_forecast</code> which controls if the growth rate is allowed to vary outside the range of the data.</li>
+<li>Add optional adjustment for periodic case data based on a random effect. This can be used to account for day of the week or month effects.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="evaluation-and-visualisation-0-0-9">Evaluation and visualisation<a class="anchor" aria-label="anchor" href="#evaluation-and-visualisation-0-0-9"></a></h4>
-<ul><li>Adds an optional integration with the <a href="https://epiforecasts.io/scoringutils/" class="external-link"><code>scoringutils</code></a> package to streamline evaluating forecasts using proper scoring rules.</li>
-<li>Adds an example of using <code><a href="../reference/fv_score_forecast.html">fv_score_forecast()</a></code> to the README.</li>
+<ul><li>Added an optional integration with the <a href="https://epiforecasts.io/scoringutils/" class="external-link"><code>scoringutils</code></a> package to streamline evaluating forecasts using proper scoring rules.</li>
+<li>Added an example of using <code><a href="../reference/fv_score_forecast.html">fv_score_forecast()</a></code> to the README.</li>
 <li>Generalise plot labels.</li>
 <li>Updated <code><a href="../reference/plot_cases.html">plot_cases()</a></code> to use a log 2 scaling rather than a log scaling.</li>
 <li>Updated the default scaling to be logit for `plot_voc_frac().</li>
-<li>Adds a new plotting argument to all plot functions - <code>central</code>. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting <code>central = TRUE</code> the user can elect to add these estimates to the plot.</li>
+<li>Added a new plotting argument to all plot functions - <code>central</code>. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting <code>central = TRUE</code> the user can elect to add these estimates to the plot.</li>
 </ul></div>
 </div>
 <div class="section level3">

@@ -24,7 +24,7 @@ This may be useful when specifying random walks, AR processes, etc."><meta prope
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@ This may be useful when specifying random walks, AR processes, etc.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">piecewise_steps</span><span class="op">(</span><span class="va">t</span>, <span class="va">step</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">piecewise_steps</span><span class="op">(</span><span class="va">t</span>, <span class="va">step</span>, offset <span class="op">=</span> <span class="fl">0</span>, steps_post_offset <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,6 +91,12 @@ This may be useful when specifying random walks, AR processes, etc.</p>
 <dd><p>Integer, the timespan over which to calculate steps</p></dd>
 <dt>step</dt>
 <dd><p>Integer, the frequency at which to step.</p></dd>
+<dt>offset</dt>
+<dd><p>Integer, the amount to offset steps. This can be used to
+index steps from this index.</p></dd>
+<dt>steps_post_offset</dt>
+<dd><p>Logical, defaults to <code>TRUE</code>. Should steps be added
+after the offset.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -100,6 +106,7 @@ This may be useful when specifying random walks, AR processes, etc.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Preprocessing functions
 <code><a href="filter_by_availability.html">filter_by_availability</a>()</code>,
+<code><a href="fv_dow_period.html">fv_dow_period</a>()</code>,
 <code><a href="latest_obs.html">latest_obs</a>()</code></p></div>
     </div>
 

@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.4000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,8 +92,11 @@
   horizon <span class="op">=</span> <span class="fl">4</span>,
   r_init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span>,
   r_step <span class="op">=</span> <span class="fl">1</span>,
+  r_forecast <span class="op">=</span> <span class="cn">TRUE</span>,
   beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.1</span><span class="op">)</span>,
   lkj <span class="op">=</span> <span class="fl">0.5</span>,
+  period <span class="op">=</span> <span class="cn">NULL</span>,
+  special_periods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,
   voc_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
   voc_label <span class="op">=</span> <span class="st">"VOC"</span>,
   strains <span class="op">=</span> <span class="fl">2</span>,
@@ -167,6 +170,9 @@ standard deviation for the normal prior on the initial log growth rate.</p></dd>
 <dt>r_step</dt>
 <dd><p>Integer, defaults to 1. The number of observations between
 each change in the growth rate.</p></dd>
+<dt>r_forecast</dt>
+<dd><p>Logical, defaults <code>TRUE</code>. Should the growth rate be
+forecast beyond the data horizon.</p></dd>
 <dt>beta</dt>
 <dd><p>Numeric vector, defaults to c(0, 0.5). Represents the mean and
 standard deviation of the normal prior (truncated at 1 and -1) on the
@@ -181,6 +187,16 @@ to 1 assigns a uniform prior for all correlations, values less than 1
 indicate increased belief in strong correlations and values greater than 1
 indicate increased belief weaker correlations. Our default setting places
 increased weight on some correlation between strains.</p></dd>
+<dt>period</dt>
+<dd><p>Logical defaults to <code>NULL</code>. If specified should be a function
+that accepts a vector of dates. This can be used to assign periodic effects
+to dates which will then be adjusted for in the case model. An example
+is adjusting for day of the week effects for which the <code><a href="fv_dow_period.html">fv_dow_period()</a></code>
+can be used.</p></dd>
+<dt>special_periods</dt>
+<dd><p>A vector of dates to pass to the <code>period</code> function
+argument with the same name to be treated as "special" for example holidays
+being treated as sundays in <code><a href="fv_dow_period.html">fv_dow_period()</a></code>.</p></dd>
 <dt>voc_scale</dt>
 <dd><p>Numeric vector of length 2. Prior mean and
 standard deviation for the initial growth rate modifier
