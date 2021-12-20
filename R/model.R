@@ -191,7 +191,7 @@ fv_inits <- function(data, strains = 2) {
       beta = rnorm(1, 0, 0.1),
       sqrt_phi = abs(rnorm(2, 0, 0.01)),
       period_eff = array(rnorm(data$period, 0, 0.1)),
-      period_sd = array(rnorm(1, 0, 0.1))
+      period_sd = array(abs(rnorm(1, 0, 0.1)))
     )
     if (strains == 1) {
       inits$sqrt_phi <- inits$sqrt_phi[1]
