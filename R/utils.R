@@ -141,6 +141,6 @@ utils::globalVariables(
     "q20", "q5", "q80", "q95", "quantile", "results", "row_id", "sd",
     "seq_available", "seq_total", "seq_voc", "share_voc", "start", "type",
     "Type", "value", "value_type", "..non_list_cols", "forecast_start",
-    "data", "time", "day_of_week", "perio", "special", "specials_to"
+    "data", "time", "day_of_week", "perio", "special", "specials_to", "period"
   )
 )
