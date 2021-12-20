@@ -111,14 +111,25 @@ save_plots <- function(plots, save_path = NULL, type = "png", ...) {
 #' This may be useful when specifying random walks, AR processes, etc.
 #'
 #' @param t Integer, the timespan over which to calculate steps
+#'
 #' @param step Integer, the frequency at which to step.
+#'
+#' @param offset Integer, the amount to offset steps. This can be used to
+#' index steps fromm this index.
+#'
+#' @param steps_post_offset Logical, defaults to `TRUE`. Should steps be added
+#' after the offset.
 #'
 #' @return A list containing two elements: `n` (the number of steps) and `steps`
 #' the location of steps as a binary variable.
 #'
 #' @family preprocess
-piecewise_steps <- function(t, step) {
-  steps <- as.integer(1:t %% step == 0)
+piecewise_steps <- function(t, step, offset = 0, steps_post_offset = TRUE) {
+  times <- 1:t - offset - 1
+  steps <- as.integer(times %% step == 0)
+  if (!steps_post_offset) {
+    steps <- ifelse(1:t > offset, 0, steps)
+  }
   return(list(n = sum(steps), steps = steps))
 }
 

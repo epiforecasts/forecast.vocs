@@ -9,6 +9,8 @@
 * Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via `beta`) and specify the expected amount of correlation between strains in the "correlated" model (`lkj`).
 * Update the internal model configuration to be non-vectorised so that the case AR(1) process can be easily generalised to an AR(P) process. This funcationality has not yet been exposed to users via the control interface.
 * Added new functionality to delay case reporting and sequence reporting by some probability mass function. This funcationality has not yet been exposed to users via the control interface.
+* Made piecewise constant growth rates backwards looking from the last available data rather than forward looking as was previously the case. This means that forecasts are made using a full window of data to estimate the growth rate but also means that the precise dates of steps change as new data is added.
+* Add a new argument `r_forecast` which controls if the growth rate is allowed to vary outside the range of the data. 
 
 ### Evaluation and visualisation
 

@@ -329,8 +329,7 @@ fv_tidy_posterior <- function(fit, probs = c(0.05, 0.2, 0.8, 0.95),
       "Sequencing overdispersion", "Notification overdispersion"
     ),
     exponentiated = c(
-      rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2),
-      rep(TRUE, 2), rep(FALSE, 3)
+      rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 2), rep(FALSE, 5)
     )
   )
   model <- merge(param_lookup, sfit, by = "variable")

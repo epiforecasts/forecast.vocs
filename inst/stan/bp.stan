@@ -15,7 +15,7 @@ data {
   int overdisp;
   int debug;
   int eta_n;
-  int eta_loc[eta_n];
+  int eta_loc[t - 2];
   real beta_mean;
   real beta_sd;
 }

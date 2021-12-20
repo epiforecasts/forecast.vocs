@@ -17,6 +17,7 @@ forecast(
   horizon = 4,
   r_init = c(0, 0.25),
   r_step = 1,
+  r_forecast = TRUE,
   beta = c(0, 0.1),
   lkj = 0.5,
   voc_scale = c(0, 0.2),
@@ -89,6 +90,9 @@ standard deviation for the normal prior on the initial log growth rate.}
 
 \item{r_step}{Integer, defaults to 1. The number of observations between
 each change in the growth rate.}
+
+\item{r_forecast}{Logical, defaults \code{TRUE}. Should the growth rate be
+forecast beyond the data horizon.}
 
 \item{beta}{Numeric vector, defaults to c(0, 0.5). Represents the mean and
 standard deviation of the normal prior (truncated at 1 and -1) on the
