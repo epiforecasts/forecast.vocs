@@ -56,7 +56,7 @@ transformed parameters {
   r[2:(t-1)] = r[2:(t-1)] + diff;
 
   // update case using initial cases, generation time and growth
-  mean_cases = cases_ar(init_cases, gt, exp(r), t); 
+  mean_cases = latent_cases_ar(init_cases, gt, exp(r), t); 
   rep_by_case = convolve(mean_cases, case_delay);
   rep_by_case = periodic_adjustment(rep_by_case, periodic, period_eff,
                                     period_sd);

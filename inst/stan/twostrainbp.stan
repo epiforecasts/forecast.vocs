@@ -136,9 +136,9 @@ transformed parameters {
     vector[1] init_nvoc_cases;
     init_nvoc_cases[1] = t_nseq > 0 ? init_cases[1] : 
                                       init_cases[1]  - init_voc_cases[1];
-    mean_nvoc_cases = cases_ar(init_nvoc_cases, gt, exp(r), t); 
+    mean_nvoc_cases = latent_cases_ar(init_nvoc_cases, gt, exp(r), t); 
   }
-  mean_voc_cases = cases_ar(init_voc_cases, gt_voc, exp(voc_r), t_seqf); 
+  mean_voc_cases = latent_cases_ar(init_voc_cases, gt_voc, exp(voc_r), t_seqf); 
 
   // combine to overall cases
   mean_cases = mean_nvoc_cases;
