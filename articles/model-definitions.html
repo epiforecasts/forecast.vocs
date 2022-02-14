@@ -46,7 +46,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.6000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +95,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="model-definitions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Model definitions</h1>
@@ -107,14 +110,14 @@
 
     
     
-<div class="section level2">
-<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
-</h2>
+<div class="section level3">
+<h3 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h3>
 <p>The package currently supports two models both with various options. A baseline single strain model and a two strain model with flexible variable dynamics. Both share the same underlying structure with expected notifications being assumed to be a product of past expected notifications, and an exponentiated time-varying term. This term is then modelled in both instances as a differenced autoregressive process with a signal lag term. In the two strain model this process can either be modelled jointly for variants, as a correlated process, or independently. By default it is assumed to vary inline with the timestep of the data but this can be altered to speed up computation or to improve out of sample performance. Observed cases are estimated from expected cases by assuming either a negative binomial or Poisson observation model. In the two strain model variant of concern positive samples are estimated using a Beta-binomial or binomial observation model. Detailed model definitions are given below. Prior values when given represent the package defaults and can, and generally should, altered by the user based on their domain specific knowledge.</p>
 </div>
-<div class="section level2">
-<h2 id="single-strain">Single strain<a class="anchor" aria-label="anchor" href="#single-strain"></a>
-</h2>
+<div class="section level3">
+<h3 id="single-strain">Single strain<a class="anchor" aria-label="anchor" href="#single-strain"></a>
+</h3>
 <p>We model the mean (<span class="math inline">\(\lambda_t\)</span>) of reported cases (<span class="math inline">\(C_t\)</span>) as an order 1 autoregressive (AR(P)) process by time unit (<span class="math inline">\(t\)</span>). The model is initialised by assuming that the initial reported cases are representative with a small amount of error (2.5%) for each <span class="math inline">\(t \lt P\)</span>.</p>
 <p><span class="math display">\[\begin{align}
   \lambda_t &amp;\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right),\ t \leq P \\
@@ -144,9 +147,9 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="two-strain">Two strain<a class="anchor" aria-label="anchor" href="#two-strain"></a>
-</h2>
+<div class="section level3">
+<h3 id="two-strain">Two strain<a class="anchor" aria-label="anchor" href="#two-strain"></a>
+</h3>
 <p>We model strain dynamics using the single strain model as a starting point but with the addition of strain specific AR(P) case model and a beta binomial (or optionally binomial) observation process for sequence data. The variant of concerns growth rate is modelled either as a fixed scaling of the non-variant of concern growth rate, as an independent AR(1) process, or in a vector autoregression framework as a correlated AR(1) process. This last formulation is described in detail below along with the modifications required to define the other two formulations. Parameters related to the variant of concern (VoC) are given the <span class="math inline">\(\delta\)</span> superscript and parameters related to non-VoC cases are given the <span class="math inline">\(o\)</span> superscript.</p>
 <p>Mean reported cases are again defined using a AR(1) process on the log scale for each strain and then combined for overall mean reported cases.</p>
 <p><span class="math display">\[\begin{align}
@@ -207,9 +210,9 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a>
-</h1>
+<div class="section level2">
+<h2 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a>
+</h2>
 <p>As well as posterior predictions and forecasts for both notifications by variant and variant of concern proportion the models also return several summary statistics which may be useful for drawing inferences about underlying transmission dynamics. These include the log scale growth rate (<span class="math inline">\(g^{o, \delta}_t\)</span>), the instantaneous effective reproduction number (<span class="math inline">\(R^{o, \delta}_t\)</span>), and the transmission advantage of the variant of concern (<span class="math inline">\(A_t\)</span>). These are calculated as follows:</p>
 <p><span class="math display">\[\begin{align}
   g^{o, \delta}_t &amp;= T_s r^{o, \delta}_t \\
@@ -218,14 +221,14 @@
 \end{align}\]</span></p>
 <p><span class="math inline">\(T_s\)</span> is a user set scaling parameter that defines the timespan over which the summary metrics apply dependent on the time step of the data. It can be set using the <code>scale_r</code> and defaults to 1 which returns summary statistics scaled to the timestep of the data. Depending on the setup of the model used these summary measures will be more or less related to their epidemiological definitions. In particular, adding a weighting to past expected cases that is more complex than a simple lag may cause interpretation issues.</p>
 </div>
-<div class="section level1">
-<h1 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
-</h1>
+<div class="section level2">
+<h2 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
+</h2>
 <p>The models are implemented in <code>stan</code> using <code>cmdstanr</code> with no defaults altered<span class="citation"><sup>[1,2]</sup></span>. Due to the complexity of the posterior it is likely that increasing the <code>adapt_delta</code> may be required to mitigate potential bias in posterior estimates.<span class="citation"><sup>[3]</sup></span> <code>forecast.vocs</code> incorporates additional functionality written in R<span class="citation"><sup>[4]</sup></span> to enable plotting forecasts and posterior predictions, summarising forecasts, and scoring them using <code>scoringutils</code><span class="citation"><sup>[5]</sup></span>. All functionality is modular allowing users to extend and alter the underlying model whilst continuing to use the package framework.</p>
 </div>
-<div class="section level1 unnumbered">
-<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-stan">
 <p>1. Team, S. D. (2021). <em>Stan modeling language users guide and reference manual, 2.28.1</em>.</p>
@@ -252,12 +255,12 @@
 
     <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>.</p>
+<p>Developed by Sam Abbott Sebastian Funk <a href="mailto:sebastian.funk@lshtm.ac.uk" class="email">sebastian.funk@lshtm.ac.uk</a> [ctb] (<a href="https://orcid.org/0000-0002-2842-3406" class="external-link uri">https://orcid.org/0000-0002-2842-3406</a>).</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.5000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.6000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,6 +103,7 @@
 <li>Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn’t exist. This could lead to bugs in user code that are hard to spot.</li>
 <li>Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases.</li>
 <li>Fixed a bug where <code><a href="../reference/summary.fv_forecast.html">summary.fv_forecast()</a></code> failed to return diagnostics.</li>
+<li>Fixed a bug whereby certain combinations of data availability and truncation can lead to attempts to access non-existing indices. (<a href="https://github.com/sbfnk" class="external-link">@sbfnk</a> in <a href="(https://github.com/epiforecasts/forecast.vocs/pulls)" class="external-link">#111</a>.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -200,11 +201,11 @@
 
 
     <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>.</p>
+  <p></p><p>Developed by Sam Abbott Sebastian Funk <a href="mailto:sebastian.funk@lshtm.ac.uk" class="email">sebastian.funk@lshtm.ac.uk</a> [ctb] (<a href="https://orcid.org/0000-0002-2842-3406" class="external-link uri">https://orcid.org/0000-0002-2842-3406</a>).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
