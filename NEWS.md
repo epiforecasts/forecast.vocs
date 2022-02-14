@@ -29,6 +29,7 @@
 * Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn't exist. This could lead to bugs in user code that are hard to spot. 
 * Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases. 
 * Fixed a bug where `summary.fv_forecast()` failed to return diagnostics.
+* Fixed a bug whereby certain combinations of data availability and truncation can lead to attempts to access non-existing indices. (@sbfnk in #111).
 
 # forecast.vocs 0.0.8
 
