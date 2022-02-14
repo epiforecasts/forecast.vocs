@@ -6,7 +6,12 @@ Authors@R:
     person(given = "Sam Abbott",
            role = c("aut", "cre"),
            email = "sam.abbott@lshtm.ac.uk",
-           comment = c(ORCID = "0000-0001-8057-8037"))
+           comment = c(ORCID = "0000-0001-8057-8037"),
+    person(given = "Sebastian",
+           family = "Funk",
+           role = c("ctb"),
+           email = "sebastian.funk@lshtm.ac.uk",
+           comment = c(ORCID = "0000-0002-2842-3406")))
 Description: Contains models and tools to produce short-term forecasts for
     both case and sequence notifications assuming circulation of either
     one or two variants. Tools are also provided to allow the evaluation
