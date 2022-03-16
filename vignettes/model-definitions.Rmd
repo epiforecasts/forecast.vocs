@@ -114,7 +114,7 @@ Where $\boldsymbol \Sigma$ is a $2 \times 2$ covariance matrix which we decompos
 \end{align}
 
 Where $\boldsymbol \Omega$ has a Lewandowski-Kurowicka-Joe (LKJ) prior where
-$\omega$ controls the prior expectation for correlation between variants (with $\omega = 1$ resulting in a uniform prior over all correlations, $\omega \lt 1$ placing more weight on larger correlations and $\omega \gt 1 placing more weight on small amounts of correlations). By default we set $\omega = 0.5$ giving more weight to correlations between variants dynamics. 
+$\omega$ controls the prior expectation for correlation between variants (with $\omega = 1$ resulting in a uniform prior over all correlations, $\omega \lt 1$ placing more weight on larger correlations and $\omega \gt 1$ placing more weight on small amounts of correlations). By default we set $\omega = 0.5$ giving more weight to correlations between variants dynamics. 
 
 On top of this correlated strain dynamic model `forecast.vocs` also offers two other options that represent extremes in the correlated model. The first of these assumes that both strains evolve with independent differenced AR(1) growth rates with only a scaling factor (s^{\delta}) linking them. The second assumes that strains growth rates are completely correlated in time (i.e they are governed by a single AR(1) differenced process) and only differ based on a scaling factor ($s^{\delta}$). See the documentation for `variant_relationship` in `?forecast()` for details. 
 
