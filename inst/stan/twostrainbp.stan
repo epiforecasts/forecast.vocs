@@ -32,6 +32,18 @@ data {
   int voc_eta_loc[relat ? t_seqf - 2 : 0];
   int period;
   int periodic[t];
+  int gt_l;
+  vector[gt_l] gt;
+  int gt_voc_l;
+  vector[gt_voc_l] gt_voc;
+  int cd_l;
+  vector[cd_l] case_delay;
+  int seqd_l;
+  vector[seqd_l] seq_delay;
+  vector[1] mean_init_cases;
+  vector[1] sd_init_cases;
+  vector[1] mean_init_voc_cases;
+  vector[1] sd_init_voc_cases;
 }
 
 transformed data {
@@ -41,10 +53,6 @@ transformed data {
   vector[1] mean_init_voc_cases;
   vector[1] sd_init_voc_cases;
   int nvoc_eta_n = eta_n - voc_eta_n;
-  vector[1] gt = rep_vector(1, 1);
-  vector[1] gt_voc = rep_vector(1, 1);
-  vector[1] case_delay = rep_vector(1, 1);
-  vector[1] seq_delay = rep_vector(1, 1);
   mean_init_cases = to_vector({X[1]});
   mean_init_cases = log(mean_init_cases);
   sd_init_cases = rep_vector(0.1, 1);

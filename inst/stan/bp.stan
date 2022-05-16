@@ -21,6 +21,10 @@ data {
   real beta_sd;
   int period;
   int periodic[t];
+  int gt_l;
+  vector[gt_l] gt;
+  int cd_l;
+  vector[cd_l] case_delay;
 }
 
 transformed data {
