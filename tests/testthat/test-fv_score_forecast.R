@@ -8,26 +8,19 @@ if (requireNamespace("scoringutils")) {
     )
 
     expect_data_table(
-      fv_score_forecast(pp_forecasts, current_obs, summarise_by = "strains")
+      fv_score_forecast(pp_forecasts, current_obs)
     )
     expect_data_table(
       fv_score_forecast(
         pp_forecasts, current_obs,
-        summarise_by = "strains", log = TRUE
-      )
-    )
-    expect_data_table(
-      fv_score_forecast(
-        pp_forecasts, current_obs,
-        summarise_by = c("strains", "horizon")
-      )
-    )
-    expect_data_table(
-      fv_score_forecast(
-        pp_forecasts, current_obs,
-        summarise_by = c("strains", "horizon"),
         log = TRUE
       )
+    )
+    expect_data_table(
+      supressMessages(fv_score_forecast(
+        pp_forecasts, current_obs,
+        check = TRUE
+      ))
     )
   })
 }

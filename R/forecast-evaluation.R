@@ -34,7 +34,7 @@
 #'
 #' @inheritParams plot_default
 #' @family modelvalidation
-#' @importFrom data.table copy setnames
+#' @importFrom data.table copy setnames setnames
 #' @export
 #' @examplesIf interactive()
 #' options(mc.cores = 4)
