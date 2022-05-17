@@ -17,7 +17,7 @@ if (requireNamespace("scoringutils")) {
       )
     )
     expect_data_table(
-      supressMessages(fv_score_forecast(
+      suppressMessages(fv_score_forecast(
         pp_forecasts, current_obs,
         check = TRUE
       ))
