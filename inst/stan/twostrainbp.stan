@@ -154,8 +154,8 @@ transformed parameters {
   // calculate fraction voc by date of sequencing
   {
     vector[t] rep_by_seq = convolve(mean_cases, seq_delay);
-    vector[t_seq] voc_by_seq = convolve(mean_voc_cases, seq_delay);
-    frac_voc = voc_by_seq ./ rep_by_seq[(t_nseq + 1):t];
+    vector[t_seqf] voc_by_seq = convolve(mean_voc_cases, seq_delay);
+    frac_voc = exp(log(voc_by_seq) -  log(rep_by_seq[(t_nseq + 1):t]));
   }
   
   

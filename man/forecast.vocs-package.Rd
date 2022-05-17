@@ -20,5 +20,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Sam Abbott \email{sam.abbott@lshtm.ac.uk} (\href{https://orcid.org/0000-0001-8057-8037}{ORCID})
 
+Other contributors:
+\itemize{
+  \item Sebastian Funk \email{sebastian.funk@lshtm.ac.uk} (\href{https://orcid.org/0000-0002-2842-3406}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}
