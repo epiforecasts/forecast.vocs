@@ -1,10 +1,12 @@
 #' Evaluate forecasts using proper scoring rules
 #'
-#' Acts as a wrapper to [scoringutils::eval_forecasts()]. In particular,
+#' Acts as a wrapper to [scoringutils::score()]. In particular,
 #' handling filtering the output for various [forecast.vocs] functions and
 #' linking this output to observed data. See the documentation for the
 #' `scoringutils` package for more on forecast scoring and the documentation
 #' and examples below for simple examples in the context of [forecast.vocs].
+#' Internally name clashes between [scoringutils] variables and [forecast.vocs]
+#' variables are handled.
 #'
 #' @param forecast A posterior forecast or posterior prediction as returned by
 #' [summary.fv_posterior()], [summary.fv_forecast()] or [fv_extract_forecast()].
@@ -19,6 +21,9 @@
 #' measure. It may be useful when targets are on very different scales or when
 #' the forecaster is more interested in good all round performance versus good
 #' performance for targets with large values.
+#'
+#' @param check Logical, defaults to FALSE. Should
+#' [scoringutils::check_forecasts()] be used to check input forecasts.
 #'
 #' @param round_to Integer defaults to 3. Number of digits to round scoring
 #' output to.
@@ -53,21 +58,20 @@
 #' # Filter for the latest available observations
 #' obs <- latest_obs(germany_covid19_delta_obs)
 #'
-#' # score overall
-#' fv_score_forecast(forecasts, obs, summarise_by = "strains")
+#' # scoreon the absolute scale
+#' scores <- fv_score_forecast(forecasts, obs)
+#' summarise_scores(scores, by = "strains")
 #'
 #' # score overall on a log scale
-#' fv_score_forecast(forecasts, obs, summarise_by = "strains", log = TRUE)
+#' log_scores <- fv_score_forecast(forecasts, obs, log = TRUE)
+#' summarise_scores(log_scores, by = "strains")
 #'
 #' # score by horizon
-#' fv_score_forecast(forecasts, obs, summarise_by = c("strains", "horizon"))
+#' summarise_scores(scores, by = c("strains", "horizon"))
 #'
 #' # score by horizon on a log scale
-#' fv_score_forecast(
-#'   forecasts, obs,
-#'   summarise_by = c("strains", "horizon"), log = TRUE
-#' )
-fv_score_forecast <- function(forecast, obs, log = FALSE,
+#' summarise_scores(log_scores, by = c("strains", "horizon"))
+fv_score_forecast <- function(forecast, obs, log = FALSE, check = TRUE,
                               round_to = 3, ...) {
   forecast <- data.table::as.data.table(forecast)
   if (!requireNamespace("scoringutils")) {
@@ -78,6 +82,9 @@ fv_score_forecast <- function(forecast, obs, log = FALSE,
   }
   if (!is.null(forecast$type)) {
     forecast <- forecast[type %in% c("Overall", "Combined")]
+  }
+  if (!is.null(forecast$overdispersion)) {
+    data.table::setnames(forecast, "overdispersion", "obs_overdispersion")
   }
   long_forecast <- quantiles_to_long(forecast)
   latest_obs <- data.table::as.data.table(obs)
@@ -90,7 +97,13 @@ fv_score_forecast <- function(forecast, obs, log = FALSE,
     long_forecast[, (cols) := purrr::map(.SD, ~ log(. + 0.01)), .SDcols = cols]
   }
 
-  scores <- scoringutils::eval_forecasts(long_forecast, ...)
+  long_forecast[, model := strains]
+
+  if (check) {
+    scoringutils::check_forecasts(long_forecast)
+  }
+
+  scores <- scoringutils::score(long_forecast, ...)
   numeric_cols <- colnames(scores)[sapply(scores, is.numeric)]
   scores <- scores[, (numeric_cols) := lapply(.SD, signif, digits = round_to),
     .SDcols = numeric_cols

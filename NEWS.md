@@ -13,6 +13,10 @@
 * Add a new argument `r_forecast` which controls if the growth rate is allowed to vary outside the range of the data. 
 * Add optional adjustment for periodic case data based on a random effect. This can be used to account for day of the week or month effects.
 
+### Bug fixes
+
+- Fixed a bug in the two-strain model caused by the addition of infrastructure to compute discrete convolutions. 
+- Updated `fv_score_forecast()` to support `scoringutils 1.0.0`. 
 
 ### Evaluation and visualisation
 

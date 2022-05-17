@@ -4,7 +4,7 @@
 \alias{fv_score_forecast}
 \title{Evaluate forecasts using proper scoring rules}
 \usage{
-fv_score_forecast(forecast, obs, log = FALSE, round_to = 3, ...)
+fv_score_forecast(forecast, obs, log = FALSE, check = TRUE, round_to = 3, ...)
 }
 \arguments{
 \item{forecast}{A posterior forecast or posterior prediction as returned by
@@ -23,6 +23,9 @@ measure. It may be useful when targets are on very different scales or when
 the forecaster is more interested in good all round performance versus good
 performance for targets with large values.}
 
+\item{check}{Logical, defaults to FALSE. Should
+\code{\link[scoringutils:check_forecasts]{scoringutils::check_forecasts()}} be used to check input forecasts.}
+
 \item{round_to}{Integer defaults to 3. Number of digits to round scoring
 output to.}
 
@@ -32,11 +35,13 @@ output to.}
 A \code{data.table} as returned by \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}.
 }
 \description{
-Acts as a wrapper to \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}. In particular,
+Acts as a wrapper to \code{\link[scoringutils:score]{scoringutils::score()}}. In particular,
 handling filtering the output for various \link{forecast.vocs} functions and
 linking this output to observed data. See the documentation for the
 \code{scoringutils} package for more on forecast scoring and the documentation
 and examples below for simple examples in the context of \link{forecast.vocs}.
+Internally name clashes between \link{scoringutils} variables and \link{forecast.vocs}
+variables are handled.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -61,20 +66,19 @@ forecasts <- summary(forecasts, target = "forecast", type = "cases")
 # Filter for the latest available observations
 obs <- latest_obs(germany_covid19_delta_obs)
 
-# score overall
-fv_score_forecast(forecasts, obs, summarise_by = "strains")
+# scoreon the absolute scale
+scores <- fv_score_forecast(forecasts, obs)
+summarise_scores(scores, by = "strains")
 
 # score overall on a log scale
-fv_score_forecast(forecasts, obs, summarise_by = "strains", log = TRUE)
+log_scores <- fv_score_forecast(forecasts, obs, log = TRUE)
+summarise_scores(log_scores, by = "strains")
 
 # score by horizon
-fv_score_forecast(forecasts, obs, summarise_by = c("strains", "horizon"))
+summarise_scores(scores, by = c("strains", "horizon"))
 
 # score by horizon on a log scale
-fv_score_forecast(
-  forecasts, obs,
-  summarise_by = c("strains", "horizon"), log = TRUE
-)
+summarise_scores(log_scores, by = c("strains", "horizon"))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
