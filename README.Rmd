@@ -132,9 +132,10 @@ A potentially useful optional integration with [`scoringutils`](https://epiforec
 library(scoringutils)
 library(knitr)
 
-pp_forecasts <- summary(forecasts, target = "forecast", type = "cases")
-scores <- fv_score_forecast(pp_forecasts, current_obs, summarise_by = "strains")
-kable(scores)
+summary(forecasts, target = "forecast", type = "cases") |>
+  fv_score_forecast(current_obs) |>
+  summarise_scores(by = "strains") |>
+  kable()
 ```
 
 ### Step by step forecast
