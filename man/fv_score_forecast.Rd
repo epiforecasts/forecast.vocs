@@ -29,10 +29,10 @@ performance for targets with large values.}
 \item{round_to}{Integer defaults to 3. Number of digits to round scoring
 output to.}
 
-\item{...}{Additional arguments passed to \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}.}
+\item{...}{Additional arguments passed to \code{\link[scoringutils:score]{scoringutils::score()}}.}
 }
 \value{
-A \code{data.table} as returned by \code{\link[scoringutils:eval_forecasts]{scoringutils::eval_forecasts()}}.
+A \code{data.table} as returned by \code{\link[scoringutils:score]{scoringutils::score()}}.
 }
 \description{
 Acts as a wrapper to \code{\link[scoringutils:score]{scoringutils::score()}}. In particular,

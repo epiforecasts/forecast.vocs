@@ -28,9 +28,9 @@
 #' @param round_to Integer defaults to 3. Number of digits to round scoring
 #' output to.
 #'
-#' @param ... Additional arguments passed to [scoringutils::eval_forecasts()].
+#' @param ... Additional arguments passed to [scoringutils::score()].
 #'
-#' @return A `data.table` as returned by [scoringutils::eval_forecasts()].
+#' @return A `data.table` as returned by [scoringutils::score()].
 #'
 #' @inheritParams plot_default
 #' @family modelvalidation
