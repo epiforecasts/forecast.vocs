@@ -98,7 +98,7 @@ fv_score_forecast <- function(forecast, obs, log = FALSE, check = TRUE,
   }
 
   long_forecast[, model := strains]
-
+  suppressWarnings(long_forecast[, mad := NULL])
   if (check) {
     scoringutils::check_forecasts(long_forecast)
   }
