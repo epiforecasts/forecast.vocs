@@ -22,7 +22,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,11 +73,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="forecastvocs-010">forecast.vocs 0.1.0<a class="anchor" aria-label="anchor" href="#forecastvocs-010"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.0" id="forecastvocs-090">forecast.vocs 0.9.0<a class="anchor" aria-label="anchor" href="#forecastvocs-090"></a></h2>
 <div class="section level3">
-<h3 id="features-0-1-0">Features<a class="anchor" aria-label="anchor" href="#features-0-1-0"></a></h3>
+<h3 id="features-0-9-0">Features<a class="anchor" aria-label="anchor" href="#features-0-9-0"></a></h3>
 <div class="section level4">
-<h4 id="model-0-1-0">Model<a class="anchor" aria-label="anchor" href="#model-0-1-0"></a></h4>
+<h4 id="model-0-9-0">Model<a class="anchor" aria-label="anchor" href="#model-0-9-0"></a></h4>
 <ul><li>Switched the “pooled” model to use a vector auto-regression set up and renamed the resulting control parameter “correlated”. On test data this performs substantially better than the old model and should be more readily extensible.</li>
 <li>Added the ability (via the <code>r_step</code> argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.</li>
 <li>Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via <code>beta</code>) and specify the expected amount of correlation between strains in the “correlated” model (<code>lkj</code>).</li>
@@ -90,11 +90,11 @@
 <li>Update initial conditions to work with <code>cmdtan 2.32.0</code>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="package-0-1-0">Package<a class="anchor" aria-label="anchor" href="#package-0-1-0"></a></h4>
+<h4 id="package-0-9-0">Package<a class="anchor" aria-label="anchor" href="#package-0-9-0"></a></h4>
 <ul><li>Use <code>linewidth</code> in <code>geom_line</code> as <code>size</code> has been depreciated.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="evaluation-and-visualisation-0-1-0">Evaluation and visualisation<a class="anchor" aria-label="anchor" href="#evaluation-and-visualisation-0-1-0"></a></h4>
+<h4 id="evaluation-and-visualisation-0-9-0">Evaluation and visualisation<a class="anchor" aria-label="anchor" href="#evaluation-and-visualisation-0-9-0"></a></h4>
 <ul><li>Added an optional integration with the <a href="https://epiforecasts.io/scoringutils/" class="external-link"><code>scoringutils</code></a> package to streamline evaluating forecasts using proper scoring rules.</li>
 <li>Added an example of using <code><a href="../reference/fv_score_forecast.html">fv_score_forecast()</a></code> to the README.</li>
 <li>Generalise plot labels.</li>
@@ -104,7 +104,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0"></a></h3>
+<h3 id="bug-fixes-0-9-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-0"></a></h3>
 <ul><li>Fixed a bug in the output of the <code><a href="../reference/forecast.html">forecast()</a></code> function where the prior specifications for the initial growth and the variant scaling were only partially included.</li>
 <li>Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn’t exist. This could lead to bugs in user code that are hard to spot.</li>
 <li>Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases.</li>
@@ -115,9 +115,9 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.8" id="forecastvocs-008">forecast.vocs 0.0.8<a class="anchor" aria-label="anchor" href="#forecastvocs-008"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="forecastvocs-080">forecast.vocs 0.8.0<a class="anchor" aria-label="anchor" href="#forecastvocs-080"></a></h2>
 <div class="section level3">
-<h3 id="features-0-0-8">Features<a class="anchor" aria-label="anchor" href="#features-0-0-8"></a></h3>
+<h3 id="features-0-8-0">Features<a class="anchor" aria-label="anchor" href="#features-0-8-0"></a></h3>
 <ul><li>Adds <code>summary</code> and <code>plot</code> methods for <code><a href="../reference/forecast.html">forecast()</a></code> and <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code> as interfaces to lower level functions.</li>
 <li>Adds a new summary variable for the transmission advantage of the VOC to the output from <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code>.</li>
 <li>Adds a new plotting function <code><a href="../reference/plot_voc_advantage.html">plot_voc_advantage()</a></code> to extract and plot this.</li>
@@ -127,20 +127,20 @@
 <li>Adds tests for all new functionality.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="breaking-changes-0-0-8">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-8"></a></h3>
+<h3 id="breaking-changes-0-8-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-8-0"></a></h3>
 <ul><li>The variant fraction label has been renamed <code>voc_frac</code> from <code>voc</code> due to the new variant advantage label.</li>
 <li>
 <code>plot_voc()</code> has been renamed <code><a href="../reference/plot_voc_frac.html">plot_voc_frac()</a></code> due to the new <code><a href="../reference/plot_voc_advantage.html">plot_voc_advantage()</a></code> function.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-0-8">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-8"></a></h3>
+<h3 id="bug-fixes-0-8-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a></h3>
 <ul><li>Spell checks documentation.</li>
 <li>Refactors model description to improve clarity.</li>
 <li>Fixed an issue where <code>voc_label</code> was not being passed by <code><a href="../reference/forecast.html">forecast()</a></code> to lower level methods and hence new labels specifying the VOC were not being assigned.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.7" id="forecastvocs-007">forecast.vocs 0.0.7<a class="anchor" aria-label="anchor" href="#forecastvocs-007"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.0" id="forecastvocs-070">forecast.vocs 0.7.0<a class="anchor" aria-label="anchor" href="#forecastvocs-070"></a></h2>
 <ul><li>Further generalised the <code>forecast</code> family to accept custom data and forecast extraction functions.</li>
 <li>Split generic posterior summary function from specific posterior summary function.</li>
 <li>Catch data passing bugs in <code>forecast</code> with new tests</li>
@@ -150,7 +150,7 @@
 <li>Fixed package building on <code>r-universe</code>.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.6" id="forecastvocs-006">forecast.vocs 0.0.6<a class="anchor" aria-label="anchor" href="#forecastvocs-006"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.0" id="forecastvocs-060">forecast.vocs 0.6.0<a class="anchor" aria-label="anchor" href="#forecastvocs-060"></a></h2>
 <ul><li>Add a vignette defining the package models.</li>
 <li>Updated documentation to use <a href="https://preferably.amirmasoudabdol.name" class="external-link">preferably</a>.</li>
 <li>Add basic tests for all modelling functions.</li>
@@ -162,19 +162,19 @@
 <li>Added the ability to pass model specific functions to the <code>forecast</code> function and wrappers enabling users to supply custom models but make use of the remaining package functionality.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.5" id="forecastvocs-005">forecast.vocs 0.0.5<a class="anchor" aria-label="anchor" href="#forecastvocs-005"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="forecastvocs-050">forecast.vocs 0.5.0<a class="anchor" aria-label="anchor" href="#forecastvocs-050"></a></h2>
 <ul><li>Overhaul all package documentation and examples.</li>
 <li>Enforce proper printing of all <code>data.table</code> output.</li>
 <li>Add structure to documentation website.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.4" id="forecastvocs-004">forecast.vocs 0.0.4<a class="anchor" aria-label="anchor" href="#forecastvocs-004"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.4.0" id="forecastvocs-040">forecast.vocs 0.4.0<a class="anchor" aria-label="anchor" href="#forecastvocs-040"></a></h2>
 <ul><li>Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.</li>
 <li>Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.</li>
 <li>Surfaced more options when plotting to allow for increased generalisability.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.3" id="forecastvocs-003">forecast.vocs 0.0.3<a class="anchor" aria-label="anchor" href="#forecastvocs-003"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.0" id="forecastvocs-030">forecast.vocs 0.3.0<a class="anchor" aria-label="anchor" href="#forecastvocs-030"></a></h2>
 <ul><li>
 <code>fv_tidy_posterior</code> now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma</li>
 <li>
@@ -187,12 +187,12 @@
 <li>Added unit tests for all preprocessing functions.</li>
 <li>Custom VOC labelling is now a feature of <code><a href="../reference/fv_tidy_posterior.html">fv_tidy_posterior()</a></code> (and hence <code><a href="../reference/forecast.html">forecast()</a></code>) as well as a standalone option via <code><a href="../reference/update_voc_label.html">update_voc_label()</a></code>.</li>
 </ul><div class="section level3">
-<h3 id="infrastructure-0-0-3">Infrastructure<a class="anchor" aria-label="anchor" href="#infrastructure-0-0-3"></a></h3>
+<h3 id="infrastructure-0-3-0">Infrastructure<a class="anchor" aria-label="anchor" href="#infrastructure-0-3-0"></a></h3>
 <ul><li>Switched to installing <code>cmdstanr</code> from GitHub.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.2" id="forecastvocs-002">forecast.vocs 0.0.2<a class="anchor" aria-label="anchor" href="#forecastvocs-002"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="forecastvocs-020">forecast.vocs 0.2.0<a class="anchor" aria-label="anchor" href="#forecastvocs-020"></a></h2>
 <ul><li>Package generalised to all variants of concern beyond Delta.</li>
 <li>Tooling added to forecast across dates and scenarios.</li>
 <li>Tooling added for prior and posterior predictive checks.</li>
@@ -200,7 +200,7 @@
 <li>Example data updated to use snapshots of COVID-19 notifications and Delta sequences sourced for the RKI (Germany).</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.1" id="forecastvocs-001">forecast.vocs 0.0.1<a class="anchor" aria-label="anchor" href="#forecastvocs-001"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.0" id="forecastvocs-010">forecast.vocs 0.1.0<a class="anchor" aria-label="anchor" href="#forecastvocs-010"></a></h2>
 <ul><li>Extracted package code from analysis code and started work on generalising use case.</li>
 <li>Added initial version of forecasting model for 1 and 2 strains with optional independence, partial pooling, and scaled relationships.</li>
 </ul></div>
