@@ -36,7 +36,7 @@ add_forecast_dates <- function(plot, forecast_dates = NULL) {
             xintercept = date,
             linetype = .data[["Data unavailable"]]
           ),
-          size = 1.1, alpha = 0.9
+          linewidth = 1.1, alpha = 0.9
         ) +
         scale_linetype_manual(values = 2:6)
     }
@@ -89,7 +89,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
       geom_line(aes(y = mean), linetype = 2)
   }
   plot <- plot +
-    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, size = 0.2) +
+    geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.2, linewidth = 0.2) +
     geom_ribbon(aes(ymin = q20, ymax = q80, col = NULL), alpha = 0.2)
 
   if (is.null(obs)) {
