@@ -15,6 +15,10 @@
 * Updated to use the new `array` stan notation.
 * Update initial conditions to work with `cmdtan 2.32.0`.
 
+### Package
+
+* Use `linewidth` in `geom_line` as `size` has been depreciated.
+
 ### Evaluation and visualisation
 
 * Added an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.

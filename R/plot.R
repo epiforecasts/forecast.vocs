@@ -85,7 +85,7 @@ plot_default <- function(posterior, target, obs = NULL, forecast_dates = NULL,
 
   if (central) {
     plot <- plot +
-      geom_line(aes(y = median), size = 1, alpha = 0.6) +
+      geom_line(aes(y = median), linewidth = 1, alpha = 0.6) +
       geom_line(aes(y = mean), linetype = 2)
   }
   plot <- plot +
