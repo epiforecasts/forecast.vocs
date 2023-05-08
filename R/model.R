@@ -224,8 +224,6 @@ fv_inits <- function(data, strains = 2) {
       }
       if (data$relat == 2) {
         inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2, 2) # nolint
-      } else {
-        inits$L_Omega <- numeric(0)
       }
     }
 
