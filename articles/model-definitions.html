@@ -21,8 +21,8 @@
   }
 </script><title>Model definitions • forecast.vocs</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Model definitions">
 <meta property="og:description" content="forecast.vocs">
@@ -46,7 +46,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.7000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,8 +98,9 @@
 
 
 
-<script src="model-definitions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Model definitions</h1>
                         <h4 data-toc-skip class="author">Sam Abbott</h4>
             
@@ -113,17 +114,45 @@
 <div class="section level3">
 <h3 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h3>
-<p>The package currently supports two models both with various options. A baseline single strain model and a two strain model with flexible variable dynamics. Both share the same underlying structure with expected notifications being assumed to be a product of past expected notifications, and an exponentiated time-varying term. This term is then modelled in both instances as a differenced autoregressive process with a signal lag term. In the two strain model this process can either be modelled jointly for variants, as a correlated process, or independently. By default it is assumed to vary inline with the timestep of the data but this can be altered to speed up computation or to improve out of sample performance. Observed cases are estimated from expected cases by assuming either a negative binomial or Poisson observation model. In the two strain model variant of concern positive samples are estimated using a Beta-binomial or binomial observation model. Detailed model definitions are given below. Prior values when given represent the package defaults and can, and generally should, altered by the user based on their domain specific knowledge.</p>
+<p>The package currently supports two models both with various options.
+A baseline single strain model and a two strain model with flexible
+variable dynamics. Both share the same underlying structure with
+expected notifications being assumed to be a product of past expected
+notifications, and an exponentiated time-varying term. This term is then
+modelled in both instances as a differenced autoregressive process with
+a signal lag term. In the two strain model this process can either be
+modelled jointly for variants, as a correlated process, or
+independently. By default it is assumed to vary inline with the timestep
+of the data but this can be altered to speed up computation or to
+improve out of sample performance. Observed cases are estimated from
+expected cases by assuming either a negative binomial or Poisson
+observation model. In the two strain model variant of concern positive
+samples are estimated using a Beta-binomial or binomial observation
+model. Detailed model definitions are given below. Prior values when
+given represent the package defaults and can, and generally should,
+altered by the user based on their domain specific knowledge.</p>
 </div>
 <div class="section level3">
 <h3 id="single-strain">Single strain<a class="anchor" aria-label="anchor" href="#single-strain"></a>
 </h3>
-<p>We model the mean (<span class="math inline">\(\lambda_t\)</span>) of reported cases (<span class="math inline">\(C_t\)</span>) as an order 1 autoregressive (AR(P)) process by time unit (<span class="math inline">\(t\)</span>). The model is initialised by assuming that the initial reported cases are representative with a small amount of error (2.5%) for each <span class="math inline">\(t \lt P\)</span>.</p>
+<p>We model the mean (<span class="math inline">\(\lambda_t\)</span>) of
+reported cases (<span class="math inline">\(C_t\)</span>) as an order 1
+autoregressive (AR(P)) process by time unit (<span class="math inline">\(t\)</span>). The model is initialised by assuming
+that the initial reported cases are representative with a small amount
+of error (2.5%) for each <span class="math inline">\(t \lt
+P\)</span>.</p>
 <p><span class="math display">\[\begin{align}
-  \lambda_t &amp;\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right),\ t \leq P \\
-  \lambda_t &amp;= \text{exp}\left(r_t\right) \sum_{p = 1}^{P} \alpha_p  \lambda_{t-p},\ t \gt P  
+  \lambda_t &amp;\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log
+C_t \right),\ t \leq P \\
+  \lambda_t &amp;= \text{exp}\left(r_t\right) \sum_{p = 1}^{P}
+\alpha_p  \lambda_{t-p},\ t \gt P  
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(r_t\)</span> can be interpreted as the growth rate and the exponential of <span class="math inline">\(r_t\)</span> as the effective reproduction number (<span class="math inline">\(R_t\)</span>) assuming a mean generation time equal to the scaling rate used (see the documentation for <code>scale_r</code> in <code>?forecast()</code>). <span class="math inline">\(r_t\)</span> is then itself modelled as a piecewise constant differenced AR(1) process,</p>
+<p>Where <span class="math inline">\(r_t\)</span> can be interpreted as
+the growth rate and the exponential of <span class="math inline">\(r_t\)</span> as the effective reproduction number
+(<span class="math inline">\(R_t\)</span>) assuming a mean generation
+time equal to the scaling rate used (see the documentation for
+<code>scale_r</code> in <code>?forecast()</code>). <span class="math inline">\(r_t\)</span> is then itself modelled as a
+piecewise constant differenced AR(1) process,</p>
 <p><span class="math display">\[\begin{align}
   r_1 &amp;\sim \text{Normal}\left(0, 0.25 \right) \\
   r_t &amp;= r_{t-1} + \epsilon_t  \\
@@ -136,47 +165,87 @@
   \sigma &amp;\sim \text{Normal}\left(0, 0.2 \right) \\
   \beta &amp;\sim \text{Normal}\left(0, 0.5 \right)
 \end{align}\]</span></p>
-<p>We then assume a negative binomial observation model with overdispersion <span class="math inline">\(\phi_c\)</span> for reported cases (<span class="math inline">\(C_t\)</span>),</p>
+<p>We then assume a negative binomial observation model with
+overdispersion <span class="math inline">\(\phi_c\)</span> for reported
+cases (<span class="math inline">\(C_t\)</span>),</p>
 <p><span class="math display">\[\begin{align}
   C_{t} &amp;\sim \text{NegBinomial}\left(\lambda_t, \phi_c\right) \\
-  \frac{1}{\sqrt{\phi_c}} &amp;\sim \text{Normal}(0, 0.5) 
+  \frac{1}{\sqrt{\phi_c}} &amp;\sim \text{Normal}(0, 0.5)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\frac{1}{\sqrt{phi_c}}\)</span> are truncated to be greater than 0 and <span class="math inline">\(\beta\)</span> is truncated to be between -1 and 1. Optionally a Poisson observation model may instead be used (see the documentation for <code>overdispersion</code> in <code>?forecast()</code>).</p>
-<p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/bp.stan" class="external-link">here</a> or can be loaded into <code>R</code> using the following code,</p>
+<p>Where <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\frac{1}{\sqrt{phi_c}}\)</span> are truncated to
+be greater than 0 and <span class="math inline">\(\beta\)</span> is
+truncated to be between -1 and 1. Optionally a Poisson observation model
+may instead be used (see the documentation for
+<code>overdispersion</code> in <code>?forecast()</code>).</p>
+<p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/bp.stan" class="external-link">here</a>
+or can be loaded into <code>R</code> using the following code,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">1</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="two-strain">Two strain<a class="anchor" aria-label="anchor" href="#two-strain"></a>
 </h3>
-<p>We model strain dynamics using the single strain model as a starting point but with the addition of strain specific AR(P) case model and a beta binomial (or optionally binomial) observation process for sequence data. The variant of concerns growth rate is modelled either as a fixed scaling of the non-variant of concern growth rate, as an independent AR(1) process, or in a vector autoregression framework as a correlated AR(1) process. This last formulation is described in detail below along with the modifications required to define the other two formulations. Parameters related to the variant of concern (VoC) are given the <span class="math inline">\(\delta\)</span> superscript and parameters related to non-VoC cases are given the <span class="math inline">\(o\)</span> superscript.</p>
-<p>Mean reported cases are again defined using a AR(1) process on the log scale for each strain and then combined for overall mean reported cases.</p>
+<p>We model strain dynamics using the single strain model as a starting
+point but with the addition of strain specific AR(P) case model and a
+beta binomial (or optionally binomial) observation process for sequence
+data. The variant of concerns growth rate is modelled either as a fixed
+scaling of the non-variant of concern growth rate, as an independent
+AR(1) process, or in a vector autoregression framework as a correlated
+AR(1) process. This last formulation is described in detail below along
+with the modifications required to define the other two formulations.
+Parameters related to the variant of concern (VoC) are given the <span class="math inline">\(\delta\)</span> superscript and parameters related
+to non-VoC cases are given the <span class="math inline">\(o\)</span>
+superscript.</p>
+<p>Mean reported cases are again defined using a AR(1) process on the
+log scale for each strain and then combined for overall mean reported
+cases.</p>
 <p><span class="math display">\[\begin{align}
-  \lambda_t &amp;\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right) ,\ t \leq P\\
-  \lambda^{\delta}_t &amp;\sim \text{LogNormal}\left(\log C^{\delta}_t , 0.025 \times \log C^{\delta}_t \right),\ t \leq P \\
+  \lambda_t &amp;\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log
+C_t \right) ,\ t \leq P\\
+  \lambda^{\delta}_t &amp;\sim \text{LogNormal}\left(\log C^{\delta}_t ,
+0.025 \times \log C^{\delta}_t \right),\ t \leq P \\
   \lambda^{o}_t &amp;= \lambda_t - \lambda^{\delta}_t,\ t \leq P \\
-  \lambda^{\delta}_t &amp;= \text{exp}\left(r^{\delta}_t\right) \sum_{p = 1}^{P} \alpha^{\delta}_p  \lambda^{\delta}_{t-p},\ t \gt P \\
-  \lambda^{o}_t &amp;= \text{exp}\left(r^{o}_t\right) \sum_{p = 1}^{P} \alpha^{o}_p  \lambda^{o}_{t-p}, t \gt P   \\
+  \lambda^{\delta}_t &amp;= \text{exp}\left(r^{\delta}_t\right) \sum_{p
+= 1}^{P} \alpha^{\delta}_p  \lambda^{\delta}_{t-p},\ t \gt P \\
+  \lambda^{o}_t &amp;= \text{exp}\left(r^{o}_t\right) \sum_{p = 1}^{P}
+\alpha^{o}_p  \lambda^{o}_{t-p}, t \gt P   \\
   \lambda_t &amp;= \lambda^{\delta}_t + \lambda^{o}_t
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(C^{\delta}_0\)</span> is derived by calculating the mean proportion of cases that had the VoC for the first time point using the overall number of reported cases, the number of sequenced cases, and the number of sequences that were positive for the VoC. The growth rate for both VoC and non-VoC cases (<span class="math inline">\(r^{o, \delta}_t\)</span>) is again modelled as differenced AR(1) processes but now combined with a variant specific modifier (<span class="math inline">\(s^{o, \delta}_0\)</span>) to growth when variant sequences are first reported (<span class="math inline">\(t_{seq}\)</span>), and a correlation structure for the time and strain varying error terms (<span class="math inline">\(\eta^{o, \delta}\)</span>).</p>
+<p>Where <span class="math inline">\(C^{\delta}_0\)</span> is derived by
+calculating the mean proportion of cases that had the VoC for the first
+time point using the overall number of reported cases, the number of
+sequenced cases, and the number of sequences that were positive for the
+VoC. The growth rate for both VoC and non-VoC cases (<span class="math inline">\(r^{o, \delta}_t\)</span>) is again modelled as
+differenced AR(1) processes but now combined with a variant specific
+modifier (<span class="math inline">\(s^{o, \delta}_0\)</span>) to
+growth when variant sequences are first reported (<span class="math inline">\(t_{seq}\)</span>), and a correlation structure for
+the time and strain varying error terms (<span class="math inline">\(\eta^{o, \delta}\)</span>).</p>
 <p><span class="math display">\[\begin{align}
   r^{o}_1 &amp;\sim \text{Normal}\left(0, 0.25 \right),\\
   r^{\delta}_{t_{seq}} &amp;= r^{o}_{t_{seq}} + s^{\delta} \\
-  r^{o, \delta}_t &amp;= r^{o, \delta}_{t-1} + \epsilon^{o, \delta}_t  \\
+  r^{o, \delta}_t &amp;= r^{o, \delta}_{t-1} + \epsilon^{o,
+\delta}_t  \\
   \epsilon^{o, \delta}_0 &amp;= \eta^{o, \delta}_0 \\
-  \epsilon^{o, \delta}_t &amp;= \beta \epsilon^{o, \delta}_{t-1} + \eta^{o, \delta}_t
+  \epsilon^{o, \delta}_t &amp;= \beta \epsilon^{o, \delta}_{t-1} +
+\eta^{o, \delta}_t
 \end{align}\]</span></p>
 <p>Where,</p>
 <p><span class="math display">\[\begin{align}
   s^{\beta} &amp;\sim \text{Normal}(0, 0.5)  \\
-  \eta^{o, \delta}_t &amp;\sim \text{MVN}\left(0, \boldsymbol \Sigma \right) \\
+  \eta^{o, \delta}_t &amp;\sim \text{MVN}\left(0, \boldsymbol \Sigma
+\right) \\
   \beta &amp;\sim \text{Normal}\left(0, 0.5 \right)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\boldsymbol \Sigma\)</span> is a <span class="math inline">\(2 \times 2\)</span> covariance matrix which we decompose for computational stability into a diagonal matrix containing variant specific scale parameters (<span class="math inline">\(\boldsymbol \Delta\)</span>) and a symmetric correlation matrix (<span class="math inline">\(\boldsymbol \Omega\)</span>) as follows,<span class="citation"><sup>[1]</sup></span></p>
+<p>Where <span class="math inline">\(\boldsymbol \Sigma\)</span> is a
+<span class="math inline">\(2 \times 2\)</span> covariance matrix which
+we decompose for computational stability into a diagonal matrix
+containing variant specific scale parameters (<span class="math inline">\(\boldsymbol \Delta\)</span>) and a symmetric
+correlation matrix (<span class="math inline">\(\boldsymbol
+\Omega\)</span>) as follows<span class="citation"><sup>[1]</sup></span>,</p>
 <p><span class="math display">\[\begin{align}
-  \boldsymbol \Sigma &amp;= \boldsymbol \Delta \boldsymbol \Omega \boldsymbol \Delta \\
+  \boldsymbol \Sigma &amp;= \boldsymbol \Delta \boldsymbol \Omega
+\boldsymbol \Delta \\
   \boldsymbol \Delta &amp;=  \left[ {\begin{array}{cc}
                             \sigma^o &amp; 0 \\
                             0&amp; \sigma^{\delta} \\
@@ -187,63 +256,125 @@
                               \end{array} } \right] \\
   \sigma^{o, \delta} &amp;\sim \text{Normal}\left(0, 0.2 \right)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\boldsymbol \Omega\)</span> has a Lewandowski-Kurowicka-Joe (LKJ) prior where <span class="math inline">\(\omega\)</span> controls the prior expectation for correlation between variants (with <span class="math inline">\(\omega = 1\)</span> resulting in a uniform prior over all correlations, <span class="math inline">\(\omega \lt 1\)</span> placing more weight on larger correlations and <span class="math inline">\(\omega \gt 1\)</span> placing more weight on small amounts of correlations). By default we set <span class="math inline">\(\omega = 0.5\)</span> giving more weight to correlations between variants dynamics.</p>
-<p>On top of this correlated strain dynamic model <code>forecast.vocs</code> also offers two other options that represent extremes in the correlated model. The first of these assumes that both strains evolve with independent differenced AR(1) growth rates with only a scaling factor (s^{}) linking them. The second assumes that strains growth rates are completely correlated in time (i.e they are governed by a single AR(1) differenced process) and only differ based on a scaling factor (<span class="math inline">\(s^{\delta}\)</span>). See the documentation for <code>variant_relationship</code> in <code>?forecast()</code> for details. </p>
-<p>We then assume a negative binomial observation model with overdispersion <span class="math inline">\(\phi_c\)</span> for reported cases (<span class="math inline">\(C_t\)</span>) as in the single strain model,</p>
+<p>Where <span class="math inline">\(\boldsymbol \Omega\)</span> has a
+Lewandowski-Kurowicka-Joe (LKJ) prior where <span class="math inline">\(\omega\)</span> controls the prior expectation for
+correlation between variants (with <span class="math inline">\(\omega =
+1\)</span> resulting in a uniform prior over all correlations, <span class="math inline">\(\omega \lt 1\)</span> placing more weight on
+larger correlations and <span class="math inline">\(\omega \gt
+1\)</span> placing more weight on small amounts of correlations). By
+default we set <span class="math inline">\(\omega = 0.5\)</span> giving
+more weight to correlations between variants dynamics.</p>
+<p>On top of this correlated strain dynamic model
+<code>forecast.vocs</code> also offers two other options that represent
+extremes in the correlated model. The first of these assumes that both
+strains evolve with independent differenced AR(1) growth rates with only
+a scaling factor (s^{}) linking them. The second assumes that strains
+growth rates are completely correlated in time (i.e they are governed by
+a single AR(1) differenced process) and only differ based on a scaling
+factor (<span class="math inline">\(s^{\delta}\)</span>). See the
+documentation for <code>variant_relationship</code> in
+<code>?forecast()</code> for details. </p>
+<p>We then assume a negative binomial observation model with
+overdispersion <span class="math inline">\(\phi_c\)</span> for reported
+cases (<span class="math inline">\(C_t\)</span>) as in the single strain
+model,</p>
 <p><span class="math display">\[\begin{align}
   C_{t} &amp;\sim \text{NegBinomial}\left(\lambda_t, \phi_c\right) \\
-  \frac{1}{\sqrt{\phi_c}} &amp;\sim \text{Normal}(0, 0.5) 
+  \frac{1}{\sqrt{\phi_c}} &amp;\sim \text{Normal}(0, 0.5)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\frac{1}{\sqrt{phi_c}}\)</span> are truncated to be greater than 0 and <span class="math inline">\(\beta\)</span> is truncated to be between -1 and 1. Again a Poisson observation model may instead be used (see the documentation for <code>overdispersion</code> in <code>?forecast()</code>).</p>
-<p>Finally, the mean proportion of samples that have the VoC (<span class="math inline">\(p_t\)</span>) is then estimated using the mean reported cases with the VoC and the overall mean reported cases.</p>
-<p><span class="math display">\[\begin{equation} 
+<p>Where <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\frac{1}{\sqrt{phi_c}}\)</span> are truncated to
+be greater than 0 and <span class="math inline">\(\beta\)</span> is
+truncated to be between -1 and 1. Again a Poisson observation model may
+instead be used (see the documentation for <code>overdispersion</code>
+in <code>?forecast()</code>).</p>
+<p>Finally, the mean proportion of samples that have the VoC (<span class="math inline">\(p_t\)</span>) is then estimated using the mean
+reported cases with the VoC and the overall mean reported cases.</p>
+<p><span class="math display">\[\begin{equation}
   p_t = \frac{\lambda^{\delta}_t}{\lambda_t}
 \end{equation}\]</span></p>
-<p>We assume a beta binomial observation model for the number of sequences (<span class="math inline">\(N_t\)</span>) that are positive (<span class="math inline">\(P_t\)</span>) for the VoC with overdispersion <span class="math inline">\(\phi_s\)</span>.</p>
+<p>We assume a beta binomial observation model for the number of
+sequences (<span class="math inline">\(N_t\)</span>) that are positive
+(<span class="math inline">\(P_t\)</span>) for the VoC with
+overdispersion <span class="math inline">\(\phi_s\)</span>.</p>
 <p><span class="math display">\[\begin{align}
-  P_{t} &amp;\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
-  \frac{1}{\sqrt{\phi_s}} &amp;\sim \text{Normal}(0, 0.5) 
+  P_{t} &amp;\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t)
+\phi_s\right) \\
+  \frac{1}{\sqrt{\phi_s}} &amp;\sim \text{Normal}(0, 0.5)
 \end{align}\]</span></p>
-<p>Where <span class="math inline">\(\sigma^{o, \delta}\)</span>, and <span class="math inline">\(\frac{1}{\sqrt{\phi_s}}\)</span> are truncated to be greater than 0. A binomial observation model is also available (see the documentation for <code>overdispersion</code> in <code>?forecast()</code>).</p>
-<p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/twostrainbp.stan" class="external-link">here</a> or can be loaded into <code>R</code> using the following code,</p>
+<p>Where <span class="math inline">\(\sigma^{o, \delta}\)</span>, and
+<span class="math inline">\(\frac{1}{\sqrt{\phi_s}}\)</span> are
+truncated to be greater than 0. A binomial observation model is also
+available (see the documentation for <code>overdispersion</code> in
+<code>?forecast()</code>).</p>
+<p>The stan code for this model available <a href="https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/twostrainbp.stan" class="external-link">here</a>
+or can be loaded into <code>R</code> using the following code,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/forecast.vocs/">forecast.vocs</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="../reference/fv_model.html">fv_model</a></span><span class="op">(</span>strains <span class="op">=</span> <span class="fl">2</span>, compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a>
 </h2>
-<p>As well as posterior predictions and forecasts for both notifications by variant and variant of concern proportion the models also return several summary statistics which may be useful for drawing inferences about underlying transmission dynamics. These include the log scale growth rate (<span class="math inline">\(g^{o, \delta}_t\)</span>), the instantaneous effective reproduction number (<span class="math inline">\(R^{o, \delta}_t\)</span>), and the transmission advantage of the variant of concern (<span class="math inline">\(A_t\)</span>). These are calculated as follows:</p>
+<p>As well as posterior predictions and forecasts for both notifications
+by variant and variant of concern proportion the models also return
+several summary statistics which may be useful for drawing inferences
+about underlying transmission dynamics. These include the log scale
+growth rate (<span class="math inline">\(g^{o, \delta}_t\)</span>), the
+instantaneous effective reproduction number (<span class="math inline">\(R^{o, \delta}_t\)</span>), and the transmission
+advantage of the variant of concern (<span class="math inline">\(A_t\)</span>). These are calculated as
+follows:</p>
 <p><span class="math display">\[\begin{align}
   g^{o, \delta}_t &amp;= T_s r^{o, \delta}_t \\
   R^{o, \delta}_t &amp;= \text{exp}\left(T_s r^{o, \delta}_t\right) \\
-  A_t &amp;= \text{exp}\left(T_s \left(r^{\delta}_t - r^{o}_t \right)\right)\\
+  A_t &amp;= \text{exp}\left(T_s \left(r^{\delta}_t - r^{o}_t
+\right)\right)\\
 \end{align}\]</span></p>
-<p><span class="math inline">\(T_s\)</span> is a user set scaling parameter that defines the timespan over which the summary metrics apply dependent on the time step of the data. It can be set using the <code>scale_r</code> and defaults to 1 which returns summary statistics scaled to the timestep of the data. Depending on the setup of the model used these summary measures will be more or less related to their epidemiological definitions. In particular, adding a weighting to past expected cases that is more complex than a simple lag may cause interpretation issues.</p>
+<p><span class="math inline">\(T_s\)</span> is a user set scaling
+parameter that defines the timespan over which the summary metrics apply
+dependent on the time step of the data. It can be set using the
+<code>scale_r</code> and defaults to 1 which returns summary statistics
+scaled to the timestep of the data. Depending on the setup of the model
+used these summary measures will be more or less related to their
+epidemiological definitions. In particular, adding a weighting to past
+expected cases that is more complex than a simple lag may cause
+interpretation issues.</p>
 </div>
 <div class="section level2">
 <h2 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
 </h2>
-<p>The models are implemented in <code>stan</code> using <code>cmdstanr</code> with no defaults altered<span class="citation"><sup>[1,2]</sup></span>. Due to the complexity of the posterior it is likely that increasing the <code>adapt_delta</code> may be required to mitigate potential bias in posterior estimates.<span class="citation"><sup>[3]</sup></span> <code>forecast.vocs</code> incorporates additional functionality written in R<span class="citation"><sup>[4]</sup></span> to enable plotting forecasts and posterior predictions, summarising forecasts, and scoring them using <code>scoringutils</code><span class="citation"><sup>[5]</sup></span>. All functionality is modular allowing users to extend and alter the underlying model whilst continuing to use the package framework.</p>
+<p>The models are implemented in <code>stan</code> using
+<code>cmdstanr</code> with no defaults altered<span class="citation"><sup>[1,2]</sup></span>. Due to the complexity of the
+posterior it is likely that increasing the <code>adapt_delta</code> may
+be required to mitigate potential bias in posterior estimates<span class="citation"><sup>[3]</sup></span>. <code>forecast.vocs</code>
+incorporates additional functionality written in R<span class="citation"><sup>[4]</sup></span> to enable plotting forecasts and
+posterior predictions, summarising forecasts, and scoring them using
+<code>scoringutils</code><span class="citation"><sup>[5]</sup></span>.
+All functionality is modular allowing users to extend and alter the
+underlying model whilst continuing to use the package framework.</p>
 </div>
 <div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-stan">
-<p>1. Team, S. D. (2021). <em>Stan modeling language users guide and reference manual, 2.28.1</em>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-stan" class="csl-entry">
+1. Team, S. D. (2021). <em>Stan modeling language users guide and
+reference manual, 2.28.1</em>.
 </div>
-<div id="ref-cmdstanr">
-<p>2. Gabry, J., &amp; Češnovar, R. (2021). <em>Cmdstanr: R interface to ’cmdstan’</em>.</p>
+<div id="ref-cmdstanr" class="csl-entry">
+2. Gabry, J., &amp; Češnovar, R. (2021). <em>Cmdstanr: R interface to
+’CmdStan’</em>.
 </div>
-<div id="ref-betancourt_2017">
-<p>3. Betancourt, M. (2017). Diagnosing biased inference with divergences. <em>Stan Case Studies</em>, <em>4</em>. <a href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html" class="external-link">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a></p>
+<div id="ref-betancourt_2017" class="csl-entry">
+3. Betancourt, M. (2017). Diagnosing biased inference with divergences.
+<em>Stan Case Studies</em>, <em>4</em>. <a href="https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html" class="external-link">https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html</a>
 </div>
-<div id="ref-R">
-<p>4. R Core Team. (2019). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a></p>
+<div id="ref-R" class="csl-entry">
+4. R Core Team. (2019). <em>R: A language and environment for
+statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>
 </div>
-<div id="ref-scoringutils">
-<p>5. Bosse, N. (2020). <em>Scoringutils: A collection of proper scoring rules and metrics to assess predictions</em>. <a href="https://github.com/epiforecasts/scoringutils" class="external-link">https://github.com/epiforecasts/scoringutils</a></p>
+<div id="ref-scoringutils" class="csl-entry">
+5. Bosse, N. (2020). <em>Scoringutils: A collection of proper scoring
+rules and metrics to assess predictions</em>. <a href="https://github.com/epiforecasts/scoringutils" class="external-link">https://github.com/epiforecasts/scoringutils</a>
 </div>
 </div>
 </div>
@@ -260,7 +391,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

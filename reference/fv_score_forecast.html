@@ -17,7 +17,7 @@ variables are handled."><!-- Inform modern browsers that this page supports both
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/5/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>Evaluate forecasts using proper scoring rules — fv_score_forecast • forecast.vocs</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Evaluate forecasts using proper scoring rules — fv_score_forecast"><meta property="og:description" content="Acts as a wrapper to scoringutils::score(). In particular,
+</script><title>Evaluate forecasts using proper scoring rules — fv_score_forecast • forecast.vocs</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Evaluate forecasts using proper scoring rules — fv_score_forecast"><meta property="og:description" content="Acts as a wrapper to scoringutils::score(). In particular,
 handling filtering the output for various forecast.vocs functions and
 linking this output to observed data. See the documentation for the
 scoringutils package for more on forecast scoring and the documentation
@@ -34,7 +34,7 @@ variables are handled."><meta property="og:image" content="epiforecasts.io/forec
     
     <a class="navbar-brand me-2" href="../index.html">forecast.vocs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.9.7000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,14 +90,14 @@ variables are handled."><meta property="og:image" content="epiforecasts.io/forec
 handling filtering the output for various <a href="forecast.vocs-package.html">forecast.vocs</a> functions and
 linking this output to observed data. See the documentation for the
 <code>scoringutils</code> package for more on forecast scoring and the documentation
-and examples below for simple examples in the context of <a href="forecast.vocs-package.html">forecast.vocs</a>.
-Internally name clashes between <a href="https://epiforecasts.io/scoringutils/reference/scoringutils-package.html" class="external-link">scoringutils</a> variables and <a href="forecast.vocs-package.html">forecast.vocs</a>
+and examples below for simple examples in the context of <code>forecast.vocs</code>.
+Internally name clashes between <code>scoringutils</code> variables and <code>forecast.vocs</code>
 variables are handled.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecast</span>, <span class="va">obs</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, check <span class="op">=</span> <span class="cn">TRUE</span>, round_to <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecast</span>, <span class="va">obs</span>, log <span class="op">=</span> <span class="cn">FALSE</span>, check <span class="op">=</span> <span class="cn">TRUE</span>, round_to <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -109,8 +109,12 @@ Internally case forecasts are filtered for using the <code>value_type</code> var
 if present as are only overall or combined case counts (i.e as returned)
 by the 1 and 2 strain models. If looking for more complex scoring it may be
 wise to implement a custom wrapper.</p></dd>
+
+
 <dt>obs</dt>
 <dd><p>A data frame of observed data as produced by <code><a href="latest_obs.html">latest_obs()</a></code>.</p></dd>
+
+
 <dt>log</dt>
 <dd><p>Logical, defaults to FALSE. Should scores be calculated on the
 log scale (with a 0.01 shift) for both observations and forecasts. Scoring in
@@ -118,18 +122,27 @@ this way can be thought of as a relative score vs the more usual absolute
 measure. It may be useful when targets are on very different scales or when
 the forecaster is more interested in good all round performance versus good
 performance for targets with large values.</p></dd>
+
+
 <dt>check</dt>
 <dd><p>Logical, defaults to FALSE. Should
 <code><a href="https://epiforecasts.io/scoringutils/reference/check_forecasts.html" class="external-link">scoringutils::check_forecasts()</a></code> be used to check input forecasts.</p></dd>
+
+
 <dt>round_to</dt>
 <dd><p>Integer defaults to 3. Number of digits to round scoring
 output to.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code><a href="https://epiforecasts.io/scoringutils/reference/score.html" class="external-link">scoringutils::score()</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>data.table</code> as returned by <code><a href="https://epiforecasts.io/scoringutils/reference/score.html" class="external-link">scoringutils::score()</a></code>.</p>
+    
+
+<p>A <code>data.table</code> as returned by <code><a href="https://epiforecasts.io/scoringutils/reference/score.html" class="external-link">scoringutils::score()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -140,42 +153,42 @@ output to.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/scoringutils/" class="external-link">scoringutils</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Fit and forecast using both the one and two strain models</span></span>
-<span class="r-in"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">germany_covid19_delta_obs</span>,</span>
-<span class="r-in">  forecast_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-06-12"</span><span class="op">)</span>,</span>
-<span class="r-in">  horizon <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">  adapt_delta <span class="op">=</span> <span class="fl">0.99</span>,</span>
-<span class="r-in">  max_treedepth <span class="op">=</span> <span class="fl">15</span>,</span>
-<span class="r-in">  variant_relationship <span class="op">=</span> <span class="st">"scaled"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Extract forecasts</span></span>
-<span class="r-in"><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">forecasts</span>, target <span class="op">=</span> <span class="st">"forecast"</span>, type <span class="op">=</span> <span class="st">"cases"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Filter for the latest available observations</span></span>
-<span class="r-in"><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># scoreon the absolute scale</span></span>
-<span class="r-in"><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">obs</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">scores</span>, by <span class="op">=</span> <span class="st">"strains"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score overall on a log scale</span></span>
-<span class="r-in"><span class="va">log_scores</span> <span class="op">&lt;-</span> <span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">obs</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">log_scores</span>, by <span class="op">=</span> <span class="st">"strains"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score by horizon</span></span>
-<span class="r-in"><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">scores</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strains"</span>, <span class="st">"horizon"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score by horizon on a log scale</span></span>
-<span class="r-in"><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">log_scores</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strains"</span>, <span class="st">"horizon"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/scoringutils/" class="external-link">scoringutils</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fit and forecast using both the one and two strain models</span></span></span>
+<span class="r-in"><span><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">germany_covid19_delta_obs</span>,</span></span>
+<span class="r-in"><span>  forecast_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-06-12"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  horizon <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>  strains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  adapt_delta <span class="op">=</span> <span class="fl">0.99</span>,</span></span>
+<span class="r-in"><span>  max_treedepth <span class="op">=</span> <span class="fl">15</span>,</span></span>
+<span class="r-in"><span>  variant_relationship <span class="op">=</span> <span class="st">"scaled"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract forecasts</span></span></span>
+<span class="r-in"><span><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">forecasts</span>, target <span class="op">=</span> <span class="st">"forecast"</span>, type <span class="op">=</span> <span class="st">"cases"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Filter for the latest available observations</span></span></span>
+<span class="r-in"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="latest_obs.html">latest_obs</a></span><span class="op">(</span><span class="va">germany_covid19_delta_obs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score on the absolute scale</span></span></span>
+<span class="r-in"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">obs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">scores</span>, by <span class="op">=</span> <span class="st">"strains"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score overall on a log scale</span></span></span>
+<span class="r-in"><span><span class="va">log_scores</span> <span class="op">&lt;-</span> <span class="fu">fv_score_forecast</span><span class="op">(</span><span class="va">forecasts</span>, <span class="va">obs</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">log_scores</span>, by <span class="op">=</span> <span class="st">"strains"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score by horizon</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">scores</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strains"</span>, <span class="st">"horizon"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score by horizon on a log scale</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://epiforecasts.io/scoringutils/reference/summarise_scores.html" class="external-link">summarise_scores</a></span><span class="op">(</span><span class="va">log_scores</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strains"</span>, <span class="st">"horizon"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -187,7 +200,7 @@ output to.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
