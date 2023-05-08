@@ -44,6 +44,9 @@ if (test_sample) {
     inits1 <- fv_inits(overdisp_dt, strains = 1)
     inits2 <- fv_inits(overdisp_dt, strains = 2)
     inits2_step <- fv_inits(overdisp_dt_step, strains = 2)
+    inits1_nooverdisp <- fv_inits(nooverdisp_dt, strains = 1)
+    inits2_scaled <- fv_inits(scaled_dt, strains = 2)
+    inits2_independent <- fv_inits(independent_dt, strains = 2)
     one_model <- suppressMessages(fv_model(strains = 1))
     two_model <- suppressMessages(fv_model(strains = 2))
   }
@@ -55,7 +58,7 @@ if (test_sample) {
 
   test_fv_sample(
     "The single strain model without overdispersion can be fit as expected",
-    nooverdisp_dt, one_model, inits1,
+    nooverdisp_dt, one_model, inits1_nooverdisp,
     convergence = FALSE
   )
 
@@ -74,12 +77,12 @@ if (test_sample) {
   test_fv_sample(
     "The two strain model with scaling and overdispersion can be fit as
     expected",
-    scaled_dt, two_model, inits2
+    scaled_dt, two_model, inits2_scaled
   )
 
   test_fv_sample(
     "The two strain model with independence and overdispersion can be fit as
     expected",
-    independent_dt, two_model, inits2
+    independent_dt, two_model, inits2_independent 
   )
 }

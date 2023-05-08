@@ -223,9 +223,9 @@ fv_inits <- function(data, strains = 2) {
         inits$voc_eta <- numeric(0)
       }
       if (data$relat == 2) {
-        inits$voc_L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2, 2) # nolint
+        inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2, 2) # nolint
       } else {
-        inits$voc_L_Omega <- numeric(0)
+        inits$L_Omega <- numeric(0)
       }
     }
 
