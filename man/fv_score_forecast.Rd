@@ -39,8 +39,8 @@ Acts as a wrapper to \code{\link[scoringutils:score]{scoringutils::score()}}. In
 handling filtering the output for various \link{forecast.vocs} functions and
 linking this output to observed data. See the documentation for the
 \code{scoringutils} package for more on forecast scoring and the documentation
-and examples below for simple examples in the context of \link{forecast.vocs}.
-Internally name clashes between \link{scoringutils} variables and \link{forecast.vocs}
+and examples below for simple examples in the context of \code{forecast.vocs}.
+Internally name clashes between \code{scoringutils} variables and \code{forecast.vocs}
 variables are handled.
 }
 \examples{
@@ -66,7 +66,7 @@ forecasts <- summary(forecasts, target = "forecast", type = "cases")
 # Filter for the latest available observations
 obs <- latest_obs(germany_covid19_delta_obs)
 
-# scoreon the absolute scale
+# score on the absolute scale
 scores <- fv_score_forecast(forecasts, obs)
 summarise_scores(scores, by = "strains")
 
