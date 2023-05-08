@@ -1,4 +1,4 @@
-# forecast.vocs 0.1.0
+# forecast.vocs 0.9.0
 
 ## Features
 
@@ -38,7 +38,7 @@
 - Fixed a bug in the two-strain model caused by the addition of infrastructure to compute discrete convolutions.
 - Updated `fv_score_forecast()` to support `scoringutils 1.0.0`.
 
-# forecast.vocs 0.0.8
+# forecast.vocs 0.8.0
 
 ## Features
 
@@ -63,7 +63,7 @@ of data with non-weekly spaces (though spacing must be constant across both sequ
 * Refactors model description to improve clarity.
 * Fixed an issue where `voc_label` was not being passed by `forecast()` to lower level methods and hence new labels specifying the VOC were not being assigned.
 
-# forecast.vocs 0.0.7
+# forecast.vocs 0.7.0
 
 * Further generalised the `forecast` family to accept custom data and forecast extraction functions.
 * Split generic posterior summary function from specific posterior summary function.
@@ -73,7 +73,7 @@ of data with non-weekly spaces (though spacing must be constant across both sequ
 * Fixes `generate_obs()` to work with all strain models and adds unit tests for all function functionality.
 * Fixed package building on `r-universe`.
 
-# forecast.vocs 0.0.6
+# forecast.vocs 0.6.0
 
 * Add a vignette defining the package models.
 * Updated documentation to use `{preferably}`.
@@ -85,19 +85,19 @@ of data with non-weekly spaces (though spacing must be constant across both sequ
 * Model specific functions (i.e `load_model`, `summarise_posterior`, and functions prefixed with `stan_` have been renamed with the `fv_` prefix).
 * Added the ability to pass model specific functions to the `forecast` function and wrappers enabling users to supply custom models but make use of the remaining package functionality.
 
-# forecast.vocs 0.0.5
+# forecast.vocs 0.5.0
 
 * Overhaul all package documentation and examples.
 * Enforce proper printing of all `data.table` output.
 * Add structure to documentation website.
 
-# forecast.vocs 0.0.4
+# forecast.vocs 0.4.0
 
 * Improve the robustness of plotting observations and forecast dates so that they can be faceted using the same variables as used for plotting estimates/forecasts.
 * Added the option to scale growth rates and reproduction numbers. This allows crude scaling by the generation time etc increasing the interpretability of these estimates.
 * Surfaced more options when plotting to allow for increased generalisability.
 
-# forecast.vocs 0.0.3
+# forecast.vocs 0.3.0
 
 * `fv_tidy_posterior` now returns a single data.table and all downstream processing and plotting functions have been updated to use this forma
 * `forecast` has been updated to use the framework from `forecast_dt` and `forecast_dt` has been removed.
@@ -112,7 +112,7 @@ of data with non-weekly spaces (though spacing must be constant across both sequ
 
 * Switched to installing `cmdstanr` from GitHub.
 
-# forecast.vocs 0.0.2
+# forecast.vocs 0.2.0
 
 * Package generalised to all variants of concern beyond Delta.
 * Tooling added to forecast across dates and  scenarios.
@@ -120,7 +120,7 @@ of data with non-weekly spaces (though spacing must be constant across both sequ
 * Tooling added for simulating data from the model (useful for simulation-based calibration amongst other things).
 * Example data updated to use snapshots of COVID-19 notifications and Delta sequences sourced for  the RKI (Germany).
 
-# forecast.vocs 0.0.1
+# forecast.vocs 0.1.0
 
 * Extracted package code from analysis code and started work on generalising use case.
 * Added initial version of forecasting model for  1 and 2 strains with optional independence, partial pooling, and scaled relationships.
