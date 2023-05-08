@@ -11,9 +11,9 @@ data {
   int t_seq;
   int t_seqf;
   int t_nots;
-  int X[t_nots];
-  int Y[t_seq];
-  int N[t_seq];
+  array[t_nots] int X;
+  array[t_seq] int Y;
+  array[t_seq] int N;
   int likelihood;
   int output_loglik;
   real r_init_mean;
@@ -27,11 +27,11 @@ data {
   int overdisp;
   int debug;
   int eta_n;
-  int eta_loc[t - 2];  
+  array[t-2] int eta_loc;  
   int voc_eta_n;
-  int voc_eta_loc[relat ? t_seqf - 2 : 0];
+  array[relat ? t_seqf - 2 : 0] int voc_eta_loc;
   int period;
-  int periodic[t];
+  array[t] int periodic;
 }
 
 transformed data {
@@ -61,8 +61,8 @@ parameters {
   real<lower = -1, upper = 1>  beta;
   vector[eta_n] eta;
   real voc_mod;
-  real<lower = -1, upper = 1> voc_beta[relat == 1 ? 1 : 0];
-  real<lower = 0> voc_scale[relat ? 1 : 0];
+  array[relat == 1 ? 1 : 0] real<lower = -1, upper = 1> voc_beta;
+  array[relat ? 1 : 0] real<lower = 0> voc_scale;
   cholesky_factor_corr[relat == 2 ? 2 : 0] L_Omega;  
   vector[voc_eta_n] voc_eta;
   vector[1] init_cases;
@@ -237,9 +237,9 @@ generated quantities {
   vector[t_seqf - 1] voc_advantage;
   real avg_voc_advantage;
   vector[t - 1] com_r;
-  int sim_voc_cases[t_seqf];
-  int sim_nvoc_cases[t];
-  int sim_cases[t];
+  array[t_seqf] int sim_voc_cases;
+  array[t] int sim_nvoc_cases;
+  array[t] int sim_cases;
   vector[output_loglik ? max(t_nots, t_nseq + t_seq) : 0] log_lik;
 
   // summary measures

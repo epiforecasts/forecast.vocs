@@ -189,12 +189,16 @@ fv_inits <- function(data, strains = 2) {
       r_scale = abs(rnorm(1, 0, 0.01)),
       eta = rnorm(data$eta_n, 0, 0.01),
       beta = rnorm(1, 0, 0.1),
-      sqrt_phi = abs(rnorm(2, 0, 0.01)),
-      period_eff = array(rnorm(data$period, 0, 0.1)),
-      period_sd = array(abs(rnorm(1, 0, 0.1)))
+      sqrt_phi = array(abs(rnorm(2, 0, 0.01))),
+      period_eff = numeric(0),
+      period_sd = numeric(0)
     )
+    if (data$period > 1) {
+      inits$period_eff <- array(rnorm(data$period, 0, 0.1))
+      inits$period_sd <- array(abs(rnorm(1, 0, 0.1)))
+    }
     if (strains == 1) {
-      inits$sqrt_phi <- inits$sqrt_phi[1]
+      inits$sqrt_phi <- array(inits$sqrt_phi[1])
     } else {
       inits$init_voc_cases <- array(
         log(abs(rnorm(
@@ -206,10 +210,23 @@ fv_inits <- function(data, strains = 2) {
         1, data$voc_mean,
         data$voc_sd * 0.1
       )
-      inits$voc_beta <- rnorm(1, 0, 0.1)
-      inits$voc_scale <- abs(rnorm(1, 0, 0.01))
-      inits$voc_eta <- rnorm(data$voc_eta_n, 0, 0.01)
+      if (data$relat == 1) {
+        inits$voc_beta <- array(rnorm(1, 0, 0.1))
+      }else {
+        inits$voc_beta <- numeric(0)
+      }
+      if (data$relat > 0) {
+        inits$voc_scale <- array(abs(rnorm(1, 0, 0.01)))
+        inits$voc_eta <- array(rnorm(data$voc_eta_n, 0, 0.01))
+      } else {
+        inits$voc_scale <- numeric(0)
+        inits$voc_eta <- numeric(0)
+      }
       inits$L_Omega <- matrix(c(1, runif(1), 0, runif(1)), 2, 2) # nolint
+    }
+
+    if (data$overdisp == 0) {
+      inits$sqrt_phi <- numeric(0)
     }
     return(inits)
   }

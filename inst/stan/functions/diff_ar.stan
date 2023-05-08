@@ -1,4 +1,4 @@
-vector diff_ar(real beta, vector eta, int[] eta_loc, int t) {
+vector diff_ar(real beta, vector eta, array[] int eta_loc, int t) {
   vector[t] diff = rep_vector(0, t);
   int loc = 0;
   for (i in 1:t){

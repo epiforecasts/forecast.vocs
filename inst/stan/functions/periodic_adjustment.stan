@@ -1,4 +1,4 @@
-vector periodic_adjustment(vector cases, int[] period, vector effect,
+vector periodic_adjustment(vector cases, array[] int period, vector effect,
                            vector eff_sd) {
   int t = num_elements(cases);
   int pl = num_elements(effect);

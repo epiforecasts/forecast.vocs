@@ -1,7 +1,7 @@
 Package: forecast.vocs
 Title: Forecast Case and Sequence Notifications using Variant of Concern
     Strain Dynamics
-Version: 0.0.9.7000
+Version: 0.1.0
 Authors@R:
     c(person(given = "Sam Abbott",
            role = c("aut", "cre"),
@@ -55,4 +55,4 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

@@ -125,40 +125,19 @@ forecasts <- forecast(obs,
   adapt_delta = 0.99, max_treedepth = 15,
   refresh = 0, show_messages = FALSE
 )
-#> Running MCMC with 4 parallel chains...
-#> 
-#> Chain 1 finished in 21.7 seconds.
-#> Chain 2 finished in 21.9 seconds.
-#> Chain 3 finished in 24.2 seconds.
-#> Chain 4 finished in 31.1 seconds.
-#> 
-#> All 4 chains finished successfully.
-#> Mean chain execution time: 24.7 seconds.
-#> Total execution time: 31.3 seconds.
-#> 
-#> Running MCMC with 4 parallel chains...
-#> 
-#> Chain 2 finished in 50.9 seconds.
-#> Chain 4 finished in 51.3 seconds.
-#> Chain 3 finished in 66.1 seconds.
-#> Chain 1 finished in 67.3 seconds.
-#> 
-#> All 4 chains finished successfully.
-#> Mean chain execution time: 58.9 seconds.
-#> Total execution time: 67.4 seconds.
 forecasts
 #>    id forecast_date strains overdispersion variant_relationship  r_init
 #> 1:  0    2021-06-19       1           TRUE           correlated 0, 0.25
 #> 2:  0    2021-06-19       2           TRUE           correlated 0, 0.25
 #>    voc_scale error               fit       data  fit_args samples max_rhat
-#> 1:  0.4, 0.2       <CmdStanMCMC[32]> <list[28]> <list[5]>    4000        1
-#> 2:  0.4, 0.2       <CmdStanMCMC[32]> <list[28]> <list[5]>    4000        1
+#> 1:  0.4, 0.2       <CmdStanMCMC[42]> <list[28]> <list[5]>    4000        1
+#> 2:  0.4, 0.2       <CmdStanMCMC[42]> <list[28]> <list[5]>    4000        1
 #>    divergent_transitions per_divergent_transitions max_treedepth
-#> 1:                     5                   0.00125            10
-#> 2:                    28                   0.00700            10
+#> 1:                     2                    0.0005            10
+#> 2:                     6                    0.0015            10
 #>    no_at_max_treedepth per_at_max_treedepth time              posterior
-#> 1:                 953              0.23825 31.3 <fv_posterior[167x20]>
-#> 2:                1162              0.29050 67.4 <fv_posterior[474x20]>
+#> 1:                1380               0.3450 14.8 <fv_posterior[167x20]>
+#> 2:                1994               0.4985 40.1 <fv_posterior[474x20]>
 #>                 forecast
 #> 1: <fv_posterior[12x13]>
 #> 2: <fv_posterior[60x13]>
@@ -244,7 +223,6 @@ two strain models for this single Forecast
 
 ``` r
 library(scoringutils)
-#> Note: scoringutils 1.0.0 introduces a lot of breaking changes and we apologise for any inconvenience. If you prefer the old interface, please download version 0.1.8 using remotes::install_github("epiforecasts/scoringutils@v0.1.8")
 library(knitr)
 
 summary(forecasts, target = "forecast", type = "cases") |>
@@ -252,15 +230,15 @@ summary(forecasts, target = "forecast", type = "cases") |>
   summarise_scores(by = "strains") |>
   kable()
 #> Warning in scoringutils::check_forecasts(long_forecast): The following warnings were produced when checking inputs:
-#> 1.  At least one column in the data corresponds to the name of a metric that will be computed by scoringutils. Please check `available_metrics()`
+#> 1.  At least one column in the data ("mad") corresponds to the name of a metric that will be computed by scoringutils. Please check `available_metrics()`
 #> Warning in check_forecasts(data): The following warnings were produced when checking inputs:
-#> 1.  At least one column in the data corresponds to the name of a metric that will be computed by scoringutils. Please check `available_metrics()`
+#> 1.  At least one column in the data ("mad") corresponds to the name of a metric that will be computed by scoringutils. Please check `available_metrics()`
 ```
 
-| strains | obs\_overdispersion | obs\_overdispersion |    mad | interval\_score | dispersion | underprediction | overprediction | coverage\_deviation | bias | ae\_median |
-| ------: | ------------------: | ------------------: | -----: | --------------: | ---------: | --------------: | -------------: | ------------------: | ---: | ---------: |
-|       1 |                   1 |                   1 |  985.0 |        1982.625 |    283.625 |        1698.500 |              0 |             \-0.375 |   NA |         NA |
-|       2 |                   1 |                   1 | 1412.5 |        1127.875 |    496.750 |         630.875 |              0 |               0.000 |   NA |         NA |
+| strains | obs\_overdispersion | obs\_overdispersion |     mad | interval\_score | dispersion | underprediction | overprediction | coverage\_deviation | bias | ae\_median |
+| ------: | ------------------: | ------------------: | ------: | --------------: | ---------: | --------------: | -------------: | ------------------: | ---: | ---------: |
+|       1 |                   1 |                   1 | 1027.25 |         1946.00 |    294.875 |        1652.250 |              0 |             \-0.375 |   NA |         NA |
+|       2 |                   1 |                   1 | 1465.00 |         1101.25 |    506.750 |         594.625 |              0 |               0.000 |   NA |         NA |
 
 ### Step by step forecast
 

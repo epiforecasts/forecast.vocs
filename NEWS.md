@@ -1,39 +1,38 @@
-# forecast.vocs 0.0.9
+# forecast.vocs 0.1.0
 
 ## Features
 
 ### Model
 
-* Switched the "pooled" model to use a vector autoregression set up and renamed the resulting control parameter "correlated". On test data this performs substantially better than the old model and should be more readily extensible.
+* Switched the "pooled" model to use a vector auto-regression set up and renamed the resulting control parameter "correlated". On test data this performs substantially better than the old model and should be more readily extensible.
 * Added the ability (via the `r_step` argument) to set the step width for the AR(1) process on the growth rate. This means that when fitting to daily data, for example, the growth rate can be specified to only change weekly. This increases the tractability of the model hence reducing run-times and may match the underlying epidemiology better in some settings.
 * Added increased prior flexibility with users able to alter the prior on the AR(1) process to approximate a random walk (via `beta`) and specify the expected amount of correlation between strains in the "correlated" model (`lkj`).
 * Update the internal model configuration to be non-vectorised so that the case AR(1) process can be easily generalised to an AR(P) process. This functionality has not yet been exposed to users via the control interface.
-* Added new functionality to delay case reporting and sequence reporting by some probability mass function. Thisfunctionality has not yet been exposed to users via the control interface.
+* Added new functionality to delay case reporting and sequence reporting by some probability mass function. This functionality has not yet been exposed to users via the control interface.
 * Made piecewise constant growth rates backwards looking from the last available data rather than forward looking as was previously the case. This means that forecasts are made using a full window of data to estimate the growth rate but also means that the precise dates of steps change as new data is added.
-* Add a new argument `r_forecast` which controls if the growth rate is allowed to vary outside the range of the data. 
-* Add optional adjustment for periodic case data based on a random effect. This can be used to account for day of the week or month effects.
-
-### Bug fixes
-
-- Fixed a bug in the two-strain model caused by the addition of infrastructure to compute discrete convolutions. 
-- Updated `fv_score_forecast()` to support `scoringutils 1.0.0`. 
+* Add a new argument `r_forecast` which controls if the growth rate is allowed to vary outside the range of the data.
+* Add optional adjustment for periodic case data based on a random effect. This can be used to account for da*y of the week or month effects.
+* Updated to use the new `array` stan notation.
+* Update initial conditions to work with `cmdtan 2.32.0`.
 
 ### Evaluation and visualisation
 
 * Added an optional integration with the [`scoringutils`](https://epiforecasts.io/scoringutils/) package to streamline evaluating forecasts using proper scoring rules.
 * Added an example of using `fv_score_forecast()` to the README.
-* Generalise plot labels. 
+* Generalise plot labels.
 * Updated `plot_cases()` to use a log 2 scaling rather than a log scaling.
 * Updated the default scaling to be logit for `plot_voc_frac().
-* Added a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot. 
+* Added a new plotting argument to all plot functions - `central`. This controls whether central estimates (i.e the mean and median) are shown. In a change to the default visualisations these are now not shown automatically but by setting `central = TRUE` the user can elect to add these estimates to the plot.
 
 ## Bug fixes
 
 * Fixed a bug in the output of the `forecast()` function where the prior specifications for the initial growth and the variant scaling were only partially included.
-* Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn't exist. This could lead to bugs in user code that are hard to spot. 
+* Tighten up overly permissive argument passing in the S3 methods that allowed users to pass arguments that didn't exist. This could lead to bugs in user code that are hard to spot.
 * Beta-binomial in the output log likelihood (but not during fitting) has been corrected to use the overdispersion for sequences and not cases. 
 * Fixed a bug where `summary.fv_forecast()` failed to return diagnostics.
 * Fixed a bug whereby certain combinations of data availability and truncation can lead to attempts to access non-existing indices. (@sbfnk in [#111]((https://github.com/epiforecasts/forecast.vocs/pulls)).
+- Fixed a bug in the two-strain model caused by the addition of infrastructure to compute discrete convolutions.
+- Updated `fv_score_forecast()` to support `scoringutils 1.0.0`.
 
 # forecast.vocs 0.0.8
 
