@@ -1,192 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/404.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/articles/model-definitions.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/authors.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/index.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/news/index.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/add_forecast_dates.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/bp_launch_shinystan.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/check_dataframe.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/check_observations.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/check_param.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/check_quantiles.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/convert_to_stanfit.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/define_scenarios.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/extract_draws.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/extract_forecast_dates.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/filter_by_availability.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast.vocs-package.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast_across_dates.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast_across_scenarios.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/forecast_n_strain.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_as_data_list.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_dow_period.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_example.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_extract_forecast.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_inits.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_model.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_sample.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_score_forecast.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/fv_tidy_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/generate_obs.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/generate_obs_scenario.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/germany_covid19_delta_obs.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/latest_obs.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/link_dates_with_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/link_obs_with_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/piecewise_steps.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot.fv_forecast.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot.fv_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_cases.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_default.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_growth.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_pairs.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_rt.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_theme.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_voc_advantage.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/plot_voc_frac.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/print.fv_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/quantiles_to_long.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/sample_sequences.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/save_plots.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/summary.fv_forecast.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/summary.fv_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/unnest_posterior.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/update_obs_availability.html</loc>
-  </url>
-  <url>
-    <loc>epiforecasts.io/forecast.vocs/reference/update_voc_label.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>epiforecasts.io/forecast.vocs/404.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/LICENSE-text.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/LICENSE.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/articles/index.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/articles/model-definitions.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/authors.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/index.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/news/index.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/add_forecast_dates.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/bp_launch_shinystan.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/check_dataframe.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/check_observations.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/check_param.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/check_quantiles.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/convert_to_stanfit.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/define_scenarios.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/extract_draws.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/extract_forecast_dates.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/filter_by_availability.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/forecast.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/forecast.vocs-package.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/forecast_across_dates.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/forecast_across_scenarios.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/forecast_n_strain.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_as_data_list.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_dow_period.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_example.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_extract_forecast.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_inits.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_model.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_sample.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_score_forecast.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/fv_tidy_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/generate_obs.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/generate_obs_scenario.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/germany_covid19_delta_obs.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/index.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/latest_obs.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/link_dates_with_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/link_obs_with_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/piecewise_steps.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot.fv_forecast.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot.fv_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_cases.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_default.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_growth.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_pairs.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_rt.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_theme.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_voc_advantage.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/plot_voc_frac.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/print.fv_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/quantiles_to_long.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/sample_sequences.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/save_plots.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/summary.fv_forecast.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/summary.fv_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/unnest_posterior.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/update_obs_availability.html</loc></url>
+<url><loc>epiforecasts.io/forecast.vocs/reference/update_voc_label.html</loc></url>
 </urlset>
+

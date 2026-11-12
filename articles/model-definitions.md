@@ -1,0 +1,300 @@
+# Model definitions
+
+### Summary
+
+The package currently supports two models both with various options. A
+baseline single strain model and a two strain model with flexible
+variable dynamics. Both share the same underlying structure with
+expected notifications being assumed to be a product of past expected
+notifications, and an exponentiated time-varying term. This term is then
+modelled in both instances as a differenced autoregressive process with
+a signal lag term. In the two strain model this process can either be
+modelled jointly for variants, as a correlated process, or
+independently. By default it is assumed to vary inline with the timestep
+of the data but this can be altered to speed up computation or to
+improve out of sample performance. Observed cases are estimated from
+expected cases by assuming either a negative binomial or Poisson
+observation model. In the two strain model variant of concern positive
+samples are estimated using a Beta-binomial or binomial observation
+model. Detailed model definitions are given below. Prior values when
+given represent the package defaults and can, and generally should,
+altered by the user based on their domain specific knowledge.
+
+### Single strain
+
+We model the mean ($`\lambda_t`$) of reported cases ($`C_t`$) as an
+order 1 autoregressive (AR(P)) process by time unit ($`t`$). The model
+is initialised by assuming that the initial reported cases are
+representative with a small amount of error (2.5%) for each $`t \lt P`$.
+
+``` math
+\begin{align}
+  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right),\ t \leq P \\
+  \lambda_t &= \text{exp}\left(r_t\right) \sum_{p = 1}^{P} \alpha_p  \lambda_{t-p},\ t \gt P  
+\end{align}
+```
+
+Where $`r_t`$ can be interpreted as the growth rate and the exponential
+of $`r_t`$ as the effective reproduction number ($`R_t`$) assuming a
+mean generation time equal to the scaling rate used (see the
+documentation for `scale_r` in `?forecast()`). $`r_t`$ is then itself
+modelled as a piecewise constant differenced AR(1) process,
+
+``` math
+\begin{align}
+  r_1 &\sim \text{Normal}\left(0, 0.25 \right) \\
+  r_t &= r_{t-1} + \epsilon_t  \\
+  \epsilon_1 &= \eta_1 \\
+  \epsilon_t &= \beta \epsilon_{t-1} + \eta_t
+\end{align}
+```
+
+Where,
+
+``` math
+\begin{align}
+  \eta_t &\sim \text{Normal}\left(0, \sigma \right) \\
+  \sigma &\sim \text{Normal}\left(0, 0.2 \right) \\
+  \beta &\sim \text{Normal}\left(0, 0.5 \right)
+\end{align}
+```
+
+We then assume a negative binomial observation model with overdispersion
+$`\phi_c`$ for reported cases ($`C_t`$),
+
+``` math
+\begin{align}
+  C_{t} &\sim \text{NegBinomial}\left(\lambda_t, \phi_c\right) \\
+  \frac{1}{\sqrt{\phi_c}} &\sim \text{Normal}(0, 0.5) 
+\end{align}
+```
+
+Where $`\sigma`$, and $`\frac{1}{\sqrt{phi_c}}`$ are truncated to be
+greater than 0 and $`\beta`$ is truncated to be between -1 and 1.
+Optionally a Poisson observation model may instead be used (see the
+documentation for `overdispersion` in `?forecast()`).
+
+The stan code for this model available
+[here](https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/bp.stan)
+or can be loaded into `R` using the following code,
+
+``` r
+
+library(forecast.vocs)
+readLines(fv_model(strains = 1, compile = FALSE))
+```
+
+### Two strain
+
+We model strain dynamics using the single strain model as a starting
+point but with the addition of strain specific AR(P) case model and a
+beta binomial (or optionally binomial) observation process for sequence
+data. The variant of concerns growth rate is modelled either as a fixed
+scaling of the non-variant of concern growth rate, as an independent
+AR(1) process, or in a vector autoregression framework as a correlated
+AR(1) process. This last formulation is described in detail below along
+with the modifications required to define the other two formulations.
+Parameters related to the variant of concern (VoC) are given the
+$`\delta`$ superscript and parameters related to non-VoC cases are given
+the $`o`$ superscript.
+
+Mean reported cases are again defined using a AR(1) process on the log
+scale for each strain and then combined for overall mean reported cases.
+
+``` math
+\begin{align}
+  \lambda_t &\sim \text{LogNormal}\left(\log C_t , 0.025 \times \log C_t \right) ,\ t \leq P\\
+  \lambda^{\delta}_t &\sim \text{LogNormal}\left(\log C^{\delta}_t , 0.025 \times \log C^{\delta}_t \right),\ t \leq P \\
+  \lambda^{o}_t &= \lambda_t - \lambda^{\delta}_t,\ t \leq P \\
+  \lambda^{\delta}_t &= \text{exp}\left(r^{\delta}_t\right) \sum_{p = 1}^{P} \alpha^{\delta}_p  \lambda^{\delta}_{t-p},\ t \gt P \\
+  \lambda^{o}_t &= \text{exp}\left(r^{o}_t\right) \sum_{p = 1}^{P} \alpha^{o}_p  \lambda^{o}_{t-p}, t \gt P   \\
+  \lambda_t &= \lambda^{\delta}_t + \lambda^{o}_t
+\end{align}
+```
+
+Where $`C^{\delta}_0`$ is derived by calculating the mean proportion of
+cases that had the VoC for the first time point using the overall number
+of reported cases, the number of sequenced cases, and the number of
+sequences that were positive for the VoC. The growth rate for both VoC
+and non-VoC cases ($`r^{o, \delta}_t`$) is again modelled as differenced
+AR(1) processes but now combined with a variant specific modifier
+($`s^{o, \delta}_0`$) to growth when variant sequences are first
+reported ($`t_{seq}`$), and a correlation structure for the time and
+strain varying error terms ($`\eta^{o, \delta}`$).
+
+``` math
+\begin{align}
+  r^{o}_1 &\sim \text{Normal}\left(0, 0.25 \right),\\
+  r^{\delta}_{t_{seq}} &= r^{o}_{t_{seq}} + s^{\delta} \\
+  r^{o, \delta}_t &= r^{o, \delta}_{t-1} + \epsilon^{o, \delta}_t  \\
+  \epsilon^{o, \delta}_0 &= \eta^{o, \delta}_0 \\
+  \epsilon^{o, \delta}_t &= \beta \epsilon^{o, \delta}_{t-1} + \eta^{o, \delta}_t
+\end{align}
+```
+
+Where,
+
+``` math
+\begin{align}
+  s^{\beta} &\sim \text{Normal}(0, 0.5)  \\
+  \eta^{o, \delta}_t &\sim \text{MVN}\left(0, \boldsymbol \Sigma \right) \\
+  \beta &\sim \text{Normal}\left(0, 0.5 \right)
+\end{align}
+```
+
+Where $`\boldsymbol \Sigma`$ is a $`2 \times 2`$ covariance matrix which
+we decompose for computational stability into a diagonal matrix
+containing variant specific scale parameters ($`\boldsymbol \Delta`$)
+and a symmetric correlation matrix ($`\boldsymbol \Omega`$) as
+follows^(\[1\]),
+
+``` math
+\begin{align}
+  \boldsymbol \Sigma &= \boldsymbol \Delta \boldsymbol \Omega \boldsymbol \Delta \\
+  \boldsymbol \Delta &=  \left[ {\begin{array}{cc}
+                            \sigma^o & 0 \\
+                            0& \sigma^{\delta} \\
+                                \end{array} } \right] \\
+  \boldsymbol \Omega &\sim \left[ {\begin{array}{cc}
+                            1 & \omega \\
+                            \omega & 1 \\
+                              \end{array} } \right] \\
+  \sigma^{o, \delta} &\sim \text{Normal}\left(0, 0.2 \right)
+\end{align}
+```
+
+Where $`\boldsymbol \Omega`$ has a Lewandowski-Kurowicka-Joe (LKJ) prior
+where $`\omega`$ controls the prior expectation for correlation between
+variants (with $`\omega = 1`$ resulting in a uniform prior over all
+correlations, $`\omega \lt 1`$ placing more weight on larger
+correlations and $`\omega \gt 1`$ placing more weight on small amounts
+of correlations). By default we set $`\omega = 0.5`$ giving more weight
+to correlations between variants dynamics.
+
+On top of this correlated strain dynamic model `forecast.vocs` also
+offers two other options that represent extremes in the correlated
+model. The first of these assumes that both strains evolve with
+independent differenced AR(1) growth rates with only a scaling factor
+(s^{}) linking them. The second assumes that strains growth rates are
+completely correlated in time (i.e they are governed by a single AR(1)
+differenced process) and only differ based on a scaling factor
+($`s^{\delta}`$). See the documentation for `variant_relationship` in
+`?forecast()` for details. 
+
+We then assume a negative binomial observation model with overdispersion
+$`\phi_c`$ for reported cases ($`C_t`$) as in the single strain model,
+
+``` math
+\begin{align}
+  C_{t} &\sim \text{NegBinomial}\left(\lambda_t, \phi_c\right) \\
+  \frac{1}{\sqrt{\phi_c}} &\sim \text{Normal}(0, 0.5) 
+\end{align}
+```
+
+Where $`\sigma`$, and $`\frac{1}{\sqrt{phi_c}}`$ are truncated to be
+greater than 0 and $`\beta`$ is truncated to be between -1 and 1. Again
+a Poisson observation model may instead be used (see the documentation
+for `overdispersion` in `?forecast()`).
+
+Finally, the mean proportion of samples that have the VoC ($`p_t`$) is
+then estimated using the mean reported cases with the VoC and the
+overall mean reported cases.
+
+``` math
+\begin{equation} 
+  p_t = \frac{\lambda^{\delta}_t}{\lambda_t}
+\end{equation}
+```
+
+We assume a beta binomial observation model for the number of sequences
+($`N_t`$) that are positive ($`P_t`$) for the VoC with overdispersion
+$`\phi_s`$.
+
+``` math
+\begin{align}
+  P_{t} &\sim \mathrm{BetaBinomial}\left(N_t, p_t \phi_s, (1 - p_t) \phi_s\right) \\
+  \frac{1}{\sqrt{\phi_s}} &\sim \text{Normal}(0, 0.5) 
+\end{align}
+```
+
+Where $`\sigma^{o, \delta}`$, and $`\frac{1}{\sqrt{\phi_s}}`$ are
+truncated to be greater than 0. A binomial observation model is also
+available (see the documentation for `overdispersion` in `?forecast()`).
+
+The stan code for this model available
+[here](https://github.com/epiforecasts/forecast.vocs/blob/main/inst/stan/twostrainbp.stan)
+or can be loaded into `R` using the following code,
+
+``` r
+
+library(forecast.vocs)
+readLines(fv_model(strains = 2, compile = FALSE))
+```
+
+## Summary statistics
+
+As well as posterior predictions and forecasts for both notifications by
+variant and variant of concern proportion the models also return several
+summary statistics which may be useful for drawing inferences about
+underlying transmission dynamics. These include the log scale growth
+rate ($`g^{o, \delta}_t`$), the instantaneous effective reproduction
+number ($`R^{o, \delta}_t`$), and the transmission advantage of the
+variant of concern ($`A_t`$). These are calculated as follows:
+
+``` math
+\begin{align}
+  g^{o, \delta}_t &= T_s r^{o, \delta}_t \\
+  R^{o, \delta}_t &= \text{exp}\left(T_s r^{o, \delta}_t\right) \\
+  A_t &= \text{exp}\left(T_s \left(r^{\delta}_t - r^{o}_t \right)\right)\\
+\end{align}
+```
+
+$`T_s`$ is a user set scaling parameter that defines the timespan over
+which the summary metrics apply dependent on the time step of the data.
+It can be set using the `scale_r` and defaults to 1 which returns
+summary statistics scaled to the timestep of the data. Depending on the
+setup of the model used these summary measures will be more or less
+related to their epidemiological definitions. In particular, adding a
+weighting to past expected cases that is more complex than a simple lag
+may cause interpretation issues.
+
+## Implementation
+
+The models are implemented in `stan` using `cmdstanr` with no defaults
+altered^(\[1,2\]). Due to the complexity of the posterior it is likely
+that increasing the `adapt_delta` may be required to mitigate potential
+bias in posterior estimates^(\[3\]). `forecast.vocs` incorporates
+additional functionality written in R^(\[4\]) to enable plotting
+forecasts and posterior predictions, summarising forecasts, and scoring
+them using `scoringutils`^(\[5\]). All functionality is modular allowing
+users to extend and alter the underlying model whilst continuing to use
+the package framework.
+
+## References
+
+1\.
+
+Team, S. D. (2021). *Stan modeling language users guide and reference
+manual, 2.28.1*.
+
+2\.
+
+Gabry, J., & Češnovar, R. (2021). *Cmdstanr: R interface to ’CmdStan’*.
+
+3\.
+
+Betancourt, M. (2017). Diagnosing biased inference with divergences.
+*Stan Case Studies*, *4*.
+<https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html>
+
+4\.
+
+R Core Team. (2019). *R: A language and environment for statistical
+computing*. R Foundation for Statistical Computing.
+<https://www.R-project.org/>
+
+5\.
+
+Bosse, N. (2020). *Scoringutils: A collection of proper scoring rules
+and metrics to assess predictions*.
+<https://github.com/epiforecasts/scoringutils>
