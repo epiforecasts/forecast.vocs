@@ -3,6 +3,8 @@
 
 # Forecast case and sequence notifications using variant of concern strain dynamics
 
+> **Archived.** No longer maintained; last updated May 2023.
+
 [![R-CMD-as-cran-check](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml/badge.svg)](https://github.com/epiforecasts/forecast.vocs/actions/workflows/R-CMD-as-cran-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/epiforecasts/forecast.vocs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/epiforecasts/forecast.vocs)
